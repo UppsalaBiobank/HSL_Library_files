@@ -1,0 +1,3128 @@
+// easyCodeII
+// ===================
+// Revisions:
+//
+// ===================
+
+#ifndef __EASYCODEII_LIBRARY_hsl__
+#define __EASYCODEII_LIBRARY_hsl__ 1
+
+#pragma once
+#include "HSLUtils/HSLUtilLib.hsl"
+#include "HSLMthLib/HSLMthLib.hsl"
+#include "HSLStrLib/HSLStrLib.hsl"
+#include "HSLDevLib/HSLDevLib.hsl"
+#include "HSLSeqLib/HSLSeqLib.hsl"
+
+// Implementation ---------------------------------------------------------------------------------
+
+  namespace EASYCODEII
+  {
+    // Library Version
+    static const variable _EASYCODEII_Library_Version("3.0.0");
+
+    // Verschiedene Tracelevels
+    const variable _TRACE_LEVEL_NONE(0);
+    const variable _TRACE_LEVEL_NORMAL(1);
+    const variable _TRACE_LEVEL_FULL(2);
+    static global variable _EASYCODEII_TraceLevel(_TRACE_LEVEL_FULL);
+
+    static const variable _APPLICATION_COM_CLASS_NAME("EASYCODEII.COM_Class"); // COM-Classname
+
+    static global object   _EASYCODEII_COM_Application_Connection;                             // COM-Verbindung zur Application
+    static global variable _EASYCODEII_COM_Application_Connection_UsedFlag(hslFalse);          // COM-Verbindung zur Application Flag
+
+    const variable _DATABASE_RETURN_VALUE_NO_ID_FOUND(-1);                   // Allgemeiner Rueckgabewert, wenn Eintrag nicht
+                                                                             // gefunden wurde.
+
+    const variable _HSLTRUE(hslTrue);                                        // hslTrue verwenden im Methodeneditor
+    const variable _HSLFALSE(hslFalse);                                      // hslFalse verwenden im Methodeneditor
+
+    const variable _SIMULATION_MODE_OFF(hslFalse);                           // Methode laeuft normal
+    const variable _SIMULATION_MODE_ON(hslTrue);                             // Methode laeuft im Simulationsmodus
+    global variable _EASYCODEII_SimulationMode;                              // Variable fuer den Simulationsmodus
+
+    static const variable _COM_INITIALISATION_DELAY(2);                      // Wartezeit der Initialisierung des easyPick COM-Interface
+
+    // Errors (Rueckgabewerte aller Funktionen)
+    namespace ERROR
+    {
+      const variable _NONE                           (0);   // No error
+      namespace GENERAL
+      {
+        const variable _LIBRARY                      (1);   // HSL-Library error
+        const variable _MLSTAR                       (2);   // MLStar-Library error
+        const variable _APPLICATION                  (3);   // Application error
+      } // namespace GENERAL
+      namespace DATABASE
+      {
+        const variable _READ                         (87);  // Database read error
+        const variable _WRITE                        (88);  // Database write error
+        const variable _UPDATE                       (89);  // Database update error
+      } // namespace DATABASE
+      namespace BARCODE
+      {
+        const variable _MORE_THAN_ONE_BARCODE_FOUND  (103);
+        const variable _NO_BARCODE_DECOED            (104);
+        const variable _WRONG_BARCODE_MASK           (105);
+        const variable _NO_BARCODE_DETECTED          (106);
+        const variable _NO_READABLE_CHARACTERS       (107);
+        const variable _NO_BARCODE_DEFINED           (140);
+      } // namespace BARCODE
+
+    } // namespace ERROR
+
+    // Function Parameters Const
+    namespace GUI
+    {
+      namespace SHOW
+      {
+        namespace MODE
+        {
+          const variable _NORMAL                     (1);   // Show Normal
+          const variable _MAXIMIZED                  (2);   // Show Maximized
+        } // namespace MODE
+      } // namespace SHOW
+      namespace LIVEVIEW
+      {
+        namespace MODE
+        {
+          const variable _NORMAL                     (1);   // Show Normal
+        } // namespace MODE
+        namespace DRAW
+        {
+          namespace COLOR
+          {
+            const variable _RED                     ("red");
+            const variable _GREEN                   ("green");
+            const variable _BLUE                    ("blue");
+            const variable _ORANGE                  ("orange");
+            const variable _CYAN                    ("cyan");
+            const variable _MANGENTA                ("mangenta");
+            const variable _YELLOW                  ("yellow");
+            const variable _GRAY                    ("gray");
+            const variable _BLACK                   ("black");
+            const variable _WHITE                   ("white");
+          } // namespace COLOR
+          namespace DRAWMODE
+          {
+            const variable _FILL                    ("fill");
+            const variable _MARGIN                  ("margin");
+          } // namespace DRAWMODE
+          namespace FONT
+          {
+            const variable _ARIAL                   ("Arial");
+          } // namespace FONT
+        } // namespace DRAW
+      } // namespace LIVEVIEW
+    } // namespace GUI
+
+    namespace CAMERA
+    {
+      namespace SAVEPICTURE
+      {
+        namespace PICTUREFORMAT
+        {
+          const variable _TIFF                       ("tiff");
+          const variable _BMP                        ("bmp");
+          const variable _JPEG_UNCOPRESSED           ("jpeg");
+          const variable _JPEG_80_PERCENT            ("jpeg 80");
+          const variable _JPEG_60_PERCENT            ("jpeg 60");
+          const variable _JPEG_40_PERCENT            ("jpeg 40");
+          const variable _JPEG_20_PERCENT            ("jpeg 20");
+          const variable _PNG                        ("png");
+          const variable _PNG_COMPRESSED_BEST        ("png best");
+          const variable _PNG_COMPRESSED_FASTEST     ("png fastest");
+          const variable _PNG_NONE                   ("png none");
+        } // namespace PICTUREFORMAT
+      } // namespace SAVEPICTURE
+    } // namespace CAMERA
+
+    namespace EASYCODEII_HELPER
+    {
+      namespace LIGHTSOURCE
+      {
+        const variable _NO_LIGHT                     (0);   // None
+        const variable _MLSTAR_DIV2_PWM1             (1);   // DIV2
+        const variable _MLSTAR_DIV2_PWM2             (2);   // DIV2
+        const variable _MLSTAR_DIV3_PWM3             (3);   // DIV3
+        const variable _MLSTAR_DIV3_PWM4             (4);   // DIV3
+        const variable _CAMERA_CHANNEL               (5);   // Camera Channel
+        const variable _CAMERA_FLASH_OUTPUTPORT      (6);   // Camera Flash Output Port
+      } // namespace LIGHTSOURCE
+      namespace SORTORDER
+      {
+        const variable _ASCENDING                    (0);   // Ascending
+        const variable _COLUMN_BY_COLUMN             (1);   // Column by column
+      } // namespace SORTORDER
+      namespace GROUPNAME
+      {
+        const variable _RACK                         ("Side");      // 1D Rack side code
+        const variable _TUBES                        ("Tubes");     // Tubes
+        const variable _BOTTOM_TL                    ("Bottom_TL"); // 2D Rack bottom code top left
+        const variable _BOTTOM_BR                    ("Bottom_BR"); // 2D Rack bottom code bottom right
+      } // namespace GROUPNAME
+    } // namespace EASYCODEII_HELPER
+
+    namespace INIT
+    {
+
+      // Init() -----------------------------------------------------------------------------------
+      // Initialisiert die Verbindung zur Application
+      function Init(
+                     device   & ML_STAR,                  // Device
+                     variable iTraceLevel,                // Gewuenschter Tracelevel
+                     variable iApplicationInit           // Soll Applikation auch initialisert werden
+                   ) variable                             // Return: _NONE          = Init erfolgreich durchgefuehrt
+                                                          //         _LIBRARY_ERROR = Init konnte nicht durchgefuehrt werden
+      {
+
+        // Setzen des Tracelevels
+        _EASYCODEII_TraceLevel = iTraceLevel;
+
+        if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(),"(",
+                                                                                  "iTraceLevel=",iTraceLevel,
+                                                                                  ",iApplicationInit=",iApplicationInit,
+                                                                               ")");
+
+        // Anzeigen der Library Version
+        if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_NORMAL) Trace(GetFunctionName()," easyCodeIILibrary Version=\"V",_EASYCODEII_Library_Version,"\"");
+
+        // Setzen des Simulations-Modus
+        _EASYCODEII_SimulationMode = _SIMULATION_MODE_OFF;
+        if (ML_STAR.IsNullDevice()==hslFalse)
+        {
+          // simulationMode, 1 = simulate, 0 = execute
+          if (ML_STAR.GetCfgValueWithKey(18)==1)
+            _EASYCODEII_SimulationMode = _SIMULATION_MODE_ON;
+          //??for testing only:?? _EASYCODEII_SimulationMode = _SIMULATION_MODE_OFF; 
+        }
+
+        if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName()," _SimulationMode=",_EASYCODEII_SimulationMode);
+
+        // Soll Applikation auch initialiert werden
+        if (iApplicationInit==hslTrue)
+        {
+          timer timerApplicationStart;
+          if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName()," Initialisation of ",_APPLICATION_COM_CLASS_NAME," ...");
+          // create connection object
+          onerror goto com_load_error;
+          _EASYCODEII_COM_Application_Connection.CreateObject(_APPLICATION_COM_CLASS_NAME);
+           // Wait short time
+          timerApplicationStart.SetTimer(_COM_INITIALISATION_DELAY);
+          timerApplicationStart.WaitTimer(hslFalse, hslFalse);
+          _EASYCODEII_COM_Application_Connection_UsedFlag = hslTrue;
+          if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName()," Initialisation ok");
+        }
+
+        // Anzeigen der Programmversion
+        if (_EASYCODEII_COM_Application_Connection_UsedFlag==hslTrue)
+        {
+         variable ReturnValue;
+         variable ApplicationVersionString("");
+          ReturnValue = _EASYCODEII_COM_Application_Connection.Application_GetVersion(ApplicationVersionString);
+          if (ReturnValue!=ERROR::_NONE)
+            return(ReturnValue);
+
+          if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_NORMAL) Trace(GetFunctionName()," Application Version=\"V",ApplicationVersionString,"\"");
+        }
+
+        return(ERROR::_NONE);
+
+        // COM-Object kann nicht instansiert werden
+        com_load_error:
+        {
+          if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_NORMAL) Trace(GetFunctionName()," Initialisation failed!");
+          return(ERROR::GENERAL::_LIBRARY);
+        }
+      }
+      // ------------------------------------------------------------------------------------------
+
+      // DeInit() ---------------------------------------------------------------------------------
+      // DeInitialisierung
+      function DeInit(
+                     ) variable                   // Return: _NONE          = DeInit erfolgreich durchgefuehrt
+                                                  //         _LIBRARY_ERROR = DeInit konnte nicht durchgefuehrt werden
+      {
+
+        if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(),"()");
+
+        if (_EASYCODEII_COM_Application_Connection_UsedFlag == hslTrue)
+        {
+          _EASYCODEII_COM_Application_Connection.ReleaseObject();
+          _EASYCODEII_COM_Application_Connection_UsedFlag = hslFalse;
+        }
+
+        return(ERROR::_NONE);
+      }
+      // ------------------------------------------------------------------------------------------
+
+      // SetSimulationMode() ----------------------------------------------------------------------
+      // Setzen des Simulations-Modus
+      function SetSimulationMode(
+                                  variable iSimulationMode             // Gewuenschter Simulations-Mode
+                                ) variable                             // Return: ReturnValue
+      {
+
+        if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(),"(",
+                                                                                  "iSimulationMode=",iSimulationMode,
+                                                                               ")");
+
+        _EASYCODEII_SimulationMode = iSimulationMode;
+
+        if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName()," _SimulationMode=",_EASYCODEII_SimulationMode);
+
+        return(ERROR::_NONE);
+      }
+      // ------------------------------------------------------------------------------------------
+
+      // GetSimulationMode() ----------------------------------------------------------------------
+      // Lesen des Simulations-Modus
+      function GetSimulationMode(
+                                  variable & oSimulationMode           // Simulations-Mode
+                                ) variable                             // Return: ReturnValue
+      {
+
+        if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(),"(...)");
+
+        oSimulationMode = hslFalse;
+
+        oSimulationMode = _EASYCODEII_SimulationMode;
+
+        if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName()," oSimulationMode=",oSimulationMode);
+
+        return(ERROR::_NONE);
+      }
+      // ------------------------------------------------------------------------------------------
+
+    } // namespace INIT
+
+    namespace APPLICATION
+    {
+
+      // IsRunning() ------------------------------------------------------------------------------
+      // Zeigt das Applikationsfenster an
+      function IsRunning(
+                          variable & oApplicationRunningFlag    // Applikation RunningFlag
+                        ) variable                              // Return: ReturnValue
+      {
+       variable ReturnValue;
+
+        if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), "(...)");
+
+        oApplicationRunningFlag = hslFalse;
+
+        if (_EASYCODEII_COM_Application_Connection_UsedFlag==hslFalse)
+        {
+          if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_NORMAL) Trace(GetFunctionName()," The Application is not running!");
+          return(ERROR::GENERAL::_APPLICATION);
+        }
+
+        ReturnValue = _EASYCODEII_COM_Application_Connection.Application_IsRunning(oApplicationRunningFlag);
+
+        if (oApplicationRunningFlag) oApplicationRunningFlag = hslTrue;
+        else                         oApplicationRunningFlag = hslFalse;
+
+        if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), " ReturnValue=",ReturnValue,
+                                                                                ",oApplicationRunningFlag=",oApplicationRunningFlag);
+
+        return(ReturnValue);
+      }
+      // ------------------------------------------------------------------------------------------
+
+      // GetStartError() --------------------------------------------------------------------------
+      // Ermittelt einen allfaelligen Fehler beim Starten der Applikation
+      function GetApplicationStartError(
+                                         variable & oApplicationStartError     // Applikation Start Error
+                                       ) variable                              // Return: ReturnValue
+      {
+       variable ReturnValue;
+
+        if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), "(...)");
+
+        oApplicationStartError = 0;
+
+        if (_EASYCODEII_COM_Application_Connection_UsedFlag==hslFalse)
+        {
+          if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_NORMAL) Trace(GetFunctionName()," The Application is not running!");
+          return(ERROR::GENERAL::_APPLICATION);
+        }
+
+        ReturnValue = _EASYCODEII_COM_Application_Connection.Application_GetStartError(oApplicationStartError);
+
+        if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), " ReturnValue=",ReturnValue,
+                                                                                ",oApplicationStartError=",oApplicationStartError);
+
+
+        return(ReturnValue);
+      }
+      // ------------------------------------------------------------------------------------------
+
+      // Application_GetApplicationErrorText() ----------------------------------------------------
+      // Ermitteln die Fehlermeldung anhand der FehlerNr
+      function GetErrorText(
+                             variable iErrorNr,            // Applikation Fehler-Nummer
+                             variable & oErrorText         // Applikation Fehler-Text
+                           ) variable                      // Return: Fehlertext
+      {
+       variable ReturnValue;
+
+        if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), "(",
+                                                                                "iErrorNr=",iErrorNr,
+                                                                                ",...)");
+
+        oErrorText="";
+
+        if (_EASYCODEII_COM_Application_Connection_UsedFlag==hslFalse)
+        {
+          if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_NORMAL) Trace(GetFunctionName()," The Application is not running!");
+          oErrorText = "The Application is not running!";
+          return(ERROR::GENERAL::_APPLICATION);
+        }
+
+        ReturnValue = _EASYCODEII_COM_Application_Connection.Application_GetErrorText(iErrorNr,
+                                                                                      oErrorText);
+
+        if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), " ReturnValue=",ReturnValue,
+                                                                                ",oErrorText=\"",oErrorText,"\"");
+
+        return(ReturnValue);
+      }
+      // ------------------------------------------------------------------------------------------
+
+      // Get_ProgrammPath() ----------------------------------------------------------------
+      // Lesen des Programm Path
+      function Get_ProgrammPath(
+                                 variable & oProgrammPath    // Programm - Path
+                               ) variable                    // Return: ReturnValue
+      {
+       variable ReturnValue;
+
+        if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), "(...)");
+
+        oProgrammPath = "";
+
+        if (_EASYCODEII_COM_Application_Connection_UsedFlag==hslFalse)
+        {
+          if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_NORMAL) Trace(GetFunctionName()," The Application is not running!");
+          return(ERROR::GENERAL::_APPLICATION);
+        }
+
+        ReturnValue = _EASYCODEII_COM_Application_Connection.Application_Get_ProgrammPath(oProgrammPath);
+
+        if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), " ReturnValue=",ReturnValue,
+                                                                                ",oProgrammPath=\"",oProgrammPath,"\"");
+
+        return(ReturnValue);
+      }
+      // ------------------------------------------------------------------------------------------
+
+    } // namespace APPLICATION
+
+    namespace APPLICATIONSETTINGS
+    {
+
+      // Get_DatabasePicturePath() ----------------------------------------------------------------
+      // Lesen des Database Picture Path
+      function Get_DatabasePicturePath(
+                                        variable & oDatabasePicturePath    // Database Picture Path
+                                      ) variable                           // Return: ReturnValue
+      {
+       variable ReturnValue;
+
+        if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), "(...)");
+
+        oDatabasePicturePath = "";
+
+        if (_EASYCODEII_COM_Application_Connection_UsedFlag==hslFalse)
+        {
+          if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_NORMAL) Trace(GetFunctionName()," The Application is not running!");
+          return(ERROR::GENERAL::_APPLICATION);
+        }
+
+        ReturnValue = _EASYCODEII_COM_Application_Connection.ApplicationSettings_Get_DatabasePicturePath(oDatabasePicturePath);
+
+        if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), " ReturnValue=",ReturnValue,
+                                                                                ",oDatabasePicturePath=\"",oDatabasePicturePath,"\"");
+
+        return(ReturnValue);
+      }
+      // ------------------------------------------------------------------------------------------
+
+    } // namespace APPLICATIONSETTINGS
+
+    namespace GUI
+    {
+
+      // Show() -----------------------------------------------------------------------------------
+      // Zeigt das Applikationsfenster
+      function Show(
+                     variable iMode
+                   ) variable      // Return: ReturnValue
+      {
+       variable ReturnValue;
+
+        if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), "(",
+                                                                                "iMode=",iMode,
+                                                                                ")");
+
+        if (_EASYCODEII_COM_Application_Connection_UsedFlag==hslFalse)
+        {
+          if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_NORMAL) Trace(GetFunctionName()," The Application is not running!");
+          return(ERROR::GENERAL::_APPLICATION);
+        }
+
+        ReturnValue = _EASYCODEII_COM_Application_Connection.GUI_Show(iMode);
+
+        if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), " ReturnValue=",ReturnValue);
+
+        return(ReturnValue);
+      }
+      // ------------------------------------------------------------------------------------------
+
+      // Hide() -----------------------------------------------------------------------------------
+      // Verbirgt das Applikationsfenster
+      function Hide(
+                   ) variable      // Return: ReturnValue
+      {
+       variable ReturnValue;
+
+        if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), "()");
+
+        if (_EASYCODEII_COM_Application_Connection_UsedFlag==hslFalse)
+        {
+          if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_NORMAL) Trace(GetFunctionName()," The Application is not running!");
+          return(ERROR::GENERAL::_APPLICATION);
+        }
+
+        ReturnValue = _EASYCODEII_COM_Application_Connection.GUI_Hide();
+
+        if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), " ReturnValue=",ReturnValue);
+
+        return(ReturnValue);
+      }
+      // ------------------------------------------------------------------------------------------
+
+      // IsVisible() ------------------------------------------------------------------------------
+      // Ist die Applikation noch sichtbar
+      function IsVisible(
+                          variable & oIsVisible
+                        ) variable      // Return: ReturnValue
+      {
+       variable ReturnValue;
+
+        if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), "(...)");
+
+        oIsVisible = hslFalse;
+
+        if (_EASYCODEII_COM_Application_Connection_UsedFlag==hslFalse)
+        {
+          if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_NORMAL) Trace(GetFunctionName()," The Application is not running!");
+          return(ERROR::GENERAL::_APPLICATION);
+        }
+
+        ReturnValue = _EASYCODEII_COM_Application_Connection.GUI_IsVisible(oIsVisible);
+
+        if (oIsVisible) oIsVisible = hslTrue;
+        else            oIsVisible = hslFalse;
+
+        if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), " ReturnValue=",ReturnValue,
+                                                                                ",oIsVisible=",oIsVisible);
+
+        return(ReturnValue);
+      }
+      // ------------------------------------------------------------------------------------------
+
+      namespace LIVEVIEW
+      {
+
+        // Show() ---------------------------------------------------------------------------------
+        // Zeigt das LiveView
+        function Show(
+                       variable iMode
+                     ) variable      // Return: ReturnValue
+        {
+         variable ReturnValue;
+
+          if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), "(",
+                                                                                  "iMode=",iMode,
+                                                                                  ")");
+
+          if (_EASYCODEII_COM_Application_Connection_UsedFlag==hslFalse)
+          {
+            if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_NORMAL) Trace(GetFunctionName()," The Application is not running!");
+            return(ERROR::GENERAL::_APPLICATION);
+          }
+
+          ReturnValue = _EASYCODEII_COM_Application_Connection.GUI_LiveView_Show(iMode);
+
+          if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), " ReturnValue=",ReturnValue);
+
+          return(ReturnValue);
+        }
+        // ----------------------------------------------------------------------------------------
+
+        // Hide() ---------------------------------------------------------------------------------
+        // Verbirgt das LiveView
+        function Hide(
+                     ) variable      // Return: ReturnValue
+        {
+         variable ReturnValue;
+
+          if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), "()");
+
+          if (_EASYCODEII_COM_Application_Connection_UsedFlag==hslFalse)
+          {
+            if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_NORMAL) Trace(GetFunctionName()," The Application is not running!");
+            return(ERROR::GENERAL::_APPLICATION);
+          }
+
+          ReturnValue = _EASYCODEII_COM_Application_Connection.GUI_LiveView_Hide();
+
+          if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), " ReturnValue=",ReturnValue);
+
+          return(ReturnValue);
+        }
+        // ----------------------------------------------------------------------------------------
+
+        // IsVisible() ----------------------------------------------------------------------------
+        // Ist das LiveView noch sichtbar
+        function IsVisible(
+                            variable & oIsVisible
+                          ) variable      // Return: ReturnValue
+        {
+         variable ReturnValue;
+
+          if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), "(...)");
+
+          oIsVisible = hslFalse;
+
+          if (_EASYCODEII_COM_Application_Connection_UsedFlag==hslFalse)
+          {
+            if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_NORMAL) Trace(GetFunctionName()," The Application is not running!");
+            return(ERROR::GENERAL::_APPLICATION);
+          }
+
+          ReturnValue = _EASYCODEII_COM_Application_Connection.GUI_LiveView_IsVisible(oIsVisible);
+
+          if (oIsVisible) oIsVisible = hslTrue;
+          else            oIsVisible = hslFalse;
+
+          if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), " ReturnValue=",ReturnValue,
+                                                                                  ",oIsVisible=",oIsVisible);
+
+          return(ReturnValue);
+        }
+        // ----------------------------------------------------------------------------------------
+
+        // SavePicture() --------------------------------------------------------------------------
+        // Aktuelles Live-Bild speichern (inkl. Draw-Funktionen)
+        function SavePicture(
+                              variable iPictureFilename,     // Name des Bildes
+                              variable iPictureFormat,       // Picture Format
+                              variable iPictureSizePercent
+                            ) variable                      // Return: ReturnValue
+        {
+         variable ReturnValue;
+
+          if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), "(",
+                                                                                  "iPictureFilename=\"",iPictureFilename,"\"",
+                                                                                  ",iPictureFormat=\"",iPictureFormat,"\"",
+                                                                                  ",iPictureSizePercent=",iPictureSizePercent,
+                                                                                  ")");
+
+          if (_EASYCODEII_COM_Application_Connection_UsedFlag==hslFalse)
+          {
+            if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_NORMAL) Trace(GetFunctionName()," The Application is not running!");
+            return(ERROR::GENERAL::_APPLICATION);
+          }
+
+          ReturnValue = _EASYCODEII_COM_Application_Connection.GUI_LiveView_SavePicture(iPictureFilename,
+                                                                                        iPictureFormat,
+                                                                                        iPictureSizePercent);
+
+          if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), " ReturnValue=",ReturnValue);
+
+          return(ReturnValue);
+        }
+        // ----------------------------------------------------------------------------------------
+
+        namespace FOCUS
+        {
+
+          // Show() -------------------------------------------------------------------------------
+          // Camera Focus Show
+          function Show(
+                         variable iPositionX,               // Position X
+                         variable iPositionY,               // Position Y
+                         variable iSizeX,                   // Size X
+                         variable iSizeY,                   // Size Y
+                         variable iAngle,                   // Angle
+                         variable iGradientValueThreshold,  // Gradient value threshold
+                         variable iGradientValueSensibility // Gradient value sensibility
+                       ) variable                           // Return: ReturnValue
+          {
+           variable ReturnValue;
+
+            if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), "(",
+                                                                                    "iPositionX=",iPositionX,
+                                                                                    ",iPositionY=",iPositionY,
+                                                                                    ",iSizeX=",iSizeX,
+                                                                                    ",iSizeY=",iSizeY,
+                                                                                    ",iAngle=",iAngle,
+                                                                                    ",iGradientValueThreshold=",iGradientValueThreshold,
+                                                                                    ",iGradientValueSensibility=",iGradientValueSensibility,
+                                                                                    ")");
+
+            if (_EASYCODEII_COM_Application_Connection_UsedFlag==hslFalse)
+            {
+              if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_NORMAL) Trace(GetFunctionName()," The Application is not running!");
+              return(ERROR::GENERAL::_APPLICATION);
+            }
+
+            ReturnValue = _EASYCODEII_COM_Application_Connection.GUI_LiveView_CameraFocus_Show(iPositionX,
+                                                                                               iPositionY,
+                                                                                               iSizeX,
+                                                                                               iSizeY,
+                                                                                               iAngle,
+                                                                                               iGradientValueThreshold,
+                                                                                               iGradientValueSensibility);
+
+            if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), " ReturnValue=",ReturnValue);
+
+            return(ReturnValue);
+          }
+          // --------------------------------------------------------------------------------------
+
+          // GetCurrentValue() --------------------------------------------------------------------
+          // Camera Focus GetCurrentValue
+          function GetCurrentValue(
+                                    variable & oCurrentGradientValueThreshold,
+                                    variable & oMaximumGradientValueThreshold,
+                                    variable & oLowerLimitGradientValueThreshold,
+                                    variable & oValueInTollerance
+                                  ) variable                           // Return: ReturnValue
+          {
+           variable ReturnValue;
+
+            if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), "(...)");
+
+            oCurrentGradientValueThreshold    = 0.0;
+            oMaximumGradientValueThreshold    = 0.0;
+            oLowerLimitGradientValueThreshold = 0.0;
+            oValueInTollerance                = hslFalse;
+
+            if (_EASYCODEII_COM_Application_Connection_UsedFlag==hslFalse)
+            {
+              if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_NORMAL) Trace(GetFunctionName()," The Application is not running!");
+              return(ERROR::GENERAL::_APPLICATION);
+            }
+
+            ReturnValue = _EASYCODEII_COM_Application_Connection.GUI_LiveView_CameraFocus_GetCurrentValue(oCurrentGradientValueThreshold,
+                                                                                                          oMaximumGradientValueThreshold,
+                                                                                                          oLowerLimitGradientValueThreshold,
+                                                                                                          oValueInTollerance);
+
+            if (oValueInTollerance) oValueInTollerance = hslTrue;
+            else                    oValueInTollerance = hslFalse;
+
+            if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), " ReturnValue=",ReturnValue,
+                                                                                    ",oCurrentGradientValueThreshold=",oCurrentGradientValueThreshold,
+                                                                                    ",oMaximumGradientValueThreshold=",oMaximumGradientValueThreshold,
+                                                                                    ",oLowerLimitGradientValueThreshold=",oLowerLimitGradientValueThreshold,
+                                                                                    ",oValueInTollerance=",oValueInTollerance);
+
+            return(ReturnValue);
+          }
+          // --------------------------------------------------------------------------------------
+
+        } // namespace FOCUS
+
+        namespace APERTURE
+        {
+
+          // Show() -------------------------------------------------------------------------------
+          // Camera Aperture Show
+          function Show(
+                         variable iPositionX,           // Position X
+                         variable iPositionY,           // Position Y
+                         variable iSizeX,               // Size X
+                         variable iSizeY,               // Size Y
+                         variable iAngle,               // Angle
+                         variable iGrayValueCenter,     // Gray value center
+                         variable iGrayValueSensibility // Gray value sensibility
+                       ) variable                       // Return: ReturnValue
+          {
+           variable ReturnValue;
+
+            if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), "(",
+                                                                                    "iPositionX=",iPositionX,
+                                                                                    ",iPositionY=",iPositionY,
+                                                                                    ",iSizeX=",iSizeX,
+                                                                                    ",iSizeY=",iSizeY,
+                                                                                    ",iAngle=",iAngle,
+                                                                                    ",iGrayValueCenter=",iGrayValueCenter,
+                                                                                    ",iGrayValueSensibility=",iGrayValueSensibility,
+                                                                                    ")");
+
+            if (_EASYCODEII_COM_Application_Connection_UsedFlag==hslFalse)
+            {
+              if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_NORMAL) Trace(GetFunctionName()," The Application is not running!");
+              return(ERROR::GENERAL::_APPLICATION);
+            }
+
+            ReturnValue = _EASYCODEII_COM_Application_Connection.GUI_LiveView_CameraAperture_Show(iPositionX,
+                                                                                                  iPositionY,
+                                                                                                  iSizeX,
+                                                                                                  iSizeY,
+                                                                                                  iAngle,
+                                                                                                  iGrayValueCenter,
+                                                                                                  iGrayValueSensibility);
+
+            if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), " ReturnValue=",ReturnValue);
+
+            return(ReturnValue);
+          }
+          // --------------------------------------------------------------------------------------
+
+          // GetCurrentValue() --------------------------------------------------------------------
+          // Camera Aperture GetCurrentValue
+          function GetCurrentValue(
+                                    variable & oCurrentGrayValueCenter,
+                                    variable & oLowerLimitGrayValueCenter,
+                                    variable & oUpperLimitGrayValueCenter,
+                                    variable & oValueInTollerance
+                                  ) variable                           // Return: ReturnValue
+          {
+           variable ReturnValue;
+
+            if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), "(...)");
+
+            oCurrentGrayValueCenter     = 0.0;
+            oLowerLimitGrayValueCenter  = 0.0;
+            oUpperLimitGrayValueCenter  = 0.0;
+            oValueInTollerance          = hslFalse;
+
+            if (_EASYCODEII_COM_Application_Connection_UsedFlag==hslFalse)
+            {
+              if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_NORMAL) Trace(GetFunctionName()," The Application is not running!");
+              return(ERROR::GENERAL::_APPLICATION);
+            }
+
+            ReturnValue = _EASYCODEII_COM_Application_Connection.GUI_LiveView_CameraAperture_GetCurrentValue(oCurrentGrayValueCenter,
+                                                                                                             oLowerLimitGrayValueCenter,
+                                                                                                             oUpperLimitGrayValueCenter,
+                                                                                                             oValueInTollerance);
+
+            if (oValueInTollerance) oValueInTollerance = hslTrue;
+            else                    oValueInTollerance = hslFalse;
+
+            if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), " ReturnValue=",ReturnValue,
+                                                                                    ",oCurrentGrayValueCenter=",oCurrentGrayValueCenter,
+                                                                                    ",oLowerLimitGrayValueCenter=",oLowerLimitGrayValueCenter,
+                                                                                    ",oUpperLimitGrayValueCenter=",oUpperLimitGrayValueCenter,
+                                                                                    ",oValueInTollerance=",oValueInTollerance);
+
+            return(ReturnValue);
+          }
+          // --------------------------------------------------------------------------------------
+
+        } // namespace APERTURE
+
+        namespace HOMOGENEOUS
+        {
+
+          // Show() -------------------------------------------------------------------------------
+          // Camera Homogeneous Show
+          function Show(
+                         variable iPositionX,                   // Position X
+                         variable iPositionY,                   // Position Y
+                         variable iSizeX,                       // Size X
+                         variable iSizeY,                       // Size Y
+                         variable iAngle,                       // Angle
+                         variable iFilterMode,                  // Filter mode
+                         variable iHomogeneousValueThreshold,   // Value threshold
+                         variable iHomogeneousValueSensibility  // Value sensibility
+                       ) variable                               // Return: ReturnValue
+          {
+           variable ReturnValue;
+
+            if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), "(",
+                                                                                    "iPositionX=",iPositionX,
+                                                                                    ",iPositionY=",iPositionY,
+                                                                                    ",iSizeX=",iSizeX,
+                                                                                    ",iSizeY=",iSizeY,
+                                                                                    ",iAngle=",iAngle,
+                                                                                    ",iFilterMode=",iFilterMode,
+                                                                                    ",iHomogeneousValueThreshold=",iHomogeneousValueThreshold,
+                                                                                    ",iHomogeneousValueSensibility=",iHomogeneousValueSensibility,
+                                                                                    ")");
+
+            if (_EASYCODEII_COM_Application_Connection_UsedFlag==hslFalse)
+            {
+              if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_NORMAL) Trace(GetFunctionName()," The Application is not running!");
+              return(ERROR::GENERAL::_APPLICATION);
+            }
+
+            ReturnValue = _EASYCODEII_COM_Application_Connection.GUI_LiveView_CameraHomogeneous_Show(iPositionX,
+                                                                                                     iPositionY,
+                                                                                                     iSizeX,
+                                                                                                     iSizeY,
+                                                                                                     iAngle,
+                                                                                                     iFilterMode,
+                                                                                                     iHomogeneousValueThreshold,
+                                                                                                     iHomogeneousValueSensibility);
+
+            if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), " ReturnValue=",ReturnValue);
+
+            return(ReturnValue);
+          }
+          // --------------------------------------------------------------------------------------
+
+          // GetCurrentValue() --------------------------------------------------------------------
+          // Camera Homogeneous GetCurrentValue
+          function GetCurrentValue(
+                                    variable & oCurrentHomogeneousValue,
+                                    variable & oMaximumHomogeneousValue,
+                                    variable & oLowerLimitHomogeneousValue,
+                                    variable & oValueInTollerance
+                                  ) variable                           // Return: ReturnValue
+          {
+           variable ReturnValue;
+
+            if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), "(...)");
+
+            oCurrentHomogeneousValue    = 0.0;
+            oMaximumHomogeneousValue    = 0.0;
+            oLowerLimitHomogeneousValue = 0.0;
+            oValueInTollerance          = hslFalse;
+
+            if (_EASYCODEII_COM_Application_Connection_UsedFlag==hslFalse)
+            {
+              if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_NORMAL) Trace(GetFunctionName()," The Application is not running!");
+              return(ERROR::GENERAL::_APPLICATION);
+            }
+
+            ReturnValue = _EASYCODEII_COM_Application_Connection.GUI_LiveView_CameraHomogeneous_GetCurrentValue(oCurrentHomogeneousValue,
+                                                                                                                oMaximumHomogeneousValue,
+                                                                                                                oLowerLimitHomogeneousValue,
+                                                                                                                oValueInTollerance);
+
+            if (oValueInTollerance) oValueInTollerance = hslTrue;
+            else                    oValueInTollerance = hslFalse;
+
+            if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), " ReturnValue=",ReturnValue,
+                                                                                    ",oCurrentHomogeneousValue=",oCurrentHomogeneousValue,
+                                                                                    ",oMaximumHomogeneousValue=",oMaximumHomogeneousValue,
+                                                                                    ",oLowerLimitHomogeneousValue=",oLowerLimitHomogeneousValue,
+                                                                                    ",oValueInTollerance=",oValueInTollerance);
+
+            return(ReturnValue);
+          }
+          // --------------------------------------------------------------------------------------
+
+        } // namespace HOMOGENEOUS
+
+        namespace DRAW
+        {
+
+          // ClearAll() ---------------------------------------------------------------------------
+          // LiveView Draw Function: ClearAll
+          function ClearAll(
+                           ) variable      // Return: ReturnValue
+          {
+           variable ReturnValue;
+
+            if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), "(",
+                                                                                    ")");
+
+            if (_EASYCODEII_COM_Application_Connection_UsedFlag==hslFalse)
+            {
+              if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_NORMAL) Trace(GetFunctionName()," The Application is not running!");
+              return(ERROR::GENERAL::_APPLICATION);
+            }
+
+            ReturnValue = _EASYCODEII_COM_Application_Connection.GUI_LiveView_Draw_ClearAll();
+
+            if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), " ReturnValue=",ReturnValue);
+
+            return(ReturnValue);
+          }
+          // --------------------------------------------------------------------------------------
+
+          // Clear() ------------------------------------------------------------------------------
+          // LiveView Draw Function: Clear
+          function Clear(
+                          variable iObjectName      // Name des Objects
+                        ) variable                  // Return: ReturnValue
+          {
+           variable ReturnValue;
+
+            if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), "(",
+                                                                                    "iObjectName=\"",iObjectName,"\"",
+                                                                                    ")");
+
+            if (_EASYCODEII_COM_Application_Connection_UsedFlag==hslFalse)
+            {
+              if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_NORMAL) Trace(GetFunctionName()," The Application is not running!");
+              return(ERROR::GENERAL::_APPLICATION);
+            }
+
+            ReturnValue = _EASYCODEII_COM_Application_Connection.GUI_LiveView_Draw_Clear(iObjectName);
+
+            if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), " ReturnValue=",ReturnValue);
+
+            return(ReturnValue);
+          }
+          // --------------------------------------------------------------------------------------
+
+          // Picture() ------------------------------------------------------------------------------
+          // LiveView Draw Function: Picture
+          function Picture(
+                            variable iObjectName,     // Name des Objects
+                            variable iPictureFileName,
+                            variable iPositionX,      // PositionX [Prozent]
+                            variable iPositionY,      // PositionY [Prozent]
+                            variable iScale,          // Scale
+                            variable iAngle           // Angle
+                          ) variable                  // Return: ReturnValue
+          {
+           variable ReturnValue;
+
+            if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), "(",
+                                                                                    "iObjectName=\"",iObjectName,"\"",
+                                                                                    ",iPictureFileName=\"",iPictureFileName,"\"",
+                                                                                    ",iPositionX=",iPositionX,
+                                                                                    ",iPositionY=",iPositionY,
+                                                                                    ",iScale=",iScale,
+                                                                                    ",iAngle=",iAngle,
+                                                                                    ")");
+
+            if (_EASYCODEII_COM_Application_Connection_UsedFlag==hslFalse)
+            {
+              if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_NORMAL) Trace(GetFunctionName()," The Application is not running!");
+              return(ERROR::GENERAL::_APPLICATION);
+            }
+
+            ReturnValue = _EASYCODEII_COM_Application_Connection.GUI_LiveView_Draw_Picture(iObjectName,
+                                                                                           iPictureFileName,
+                                                                                           iPositionX,
+                                                                                           iPositionY,
+                                                                                           iScale,
+                                                                                           iAngle);
+
+            if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), " ReturnValue=",ReturnValue);
+
+            return(ReturnValue);
+          }
+          // --------------------------------------------------------------------------------------
+
+          // Cross() ------------------------------------------------------------------------------
+          // LiveView Draw Function: Cross
+          function Cross(
+                          variable iObjectName,     // Name des Objects
+                          variable iPositionX,      // PositionX [Prozent]
+                          variable iPositionY,      // PositionY [Prozent]
+                          variable iSize,           // Size [Prozent]
+                          variable iAngle,          // Angle
+                          variable iColor,          // Color
+                          variable iLineSize        // LineSize
+                        ) variable                  // Return: ReturnValue
+          {
+           variable ReturnValue;
+
+            if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), "(",
+                                                                                    "iObjectName=\"",iObjectName,"\"",
+                                                                                    ",iPositionX=",iPositionX,
+                                                                                    ",iPositionY=",iPositionY,
+                                                                                    ",iSize=",iSize,
+                                                                                    ",iAngle=",iAngle,
+                                                                                    ",iColor=\"",iColor,"\"",
+                                                                                    ",iLineSize=",iLineSize,
+                                                                                    ")");
+
+            if (_EASYCODEII_COM_Application_Connection_UsedFlag==hslFalse)
+            {
+              if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_NORMAL) Trace(GetFunctionName()," The Application is not running!");
+              return(ERROR::GENERAL::_APPLICATION);
+            }
+
+            ReturnValue = _EASYCODEII_COM_Application_Connection.GUI_LiveView_Draw_Cross(iObjectName,
+                                                                                         iPositionX,
+                                                                                         iPositionY,
+                                                                                         iSize,
+                                                                                         iAngle,
+                                                                                         iColor,
+                                                                                         iLineSize);
+
+            if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), " ReturnValue=",ReturnValue);
+
+            return(ReturnValue);
+          }
+          // --------------------------------------------------------------------------------------
+
+          // Ellipse() ----------------------------------------------------------------------------
+          // LiveView Draw Function: Ellipse
+          function Ellipse(
+                            variable iObjectName,     // Name des Objects
+                            variable iPositionX,      // PositionX [Prozent]
+                            variable iPositionY,      // PositionY [Prozent]
+                            variable iSizeX,          // SizeX [Prozent]
+                            variable iSizeY,          // SizeY [Prozent]
+                            variable iAngle,          // Angle
+                            variable iColor,          // Color
+                            variable iLineSize,       // LineSize
+                            variable iDrawMode        // DrawMode
+                          ) variable                  // Return: ReturnValue
+          {
+           variable ReturnValue;
+
+            if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), "(",
+                                                                                    "iObjectName=\"",iObjectName,"\"",
+                                                                                    ",iPositionX=",iPositionX,
+                                                                                    ",iPositionY=",iPositionY,
+                                                                                    ",iSizeX=",iSizeX,
+                                                                                    ",iSizeY=",iSizeY,
+                                                                                    ",iAngle=",iAngle,
+                                                                                    ",iColor=\"",iColor,"\"",
+                                                                                    ",iLineSize=",iLineSize,
+                                                                                    ",iDrawMode=\"",iDrawMode,"\"",
+                                                                                    ")");
+
+            if (_EASYCODEII_COM_Application_Connection_UsedFlag==hslFalse)
+            {
+              if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_NORMAL) Trace(GetFunctionName()," The Application is not running!");
+              return(ERROR::GENERAL::_APPLICATION);
+            }
+
+            ReturnValue = _EASYCODEII_COM_Application_Connection.GUI_LiveView_Draw_Ellipse(iObjectName,
+                                                                                           iPositionX,
+                                                                                           iPositionY,
+                                                                                           iSizeX,
+                                                                                           iSizeY,
+                                                                                           iAngle,
+                                                                                           iColor,
+                                                                                           iLineSize,
+                                                                                           iDrawMode);
+
+            if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), " ReturnValue=",ReturnValue);
+
+            return(ReturnValue);
+          }
+          // --------------------------------------------------------------------------------------
+
+          // Rectangle() --------------------------------------------------------------------------
+          // LiveView Draw Function: Rectangle
+          function Rectangle(
+                              variable iObjectName,     // Name des Objects
+                              variable iPositionX,      // PositionX [Prozent]
+                              variable iPositionY,      // PositionY [Prozent]
+                              variable iSizeX,          // SizeX [Prozent]
+                              variable iSizeY,          // SizeY [Prozent]
+                              variable iAngle,          // Angle
+                              variable iColor,          // Color
+                              variable iLineSize,       // LineSize
+                              variable iDrawMode        // DrawMode
+                            ) variable                  // Return: ReturnValue
+          {
+           variable ReturnValue;
+
+            if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), "(",
+                                                                                    "iObjectName=\"",iObjectName,"\"",
+                                                                                    ",iPositionX=",iPositionX,
+                                                                                    ",iPositionY=",iPositionY,
+                                                                                    ",iSizeX=",iSizeX,
+                                                                                    ",iSizeY=",iSizeY,
+                                                                                    ",iAngle=",iAngle,
+                                                                                    ",iColor=\"",iColor,"\"",
+                                                                                    ",iLineSize=",iLineSize,
+                                                                                    ",iDrawMode=\"",iDrawMode,"\"",
+                                                                                    ")");
+
+            if (_EASYCODEII_COM_Application_Connection_UsedFlag==hslFalse)
+            {
+              if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_NORMAL) Trace(GetFunctionName()," The Application is not running!");
+              return(ERROR::GENERAL::_APPLICATION);
+            }
+
+            ReturnValue = _EASYCODEII_COM_Application_Connection.GUI_LiveView_Draw_Rectangle(iObjectName,
+                                                                                             iPositionX,
+                                                                                             iPositionY,
+                                                                                             iSizeX,
+                                                                                             iSizeY,
+                                                                                             iAngle,
+                                                                                             iColor,
+                                                                                             iLineSize,
+                                                                                             iDrawMode);
+
+            if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), " ReturnValue=",ReturnValue);
+
+            return(ReturnValue);
+          }
+          // --------------------------------------------------------------------------------------
+
+          // Line() -------------------------------------------------------------------------------
+          // LiveView Draw Function: Line
+          function Line(
+                         variable iObjectName,     // Name des Objects
+                         variable iPosition1X,     // Position 1 X [Prozent]
+                         variable iPosition1Y,     // Position 1 Y [Prozent]
+                         variable iPosition2X,     // Position 2 X [Prozent]
+                         variable iPosition2Y,     // Position 2 Y [Prozent]
+                         variable iColor,          // Color
+                         variable iLineSize        // LineSize
+                       ) variable                  // Return: ReturnValue
+          {
+           variable ReturnValue;
+
+            if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), "(",
+                                                                                    "iObjectName=\"",iObjectName,"\"",
+                                                                                    ",iPosition1X=",iPosition1X,
+                                                                                    ",iPosition1Y=",iPosition1Y,
+                                                                                    ",iPosition2X=",iPosition2X,
+                                                                                    ",iPosition2Y=",iPosition2Y,
+                                                                                    ",iColor=\"",iColor,"\"",
+                                                                                    ",iLineSize=",iLineSize,
+                                                                                    ")");
+
+            if (_EASYCODEII_COM_Application_Connection_UsedFlag==hslFalse)
+            {
+              if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_NORMAL) Trace(GetFunctionName()," The Application is not running!");
+              return(ERROR::GENERAL::_APPLICATION);
+            }
+
+            ReturnValue = _EASYCODEII_COM_Application_Connection.GUI_LiveView_Draw_Line(iObjectName,
+                                                                                        iPosition1X,
+                                                                                        iPosition1Y,
+                                                                                        iPosition2X,
+                                                                                        iPosition2Y,
+                                                                                        iColor,
+                                                                                        iLineSize);
+
+            if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), " ReturnValue=",ReturnValue);
+
+            return(ReturnValue);
+          }
+          // --------------------------------------------------------------------------------------
+
+          // Text() -------------------------------------------------------------------------------
+          // LiveView Draw Function: Text
+          function Text(
+                         variable iObjectName,     // Name des Objects
+                         variable iPositionX,      // PositionX [Prozent]
+                         variable iPositionY,      // PositionY [Prozent]
+                         variable iText,           // Text
+                         variable iColor,          // Color
+                         variable iFontName,       // FontName
+                         variable iTextSize        // TextSize
+                       ) variable                  // Return: ReturnValue
+          {
+           variable ReturnValue;
+
+            if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), "(",
+                                                                                    "iObjectName=\"",iObjectName,"\"",
+                                                                                    ",iPositionX=",iPositionX,
+                                                                                    ",iPositionY=",iPositionY,
+                                                                                    ",iText=\"",iText,"\"",
+                                                                                    ",iColor=\"",iColor,"\"",
+                                                                                    ",iFontName=\"",iFontName,"\"",
+                                                                                    ",iTextSize=",iTextSize,
+                                                                                    ")");
+
+            if (_EASYCODEII_COM_Application_Connection_UsedFlag==hslFalse)
+            {
+              if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_NORMAL) Trace(GetFunctionName()," The Application is not running!");
+              return(ERROR::GENERAL::_APPLICATION);
+            }
+
+            ReturnValue = _EASYCODEII_COM_Application_Connection.GUI_LiveView_Draw_Text(iObjectName,
+                                                                                        iPositionX,
+                                                                                        iPositionY,
+                                                                                        iText,
+                                                                                        iColor,
+                                                                                        iFontName,
+                                                                                        iTextSize);
+
+            if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), " ReturnValue=",ReturnValue);
+
+            return(ReturnValue);
+          }
+          // ----------------------------------------------------------------------------------------
+
+        } // namespace DRAW
+
+      } // namespace LIVEVIEW
+
+    } // namespace GUI
+
+    namespace CAMERA
+    {
+
+      // Open() -----------------------------------------------------------------------------------
+      // Oeffnen der Camera
+      function Open(
+                     variable iSettingNameCamera      // Name der Settings
+                   ) variable                         // Return: ReturnValue
+      {
+       variable ReturnValue;
+
+        if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), "(",
+                                                                                "iSettingNameCamera=\"",iSettingNameCamera,"\"",
+                                                                                ")");
+
+        if (_EASYCODEII_COM_Application_Connection_UsedFlag==hslFalse)
+        {
+          if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_NORMAL) Trace(GetFunctionName()," The Application is not running!");
+          return(ERROR::GENERAL::_APPLICATION);
+        }
+
+        ReturnValue = _EASYCODEII_COM_Application_Connection.Camera_Open(iSettingNameCamera);
+
+        if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), " ReturnValue=",ReturnValue);
+
+        return(ReturnValue);
+      }
+      // ------------------------------------------------------------------------------------------
+
+      // Close() ----------------------------------------------------------------------------------
+      // Schliessen der Camera
+      function Close(
+                    ) variable                         // Return: ReturnValue
+      {
+       variable ReturnValue;
+
+        if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), "()");
+
+        if (_EASYCODEII_COM_Application_Connection_UsedFlag==hslFalse)
+        {
+          if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_NORMAL) Trace(GetFunctionName()," The Application is not running!");
+          return(ERROR::GENERAL::_APPLICATION);
+        }
+
+        ReturnValue = _EASYCODEII_COM_Application_Connection.Camera_Close();
+
+        if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), " ReturnValue=",ReturnValue);
+
+        return(ReturnValue);
+      }
+      // ------------------------------------------------------------------------------------------
+
+      // IsOpen() ---------------------------------------------------------------------------------
+      // Camera Open Check
+      function IsOpen(
+                       variable & oCameraIsOpen         // Camera open flag
+                     ) variable                         // Return: ReturnValue
+      {
+       variable ReturnValue;
+
+        if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), "(...)");
+
+        oCameraIsOpen = hslFalse;
+
+        if (_EASYCODEII_COM_Application_Connection_UsedFlag==hslFalse)
+        {
+          if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_NORMAL) Trace(GetFunctionName()," The Application is not running!");
+          return(ERROR::GENERAL::_APPLICATION);
+        }
+
+        ReturnValue = _EASYCODEII_COM_Application_Connection.Camera_IsOpen(oCameraIsOpen);
+
+        if (oCameraIsOpen) oCameraIsOpen = hslTrue;
+        else               oCameraIsOpen = hslFalse;
+
+        if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), " ReturnValue=",ReturnValue,
+                                                                                ",oCameraIsOpen=",oCameraIsOpen);
+
+        return(ReturnValue);
+      }
+      // ------------------------------------------------------------------------------------------
+
+      // TakePicture() ----------------------------------------------------------------------------
+      // Erstellen eines Bildes
+      function TakePicture(
+                          ) variable                       // Return: ReturnValue
+      {
+       variable ReturnValue;
+
+        if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), "()");
+
+        if (_EASYCODEII_COM_Application_Connection_UsedFlag==hslFalse)
+        {
+          if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_NORMAL) Trace(GetFunctionName()," The Application is not running!");
+          return(ERROR::GENERAL::_APPLICATION);
+        }
+
+        ReturnValue = _EASYCODEII_COM_Application_Connection.Camera_TakePicture();
+
+        if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName()," ReturnValue=",ReturnValue);
+
+        return(ReturnValue);
+      }
+      // ------------------------------------------------------------------------------------------
+
+      // SavePicture() ----------------------------------------------------------------------------
+      // Erstelltes Bildes speichern
+      function SavePicture(
+                            variable iPictureFilename,     // Name des Bildes
+                            variable iPictureFormat,       // Picture Format
+                            variable iPictureSizePercent
+                          ) variable                      // Return: ReturnValue
+      {
+       variable ReturnValue;
+
+        if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), "(",
+                                                                                "iPictureFilename=\"",iPictureFilename,"\"",
+                                                                                ",iPictureFormat=\"",iPictureFormat,"\"",
+                                                                                ",iPictureSizePercent=",iPictureSizePercent,
+                                                                                ")");
+
+        if (_EASYCODEII_COM_Application_Connection_UsedFlag==hslFalse)
+        {
+          if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_NORMAL) Trace(GetFunctionName()," The Application is not running!");
+          return(ERROR::GENERAL::_APPLICATION);
+        }
+
+        ReturnValue = _EASYCODEII_COM_Application_Connection.Camera_SavePicture(iPictureFilename,
+                                                                                iPictureFormat,
+                                                                                iPictureSizePercent);
+
+        if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), " ReturnValue=",ReturnValue);
+
+        return(ReturnValue);
+      }
+      // ------------------------------------------------------------------------------------------
+
+      // LoadPicture() ----------------------------------------------------------------------------
+      // Erstelltes Bildes speichern
+      function LoadPicture(
+                            variable iPictureFilename     // Name des Bildes
+                          ) variable                      // Return: ReturnValue
+      {
+       variable ReturnValue;
+
+        if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), "(",
+                                                                                "iPictureFilename=\"",iPictureFilename,"\"",
+                                                                                ")");
+
+        if (_EASYCODEII_COM_Application_Connection_UsedFlag==hslFalse)
+        {
+          if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_NORMAL) Trace(GetFunctionName()," The Application is not running!");
+          return(ERROR::GENERAL::_APPLICATION);
+        }
+
+        ReturnValue = _EASYCODEII_COM_Application_Connection.Camera_LoadPicture(iPictureFilename);
+
+        if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), " ReturnValue=",ReturnValue);
+
+        return(ReturnValue);
+      }
+      // ------------------------------------------------------------------------------------------
+
+      // SetOutputFlash() ----------------------------------------------------------------------------
+      // Camera Output Flash On/Off
+      function SetOutputPortFlash(
+                                   variable iOn     // 
+                                 ) variable         // Return: ReturnValue
+      {
+       variable ReturnValue;
+
+        if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), "(",
+                                                                                "iOn=",iOn,
+                                                                                ")");
+
+        if (_EASYCODEII_COM_Application_Connection_UsedFlag==hslFalse)
+        {
+          if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_NORMAL) Trace(GetFunctionName()," The Application is not running!");
+          return(ERROR::GENERAL::_APPLICATION);
+        }
+
+        ReturnValue = _EASYCODEII_COM_Application_Connection.Camera_SetOutputPortFlash(iOn);
+
+        if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), " ReturnValue=",ReturnValue);
+
+        return(ReturnValue);
+      }
+      // ------------------------------------------------------------------------------------------
+
+    } // namespace CAMERA
+
+    namespace SETTINGS
+    {
+
+      // SelectCameraSettings() -------------------------------------------------------------------
+      // Aussuchen der Camera Settings
+      function SelectCameraSettings(
+                                      variable iDefaultSettingNameCamera, // Name der Vorgabe-Settings
+                                      variable & oSettingNameCamera       // Name der Settings
+                                    ) variable                            // Return: ReturnValue
+      {
+       variable ReturnValue;
+
+        if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), "(",
+                                                                                "iDefaultSettingNameCamera=\"",iDefaultSettingNameCamera,"\"",
+                                                                                ",...)");
+
+        oSettingNameCamera = "";
+
+        if (_EASYCODEII_COM_Application_Connection_UsedFlag==hslFalse)
+        {
+          if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_NORMAL) Trace(GetFunctionName()," The Application is not running!");
+          return(ERROR::GENERAL::_APPLICATION);
+        }
+
+        ReturnValue = _EASYCODEII_COM_Application_Connection.Settings_SelectCameraSettings(iDefaultSettingNameCamera,
+                                                                                           oSettingNameCamera);
+
+        if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), " ReturnValue=",ReturnValue,
+                                                                                ",oSettingNameCamera=\"",oSettingNameCamera,"\"");
+
+        return(ReturnValue);
+      }
+      // ------------------------------------------------------------------------------------------
+
+      // SelectBarcodeSettings() ------------------------------------------------------------------
+      // Aussuchen der Barcode Settings
+      function SelectBarcodeSettings(
+                                      variable iDefaultSettingNameBarcode,  // Name der Vorgabe-Settings
+                                      variable & oSettingNameBarcode        // Name der Settings
+                                    ) variable                              // Return: ReturnValue
+      {
+       variable ReturnValue;
+
+        if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), "(",
+                                                                                "iDefaultSettingNameBarcode=\"",iDefaultSettingNameBarcode,"\"",
+                                                                                ",...)");
+
+        oSettingNameBarcode = "";
+
+        if (_EASYCODEII_COM_Application_Connection_UsedFlag==hslFalse)
+        {
+          if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_NORMAL) Trace(GetFunctionName()," The Application is not running!");
+          return(ERROR::GENERAL::_APPLICATION);
+        }
+
+        ReturnValue = _EASYCODEII_COM_Application_Connection.Settings_SelectBarcodeSettings(iDefaultSettingNameBarcode,
+                                                                                            oSettingNameBarcode);
+
+        if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), " ReturnValue=",ReturnValue,
+                                                                                ",oSettingNameBarcode=\"",oSettingNameBarcode,"\"");
+
+        return(ReturnValue);
+      }
+      // ------------------------------------------------------------------------------------------
+
+    } // namespace SETTINGS
+
+    namespace ANALYSE
+    {
+
+      namespace BARCODE
+      {
+
+        // Start() ----------------------------------------------------------------------------------
+        // Startet die Analyse des Barocdes
+        function Start(
+                        variable iSettingNameBarcode     // Name der Settings
+                      ) variable                         // Return: ReturnValue
+        {
+         variable ReturnValue;
+
+          if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), "(",
+                                                                                  "iSettingNameBarcode=\"",iSettingNameBarcode,"\"",
+                                                                                  ")");
+
+          if (_EASYCODEII_COM_Application_Connection_UsedFlag==hslFalse)
+          {
+            if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_NORMAL) Trace(GetFunctionName()," The Application is not running!");
+            return(ERROR::GENERAL::_APPLICATION);
+          }
+
+          ReturnValue = _EASYCODEII_COM_Application_Connection.AnalyseBarcode_Start(iSettingNameBarcode);
+
+          if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), " ReturnValue=",ReturnValue);
+
+          return(ReturnValue);
+        }
+        // ------------------------------------------------------------------------------------------
+
+        // Start_ParameterList() ----------------------------------------------------------------
+        // Startet die Analyse des Barcode mit speziellen Parametern
+        function Start_ParameterList(
+                                      variable iSettingNameBarcode,    // Name der Settings
+                                      variable iArrayParameterList[]   // 
+                                    ) variable                         // Return: ReturnValue
+        {
+         variable ReturnValue;
+
+          if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), "(",
+                                                                                  "iSettingNameBarcode=\"",iSettingNameBarcode,"\"",
+                                                                                  ",...",
+                                                                                  ")");
+
+          if (_EASYCODEII_COM_Application_Connection_UsedFlag==hslFalse)
+          {
+            if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_NORMAL) Trace(GetFunctionName()," The Application is not running!");
+            return(ERROR::GENERAL::_APPLICATION);
+          }
+
+          ReturnValue = _EASYCODEII_COM_Application_Connection.AnalyseBarcode_Start_ParameterList(iSettingNameBarcode,
+                                                                                                  iArrayParameterList);
+
+          if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), " ReturnValue=",ReturnValue);
+
+          return(ReturnValue);
+        }
+        // ------------------------------------------------------------------------------------------
+
+        // Stop() -----------------------------------------------------------------------------------
+        // Stoppt die Analyse des Barocdes
+        function Stop(
+                     ) variable                         // Return: ReturnValue
+        {
+         variable ReturnValue;
+
+          if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), "()");
+
+          if (_EASYCODEII_COM_Application_Connection_UsedFlag==hslFalse)
+          {
+            if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_NORMAL) Trace(GetFunctionName()," The Application is not running!");
+            return(ERROR::GENERAL::_APPLICATION);
+          }
+
+          ReturnValue = _EASYCODEII_COM_Application_Connection.AnalyseBarcode_Stop();
+
+          if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), " ReturnValue=",ReturnValue);
+
+          return(ReturnValue);
+        }
+        // ------------------------------------------------------------------------------------------
+
+        // Reset() ----------------------------------------------------------------------------------
+        // Resettet die Analyse des Barocdes
+        function Reset(
+                      ) variable                         // Return: ReturnValue
+        {
+         variable ReturnValue;
+
+          if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), "()");
+
+          if (_EASYCODEII_COM_Application_Connection_UsedFlag==hslFalse)
+          {
+            if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_NORMAL) Trace(GetFunctionName()," The Application is not running!");
+            return(ERROR::GENERAL::_APPLICATION);
+          }
+
+          ReturnValue = _EASYCODEII_COM_Application_Connection.AnalyseBarcode_Reset();
+
+          if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), " ReturnValue=",ReturnValue);
+
+          return(ReturnValue);
+        }
+        // ------------------------------------------------------------------------------------------
+
+        // CheckRunning() ---------------------------------------------------------------------------
+        // Check Finish Analyse des Barcodes
+        function CheckRunning(
+                               variable & oRunning              // Running-Flag
+                             ) variable                         // Return: ReturnValue
+        {
+         variable ReturnValue;
+
+          if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), "(...)");
+
+          oRunning = hslFalse;
+
+          if (_EASYCODEII_COM_Application_Connection_UsedFlag==hslFalse)
+          {
+            if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_NORMAL) Trace(GetFunctionName()," The Application is not running!");
+            return(ERROR::GENERAL::_APPLICATION);
+          }
+
+          ReturnValue = _EASYCODEII_COM_Application_Connection.AnalyseBarcode_CheckRunning(oRunning);
+
+          if (oRunning) oRunning = hslTrue;
+          else          oRunning = hslFalse;
+
+          if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), " ReturnValue=",ReturnValue,
+                                                                                  ",oRunning=",oRunning);
+
+          return(ReturnValue);
+        }
+        // ------------------------------------------------------------------------------------------
+
+        // SaveResult() -----------------------------------------------------------------------------
+        // Save Result of analysed bar code
+        function SaveResult(
+                             variable iAsynchronPictureSave,
+                             variable iDescription,
+                             variable & oEasyCodeIIRackID     // easyCodeIIRackID
+                           ) variable                         // Return: ReturnValue
+        {
+         variable ReturnValue;
+
+          if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), "(",
+                                                                                  "iAsynchronPictureSave=",iAsynchronPictureSave,
+                                                                                  ",iDescription=\"",iDescription,"\"",
+                                                                                  ",...)");
+
+          oEasyCodeIIRackID = _DATABASE_RETURN_VALUE_NO_ID_FOUND;
+
+          if (_EASYCODEII_COM_Application_Connection_UsedFlag==hslFalse)
+          {
+            if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_NORMAL) Trace(GetFunctionName()," The Application is not running!");
+            return(ERROR::GENERAL::_APPLICATION);
+          }
+
+          ReturnValue = _EASYCODEII_COM_Application_Connection.AnalyseBarcode_SaveResult(iAsynchronPictureSave,
+                                                                                         iDescription,
+                                                                                         oEasyCodeIIRackID);
+
+          if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), " ReturnValue=",ReturnValue,
+                                                                                  ",oEasyCodeIIRackID=",oEasyCodeIIRackID);
+
+          return(ReturnValue);
+        }
+        // ------------------------------------------------------------------------------------------
+
+        // SaveResult_CheckAsynchronSaving() --------------------------------------------------------
+        // Check Finish Saving Results by Asynchron mode
+        function SaveResult_CheckAsynchronSaveFinish(
+                                                      variable & oFinish               // Finish-Flag
+                                                    ) variable                         // Return: ReturnValue
+        {
+         variable ReturnValue;
+
+          if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), "(...)");
+
+          oFinish = hslFalse;
+
+          if (_EASYCODEII_COM_Application_Connection_UsedFlag==hslFalse)
+          {
+            if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_NORMAL) Trace(GetFunctionName()," The Application is not running!");
+            return(ERROR::GENERAL::_APPLICATION);
+          }
+
+          ReturnValue = _EASYCODEII_COM_Application_Connection.AnalyseBarcode_SaveResult_CheckAsynchronSaveFinish(oFinish);
+
+          if (oFinish) oFinish = hslTrue;
+          else         oFinish = hslFalse;
+
+          if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), " ReturnValue=",ReturnValue,
+                                                                                  ",oFinish=",oFinish);
+
+          return(ReturnValue);
+        }
+        // ------------------------------------------------------------------------------------------
+
+        // ExportRackPicture() ----------------------------------------------------------------------
+        // Export rack picture
+        function ExportRackPicture(
+                                    variable iEasyCodeIIRackID,      // easyCodeIIRackID
+                                    variable iAsynchronPictureSave,
+                                    variable iPictureFilenamePath,
+                                    variable iPictureFormat,
+                                    variable iDrawAnalysedInformation,
+                                    variable iPictureCropped,
+                                    variable iPictureSizePercent
+                                  ) variable                         // Return: ReturnValue
+        {
+         variable ReturnValue;
+
+          if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), "(",
+                                                                                  "iEasyCodeIIRackID=",iEasyCodeIIRackID,
+                                                                                  ",iAsynchronPictureSave=",iAsynchronPictureSave,
+                                                                                  ",iPictureFilenamePath=\"",iPictureFilenamePath,"\"",
+                                                                                  ",iPictureFormat=\"",iPictureFormat,"\"",
+                                                                                  ",iDrawAnalysedInformation=",iDrawAnalysedInformation,
+                                                                                  ",iPictureCropped=",iPictureCropped,
+                                                                                  ",iPictureSizePercent=",iPictureSizePercent,
+                                                                                  ")");
+
+          if (_EASYCODEII_COM_Application_Connection_UsedFlag==hslFalse)
+          {
+            if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_NORMAL) Trace(GetFunctionName()," The Application is not running!");
+            return(ERROR::GENERAL::_APPLICATION);
+          }
+
+          ReturnValue = _EASYCODEII_COM_Application_Connection.AnalyseBarcode_ExportRackPicture(iEasyCodeIIRackID,
+                                                                                                iAsynchronPictureSave,
+                                                                                                iPictureFilenamePath,
+                                                                                                iPictureFormat,
+                                                                                                iDrawAnalysedInformation,
+                                                                                                iPictureCropped,
+                                                                                                iPictureSizePercent);
+
+          if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), " ReturnValue=",ReturnValue);
+
+          return(ReturnValue);
+        }
+        // ------------------------------------------------------------------------------------------
+
+        // ExportToZipArchive() ---------------------------------------------------------------------
+        // Export to a ZIP archive
+        function ExportToZipArchive(
+                                    variable iArrayEasyCodeIIRackID[],      // easyCodeIIRackID
+                                    variable iArchiveFilenamePath,
+                                    variable iArchiveAppendMode
+                                  ) variable                                // Return: ReturnValue
+        {
+         variable ReturnValue;
+
+          if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), "(",
+                                                                                  "iArrayEasyCodeIIRackID=...",
+                                                                                  ",iArchiveFilenamePath=\"",iArchiveFilenamePath,"\"",
+                                                                                  ",iArchiveAppendMode=",iArchiveAppendMode,
+                                                                                  ")");
+
+          if (_EASYCODEII_COM_Application_Connection_UsedFlag==hslFalse)
+          {
+            if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_NORMAL) Trace(GetFunctionName()," The Application is not running!");
+            return(ERROR::GENERAL::_APPLICATION);
+          }
+
+          ReturnValue = _EASYCODEII_COM_Application_Connection.AnalyseBarcode_ExportToZipArchive(iArrayEasyCodeIIRackID,
+                                                                                                 iArchiveFilenamePath,
+                                                                                                 iArchiveAppendMode);
+
+          if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), " ReturnValue=",ReturnValue);
+
+          return(ReturnValue);
+        }
+        // ------------------------------------------------------------------------------------------
+
+      } // namespace BARCODE
+
+    } // namespace ANALYSE
+
+    namespace DATABASE
+    {
+
+      // GetEasyCodeIIRack() ----------------------------------------------------------------------
+      // Ermitteln der Rack Informationen
+      function GetEasyCodeIIRack(
+                                  variable iEasyCodeIIRackID,             // easyCodeIIRackID
+                                  variable & oPictureFilename,
+                                  variable & oErrorCode,
+                                  variable & oDescription
+                                ) variable                                     // Return: ReturnValue
+      {
+       variable ReturnValue;
+
+        if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), "(",
+                                                                                "iEasyCodeIIRackID=",iEasyCodeIIRackID,
+                                                                                ",...)");
+
+        oPictureFilename  = "";
+        oErrorCode        = ERROR::_NONE;
+        oDescription      = "";
+
+        if (_EASYCODEII_COM_Application_Connection_UsedFlag==hslFalse)
+        {
+          if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_NORMAL) Trace(GetFunctionName()," The Application is not running!");
+          return(ERROR::GENERAL::_APPLICATION);
+        }
+
+        ReturnValue = _EASYCODEII_COM_Application_Connection.Database_GetEasyCodeIIRack(iEasyCodeIIRackID,
+                                                                                        oPictureFilename,
+                                                                                        oErrorCode,
+                                                                                        oDescription);
+
+        if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), " ReturnValue=",ReturnValue,
+                                                                                ",oPictureFilename=\"",oPictureFilename,"\"",
+                                                                                ",oErrorCode=",oErrorCode,
+                                                                                ",oDescription=\"",oDescription,"\"");
+
+        return(ReturnValue);
+      }
+      // ------------------------------------------------------------------------------------------
+
+      // SetEasyCodeIIRack_Field_Description() ----------------------------------------------------
+      // Setzen der Rack Description
+      function SetEasyCodeIIRack_Field_Description(
+                                                    variable iEasyCodeIIRackID,             // easyCodeIIRackID
+                                                    variable iDescription
+                                                  ) variable                                // Return: ReturnValue
+      {
+       variable ReturnValue;
+
+        if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), "(",
+                                                                                "iEasyCodeIIRackID=",iEasyCodeIIRackID,
+                                                                                ",iDescription=\"",iDescription,"\"",
+                                                                                ",...)");
+
+        if (_EASYCODEII_COM_Application_Connection_UsedFlag==hslFalse)
+        {
+          if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_NORMAL) Trace(GetFunctionName()," The Application is not running!");
+          return(ERROR::GENERAL::_APPLICATION);
+        }
+
+        ReturnValue = _EASYCODEII_COM_Application_Connection.Database_SetEasyCodeIIRack_Field_Description(iEasyCodeIIRackID,
+                                                                                                          iDescription);
+
+        if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), " ReturnValue=",ReturnValue);
+
+        return(ReturnValue);
+      }
+      // ------------------------------------------------------------------------------------------
+
+      // GetEasyCodeIIGroup() ---------------------------------------------------------------------
+      // Ermitteln der Group Informationen
+      function GetEasyCodeIIGroup(
+                                   variable iEasyCodeIIGroupID,             // easyCodeIIGroupID
+                                   variable & oNumber,
+                                   variable & oName,
+                                   variable & oErrorCode,
+                                   variable & oDescription
+                                 ) variable                                     // Return: ReturnValue
+      {
+       variable ReturnValue;
+
+        if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), "(",
+                                                                                "iEasyCodeIIGroupID=",iEasyCodeIIGroupID,
+                                                                                ",...)");
+
+        oNumber           = 0;
+        oName             = "";
+        oErrorCode        = ERROR::_NONE;
+        oDescription      = "";
+
+        if (_EASYCODEII_COM_Application_Connection_UsedFlag==hslFalse)
+        {
+          if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_NORMAL) Trace(GetFunctionName()," The Application is not running!");
+          return(ERROR::GENERAL::_APPLICATION);
+        }
+
+        ReturnValue = _EASYCODEII_COM_Application_Connection.Database_GetEasyCodeIIGroup(iEasyCodeIIGroupID,
+                                                                                         oNumber,
+                                                                                         oName,
+                                                                                         oErrorCode,
+                                                                                         oDescription);
+
+        if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), " ReturnValue=",ReturnValue,
+                                                                                ",oNumber=",oNumber,
+                                                                                ",oName=\"",oName,"\"",
+                                                                                ",oErrorCode=",oErrorCode,
+                                                                                ",oDescription=\"",oDescription,"\"");
+
+        return(ReturnValue);
+      }
+      // ------------------------------------------------------------------------------------------
+
+      // SetEasyCodeIIGroup_Field_Description() ---------------------------------------------------
+      // Setzen der Group Description
+      function SetEasyCodeIIGroup_Field_Description(
+                                                     variable iEasyCodeIIGroupID,             // easyCodeIIGroupID
+                                                     variable iDescription
+                                                   ) variable                                 // Return: ReturnValue
+      {
+       variable ReturnValue;
+
+        if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), "(",
+                                                                                "iEasyCodeIIGroupID=",iEasyCodeIIGroupID,
+                                                                                ",iDescription=\"",iDescription,"\"",
+                                                                                ",...)");
+
+        if (_EASYCODEII_COM_Application_Connection_UsedFlag==hslFalse)
+        {
+          if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_NORMAL) Trace(GetFunctionName()," The Application is not running!");
+          return(ERROR::GENERAL::_APPLICATION);
+        }
+
+        ReturnValue = _EASYCODEII_COM_Application_Connection.Database_SetEasyCodeIIGroup_Field_Description(iEasyCodeIIGroupID,
+                                                                                                           iDescription);
+
+        if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), " ReturnValue=",ReturnValue);
+
+        return(ReturnValue);
+      }
+      // ------------------------------------------------------------------------------------------
+
+      // GetEasyCodeIIGroupID_By_EasyCodeIIRackID() -----------------------------------------------
+      // Ermitteln der GroupIDs anhand der RackID
+      function GetEasyCodeIIGroupID_By_EasyCodeIIRackID(
+                                                         variable iEasyCodeIIRackID,            // easyCodeIIRackID
+                                                         variable & oArrayEasyCodeIIGroupID[]   // Array of easyCodeIIGroupID
+                                                       ) variable                               // Return: ReturnValue
+      {
+       variable ReturnValue;
+       variable tmpNr;
+
+        if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), "(",
+                                                                                "iEasyCodeIIRackID=",iEasyCodeIIRackID,
+                                                                                ",...)");
+
+        oArrayEasyCodeIIGroupID.SetSize(0);
+
+        if (_EASYCODEII_COM_Application_Connection_UsedFlag==hslFalse)
+        {
+          if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_NORMAL) Trace(GetFunctionName()," The Application is not running!");
+          return(ERROR::GENERAL::_APPLICATION);
+        }
+
+        ReturnValue = _EASYCODEII_COM_Application_Connection.Database_GetEasyCodeIIGroupID_By_EasyCodeIIRackID(iEasyCodeIIRackID,
+                                                                                                               oArrayEasyCodeIIGroupID);
+
+        if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL)
+        {
+         variable traceOutputEasyCodeIIGroupID("");
+          for (tmpNr=0;tmpNr<oArrayEasyCodeIIGroupID.GetSize();tmpNr++)
+          {
+            if (tmpNr>0)
+              traceOutputEasyCodeIIGroupID = traceOutputEasyCodeIIGroupID + ",";
+            traceOutputEasyCodeIIGroupID = traceOutputEasyCodeIIGroupID + IStr(oArrayEasyCodeIIGroupID[tmpNr]);
+          }
+          Trace(GetFunctionName()," ReturnValue=",ReturnValue,
+                                  ",oEasyCodeIIGroupIDs=",traceOutputEasyCodeIIGroupID);
+        }
+
+        return(ReturnValue);
+      }
+      // ------------------------------------------------------------------------------------------
+
+      // GetEasyCodeIIGroupID_By_Name() -----------------------------------------------------------
+      // Lesen der GroupID anhand des Gruppen-Namen
+      function GetEasyCodeIIGroupID_By_Name(
+                                             variable iEasyCodeIIRackID,              // easyCodeIIRackID
+                                             variable iName,
+                                             variable & oEasyCodeIIGroupID
+                                           ) variable                                 // Return: ReturnValue
+      {
+       variable ReturnValue;
+
+        if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), "(",
+                                                                                "iEasyCodeIIRackID=",iEasyCodeIIRackID,
+                                                                                ",iName=\"",iName,"\"",
+                                                                                ",...)");
+
+        oEasyCodeIIGroupID = _DATABASE_RETURN_VALUE_NO_ID_FOUND;
+
+        if (_EASYCODEII_COM_Application_Connection_UsedFlag==hslFalse)
+        {
+          if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_NORMAL) Trace(GetFunctionName()," The Application is not running!");
+          return(ERROR::GENERAL::_APPLICATION);
+        }
+
+        ReturnValue = _EASYCODEII_COM_Application_Connection.Database_GetEasyCodeIIGroupID_By_Name(iEasyCodeIIRackID,
+                                                                                                   iName,
+                                                                                                   oEasyCodeIIGroupID);
+
+        if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), " ReturnValue=",ReturnValue,
+                                                                                ",oEasyCodeIIGroupID=",oEasyCodeIIGroupID);
+
+        return(ReturnValue);
+      }
+      // ------------------------------------------------------------------------------------------
+
+      // GetEasyCodeIIGroup_LabwareInformation() --------------------------------------------------
+      // Lesen der Gruppen-Labware-Informationen
+      function GetEasyCodeIIGroup_LabwareInformation(
+                                                      variable iEasyCodeIIGroupID,  // easyCodeIIGroupID
+                                                      variable & oSectionsX,
+                                                      variable & oSectionsY
+                                                    ) variable                      // Return: ReturnValue
+      {
+       variable ReturnValue;
+
+        if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), "(",
+                                                                                "iEasyCodeIIGroupID=",iEasyCodeIIGroupID,
+                                                                                ",...)");
+
+        oSectionsX = 0;
+        oSectionsY = 0;
+
+        if (_EASYCODEII_COM_Application_Connection_UsedFlag==hslFalse)
+        {
+          if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_NORMAL) Trace(GetFunctionName()," The Application is not running!");
+          return(ERROR::GENERAL::_APPLICATION);
+        }
+
+        ReturnValue = _EASYCODEII_COM_Application_Connection.Database_GetEasyCodeIIGroup_LabwareInformation(iEasyCodeIIGroupID,
+                                                                                                            oSectionsX,
+                                                                                                            oSectionsY);
+
+        if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), " ReturnValue=",ReturnValue,
+                                                                                ",oSectionsX=",oSectionsX,
+                                                                                ",oSectionsY=",oSectionsY);
+
+        return(ReturnValue);
+      }
+      // ------------------------------------------------------------------------------------------
+
+      // GetEasyCodeIIContainer() -----------------------------------------------------------------
+      // Ermitteln der Container Informationen
+      function GetEasyCodeIIContainer(
+                                       variable iEasyCodeIIContainerID,             // easyCodeIIContainerID
+                                       variable & oBarcode,
+                                       variable & oBarcodeType,
+                                       variable & oPositionNumber,
+                                       variable & oPositionText,
+                                       variable & oQuality,
+                                       variable & oQualityDetails,
+                                       variable & oErrorCode,
+                                       variable & oDescription
+                                     ) variable                                     // Return: ReturnValue
+      {
+       variable ReturnValue;
+
+        if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), "(",
+                                                                                "iEasyCodeIIContainerID=",iEasyCodeIIContainerID,
+                                                                                ",...)");
+
+        oBarcode        = "";
+        oBarcodeType    = "";
+        oPositionNumber = 0;
+        oPositionText   = "";
+        oQuality        = 0.0;
+        oQualityDetails = "";
+        oErrorCode      = ERROR::_NONE;
+        oDescription    = "";
+
+        if (_EASYCODEII_COM_Application_Connection_UsedFlag==hslFalse)
+        {
+          if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_NORMAL) Trace(GetFunctionName()," The Application is not running!");
+          return(ERROR::GENERAL::_APPLICATION);
+        }
+
+        ReturnValue = _EASYCODEII_COM_Application_Connection.Database_GetEasyCodeIIContainer(iEasyCodeIIContainerID,
+                                                                                             oBarcode,
+                                                                                             oBarcodeType,
+                                                                                             oPositionNumber,
+                                                                                             oPositionText,
+                                                                                             oQuality,
+                                                                                             oQualityDetails,
+                                                                                             oErrorCode,
+                                                                                             oDescription);
+
+        if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), " ReturnValue=",ReturnValue,
+                                                                                ",oBarcode=\"",oBarcode,"\"",
+                                                                                ",oBarcodeType=\"",oBarcodeType,"\"",
+                                                                                ",oPositionNumber=",oPositionNumber,
+                                                                                ",oPositionText=\"",oPositionText,"\"",
+                                                                                ",oQuality=",oQuality,
+                                                                                ",oQualityDetails=\"",oQualityDetails,"\"",
+                                                                                ",oErrorCode=",oErrorCode,
+                                                                                ",oDescription=\"",oDescription,"\"");
+
+        return(ReturnValue);
+      }
+      // ------------------------------------------------------------------------------------------
+
+      // SetEasyCodeIIContainer_Field_Description() -----------------------------------------------
+      // Setzten der Cotainer Description
+      function SetEasyCodeIIContainer_Field_Description(
+                                                         variable iEasyCodeIIContainerID,        // easyCodeIIContainerID
+                                                         variable iDescription
+                                                       ) variable                                // Return: ReturnValue
+      {
+       variable ReturnValue;
+
+        if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), "(",
+                                                                                "iEasyCodeIIContainerID=",iEasyCodeIIContainerID,
+                                                                                ",iDescription=\"",iDescription,"\"",
+                                                                                ",...)");
+
+        if (_EASYCODEII_COM_Application_Connection_UsedFlag==hslFalse)
+        {
+          if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_NORMAL) Trace(GetFunctionName()," The Application is not running!");
+          return(ERROR::GENERAL::_APPLICATION);
+        }
+
+        ReturnValue = _EASYCODEII_COM_Application_Connection.Database_SetEasyCodeIIContainer_Field_Description(iEasyCodeIIContainerID,
+                                                                                                               iDescription);
+
+        if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), " ReturnValue=",ReturnValue);
+
+        return(ReturnValue);
+      }
+      // ------------------------------------------------------------------------------------------
+
+      // GetEasyCodeIIContainerID_By_EasyCodeIIGroupID() -----------------------------------------------
+      // Ermitteln der ContainerIDs anhand der GroupID
+      function GetEasyCodeIIContainerID_By_EasyCodeIIGroupID(
+                                                              variable iEasyCodeIIGroupID,              // easyCodeIIGroupID
+                                                              variable & oArrayEasyCodeIIContainerID[]  // Array of easyCodeIIContainerID
+                                                            ) variable                                  // Return: ReturnValue
+      {
+       variable ReturnValue;
+       variable tmpNr;
+
+        if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), "(",
+                                                                                "iEasyCodeIIGroupID=",iEasyCodeIIGroupID,
+                                                                                ",...)");
+
+        oArrayEasyCodeIIContainerID.SetSize(0);
+
+        if (_EASYCODEII_COM_Application_Connection_UsedFlag==hslFalse)
+        {
+          if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_NORMAL) Trace(GetFunctionName()," The Application is not running!");
+          return(ERROR::GENERAL::_APPLICATION);
+        }
+
+        ReturnValue = _EASYCODEII_COM_Application_Connection.Database_GetEasyCodeIIContainerID_By_EasyCodeIIGroupID(iEasyCodeIIGroupID,
+                                                                                                                    oArrayEasyCodeIIContainerID);
+
+        if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL)
+        {
+         variable traceOutputEasyCodeIIContainerID("");
+          for (tmpNr=0;tmpNr<oArrayEasyCodeIIContainerID.GetSize();tmpNr++)
+          {
+            if (tmpNr>0)
+              traceOutputEasyCodeIIContainerID = traceOutputEasyCodeIIContainerID + ",";
+            traceOutputEasyCodeIIContainerID = traceOutputEasyCodeIIContainerID + IStr(oArrayEasyCodeIIContainerID[tmpNr]);
+          }
+          Trace(GetFunctionName()," ReturnValue=",ReturnValue,
+                                  ",oEasyCodeIIContainerIDs=",traceOutputEasyCodeIIContainerID);
+        }
+
+        return(ReturnValue);
+      }
+      // ------------------------------------------------------------------------------------------
+
+      // GetEasyCodeIIContainerID_By_PositionNumber() ---------------------------------------------
+      // Ermitteln der ContainerID anhand der PositionNumber
+      function GetEasyCodeIIContainerID_By_PositionNumber(
+                                                           variable iEasyCodeIIGroupID,                 // easyCodeIIGroupID
+                                                           variable iPositionNumber,
+                                                           variable & oArrayEasyCodeIIContainerID[]     // Array of easyCodeIIContainerID
+                                                         ) variable                                     // Return: ReturnValue
+      {
+       variable ReturnValue;
+       variable tmpNr;
+
+        if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), "(",
+                                                                                "iEasyCodeIIGroupID=",iEasyCodeIIGroupID,
+                                                                                ",iPositionNumber=",iPositionNumber,
+                                                                                ",...)");
+
+        oArrayEasyCodeIIContainerID.SetSize(0);
+
+        if (_EASYCODEII_COM_Application_Connection_UsedFlag==hslFalse)
+        {
+          if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_NORMAL) Trace(GetFunctionName()," The Application is not running!");
+          return(ERROR::GENERAL::_APPLICATION);
+        }
+
+        ReturnValue = _EASYCODEII_COM_Application_Connection.Database_GetEasyCodeIIContainerID_By_PositionNumber(iEasyCodeIIGroupID,
+                                                                                                                 iPositionNumber,
+                                                                                                                 oArrayEasyCodeIIContainerID);
+
+        if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL)
+        {
+         variable traceOutputEasyCodeIIContainerID("");
+          for (tmpNr=0;tmpNr<oArrayEasyCodeIIContainerID.GetSize();tmpNr++)
+          {
+            if (tmpNr>0)
+              traceOutputEasyCodeIIContainerID = traceOutputEasyCodeIIContainerID + ",";
+            traceOutputEasyCodeIIContainerID = traceOutputEasyCodeIIContainerID + IStr(oArrayEasyCodeIIContainerID[tmpNr]);
+          }
+          Trace(GetFunctionName()," ReturnValue=",ReturnValue,
+                                  ",oEasyCodeIIContainerIDs=",traceOutputEasyCodeIIContainerID);
+        }
+
+        return(ReturnValue);
+      }
+      // ------------------------------------------------------------------------------------------
+
+      // GetEasyCodeIIContainerID_By_PositionText() -----------------------------------------------
+      // Ermitteln der ContainerID anhand der PositionText
+      function GetEasyCodeIIContainerID_By_PositionText(
+                                                         variable iEasyCodeIIGroupID,                 // easyCodeIIGroupID
+                                                         variable iPositionText,
+                                                         variable & oArrayEasyCodeIIContainerID[]     // Array of easyCodeIIContainerID
+                                                       ) variable                                     // Return: ReturnValue
+      {
+       variable ReturnValue;
+       variable tmpNr;
+
+        if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), "(",
+                                                                                "iEasyCodeIIGroupID=",iEasyCodeIIGroupID,
+                                                                                ",iPositionText=\"",iPositionText,"\"",
+                                                                                ",...)");
+
+        oArrayEasyCodeIIContainerID.SetSize(0);
+
+        if (_EASYCODEII_COM_Application_Connection_UsedFlag==hslFalse)
+        {
+          if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_NORMAL) Trace(GetFunctionName()," The Application is not running!");
+          return(ERROR::GENERAL::_APPLICATION);
+        }
+
+        ReturnValue = _EASYCODEII_COM_Application_Connection.Database_GetEasyCodeIIContainerID_By_PositionText(iEasyCodeIIGroupID,
+                                                                                                               iPositionText,
+                                                                                                               oArrayEasyCodeIIContainerID);
+
+        if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL)
+        {
+         variable traceOutputEasyCodeIIContainerID("");
+          for (tmpNr=0;tmpNr<oArrayEasyCodeIIContainerID.GetSize();tmpNr++)
+          {
+            if (tmpNr>0)
+              traceOutputEasyCodeIIContainerID = traceOutputEasyCodeIIContainerID + ",";
+            traceOutputEasyCodeIIContainerID = traceOutputEasyCodeIIContainerID + IStr(oArrayEasyCodeIIContainerID[tmpNr]);
+          }
+          Trace(GetFunctionName()," ReturnValue=",ReturnValue,
+                                  ",oEasyCodeIIContainerIDs=",traceOutputEasyCodeIIContainerID);
+        }
+
+        return(ReturnValue);
+      }
+      // ------------------------------------------------------------------------------------------
+
+    } // namespace DATABASE
+
+    namespace HELPER
+    {
+
+      // StrIStrMitNullen() -----------------------------------------------------------------------
+      static function StrIStrMitNullen(
+                                        variable Zahl,           // Zahl die gewandelt werden soll
+                                        variable TotalLaenge     // Wie lange soll der String total sein
+                                      ) variable                 // Return: Gewandelter String mit vorhergehenden Nullen
+      {
+        variable strNullen;
+
+         strNullen = "000000000000000000" + StrIStr(Zahl);
+         strNullen= StrRight(strNullen,TotalLaenge);
+
+         return(strNullen);
+      }
+      // ------------------------------------------------------------------------------------------
+
+      namespace LABWARE
+      {
+
+        // GetPositionCoordinates_Center_by_Labware() -----------------------------------------------
+        // Ermittelt die Koordinaten (Zentrum) anhand der Labware
+        function GetPositionCoordinates_Center_by_Labware(
+                                                           device   & ML_STAR,       // Device
+                                                           variable iLabware,        // Labware
+                                                           variable & oCoordinateX,  // Ausgabe Coordinate-X
+                                                           variable & oCoordinateY,  // Ausgabe Coordinate-Y
+                                                           variable & oCoordinateZ   // Coordinate-Z
+                                                         ) variable                  // Return: _NONE          = Position ermittelt
+                                                                                     //         _LIBRARY_ERROR = Position konnte nicht ermittelt werden
+        {
+         variable labwareCoords[];
+         variable xCoords1;
+         variable xCoords2;
+         variable yCoords1;
+         variable yCoords2;
+
+          if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), "(",
+                                                                                  "iLabware=\"",iLabware,"\"",
+                                                                                  ",...)");
+
+          oCoordinateX = 0.0;
+          oCoordinateY = 0.0;
+
+          onerror goto labware_error;
+          if (ML_STAR.GetLabwarePositionEx(iLabware,labwareCoords)==0)
+          {
+            if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_NORMAL) Trace(GetFunctionName()," Labware=\"",iLabware,"\" not found!");
+            return(ERROR::GENERAL::_LIBRARY);
+          }
+
+          xCoords2 = labwareCoords.GetAt(8);
+          xCoords1 = labwareCoords.GetAt(6);
+          yCoords2 = labwareCoords.GetAt(13);
+          yCoords1 = labwareCoords.GetAt(7);
+
+          if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), " xCoords1=",xCoords1,
+                                                                                  ",xCoords2=",xCoords2,
+                                                                                  ",yCoords1=",yCoords1,
+                                                                                  ",yCoords2=",yCoords2);
+
+          oCoordinateX = (xCoords2 - xCoords1) / 2 + xCoords1; // x-coord
+          oCoordinateY = (yCoords2 - yCoords1) / 2 + yCoords1; // y-coord
+          oCoordinateZ = labwareCoords.GetAt(2);               // z-coord
+
+          if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), " oCoordinateX=",oCoordinateX,
+                                                                                  ",oCoordinateY=",oCoordinateY,
+                                                                                  ",oCoordinateZ=",oCoordinateZ);
+
+          return(ERROR::_NONE);
+
+          // Befehl konnte nicht ausgefuehrt werden
+          labware_error:
+          {
+            if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_NORMAL) Trace(GetFunctionName()," Labware=\"",iLabware,"\" not found!");
+            return(ERROR::GENERAL::_LIBRARY);
+          }
+        }
+        // ------------------------------------------------------------------------------------------
+
+        // GetPositionCoordinates_by_Labware() ------------------------------------------------------
+        // Ermittelt die Koordinaten anhand der Labware
+        function GetPositionCoordinates_by_Labware(
+                                                    device   & ML_STAR,       // Device
+                                                    variable iLabware,        // Labware
+                                                    variable & oCoordinateX,  // Coordinate-X
+                                                    variable & oCoordinateY,  // Coordinate-Y
+                                                    variable & oCoordinateZ   // Coordinate-Z
+                                                  ) variable                  // Return: _NONE          = Position ermittelt
+                                                                              //         _LIBRARY_ERROR = Position konnte nicht ermittelt werden
+        {
+         variable labwareCoords[];
+
+          if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), "(",
+                                                                                  "iLabware=\"",iLabware,"\"",
+                                                                                  ",...)");
+
+          oCoordinateX = 0.0;
+          oCoordinateY = 0.0;
+          oCoordinateZ = 0.0;
+
+          onerror goto labware_error;
+          if (ML_STAR.GetLabwarePosition(iLabware,labwareCoords)==0)
+          {
+            if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_NORMAL) Trace(GetFunctionName()," Labware=\"",iLabware,"\" not found!");
+            return(ERROR::GENERAL::_LIBRARY);
+          }
+
+          oCoordinateX = labwareCoords.GetAt(0); // x-coord
+          oCoordinateY = labwareCoords.GetAt(1); // y-coord
+          oCoordinateZ = labwareCoords.GetAt(2); // z-coord
+
+          if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), " oCoordinateX=",oCoordinateX,
+                                                                                  ",oCoordinateY=",oCoordinateY,
+                                                                                  ",oCoordinateZ=",oCoordinateZ);
+
+          return(ERROR::_NONE);
+
+          // Befehl konnte nicht ausgefuehrt werden
+          labware_error:
+          {
+            if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_NORMAL) Trace(GetFunctionName()," Labware=\"",iLabware,"\" not found!");
+            return(ERROR::GENERAL::_LIBRARY);
+          }
+        }
+        // ------------------------------------------------------------------------------------------
+
+              // GetPositionCoordinates_by_LabwarePosition() ----------------------------------------
+        // Ermittelt die Koordinaten anhand der Labware
+        function GetPositionCoordinates_by_LabwarePosition(
+                                                            device   & ML_STAR,       // Device
+                                                            variable iLabware,        // Labware
+                                                            variable iPosition,       // Position
+                                                            variable & oCoordinateX,  // Coordinate-X
+                                                            variable & oCoordinateY,  // Coordinate-Y
+                                                            variable & oCoordinateZ   // Coordinate-Z
+                                                          ) variable                  // Return: _NONE          = Position ermittelt
+                                                                                      //         _LIBRARY_ERROR = Position konnte nicht ermittelt werden
+        {
+         variable labwareCoords[];
+
+          if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), "(",
+                                                                                  "iLabware=\"",iLabware,"\"",
+                                                                                  ",iPosition=\"",iPosition,"\"",
+                                                                                  ",...)");
+
+          oCoordinateX = 0.0;
+          oCoordinateY = 0.0;
+          oCoordinateZ = 0.0;
+
+          onerror goto labware_error;
+          if (ML_STAR.GetLabwarePosition(iLabware,labwareCoords,iPosition)==0)
+          {
+            if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_NORMAL) Trace(GetFunctionName()," Labware=\"",iLabware,"\" AND Position=",iPosition," not found!");
+            return(ERROR::GENERAL::_LIBRARY);
+          }
+
+          oCoordinateX = labwareCoords.GetAt(0); // x-coord
+          oCoordinateY = labwareCoords.GetAt(1); // y-coord
+          oCoordinateZ = labwareCoords.GetAt(2); // z-coord
+
+          if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), " oCoordinateX=",oCoordinateX,
+                                                                                  ",oCoordinateY=",oCoordinateY,
+                                                                                  ",oCoordinateZ=",oCoordinateZ);
+
+          return(ERROR::_NONE);
+
+          // Befehl konnte nicht ausgefuehrt werden
+          labware_error:
+          {
+            if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_NORMAL) Trace(GetFunctionName()," Labware=\"",iLabware,"\" AND Position=",iPosition," not found!");
+            return(ERROR::GENERAL::_LIBRARY);
+          }
+        }
+        // ------------------------------------------------------------------------------------------
+
+      } // namespace LABWARE
+
+      namespace MLSTAR
+      {
+
+        // GetNumberOfPipettingChannels() -----------------------------------------------------------
+        function GetNumberOfPipettingChannels(
+                                               device   & ML_STAR      // Device
+                                             ) variable                // Return: Number of channels
+        {
+         variable numberOfChannels;
+
+          if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), "(...)");
+
+          numberOfChannels = ML_STAR.GetCfgValueWithKey(1);
+
+          if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName()," numberOfChannels=",numberOfChannels);
+
+          return(numberOfChannels);
+        }
+        // ------------------------------------------------------------------------------------------
+
+        // ChannelPattern_LeftAdjust() --------------------------------------------------------------
+        // Linksbuendiges Channelpattern
+        function ChannelPattern_LeftAdjust(
+                                            variable iNumberOfChannels,      // Anzahl Kanaele
+                                            variable iTotalNumberOfChannels  // Anzahl Kanaele total
+                                          ) variable                         // Return: Channel pattern
+        {
+          variable strEinzen;
+          variable strNullen;
+          variable ChannelPattern;
+
+           if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(),"(",
+                                                                                  "iNumberOfChannels=",iNumberOfChannels,
+                                                                                  ",iTotalNumberOfChannels=",iTotalNumberOfChannels,
+                                                                                  ")");
+
+           strEinzen = "11111111111111111111111111111111";
+           strNullen = "00000000000000000000000000000000";
+           ChannelPattern= StrLeft( StrLeft(strEinzen,iNumberOfChannels) + strNullen ,iTotalNumberOfChannels);
+
+           if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName()," ChannelPattern=\"",ChannelPattern,"\"");
+
+           return(ChannelPattern);
+        }
+        // ------------------------------------------------------------------------------------------
+
+        // ChannelPattern_RightAdjust() -------------------------------------------------------------
+        // Rechtsbuendiges Channelpattern
+        function ChannelPattern_RightAdjust(
+                                             variable iNumberOfChannels,      // Anzahl Kanaele
+                                             variable iTotalNumberOfChannels  // Anzahl Kanaele total
+                                           ) variable                         // Return: Channel pattern
+        {
+          variable strEinzen;
+          variable strNullen;
+          variable ChannelPattern;
+
+           if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(),"(",
+                                                                                  "iNumberOfChannels=",iNumberOfChannels,
+                                                                                  ",iTotalNumberOfChannels=",iTotalNumberOfChannels,
+                                                                                  ")");
+
+           strEinzen = "11111111111111111111111111111111";
+           strNullen = "00000000000000000000000000000000";
+           ChannelPattern= StrRight( strNullen + StrLeft(strEinzen,iNumberOfChannels) ,iTotalNumberOfChannels);
+
+           if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName()," ChannelPattern=\"",ChannelPattern,"\"");
+
+           return(ChannelPattern);
+        }
+        // ------------------------------------------------------------------------------------------
+
+        // ChannelPattern_SingleAdjust() ------------------------------------------------------------
+        // Channelpattern eines einzigen Kanals
+        function ChannelPattern_SingleAdjust(
+                                              variable iSingleChannel,         // Kanal
+                                              variable iTotalNumberOfChannels  // Anzahl Kanaele total
+                                            ) variable                         // Return: Channel pattern
+        {
+          variable strEinzen;
+          variable strNullen;
+          variable ChannelPattern;
+
+           if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(),"(",
+                                                                                  "iSingleChannel=",iSingleChannel,
+                                                                                  ",iTotalNumberOfChannels=",iTotalNumberOfChannels,
+                                                                                  ")");
+
+           strNullen = "00000000000000000000000000000000";
+           ChannelPattern= StrLeft( StrLeft(strNullen,iSingleChannel-1) + "1" + strNullen ,iTotalNumberOfChannels);
+
+           if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName()," ChannelPattern=\"",ChannelPattern,"\"");
+
+           return(ChannelPattern);
+        }
+        // ------------------------------------------------------------------------------------------
+
+      } // namespace MLSTAR
+
+      namespace TRACE
+      {
+
+        // Trace2Text() -----------------------------------------------------------------------------
+        // Gibt einen Text je nach Tracelevel aus
+        function Trace2Text(
+                             variable iTraceLevel,        // Tracelevel
+                             variable iText1,             // Tracetext 1
+                             variable iText2              // Tracetext 2
+                           ) variable                     // Return: _NONE          = Ausgabe wurde gemacht
+                                                          //         _LIBRARY_ERROR = keine Ausgabe wurde gemacht
+        {
+          if (_EASYCODEII_TraceLevel<iTraceLevel) return(ERROR::_NONE);
+
+          Trace(iText1,iText2);
+
+          return(ERROR::_NONE);
+        }
+        // ------------------------------------------------------------------------------------------
+
+        // Trace4Text() -----------------------------------------------------------------------------
+        // Gibt einen Text je nach Tracelevel aus
+        function Trace4Text(
+                             variable iTraceLevel,        // Tracelevel
+                             variable iText1,             // Tracetext 1
+                             variable iText2,             // Tracetext 2
+                             variable iText3,             // Tracetext 3
+                             variable iText4              // Tracetext 4
+                           ) variable                     // Return: _NONE          = Ausgabe wurde gemacht
+                                                          //         _LIBRARY_ERROR = keine Ausgabe wurde gemacht
+        {
+          if (_EASYCODEII_TraceLevel<iTraceLevel) return(ERROR::_NONE);
+
+          Trace(iText1,iText2,iText3,iText4);
+
+          return(ERROR::_NONE);
+        }
+        // ------------------------------------------------------------------------------------------
+
+        // Trace6Text() -----------------------------------------------------------------------------
+        // Gibt einen Text je nach Tracelevel aus
+        function Trace6Text(
+                             variable iTraceLevel,        // Tracelevel
+                             variable iText1,             // Tracetext 1
+                             variable iText2,             // Tracetext 2
+                             variable iText3,             // Tracetext 3
+                             variable iText4,             // Tracetext 4
+                             variable iText5,             // Tracetext 5
+                             variable iText6              // Tracetext 6
+                           ) variable                     // Return: _NONE          = Ausgabe wurde gemacht
+                                                          //         _LIBRARY_ERROR = keine Ausgabe wurde gemacht
+        {
+          if (_EASYCODEII_TraceLevel<iTraceLevel) return(ERROR::_NONE);
+
+          Trace(iText1,iText2,iText3,iText4,iText5,iText6);
+
+          return(ERROR::_NONE);
+        }
+        // ------------------------------------------------------------------------------------------
+
+        // TraceArrayStr() -----------------------------------------------------------------------------
+        // Tracet einen Array Type String
+        function TraceArrayStr(
+                                variable iTraceLevel,  // Tracelevel
+                                variable iArrayName,
+                                variable iArray[]      // Array Variable
+                              ) variable               // Return: _NONE          = Ausgabe wurde gemacht
+                                                       //         _LIBRARY_ERROR = keine Ausgabe wurde gemacht
+        {
+          variable index;
+          variable arrayString("");
+
+          if (_EASYCODEII_TraceLevel<iTraceLevel) return(ERROR::_NONE);
+
+          for (index = 0;index < iArray.GetSize(); index++)
+          {         
+             arrayString = arrayString + "[" + StrIStr(index) + "]=\"" + iArray.GetAt(index) + "\"";
+             if (index<iArray.GetSize()-1) arrayString = arrayString + ",";
+          }
+
+          Trace(GetFunctionName()," ",iArrayName,"[", iArray.GetSize(), "]"," ",arrayString,"");
+
+          return(ERROR::_NONE);
+        }
+        // ------------------------------------------------------------------------------------------
+
+        // TraceArrayInt() -----------------------------------------------------------------------------
+        // Tracet einen Array Type Intger
+        function TraceArrayInt(
+                                variable iTraceLevel,  // Tracelevel
+                                variable iArrayName,
+                                variable iArray []     // Array Variable
+                              ) variable               // Return: _NONE          = Ausgabe wurde gemacht
+                                                       //         _LIBRARY_ERROR = keine Ausgabe wurde gemacht
+        {
+          variable index;
+          variable arrayString("");
+
+          if (_EASYCODEII_TraceLevel<iTraceLevel) return(ERROR::_NONE);
+
+          for (index = 0;index < iArray.GetSize(); index++)
+          {         
+             arrayString = arrayString + "[" + StrIStr(index) + "]=" + StrIStr(iArray.GetAt(index)) + "";
+             if (index<iArray.GetSize()-1) arrayString = arrayString + ",";
+          }
+
+          Trace(GetFunctionName()," ",iArrayName,"[", iArray.GetSize(), "]"," ",arrayString,"");
+
+          return(ERROR::_NONE);
+        }
+        // ------------------------------------------------------------------------------------------
+
+        // TraceArrayFloat() -----------------------------------------------------------------------------
+        // Tracet einen Array Type Float
+        function TraceArrayFloat(
+                                  variable iTraceLevel,  // Tracelevel
+                                  variable iArrayName,
+                                  variable iArray[]      // Array Variable
+                                ) variable               // Return: _NONE          = Ausgabe wurde gemacht
+                                                         //         _LIBRARY_ERROR = keine Ausgabe wurde gemacht
+        {
+          variable index;
+          variable arrayString("");
+
+          if (_EASYCODEII_TraceLevel<iTraceLevel) return(ERROR::_NONE);
+
+          for (index = 0;index < iArray.GetSize(); index++)
+          {         
+             arrayString = arrayString + "[" + StrIStr(index) + "]=" + StrFStr(iArray.GetAt(index)) + "";
+             if (index<iArray.GetSize()-1) arrayString = arrayString + ",";
+          }
+
+          Trace(GetFunctionName()," ",iArrayName,"[", iArray.GetSize(), "]"," ",arrayString,"");
+
+          return(ERROR::_NONE);
+        }
+        // ------------------------------------------------------------------------------------------
+
+        // TraceSequence() --------------------------------------------------------------------------
+        // Gibt eine Sequence je nach Tracelevel aus
+        function TraceSequence(
+                                variable iTraceLevel,        // Tracelevel
+                                sequence iSequence           // Sequence
+                              ) variable                     // Return: _NONE          = Ausgabe wurde gemacht
+                                                             //         _LIBRARY_ERROR = keine Ausgabe wurde gemacht
+        {
+        variable index;
+
+         if (_EASYCODEII_TraceLevel<iTraceLevel) return(ERROR::_NONE);
+
+         Trace("iSequence=\"",iSequence.GetName(),"\",size=",iSequence.GetTotal());
+         for (index=iSequence.SetCurrentPosition(1);index!=0;index=iSequence.Increment(1))
+         {
+           Trace("LabwareId=\"",iSequence.GetLabwareId(),"\",PositionId=\"",iSequence.GetPositionId(),"\"");
+         }
+
+         return(ERROR::_NONE);
+        }
+        // ------------------------------------------------------------------------------------------
+
+      } // namespace TRACE
+
+      namespace SEQUENCE
+      {
+
+        // Init() --------------------------------------------------------------------------
+        // Sequence initialisieren
+        function Init(
+                       sequence & oSequence  // Sequence
+                     ) variable
+        {
+          if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(),"(...)");
+
+          if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName()," oSequence=\"",oSequence.GetName(),"\"");
+
+          // Sequence zuerst loeschen
+          SeqRemoveAll(oSequence);
+
+          return(ERROR::_NONE);
+        }
+        // ------------------------------------------------------------------------------------------
+
+        // Add() ---------------------------------------------------------------------------
+        // Sequence addieren
+        function Add(
+                      sequence iSourceSequence1,      // Source Sequence
+                      sequence iSourceSequence2,      // Source Sequence
+                      sequence & oDestinationSequence // Ziehl Sequence
+                    ) variable
+        {
+          variable index; // loop index
+          sequence tmp_DestinationSequence;
+
+          if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(),"(...)");
+
+          if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName()," iSourceSequence1=\"",iSourceSequence1.GetName(),"\"",
+                                                                                 ",iSourceSequence2=\"",iSourceSequence2.GetName(),"\"",
+                                                                                 ",oDestinationSequence=\"",oDestinationSequence.GetName(),"\"");
+
+          // Sequence zuerst loeschen
+          SeqRemoveAll(oDestinationSequence);
+
+          // set count to total
+          iSourceSequence1.SetCount(iSourceSequence1.GetTotal());
+          for (index = iSourceSequence1.SetCurrentPosition(1);index != 0;index = iSourceSequence1.Increment(1))
+          {
+            tmp_DestinationSequence.Add(iSourceSequence1.GetLabwareId(),iSourceSequence1.GetPositionId());
+          }
+          iSourceSequence2.SetCount(iSourceSequence2.GetTotal());
+          for (index = iSourceSequence2.SetCurrentPosition(1);index != 0;index = iSourceSequence2.Increment(1))
+          {
+            tmp_DestinationSequence.Add(iSourceSequence2.GetLabwareId(),iSourceSequence2.GetPositionId());
+          }
+
+          // Sequence-Zeiger an Anfang setzen
+          SeqSetMax(tmp_DestinationSequence,SeqGetTotal(tmp_DestinationSequence));
+          tmp_DestinationSequence.SetCurrentPosition(1);
+
+          oDestinationSequence = tmp_DestinationSequence;
+
+          return(ERROR::_NONE);
+        }
+        // --------------------------------------------------------------------------------------------
+
+        // Copy() ---------------------------------------------------------------------------
+        // Sequence kopieren
+        function Copy(
+                       sequence iSourceSequence,       // Source Sequence
+                       sequence & oDestinationSequence // Ziehl Sequence
+                     ) variable
+        {
+          variable index; // loop index
+          sequence tmp_DestinationSequence;
+          variable tmp_CurrentPosititionSourceSequence;
+
+          if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(),"(...)");
+
+          if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName()," iSourceSequence=\"",iSourceSequence.GetName(),"\"",
+                                                                                 ",oDestinationSequence=\"",oDestinationSequence.GetName(),"\"");
+
+          // Sequence zuerst loeschen
+          SeqRemoveAll(oDestinationSequence);
+
+          tmp_CurrentPosititionSourceSequence = iSourceSequence.GetCurrentPosition();
+
+          // set count to total
+          iSourceSequence.SetCount(iSourceSequence.GetTotal());
+          for (index = iSourceSequence.SetCurrentPosition(1);index != 0;index = iSourceSequence.Increment(1))
+          {
+            tmp_DestinationSequence.Add(iSourceSequence.GetLabwareId(),iSourceSequence.GetPositionId());
+          }
+
+          // Sequence-Zeiger an Anfang setzen
+          SeqSetMax(tmp_DestinationSequence,SeqGetTotal(tmp_DestinationSequence));
+          tmp_DestinationSequence.SetCurrentPosition(tmp_CurrentPosititionSourceSequence);
+
+          oDestinationSequence = tmp_DestinationSequence;
+
+          return(ERROR::_NONE);
+        }
+        // --------------------------------------------------------------------------------------------
+
+      } // namespace SEQUENCE
+
+    } // namespace HELPER
+
+    // ------------------------------------------------------------------------------------------
+    namespace MLSTAR
+    {
+      static       variable _light_CAMERA_FLASH_OUTPUTPORT_IsOn (hslFalse);
+
+      // Mit welchem Faktor wird das PWM-Signal verkleinert, dass nur maximal 24V auf dem Ausgang ist
+      static const variable _light_CAMERA_CHANNEL_PWM_Factor    (0.58);
+      static       variable _light_CAMERA_CHANNEL_PWM_IsOn      (hslFalse);
+
+      // Mit welchem Faktor wird das PWM-Signal verkleinert, dass nur maximal 24V auf dem Ausgang ist
+      static const variable _light_DIV2_PWM_Factor              (0.58);
+      // DIV2 PWM-Nummer
+      static const variable _light_DIV2_PWM1_Number             ("on1");
+      static       variable _light_DIV2_PWM1_IsOn               (hslFalse);
+      static const variable _light_DIV2_PWM2_Number             ("on2");
+      static       variable _light_DIV2_PWM2_IsOn               (hslFalse);
+
+      // Mit welchem Faktor wird das PWM-Signal verkleinert, dass nur maximal 24V auf dem Ausgang ist
+      static const variable _light_DIV3_PWM_Factor             (0.58);
+      // DIV3 PWM-Nummer
+      static const variable _light_DIV3_PWM3_Number             ("on3");
+      static       variable _light_DIV3_PWM3_IsOn               (hslFalse);
+      static const variable _light_DIV3_PWM4_Number             ("on4");
+      static       variable _light_DIV3_PWM4_IsOn               (hslFalse);
+
+      static function ExecFW_Cmd(
+                                  device & ML_STAR,
+                                  variable cmd,
+                                  variable prm
+                                ) variable []
+      {
+       variable tmpVal[];
+
+        if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), "(",
+                                                                                "cmd=\"",cmd,"\"",
+                                                                                ",prm=\"",prm,"\"",
+                                                                                ")");
+
+        tmpVal = ML_STAR.FirmwareCommand( "5b484f0a_de4d_4e9a_bb4a9045f08b295c" );
+
+        if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(),"answer=\"",tmpVal.GetAt(3),"\"");
+
+        return(tmpVal);
+      } // end of ExecFW_Cmd()
+
+      // ---------------------------------------------------------------
+      // Einschalten des Licht 
+      // ---------------------------------------------------------------
+      function Light_On(
+                         device & ML_STAR,       // Device
+                         variable iLightSource,  // PWM number and DIV2 or DIV3 connector
+                         variable iPercent       // Lichtstaerke
+                       ) variable
+      {
+       variable rc[];
+       variable er("");
+       variable percentStr;
+
+        if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), "(",
+                                                                                "iLightSource=",iLightSource,
+                                                                                ",iPercent=",iPercent,
+                                                                                ")");
+
+        if (iPercent>100) iPercent = 100;
+        if (iPercent<0)   iPercent = 0;
+
+        if (iLightSource == EASYCODEII_HELPER::LIGHTSOURCE::_MLSTAR_DIV2_PWM1)
+        {
+          percentStr = HELPER::StrIStrMitNullen(IVal(FStr(iPercent*_light_DIV2_PWM_Factor)),3);
+          if (_EASYCODEII_SimulationMode == _SIMULATION_MODE_OFF)
+          {
+            rc = ExecFW_Cmd(ML_STAR,"X0OS",_light_DIV2_PWM1_Number+"od01"+"os"+percentStr+"oe"+percentStr);
+            er = rc.GetAt(3);
+            if (er != "er00/00" && er != "er00")
+            {
+              if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_NORMAL) Trace(GetFunctionName()," Instrument error: ",er);
+              return(ERROR::GENERAL::_MLSTAR);
+            }
+          }
+          _light_DIV2_PWM1_IsOn = hslTrue;
+        }
+        else if (iLightSource == EASYCODEII_HELPER::LIGHTSOURCE::_MLSTAR_DIV2_PWM2)
+        {
+          percentStr = HELPER::StrIStrMitNullen(IVal(FStr(iPercent*_light_DIV2_PWM_Factor)),3);
+          if (_EASYCODEII_SimulationMode == _SIMULATION_MODE_OFF)
+          {
+            rc = ExecFW_Cmd(ML_STAR,"X0OS",_light_DIV2_PWM2_Number+"od01"+"os"+percentStr+"oe"+percentStr);
+            er = rc.GetAt(3);
+            if (er != "er00/00" && er != "er00")
+            {
+              if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_NORMAL) Trace(GetFunctionName()," Instrument error: ",er);
+              return(ERROR::GENERAL::_MLSTAR);
+            }
+          }
+          _light_DIV2_PWM2_IsOn = hslTrue;
+        }
+        else if (iLightSource == EASYCODEII_HELPER::LIGHTSOURCE::_MLSTAR_DIV3_PWM3)
+        {
+          percentStr = HELPER::StrIStrMitNullen(IVal(FStr(iPercent*_light_DIV3_PWM_Factor)),3);
+          if (_EASYCODEII_SimulationMode == _SIMULATION_MODE_OFF)
+          {
+            rc = ExecFW_Cmd(ML_STAR,"X0OS",_light_DIV3_PWM3_Number+"od01"+"os"+percentStr+"oe"+percentStr);
+            er = rc.GetAt(3);
+            if (er != "er00/00" && er != "er00")
+            {
+              if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_NORMAL) Trace(GetFunctionName()," Instrument error: ",er);
+              return(ERROR::GENERAL::_MLSTAR);
+            }
+          }
+          _light_DIV3_PWM3_IsOn = hslTrue;
+        }
+        else if (iLightSource == EASYCODEII_HELPER::LIGHTSOURCE::_MLSTAR_DIV3_PWM4)
+        {
+          percentStr = HELPER::StrIStrMitNullen(IVal(FStr(iPercent*_light_DIV3_PWM_Factor)),3);
+          if (_EASYCODEII_SimulationMode == _SIMULATION_MODE_OFF)
+          {
+            rc = ExecFW_Cmd(ML_STAR,"X0OS",_light_DIV3_PWM4_Number+"od01"+"os"+percentStr+"oe"+percentStr);
+            er = rc.GetAt(3);
+            if (er != "er00/00" && er != "er00")
+            {
+              if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_NORMAL) Trace(GetFunctionName()," Instrument error: ",er);
+              return(ERROR::GENERAL::_MLSTAR);
+            }
+          }
+          _light_DIV3_PWM4_IsOn = hslTrue;
+        }
+        else if (iLightSource == EASYCODEII_HELPER::LIGHTSOURCE::_CAMERA_CHANNEL)
+        {
+          percentStr = HELPER::StrIStrMitNullen(IVal(FStr(iPercent*_light_CAMERA_CHANNEL_PWM_Factor)),3);
+          if (_EASYCODEII_SimulationMode == _SIMULATION_MODE_OFF)
+          {
+            rc = ExecFW_Cmd(ML_STAR,"ICCA","ca"+percentStr);
+            er = rc.GetAt(3);
+            if (er != "er00/00" && er != "er00")
+            {
+              if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_NORMAL) Trace(GetFunctionName()," Instrument error: ",er);
+              return(ERROR::GENERAL::_MLSTAR);
+            }
+          }
+          _light_CAMERA_CHANNEL_PWM_IsOn = hslTrue;
+        }
+        else if (iLightSource == EASYCODEII_HELPER::LIGHTSOURCE::_CAMERA_FLASH_OUTPUTPORT)
+        {
+          variable returnValue;
+          returnValue = CAMERA::SetOutputPortFlash(hslTrue);
+          if (returnValue != ERROR::_NONE)
+            return (returnValue);
+          _light_CAMERA_FLASH_OUTPUTPORT_IsOn = hslTrue;
+        }
+        else if (iLightSource == EASYCODEII_HELPER::LIGHTSOURCE::_NO_LIGHT)
+        {
+        }
+        else 
+        {
+          if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_NORMAL) Trace(GetFunctionName()," Instrument error: ","No light source selected");
+          return(ERROR::GENERAL::_MLSTAR);
+        }
+
+        return(ERROR::_NONE);
+      }
+
+      // ---------------------------------------------------------------
+      // Ausschalten des Licht
+      // ---------------------------------------------------------------
+      function Light_Off(
+                          device & ML_STAR,       // Device
+                          variable iLightSource   // PWM number and DIV2 or DIV3 connector
+                        ) variable
+      {
+       variable rc[];
+       variable er("");
+
+        if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), "(",
+                                                                                "iLightSource=",iLightSource,
+                                                                                ")");
+
+        if (iLightSource == EASYCODEII_HELPER::LIGHTSOURCE::_MLSTAR_DIV2_PWM1)
+        {
+          if (_EASYCODEII_SimulationMode == _SIMULATION_MODE_OFF)
+          {
+            rc = ExecFW_Cmd(ML_STAR,"X0OR",_light_DIV2_PWM1_Number);
+            er = rc.GetAt(3);
+            if (er != "er00/00" && er != "er00")
+            {
+              if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_NORMAL) Trace(GetFunctionName()," Instrument error: ",er);
+              return(ERROR::GENERAL::_MLSTAR);
+            }
+          }
+          _light_DIV2_PWM1_IsOn = hslFalse;
+        }
+        else if (iLightSource == EASYCODEII_HELPER::LIGHTSOURCE::_MLSTAR_DIV2_PWM2)
+        {
+          if (_EASYCODEII_SimulationMode == _SIMULATION_MODE_OFF)
+          {
+            rc = ExecFW_Cmd(ML_STAR,"X0OR",_light_DIV2_PWM2_Number);
+            er = rc.GetAt(3);
+            if (er != "er00/00" && er != "er00")
+            {
+              if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_NORMAL) Trace(GetFunctionName()," Instrument error: ",er);
+              return(ERROR::GENERAL::_MLSTAR);
+            }
+          }
+          _light_DIV2_PWM2_IsOn = hslFalse;
+        }
+        else if (iLightSource == EASYCODEII_HELPER::LIGHTSOURCE::_MLSTAR_DIV3_PWM3)
+        {
+          if (_EASYCODEII_SimulationMode == _SIMULATION_MODE_OFF)
+          {
+            rc = ExecFW_Cmd(ML_STAR,"X0OR",_light_DIV3_PWM3_Number);
+            er = rc.GetAt(3);
+            if (er != "er00/00" && er != "er00")
+            {
+              if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_NORMAL) Trace(GetFunctionName()," Instrument error: ",er);
+              return(ERROR::GENERAL::_MLSTAR);
+            }
+          }
+          _light_DIV3_PWM3_IsOn = hslFalse;
+        }
+        else if (iLightSource == EASYCODEII_HELPER::LIGHTSOURCE::_MLSTAR_DIV3_PWM4)
+        {
+          if (_EASYCODEII_SimulationMode == _SIMULATION_MODE_OFF)
+          {
+            rc = ExecFW_Cmd(ML_STAR,"X0OR",_light_DIV3_PWM4_Number);
+            er = rc.GetAt(3);
+            if (er != "er00/00" && er != "er00")
+            {
+              if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_NORMAL) Trace(GetFunctionName()," Instrument error: ",er);
+              return(ERROR::GENERAL::_MLSTAR);
+            }
+          }
+          _light_DIV3_PWM4_IsOn = hslFalse;
+        }
+        else if (iLightSource == EASYCODEII_HELPER::LIGHTSOURCE::_CAMERA_CHANNEL)
+        {
+          if (_EASYCODEII_SimulationMode == _SIMULATION_MODE_OFF)
+          {
+            rc = ExecFW_Cmd(ML_STAR,"ICCB","");
+            er = rc.GetAt(3);
+            if (er != "er00/00" && er != "er00")
+            {
+              if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_NORMAL) Trace(GetFunctionName()," Instrument error: ",er);
+              return(ERROR::GENERAL::_MLSTAR);
+            }
+          }
+          _light_CAMERA_CHANNEL_PWM_IsOn = hslFalse;
+        }
+        else if (iLightSource == EASYCODEII_HELPER::LIGHTSOURCE::_CAMERA_FLASH_OUTPUTPORT)
+        {
+          variable returnValue;
+          returnValue = CAMERA::SetOutputPortFlash(hslFalse);
+          if (returnValue != ERROR::_NONE)
+            return (returnValue);
+          _light_CAMERA_FLASH_OUTPUTPORT_IsOn = hslTrue;
+          _light_CAMERA_FLASH_OUTPUTPORT_IsOn = hslFalse;
+        }
+        else if (iLightSource == EASYCODEII_HELPER::LIGHTSOURCE::_NO_LIGHT)
+        {
+        }
+        else
+        {
+          if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_NORMAL) Trace(GetFunctionName()," Instrument error: ","No light source selected");
+          return(ERROR::GENERAL::_MLSTAR);
+        }
+
+        return(ERROR::_NONE);
+      }
+      // ---------------------------------------------------------------
+
+      // ---------------------------------------------------------------
+      // Ausschalten aller Licht-Quellen
+      // ---------------------------------------------------------------
+      function Light_Off_All(
+                              device & ML_STAR       // Device
+                            ) variable
+      {
+        if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), "(",
+                                                                                ")");
+
+        if (_light_DIV2_PWM1_IsOn == hslTrue)
+        {
+          Light_Off(ML_STAR,EASYCODEII_HELPER::LIGHTSOURCE::_MLSTAR_DIV2_PWM1);
+        }
+        if (_light_DIV2_PWM2_IsOn == hslTrue)
+        {
+          Light_Off(ML_STAR,EASYCODEII_HELPER::LIGHTSOURCE::_MLSTAR_DIV2_PWM2);
+        }
+        if (_light_DIV3_PWM3_IsOn == hslTrue)
+        {
+          Light_Off(ML_STAR,EASYCODEII_HELPER::LIGHTSOURCE::_MLSTAR_DIV3_PWM3);
+        }
+        if (_light_DIV3_PWM4_IsOn == hslTrue)
+        {
+          Light_Off(ML_STAR,EASYCODEII_HELPER::LIGHTSOURCE::_MLSTAR_DIV3_PWM4);
+        }
+        if (_light_CAMERA_CHANNEL_PWM_IsOn == hslTrue)
+        {
+          Light_Off(ML_STAR,EASYCODEII_HELPER::LIGHTSOURCE::_CAMERA_CHANNEL);
+        }
+        if (_light_CAMERA_FLASH_OUTPUTPORT_IsOn == hslTrue)
+        {
+          Light_Off(ML_STAR,EASYCODEII_HELPER::LIGHTSOURCE::_CAMERA_FLASH_OUTPUTPORT);
+        }
+
+        return(ERROR::_NONE);
+      }
+      // ---------------------------------------------------------------
+
+    } // end namespace MLSTAR
+
+  } // namespace EASYCODEII
+
+#endif
