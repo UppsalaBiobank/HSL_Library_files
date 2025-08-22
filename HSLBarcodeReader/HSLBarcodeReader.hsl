@@ -1,27 +1,18 @@
 // ======================================================================
 // This is a part of the HSL BarcodeReader Library.
 // ======================================================================
-//    2025-08-22  HenrikUbb   :  Slight refactoring
+// //    2025-08-22  HenrikUbb   :  Slight refactoring
 // ======================================================================
 
 #ifndef __HSLBarcodeReaderLib_hsl__
 #define __HSLBarcodeReaderLib_hsl__	1
-
-// Comment out following line, when HSL library is ok (to speed up method editor)
-//#define FIL_DEVELOP		1
-
-#ifdef FIL_DEVELOP
-	#ifndef HSL_RUNTIME
-	#define HSL_RUNTIME			1
-	#endif
-#endif
 
 // ==========================================================================
 // Implementation of File library 
 // ==========================================================================
 #ifdef HSL_RUNTIME
 #pragma once 
-#include "HSLBarcodeReader.hs_"
+#include "HSLBarcodeReaderImpl.hs_"
 #endif //end of #ifdef HSL_RUNTIME
 
 // Interface to File library 
@@ -41,6 +32,7 @@ namespace HSLBarcodeReader
 	function SetErrorRecovery(variable errRecovery) variable { return (0); }
 
 } // end of namespace HSLBarcodeReader
-
 #endif
+
 #endif // end of #ifndef __HSLBarcodeReaderLib_hsl__ 
+// $$author=Henrik$$valid=0$$time=2025-08-14 13:23$$checksum=782256c1$$length=085$$
