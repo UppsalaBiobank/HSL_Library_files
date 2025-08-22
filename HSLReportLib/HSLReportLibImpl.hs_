@@ -1,24 +1,4 @@
 // ======================================================================
-// This is a part of the HSL Report Library.
-// Copyright (C) by HAMILTON Bonaduz AG, CH-7402 Bonaduz.
-// All rights reserved.
-// ======================================================================
-//
-// Modification History
-// 2003-02-17  ubernhard : - Initial file creation.
-//	2003-04-03  ubernhard : - implement function CreateATBarcodeFile()
-//	2003-08-20  ubernhard : - timeout "STracker::flushToDisk" before calling HxATFilter respectively HxReport
-//									- implement static function IsSampleTrackerOn()
-//									- Check sample tracker switch during initialization of library
-//	2004-02-05	ubernhard : - removed timeout "STracker::flushToDisk" before calling HxATFilter respectively HxReport
-//									- get the one and only sample tracker object instantiated by the executor
-//									- all sample tracker calls done over this sample tracker object
-//									- use Flush function of IHxSampleTracker3 before calling HxATFilter respectively HxReport
-// 2006-08-30	fgarcia	 : - changed implementation of CreateReportFile(), an error is thrown that 
-//									  function is not longer supported
-//									- use of HxVectorDB instead of old Sample Tracker
-// 2006-08-31	fgarcia	 : - added special error handler when using HxVectorDB to get a labware ID
-// 2006-11-21  fgarcia   : - call Synchronize() of VectorDB before executing ATFilter
 // 2025-08-22  HenrikUBB : - changed from #include guards to #pragma once. 
 //                         - moved #include HSLStringTableLib.hs_ from HSLReport namespace. Move it back, with guard, if it causes issues at runtime.
 //
