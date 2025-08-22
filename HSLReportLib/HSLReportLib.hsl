@@ -1,16 +1,6 @@
 // ======================================================================
 // This is a part of the HSL Report Lib.
-// Copyright (C) by HAMILTON Bonaduz AG, CH-7402 Bonaduz.
-// All rights reserved.
 // ======================================================================
-//
-// Modification History
-// 2003-02-17  ubernhard	: Initial file creation.
-// 2003-04-03  ubernhard	: add function CreateATBarcodeFile()
-// 2006-08-30	fgarcia		: declared CreateReportFile() as static
-// 2025-08-22	HenrikUbb	: Slight refactoring done
-// ======================================================================
-
 #ifndef __HSLReportLib_hsl__
 #define __HSLReportLib_hsl__	1
 
