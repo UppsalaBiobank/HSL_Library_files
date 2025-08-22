@@ -24,8 +24,8 @@
 //
 // ======================================================================
 
-#ifndef __HSLReportImpl_hsl__
-#define __HSLReportImpl_hsl__	1
+#ifndef __HSLReportLibImpl_hsl__
+#define __HSLReportLibImpl_hsl__	1
 #pragma once
 #include "HSLStrLib/HSLStrLib.hsl"
 #include "HSLSynLib/HSLSynLib.hsl"
