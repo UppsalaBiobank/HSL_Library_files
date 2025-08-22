@@ -1,15 +1,4 @@
 // ======================================================================
-// This is the language dependant part of the HSL Report Library.
-// Copyright (C) by HAMILTON Bonaduz AG, CH-7402 Bonaduz.
-// ======================================================================
-//
-// Modification History
-//
-// 2003-02-17  ubernhard : Initial file creation.
-// 2003-04-08  ubernhard : Add IDS::traceCreateATBarcodeFile
-// 2004-02-12  ubernhard : changed helpFileName from HSLREPORTLIBENU.HLP to HSLREPORTLIBENU.CHM
-// 2006-08-30	fgarcia	 :	added error string for 'function not supported'
-//									and removed string for 'config file not found'
 //
 // ======================================================================
 
