@@ -19,7 +19,7 @@
 // ==========================================================================
 #ifdef HSL_RUNTIME
 #pragma once 
-#include "HSLReport/HSLReportLib.hs_"
+#include "HSLReport/HSLReportLibImpl.hs_"
 //#include "HSLReportLib.hs_"
 #endif //end of #ifdef HSL_RUNTIME
 
