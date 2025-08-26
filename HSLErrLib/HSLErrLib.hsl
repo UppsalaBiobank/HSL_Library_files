@@ -1,0 +1,30 @@
+// This is a part of the HSL Error Library.
+//
+// Modification History
+
+#ifndef __HSLErrLib_hsl__
+#define __HSLErrLib_hsl__	1
+
+#ifdef HSL_RUNTIME
+#pragma once //use either pragma once or include guard, not both
+#include "HSLErrLibImpl.hs_"
+#endif
+
+// Interface to Error library 
+#ifndef HSL_RUNTIME
+function ErrGetId() variable													{return(0);}
+function ErrSetId(variable number) void									{return;}
+function ErrGetDescription() variable										{return(0);}
+function ErrSetDescription(variable& description) void				{return;}
+function ErrGetDataAt(variable index) variable							{return(0);}
+function ErrSetDataAt(variable index, variable& variableObj) void	{return;}
+function ErrRaise(variable number, variable& description) void		{return;}
+function ErrRaiseLast() void													{return;}
+function ErrClear() void														{return;}
+function ErrMajor(variable hxr) variable									{return(0);}
+function ErrMinor(variable hxr) variable									{return(0);}
+function ErrCode(variable hxr) variable									{return(0);}
+function ErrDisplayError(variable& title) variable						{return(0);}
+#endif
+
+#endif
