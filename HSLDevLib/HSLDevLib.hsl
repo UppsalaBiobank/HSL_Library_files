@@ -1,0 +1,241 @@
+// This is a part of the HSL Device Library.
+//
+// Modification History
+//
+
+#ifndef __HSLDevLib_hsl__
+#define __HSLDevLib_hsl__		1
+
+// ==========================================================================
+// Implementation of File library 
+// ==========================================================================
+#ifdef HSL_RUNTIME
+#pragma once //use either pragma once or include guard,not both
+#include "HSLDevLibImpl.hs_"
+#endif
+
+// Interface to Device library 
+#ifndef HSL_RUNTIME
+namespace DevConstants
+{
+function DevGetSequence(
+	device& deviceObj,
+	variable& sequenceName,
+	sequence& sequenceCopy) void		{return;}
+function DevGetSequenceRef(
+	device& deviceObj,
+	variable& sequenceName,
+	sequence& sequenceRef) variable			{return(0);}
+function DevResetSequence(
+	device& deviceObj,
+	variable& sequenceName) variable		{return(0);}
+function DevCopyResetSequence(
+	device& deviceObj,
+	variable& sequenceName,
+	sequence& sequenceObj) variable		{return(0);}
+function DevAddLabware(
+	device& deviceObj,
+	variable& labwareId,
+	variable& configFile,
+	variable xCoord,
+	variable yCoord,
+	variable zCoord,
+	variable angle) variable		{return(0);}
+function DevAddPreloadedLabware(
+	device& deviceObj,
+	variable& labwareId,
+	variable& configFile,
+	variable xCoord,
+	variable yCoord,
+	variable zCoord,
+	variable angle,
+	variable& preloadedLabIdBase) variable		{return(0);}
+function DevRemoveLabware(
+	device& deviceObj,
+	variable& labwareId) variable			{return(0);}
+function DevAddContainerToRack(
+	device& deviceObj,
+	variable& rackId,
+	variable& positionId,
+	variable& configFile,
+	variable xOffset,
+	variable yOffset,
+	variable zOffset) variable		{return(0);}
+function DevAddLabwareToTemplate(
+	device& deviceObj,
+	variable& labwareId,
+	variable& configFile,
+	variable& templateId,
+	variable& siteId) variable			{return(0);}
+function DevRemoveLabwareFromTemplate(
+	device& deviceObj,
+	variable& labwareId,
+	variable& templateId) variable		{return(0);}
+function DevGetLabwarePosition(
+	device& deviceObj,
+	variable& labwareId,
+	variable& xCoord,
+	variable& yCoord,
+	variable& zCoord,
+	variable& angle) variable		{return(0);}
+function DevGetLabwarePositionEx(
+	device& deviceObj,
+	variable& labwareId,
+	variable& positionId,
+	variable& xCoord,
+	variable& yCoord,
+	variable& zCoord,
+	variable& angle) variable		{return(0);}
+function DevGetLabwarePositionEx2(
+	device& deviceObj,
+	variable& labwareId,
+	variable& xCoord,
+	variable& yCoord,
+	variable& zCoord,
+	variable& angle,
+	variable& dimX,
+	variable& dimY,
+	variable& boundary1X,
+	variable& boundary1Y,
+	variable& boundary2X,
+	variable& boundary2Y,
+	variable& boundary3X,
+	variable& boundary3Y,
+	variable& boundary4X,
+	variable& boundary4Y) variable		{return(0);}
+function DevGetTemplateLabwareNames(
+	device& deviceObj,
+	variable& count) variable			{return(0);}
+function DevGetTemplateLabwareNameAt(
+	variable index,
+	variable& templateName,
+	variable& labwareName) void			{return;}
+function DevGetLabwareData(
+	device& deviceObj,
+	variable& labwareId,
+	variable& propertyKey) variable		{return(0);}
+function DevComputeContainerVolume(
+	device& deviceObj,
+	variable& labwareId,
+	variable& positionId,
+	variable height,
+	variable deckCoordinates) variable			{return(0);}
+function DevComputeContainerVolume2(
+	device& deviceObj,
+	variable& labwareId,
+	variable& positionId,
+	variable height,
+	variable deckCoordinates,
+	variable connectedContainers) variable		{return(0);}
+function DevAddSequence(
+	device& deviceObj,
+	sequence& sequenceObj,
+	variable initFromCfg,
+	variable first,
+	variable last,
+	variable editable,
+	variable& cfgFile) void		{return;}
+function DevAddSequence2(
+	device& deviceObj,
+	sequence& editedSequenceObj,
+	sequence& baseSeqenceObj,
+	variable editable) void		{return;}
+function DevEditSequences(
+	device& deviceObj,
+	variable& title,
+	variable& prompt,
+	variable timeout) void		{return;}
+function DevEditSequences2(
+	device& deviceObj,
+	variable& title,
+	variable& prompt,
+	variable timeout,
+	variable sound) void		{return;}
+function DevRemoveSequences(
+	device& deviceObj) void		{return;}
+function DevPause() void		{return;}
+function DevGetInstrumentName(
+	device& deviceObj) variable			{return(0);}
+function DevGetInstrumentViewName(
+	device& deviceObj) variable			{return(0);}
+function DevGetReleaseVersion(
+	device& deviceObj) variable			{return(0);}
+function DevGetPositionsLabwareNames(
+	device& deviceObj,
+	sequence& sequenceObj,
+	variable& labwareName,
+	variable& count) variable		{return(0);}
+function DevGetPositionLabwareNameAt(
+	variable index,
+	variable& templateSite,
+	variable& labwareName,
+	variable& positionName) void		{return;}
+function DevGetCfgValueWithKey(
+	device& deviceObj,
+	variable key) variable			{return(0);}
+function DevGetDeckLayoutFileName(
+	device& deviceObj) variable			{return(0);}
+function DevGetBarcodeData(
+	device& deviceObj,
+	variable& labwareName,
+	variable& positionName,
+	variable& barcodeData) variable		{return(0);}
+function DevSetBarcodeData(
+	device& deviceObj,
+	variable& labwareName,
+	variable& positionName,
+	variable& barcodeData) variable		{return(0);}
+function DevGetBarcodeData2(
+	device& deviceObj,
+	variable& labwareName[],
+	variable& positionName[],
+	variable& barcodeData[]) variable			{return(0);}
+function DevSetBarcodeData2(
+	device& deviceObj,
+	variable& labwareName[],
+	variable& positionName[],
+	variable& barcodeData[]) variable			{return(0);}
+function DevGetBarcodeData3(
+	device& deviceObj,
+	sequence& sequenceObj,
+	variable& barcodeData[]) variable			{return(0);}
+function DevSetBarcodeData3(
+	device& deviceObj,
+	sequence& sequenceObj,
+	variable& barcodeData[]) variable			{return(0);}
+function DevIsValidLabwareForCurrentDeckLayout(
+	device& deviceObj,
+	variable& labwareId) variable			{return(0);}
+function DevGetUniqueBarcode(
+	device& deviceObj,
+	variable& labwareName,
+	variable& positionName,
+	variable& uniqueBarcode) variable		{return(0);}
+function DevSetUniqueBarcode(
+	device& deviceObj,
+	variable& labwareName,
+	variable& positionName,
+	variable uniqueBarcode) variable		{return(0);}
+function DevGetUniqueBarcode2(
+	device& deviceObj,
+	variable& labwareName[],
+	variable& positionName[],
+	variable& uniqueBarcode[]) variable			{return(0);}
+function DevSetUniqueBarcode2(
+	device& deviceObj,
+	variable& labwareName[],
+	variable& positionName[],
+	variable& uniqueBarcode[]) variable			{return(0);}
+function DevGetUniqueBarcode3(
+	device& deviceObj,
+	sequence& sequenceObj,
+	variable& uniqueBarcode[]) variable			{return(0);}
+function DevSetUniqueBarcode3(
+	device& deviceObj,
+	sequence& sequenceObj,
+	variable& uniqueBarcode[]) variable			{return(0);}
+
+}//namespace HSLDev
+#endif
+#endif
+// $$author=Henrik$$valid=0$$time=2025-08-26 13:50$$checksum=e6a1eec3$$length=085$$
