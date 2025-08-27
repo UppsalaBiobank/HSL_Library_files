@@ -6,8 +6,8 @@
 //
 //----------------------------------------------------------------------------------------
 
-#ifndef __HSLEXTENSIONS_FRAMEWORK__
-#define __HSLEXTENSIONS_FRAMEWORK__ 1
+#ifndef __HSLEXTENSIONSFRAMEWORK_hsl__
+#define __HSLEXTENSIONSFRAMEWORK_hsl__ 1
 
 //============================== includes ==============================
 #ifdef HSL_RUNTIME
