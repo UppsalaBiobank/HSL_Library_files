@@ -1,0 +1,75 @@
+//----------------------------------------------------------------------------------------
+// This is part of the HSL Extensions Framework
+// Description          : Framework library with common functions
+//
+// Modification History
+//
+//----------------------------------------------------------------------------------------
+
+#ifndef __HSLEXTENSIONS_FRAMEWORK__
+#define __HSLEXTENSIONS_FRAMEWORK__ 1
+
+//============================== includes ==============================
+#ifdef HSL_RUNTIME
+#pragma once //use either "#pragma once" or "include guard", not both
+#include "HSLExtensions/HSLExtensionsFrameworkImpl.hs_"
+#endif
+
+//============================== HSLExtensions ==============================
+
+#ifndef HSL_RUNTIME
+namespace HSLExtensions
+{
+	namespace Framework
+	{
+		namespace Informations
+		{
+			function GetVersion() variable	{return(0);}
+		}//namespace Informations
+		namespace Types
+		{
+			function IsInteger(variable i_varValue) variable	{return(0);}
+			function IsString(variable i_varValue) variable	{return(0);}
+			function IsFloat(variable i_varValue) variable	{return(0);}
+			function IsBoolean(variable i_varValue) variable	{return(0);}
+			function IsNull(variable i_varValue) variable	{return(0);}
+			function IsEmptyString(variable i_varValue) variable	{return(0);}
+			function GetValueType(variable i_varValue) variable	{return(0);}
+			function IsIntegerArray(variable i_arrValues[]) variable	{return(0);}
+			function IsStringArray(variable i_arrValues[]) variable	{return(0);}
+			function IsFloatArray(variable i_arrValues[]) variable	{return(0);}
+			function IsBooleanArray(variable i_arrValues[]) variable	{return(0);}
+		}//namespace Types
+		namespace Converter
+		{
+			function ConvertTypeToString(variable i_intType) variable	{return(0);}
+			static function _RemoveZerosFromFloatValueString(variable i_strValue) variable	{return(0);}
+			function ConvertToString(variable i_varValue) variable	{return(0);}
+			function ConvertToBoolean(variable i_varValue, variable& o_bSuccessfulConverted) variable	{return(0);}
+			function ConvertToInteger(variable i_varValue, variable& o_blnSuccessfulConverted) variable	{return(0);}
+			function ConvertToFloat(variable i_varValue, variable& o_blnSuccessfulConverted) variable	{return(0);}
+
+		}//namespace Converter
+		namespace Trace
+		{
+			function SetTraceLevel(variable i_intTraceLevel) void	{return;}
+			function DebugTrace(variable i_strFunctionName, variable i_strText) void	{return;}
+			function WarningTrace(variable i_strFunctionName, variable i_strText) void	{return;}
+			function ParameterTypeWarningTrace(variable i_strFunctionName, variable i_intExcpectedType, variable i_varParameter) void	{return;}
+			function ErrorTrace(variable i_strFunctionName, variable i_strText) void	{return;}
+			function ParameterTypeErrorTrace(variable i_strFunctionName, variable i_intExcpectedType, variable i_varParameter) void	{return;}
+			function ParameterOutOfRangeErrorTrace(variable i_strFunctionName, variable i_strParameterName, variable i_varParameter) void	{return;}
+			static function _FunctionParameterTrace(variable i_strFunctionName, variable i_strParameterPrefix, variable i_strParameterName, variable i_varParameter) void	{return;}
+			function FunctionInputParameterTrace(variable i_strFunctionName, variable i_strParameterName, variable i_varParameter) void	{return;}
+			function FunctionOutputParameterTrace(variable i_strFunctionName, variable i_strParameterName, variable i_varParameter) void	{return;}
+			function FunctionResultParameterTrace( variable i_strFunctionName, variable i_varParameter) void	{return;}
+			static function _FunctionArryTrace(variable i_strFunctionName, variable i_strParameterPrefix, variable i_strParameterName, variable i_arrParameter[]) void	{return;}
+			function ArrayTrace(variable i_strFunctionName, variable i_strParameterName, variable i_arrParameter[]) void	{return;}
+			function FunctionInputArrayTrace(variable i_strFunctionName, variable i_strParameterName, variable i_arrParameter[]) void	{return;}
+			function FunctionOutputArrayTrace(variable i_strFunctionName, variable i_strParameterName, variable i_arrParameter[]) void	{return;}
+			function FunctionResultArrayTrace(variable i_strFunctionName, variable i_arrParameter[]) void	{return;}
+		}//namespace Trace
+	}//namespace Framework
+}//namespace HSLExtensions
+#endif
+#endif
