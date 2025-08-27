@@ -1,14 +1,7 @@
 // This is a part of the HSL Error Library.
-// Copyright (C) by HAMILTON Bonaduz AG, CH-7402 Bonaduz.
-// All rights reserved.
 //
 // Modification History
-// 2001-06-26  bandenmatten : Removed onerror goto statements from library functions.
-// 2001-07-17  bandenmatten : Divided library into interface and implemenation.
-// 2001-08-08  bandenmatten : Added function ErrRaiseLast.
-// 2002-12-05  bandenmatten : Specified return values for exported library functions.
-// 2003-01-30  bandenmatten : Moved the included libraries into the #ifdef HSL_RUNTIME block (optimization and exportcontrol).
-// 2005-11-11  bandenmatten : Fixed error in function ErrMinor().
+//
 
 #ifndef __HSLErrLibImpl_hsl__
 #define __HSLErrLibImpl_hsl__	1
@@ -17,6 +10,9 @@
 #include "HSLMthLib/HSLMthLib.hsl"
 #include "HSLStrLib/HSLStrLib.hsl"
 
+// --------------------------------------------------------------------------------------
+// Implementation of File library 
+// --------------------------------------------------------------------------------------
 namespace HSLErrLib
 {
 function ErrGetId() variable
@@ -113,6 +109,4 @@ function ErrDisplayError(variable& title) variable
 		return(MessageBox(message, title, style));
 	}
 }
-
 #endif
-// $$author=Henrik$$valid=0$$time=2025-08-15 14:30$$checksum=898dda1a$$length=083$$
