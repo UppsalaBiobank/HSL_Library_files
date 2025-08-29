@@ -1,0 +1,38 @@
+//----------------------------------------------------------------------------------------
+// Project              : HSL Extension Framework
+// Description          : Framework library with 2-dimensional array functions
+
+// Revision history:
+//----------------------------------------------------------------------------------------
+
+#ifndef __HSLEXTENSIONS_ARRAY2D__
+#define __HSLEXTENSIONS_ARRAY2D__ 1
+
+#ifdef HSL_RUNTIME
+#pragma once //use either "#pragma once" or "include guard", not both
+#include "HSLExtensions/Array2DImpl.hs_"
+#endif
+
+#ifndef HSL_RUNTIME
+
+namespace HSLExtensions
+{
+   namespace Array2D
+   {
+   private function _GetSize(variable i_arrValues[], variable& o_intSizeX, variable& o_intSizeY) void 	                     {return;}
+   function Create(variable i_intSizeX, variable i_intSizeY) variable 	                                                      {return(0);} //variable is an array
+   function GetSize(variable i_arrValues[], variable& o_intSizeX, variable& o_intSizeY) void 	                              {return;}
+   function InitializeAllValues(variable& io_arrValues[], variable i_varValue) void 	                                       {return;}
+   function SetValue(variable& io_arrValues[], variable i_intPositionX, variable i_intPositionY, variable i_varValue) void 	{return;}
+   function GetValue(variable i_arrValues[], variable i_intPositionX, variable i_intPositionY) variable 	                     {return(0);}
+   function GetRow(variable i_arrValues[], variable i_intPositionY) variable 	                                                {return(0);} //variable is an array
+   function GetColumn(variable i_arrValues[], variable i_intPositionX) variable 	                                             {return(0);} //variable is an array
+   function SetRow(variable io_arrValues[], variable i_arrRow[], variable i_intPositionY) void 	                              {return;}
+   function SetColumn(variable io_arrValues[], variable i_arrColumn[], variable i_intPositionX) void	                        {return;}
+   function AddRow(variable io_arrValues[], variable i_arrRow[]) void 	{return;}
+   } //end Array2D
+} //end HSLExtension
+#endif
+#endif //end __HSLEXTENSION_ARRAY2D__
+
+// $$author=Henrik$$valid=0$$time=2025-08-27 09:58$$checksum=71ede2df$$length=083$$
