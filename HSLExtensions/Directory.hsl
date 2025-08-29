@@ -1,0 +1,37 @@
+//----------------------------------------------------------------------------------------
+// Project              : HSL Extension Framework
+// Description          : Framework library with directory functions
+
+// Revision history:
+//----------------------------------------------------------------------------------------
+
+#ifndef __HSLEXTENSIONS_DIRECTORY__
+#define __HSLEXTENSIONS_DIRECTORY__ 1
+
+#ifdef HSL_RUMTIME
+#pragma once //use either "#pragma once" or "include guard", not both
+#include "HSLExtensions/Directory.hs_"
+#endif
+
+#ifndef HSL_RUMTIME
+namespace HSLExtensions
+{
+   //============================== Directory ==============================
+   namespace Directory
+   {
+   function Exists(variable i_strDirectoryName) variable {return(0);}
+   private function _Split(variable i_strDirectoryName, variable i_strDelimiter) variable {return(0);} //variable is an array
+   function Create(variable i_strDirectoryName) variable {return(0);}
+   function Delete(variable i_strDirectoryName, variable i_blnDeleteProtectedFiles) variable {return(0);}
+   function GetSubDirectories(variable i_strDirectoryName) variable {return(0);}//variable is an array
+   function GetFileCount(variable i_strDirectoryName) variable {return(0);}
+   function GetFileNames(variable i_strDirectoryName) variable {return(0);}//variable is an array
+   function Copy( variable i_strDirectoryNameSource, variable i_strDirectoryNameTarget, variable i_blnOverwriteExisting) variable {return(0);}
+   function Move( variable i_strDirectoryNameSource, variable i_strDirectoryNameTarget,variable i_blnOverwriteExisting) variable {return(0);}
+   function GetDirectoryInformation(variable i_strDirectoryName, variable& o_blnIsReadOnly) variable {return(0);}
+   function GetNewestFileName(variable i_strDirectoryName) variable {return(0);}
+   function GetOldestFileName(variable i_strDirectoryName) variable {return(0);}
+   } //end Directory
+} //end HSLExtensions
+#endif
+#endif //end __HSLEXTENSIONS_DIRECTORY__
