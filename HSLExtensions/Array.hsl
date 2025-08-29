@@ -1,0 +1,61 @@
+//----------------------------------------------------------------------------------------
+// Project              : HSL Extension Framework
+// Description          : Framework library with array functions
+// Revision history:
+//----------------------------------------------------------------------------------------
+
+#ifndef __HSLEXTENSIONS_ARRAY__
+#define __HSLEXTENSIONS_ARRAY__ 1
+
+//============================== includes ==============================
+#ifdef HSL_RUNTIME
+#pragma once //use either "#pragma once" or "include guard", not both
+#include "HSLExtensions/ArrayImpl.hs_"
+#endif
+
+#ifndef HSL_RUNTIME
+namespace HSLExtensions
+{
+	namespace Array
+	{
+   	function IsIntegerArray(variable i_arrValues[]) variable						{return(0);}
+		function IsStringArray(variable i_arrValues[]) variable							{return(0);}
+		function IsFloatArray(variable i_arrValues[]) variable							{return(0);}
+		function IsBooleanArray(variable i_arrValues[]) variable						{return(0);}
+		function IsEmpty(variable i_arrValues[]) variable								{return(0);}
+		function Copy(variable i_arrValues[]) variable									{return(0);} //variable is an array might cause issues during runtime
+		function Concat(variable i_arrValuesA[], variable i_arrValuesB[]) variable		{return(0);}
+		function Append(variable& io_arrValuesA[], variable i_arrValuesB[]) void		{return;}
+		function ConvertToStringArray(variable i_arrValues[]) variable					{return(0);}
+		function ConvertToIntegerArray(variable i_arrValues[], variable& o_blnSuccessfulConverted) variable 	{return(0);}
+		function ConvertToFloatArray(variable i_arrValues[], variable& o_blnSuccessfulConverted) variable		{return(0);}
+		function ConvertToBooleanArray(variable i_arrValues[], variable& o_blnSuccessfulConverted) variable		{return(0);}
+		function ContainsValue(variable i_arrValues[], variable i_varValue) variable	{return(0);}
+		function FindValue(variable i_arrValues[], variable i_varValue) variable		{return(0);}
+		function ContainsDuplicates(variable i_arrValues[]) variable					{return(0);}
+		function CompareArrays(variable i_arrExpectedValues[], variable i_arrActualValues[], variable& o_arrMissingValues[], variable& o_arrNotExpectedValues[] ) variable  {return(0);}
+		function Sort(variable i_arrValues[], variable i_intSortMode, variable& o_bSuccessfulSorted) variable	{return(0);}
+		function InitializeAllValues(variable& io_arrValues[], variable i_varValue) void						{return;}
+		/*function IsIntegerArray(variable i_arrValues[]) variable						{return(0);}
+		function IsStringArray(variable i_arrValues[]) variable							{return(0);}
+		function IsFloatArray(variable i_arrValues[]) variable							{return(0);}
+		function IsBooleanArray(variable i_arrValues[]) variable						{return(0);}
+		function IsEmpty(variable i_arrValues[]) variable								{return(0);}
+		function Copy(variable i_arrValues[]) variable							{return();} //variable is an array
+		function Concat(variable i_arrValuesA[], variable i_arrValuesB[]) variable[]	;//{return();}
+		function Append(variable& io_arrValuesA[], variable i_arrValuesB[]) void			{return();}
+		function ConvertToStringArray(variable i_arrValues[]) variable[]				//{return();}
+		function ConvertToIntegerArray(variable i_arrValues[], variable& o_blnSuccessfulConverted) variable[] 	//{return();}
+		function ConvertToFloatArray(variable i_arrValues[], variable& o_blnSuccessfulConverted) variable[]		//{return();}
+		function ConvertToBooleanArray(variable i_arrValues[], variable& o_blnSuccessfulConverted) variable[]	//{return();}
+		function ContainsValue(variable i_arrValues[], variable i_varValue) variable	{return(0);}
+		function FindValue(variable i_arrValues[], variable i_varValue) variable[]	//{return();}
+		function ContainsDuplicates(variable i_arrValues[]) variable[]					//{return();}
+		function CompareArrays(variable i_arrExpectedValues[], variable i_arrActualValues[], variable& o_arrMissingValues[], variable& o_arrNotExpectedValues[] ) variable  {return();}
+		function Sort(variable i_arrValues[], variable i_intSortMode, variable& o_bSuccessfulSorted) variable[]	//{return();}
+		function InitializeAllValues(variable& io_arrValues[], variable i_varValue) void						{return(0);}*/
+	}//namespace Array
+}//namespace HSLExtensions
+#endif
+#endif
+// $$author=Henrik$$valid=0$$time=2025-08-29 10:27$$checksum=dcaf46ad$$length=085$$
