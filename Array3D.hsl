@@ -1,0 +1,30 @@
+//----------------------------------------------------------------------------------------
+// Project              : HSL Extension Framework
+// Description          : Framework library with 2-dimensional array functions
+// Revision history:
+//----------------------------------------------------------------------------------------
+
+#ifndef __HSLEXTENSIONS_ARRAY3D__
+#define __HSLEXTENSIONS_ARRAY3D__ 1
+
+#ifdef HSL_RUNTIME
+#pragma once //use either "#pragma once" or "include guard", not both
+#include "HSLExtensions/Array3DImpl.hs_"
+#endif
+
+#ifndef HSL_RUNTIME
+namespace HSLExtensions
+{
+   //============================== Array3D ==============================
+   namespace Array3D
+   {
+private function _GetSize(variable i_arrValues[], variable& o_intSizeX, variable& o_intSizeY, variable& o_intSizeZ) void {return;}
+function Create(variable i_intSizeX, variable i_intSizeY, variable i_intSizeZ) variable {return(0);} //returnvalue is an array
+function GetSize(variable i_arrValues[], variable& o_intSizeX, variable& o_intSizeY, variable& o_intSizeZ) void {return;}
+function InitializeAllValues(variable& io_arrValues[], variable i_varValue) void {return;}
+function SetValue(variable& io_arrValues[], variable i_intPositionX, variable i_intPositionY, variable i_intPositionZ, variable i_varValue) void {return;}
+function GetValue(variable i_arrValues[], variable i_intPositionX, variable i_intPositionY,variable i_intPositionZ) variable {return(0);}
+   } //end Array3D
+} //end HSLExtension
+#endif
+#endif //end __HSLEXTENSION_ARRAY3D__
