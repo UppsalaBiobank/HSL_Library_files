@@ -1,0 +1,39 @@
+//----------------------------------------------------------------------------------------
+// Project              : HSL Extension Framework
+// Description          : Framework library with file functions
+//
+// Revision history:
+
+//----------------------------------------------------------------------------------------
+
+#ifndef __HSLEXTENSIONS_FILE__
+#define __HSLEXTENSIONS_FILE__ 1
+
+#ifdef HSL_RUNTIME
+#pragma once //use either "#pragma once" or "include guard", not both
+#include "HSLExtensions/FileImpl.hsl"
+#endif
+
+#ifndef HSL_RUNTIME
+//============================== HSLExtensions ==============================
+namespace HSLExtensions
+{
+   namespace File
+   {
+      function CreateFullFileName(variable i_strDirectory, variable i_strShortFileName) variable {return(0);}
+      function GetFileName(variable i_strFullFileName) variable {return(0);}
+      function GetFileNameWithoutExtension(variable i_strFullFileName) variable {return(0);}
+      function GetFileExtension(variable i_strFullFileName) variable {return(0);}
+      function GetDriveName(variable i_strFullFileName) variable {return(0);}
+      function GetDirectoryName(variable i_strFullFileName) variable {return(0);}
+      function CreateTemporaryFileName() variable {return(0);}
+      function Exists(variable i_strFullFileName) variable {return(0);}
+      function Copy( variable i_strFullFileNameSource, variable i_strFullFileNameDestination, variable i_blnOverwriteExistingFile) variable {return(0);}
+      function Delete(variable i_strFullFileName) variable {return(0);}
+      function Move( variable i_strFullFileNameSource, variable i_strFullFileNameDestination, variable i_blnOverwriteExistingFile) variable {return(0);}
+      function Rename( variable i_strFullFileNameSource, variable i_strFullFileNameDestination, variable i_blnOverwriteExistingFile) variable {return(0);}
+      function GetFileInformation(variable i_strFullFileName, variable& o_intSizeInBytes, variable& o_blnIsReadOnly) variable {return(0);}
+   } //end File
+} //end HSLExtensions
+#endif
+#endif //end __HSLEXTENSIONS_FILE__
