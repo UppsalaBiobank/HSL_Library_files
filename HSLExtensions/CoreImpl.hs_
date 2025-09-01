@@ -381,5 +381,3 @@ namespace HSLExtensions
    } //end Core
 } //end HSLExtension
 #endif //end __HSLEXTENSION_CORE__
-
-// $$author=Henrik$$valid=0$$time=2025-08-27 09:59$$checksum=e7d774d6$$length=083$$
