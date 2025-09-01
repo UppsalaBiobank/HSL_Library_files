@@ -532,5 +532,3 @@ namespace HSLExtensions
    } //end Drive
 } //end HSLExtensions
 #endif //end __HSLEXTENSIONS_DRIVE__
-
-// $$author=Henrik$$valid=0$$time=2025-09-01 12:36$$checksum=0ab7b4cb$$length=083$$
