@@ -1,0 +1,34 @@
+//----------------------------------------------------------------------------------------
+// Project              : HSL Extension Framework
+// Description          : Framework library with drive functions
+// Revision history:
+//----------------------------------------------------------------------------------------
+
+#ifndef __HSLEXTENSIONS_DRIVE__
+#define __HSLEXTENSIONS_DRIVE__ 1
+
+#ifdef HSL_RUN_TIME
+#pragma once //use either "#pragma once" or "include guard", not both
+#include "HSLExtensions/DriveImpl.hs_"
+#endif
+
+#ifndef HSL_RUNTIME
+//============================== HSLExtensions ==============================
+namespace HSLExtensions
+{
+   //============================== Drive ==============================
+   namespace Drive
+   {
+      function Exists(variable i_strDriveName) variable {return(0);}
+      private function _Split(variable i_strNames, variable i_strDelimiter) variable {return(0);} //variable is an array
+      function GetDrives() variable {return(0);}//variable is an array
+      function IsReady(variable i_strDriveName) variable {return(0);}
+      function GetSize(variable i_strDriveName, variable& o_intSizeInMB, variable& o_intAvailableSpaceInMB) void {return;}
+      function GetType(variable i_strDriveName) variable {return(0);}
+      function GetFileSystem(variable i_strDriveName) variable {return(0);}
+   } //end Drive
+} //end HSLExtensions
+#endif
+#endif //end __HSLEXTENSIONS_DRIVE__
+
+// $$author=Henrik$$valid=0$$time=2025-09-01 11:36$$checksum=dd89cd6b$$length=083$$
