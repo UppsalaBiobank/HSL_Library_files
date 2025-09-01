@@ -5,7 +5,7 @@
 #ifndef __HSLGetSerialNumber_hsl__
 #define __HSLGetSerialNumber_hsl__	1
 
-//this function has been added to frameworkimpl.hs_
+//this function has been added to HSLExtensionsFramework/HSLExtensionsFrameworkImpl
 #pragma once
 #include "HSLStrLib/HSLStrLib.hsl"
 
