@@ -1,0 +1,45 @@
+//----------------------------------------------------------------------------------------
+// Project              : HSL Extension Framework
+// Description          : Framework library with framework functions
+// Revision history:
+//----------------------------------------------------------------------------------------
+
+#ifndef __HSLEXTENSIONS_FRAMEWORKINTERFACE__
+#define __HSLEXTENSIONS_FRAMEWORKINTERFACE__ 1
+
+//============================== includes ==============================
+#pragma once //use either "#pragma once" or "include guard", not both
+#include "HSLExtensions/HSLExtensionsFramework.hsl"
+
+//#ifndef __HSLEXTENSIONS_FRAMEWORK__
+//   #include "HSLExtensions/Framework/HSLExtensionsFramework.hsl"
+//#endif
+
+//============================== HSLExtension ==============================
+namespace HSLExtensions
+{
+   //============================== Array ==============================
+   namespace Framework
+   {
+      //------------------------------------------------------
+      // Get the framework version
+      //
+      // [return] version (string)
+      //------------------------------------------------------
+      function GetVersion() variable
+      {
+         return(HSLExtensions::Framework::Informations::GetVersion());
+      }
+
+      //------------------------------------------------------
+      // Set the trace level of the framework
+      //
+      // [in] i_intTraceLevel: trace level (see ASWStandard::TraceLevel)
+      //------------------------------------------------------
+      function SetTraceLevel(variable i_intTraceLevel) void
+	   {
+         HSLExtensions::Framework::Trace::SetTraceLevel(i_intTraceLevel);		      
+	   }
+   } //end Framework
+} //end HSLExtension
+#endif //end __HSLEXTENSIONS_FRAMEWORKINTERFACE__
