@@ -22,6 +22,7 @@ namespace HSLExtensions
    {
       function GetVersion() variable {return(0);}
       function SetTraceLevel(variable i_intTraceLevel) void {return;}
+      function GetSerialNumber(device& ML_STAR) variable {return(0);}
    } //end Framework
 } //end HSLExtension
 #endif
