@@ -3,17 +3,13 @@
 // Description          : Framework library with framework functions
 // Revision history:
 //----------------------------------------------------------------------------------------
-
 #ifndef __HSLEXTENSIONS_FRAMEWORKINTERFACE__
 #define __HSLEXTENSIONS_FRAMEWORKINTERFACE__ 1
 
 //============================== includes ==============================
 #pragma once //use either "#pragma once" or "include guard", not both
 #include "HSLExtensions/HSLExtensionsFramework.hsl"
-
-//#ifndef __HSLEXTENSIONS_FRAMEWORK__
-//   #include "HSLExtensions/Framework/HSLExtensionsFramework.hsl"
-//#endif
+#include "HSLStrLib/HSLStrLib.hsl"
 
 //============================== HSLExtension ==============================
 namespace HSLExtensions
@@ -61,7 +57,7 @@ namespace HSLExtensions
 		   serialNumber = StrMid(rc.ElementAt(3), StrFind(rc.ElementAt(3), "sn"), 6);
       }
 	   return(StrMakeUpper(serialNumber));
-      } 
+      }  
    } //end Framework
 } //end HSLExtension
 #endif //end __HSLEXTENSIONS_FRAMEWORKINTERFACE__
