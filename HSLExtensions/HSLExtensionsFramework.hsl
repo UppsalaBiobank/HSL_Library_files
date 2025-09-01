@@ -25,6 +25,7 @@ namespace HSLExtensions
 		namespace Informations
 		{
 			function GetVersion() variable	{return(0);}
+	        function GetSerialNumber(device& ML_STAR) variable {return(0);}
 		}//namespace Informations
 		namespace Types
 		{
