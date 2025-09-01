@@ -1098,7 +1098,6 @@ namespace HSLExtensions
             return(strScriptResult);
          }
       } 
-
    } //end Directory
 } //end HSLExtensions
 #endif //end __HSLEXTENSIONS_DIRECTORY__
