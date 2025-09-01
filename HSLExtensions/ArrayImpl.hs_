@@ -873,10 +873,6 @@ namespace HSLExtensions
          //trace output
          HSLExtensions::Framework::Trace::FunctionResultArrayTrace(strFunctionName, io_arrValues);
       }
-
    } //end Array
 } //end HSLExtension
-
 #endif //end __HSLEXTENSION_ARRAY__
-
-// $$author=Henrik$$valid=0$$time=2025-08-29 10:26$$checksum=a28921c7$$length=083$$
