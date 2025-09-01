@@ -1,0 +1,28 @@
+//----------------------------------------------------------------------------------------
+// Project              : HSL Extension Framework
+// Description          : Framework library with framework functions
+// Revision history:
+//----------------------------------------------------------------------------------------
+
+#ifndef __HSLEXTENSIONS_FRAMEWORKINTERFACE__
+#define __HSLEXTENSIONS_FRAMEWORKINTERFACE__ 1
+
+#ifdef HSL_RUNTIME
+//============================== includes ==============================
+#pragma once //use either "#pragma once" or "include guard", not both
+#include "HSLExtensions/Framework.hs_"
+#endif
+
+#ifndef HSl_RUNTIME
+//============================== HSLExtension ==============================
+namespace HSLExtensions
+{
+   //============================== Array ==============================
+   namespace Framework
+   {
+      function GetVersion() variable {return(0);}
+      function SetTraceLevel(variable i_intTraceLevel) void {return;}
+   } //end Framework
+} //end HSLExtension
+#endif
+#endif //end __HSLEXTENSIONS_FRAMEWORKINTERFACE__
