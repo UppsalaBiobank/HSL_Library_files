@@ -386,10 +386,7 @@ namespace HSLExtensions
 
          return(varValue);
       }
-
    } //end Array3D
 } //end HSLExtension
-
 #endif //end __HSLEXTENSION_ARRAY3D__
 
-// $$author=Henrik$$valid=0$$time=2025-08-27 09:59$$checksum=0ee1ec7d$$length=083$$
