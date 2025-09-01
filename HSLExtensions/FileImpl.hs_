@@ -827,5 +827,4 @@ namespace HSLExtensions
       }      
    } //end File
 } //end HSLExtensions
-
 #endif //end __HSLEXTENSIONS_FILE__
