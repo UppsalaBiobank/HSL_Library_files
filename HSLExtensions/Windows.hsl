@@ -1,0 +1,28 @@
+//----------------------------------------------------------------------------------------
+// Project              : HSL Extension Framework
+// Description          : Framework library with windows functions
+// Revision history:
+//----------------------------------------------------------------------------------------
+
+#ifndef __HSLEXTENSIONS_WINDOWS__
+#define __HSLEXTENSIONS_WINDOWS__ 1
+
+#ifdef HSL_RUNTIME
+#pragma once //use either "#pragma once" or "include guard", not both
+#include "HSLExtensions/WindowsImpl.hs_"
+#endif
+
+#ifndef HSL_RUNTIME
+//============================== HSLExtensions ==============================
+namespace HSLExtensions
+{
+   //============================== String ==============================
+   namespace Windows
+   {
+   function GetSpecialDirectory(variable i_intSpecialDirectoryType) variable {return(0);}
+   function GetRegistryValue( variable i_intHKey, variable i_strKey, variable i_strValueName, variable& o_varValue) variable {return(0);} 
+   function SetRegistryValue( variable i_intHKey, variable i_strKey, variable i_strValueName, variable i_varValue, variable i_intValueType) variable {return(0);} 
+   } //end Windows
+} //end HSLExtensions
+#endif
+#endif //end __HSLEXTENSIONS_WINDOWS__
