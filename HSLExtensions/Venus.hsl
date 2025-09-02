@@ -1,0 +1,37 @@
+//----------------------------------------------------------------------------------------
+// Project              : HSL Extension Framework
+// Description          : Framework library with Venus functions
+// Revision history:
+//----------------------------------------------------------------------------------------
+
+#ifndef __HSLEXTENSIONS_VENUS__
+#define __HSLEXTENSIONS_VENUS__ 1
+
+#ifdef HSL_RUNTIME
+#pragma once //use either "#pragma once" or "include guard", not both
+#include "HSLExtensions/VenusImpl.hs_"
+#endif
+
+//============================== HSLExtensions ==============================
+namespace HSLExtensions
+{
+   //============================== String ==============================
+   namespace Venus
+   {
+      function GetBlockDataPackageDelimiters(device& ML_STAR, variable& o_strBlockDelimiter, variable& o_strFieldDelimiter) void {return;}
+      function GetTadmMode(device& ML_STAR) variable {return(0);}
+      function IsStarSimulated(device& ML_STAR) variable {return(0);}
+      function GetDeckOffset(device& ML_STAR, variable& o_fltDeckOffsetX, variable& o_fltDeckOffsetY, variable& o_fltDeckOffsetZ) void {return;}
+      function GetDeckRaster(device& ML_STAR) variable {return(0);}
+      function GetNumberOfChannels(device& ML_STAR) variable {return(0);}
+      function GetLaboratoryName() variable {return(0);}
+      function GetSystemSoftwareVersion() variable {return(0);}
+      function GetStarSoftwareVersion() variable {return(0);}
+      function IsIvdSystem() variable {return(0);}
+      function GetErrorEmailAddress() variable {return(0);}
+      function IsErrorEmailEnabled() variable {return(0);}
+      function GetCurrentUserRights() variable {return(0);}
+   } //end String
+} //end HSLExtensions
+
+#endif //end __HSLEXTENSIONS_STRING__
