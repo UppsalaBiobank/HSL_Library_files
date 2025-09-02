@@ -1,0 +1,37 @@
+//----------------------------------------------------------------------------------------
+// Project              : HSL Extension Framework
+// Description          : Framework library with 2-dimensional sequence array functions
+// Revision history:
+//----------------------------------------------------------------------------------------
+
+#ifndef __HSLEXTENSION_SEQARRAY2D__
+#define __HSLEXTENSION_SEQARRAY2D__ 1
+
+#ifdef HSL_RUNTIME
+#pragma once
+#include "HSLExtensions/SequenceArray2DImpl.hs_"
+#endif
+
+#ifndef HSL_RUNTIME
+//============================== HSLExtensions ==============================
+namespace HSLExtensions
+{
+   //============================== SequenceArray2D ==============================
+   namespace SequenceArray2D
+   {  
+      private function _GetSize(sequence i_arrValues[], variable& o_intSizeX, variable& o_intSizeY) void {return;}
+      private function _CreateTraceOfSequence(sequence i_seqObject) variable  {return(0);}
+      private function _CreateTraceOfSequenceArray(sequence i_seqObject[]) variable {return(0);} //variable is an array
+      function Create(variable i_intSizeX, variable i_intSizeY) variable  {return(0);}
+      function GetSize(sequence i_arrValues[], variable& o_intSizeX, variable& o_intSizeY) void {return;}
+      function SetSequence(sequence& io_arrValues[], variable i_intPositionX, variable i_intPositionY, sequence i_seqValue) void {return;}
+      function GetSequence(sequence i_arrValues[], variable i_intPositionX, variable i_intPositionY) variable  {return(0);}
+      function GetRow(sequence i_arrValues[], variable i_intPositionY) variable  {return(0);}
+      function GetColumn(sequence i_arrValues[], variable i_intPositionX) variable  {return(0);}
+      function SetRow(sequence io_arrValues[], sequence i_arrRow[], variable i_intPositionY) void {return;}
+      function SetColumn(sequence io_arrValues[], sequence i_arrColumn[], variable i_intPositionX) void {return;}
+      function AddRow(sequence io_arrValues[], sequence i_arrNewRow[]) void {return;}
+   } //end SeqArray2D
+} //end HSLExtensions
+#endif
+#endif //end __HSLEXTENSION_SEQARRAY2D__
