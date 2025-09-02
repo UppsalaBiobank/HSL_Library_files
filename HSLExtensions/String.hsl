@@ -1,0 +1,32 @@
+//----------------------------------------------------------------------------------------
+// Project              : HSL Extension Framework
+// Description          : Framework library with string functions
+// Revision history:
+//----------------------------------------------------------------------------------------
+
+#ifndef __HSLEXTENSIONS_STRING__
+#define __HSLEXTENSIONS_STRING__ 1
+
+#ifdef HSL_RUNTIME
+#pragma once //use either "#pragma once" or "include guard", not both
+#include "HSLExtensions/StringImpl.hs_"
+#endif
+
+#ifndef HSL_RUNTIME
+//============================== HSLExtensions ==============================
+namespace HSLExtensions
+{
+   //============================== String ==============================
+   namespace String
+   {
+      function Split(variable i_strValue, variable i_strDelimiter, variable i_blnTrimWhitespaces) variable {return(0);}
+      function Trim(variable i_strValue) variable {return(0);}
+      function ConvertToCharArray(variable i_strValue) variable {return(0);}
+      function ConvertToAsciiArray(variable i_strValue) variable {return(0);}
+      function FromAsciiArray(variable i_arrAsciiValues[]) variable {return(0);}
+      function Join(variable i_arrValues[]) variable {return(0);}
+      function JoinWithDelimiter(variable i_arrValues[], variable i_strDelimiter) variable {return(0);}
+   } //end String
+} //end HSLExtensions
+#endif
+#endif //end __HSLEXTENSIONS_STRING__
