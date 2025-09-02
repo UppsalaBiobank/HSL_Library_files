@@ -1,0 +1,23 @@
+#ifndef __HSLDeckVisualize_hsl__
+#define __HSLDeckVisualize_hsl__ 1
+// ==========================================================================
+// Implementation of File library 
+// ==========================================================================
+#ifdef HSL_RUNTIME
+#pragma once // use either pragma once or include guard not both
+#include "HSLDeckVisualizeImpl.hs_"
+#endif
+
+
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Interface to library 
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+#ifndef HSL_RUNTIME
+namespace DeckVisualize
+{
+	function UpdateUsedPositions(device& dev, sequence& positions, variable action, variable description) void {}
+	function UpdateUsedLabware(device& dev, variable labware[], variable action[], variable description) void {}
+	function UpdateLoadedLabware(device& dev, variable labware[], variable state[], variable description) void {}
+} 
+#endif
+#endif
