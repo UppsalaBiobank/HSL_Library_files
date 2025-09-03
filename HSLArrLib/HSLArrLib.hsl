@@ -3,7 +3,7 @@
 // Modification History
 
 #ifndef __HSLArrLib_hsl__
-#define __HSLArrLib_hsl__	1
+#define __HSLArrLib_hsl__  1
 
 // ==========================================================================
 // Implementation of File library 
@@ -17,22 +17,54 @@
 #ifndef HSL_RUNTIME
 namespace Arr
 {
-function VarArrUpperBound() variable																		{return(0);}
-function VarArrGetSize(variable row) variable															{return(0);}
-function VarArrSetSize(variable row, variable newSize) void											{return;}
-function VarArrSetAt(variable row, variable column, variable& variableObj) void				{return;}
-function VarArrGetAt(variable row, variable column) variable										{return(0);}
-function VarArrElementAt(variable row, variable column) variable									{return(0);}
-function VarArrAdd(variable row, variable& variableObj) void										{return;}
-function VarArrInsertElementAt(variable row, variable column, variable& variableObj) void	{return;}
-function SeqArrUpperBound() variable																		{return(0);}
-function SeqArrGetSize(variable row) variable															{return(0);}
-function SeqArrSetSize(variable row, variable newSize) void											{return;}
-function SeqArrSetAt(variable row, variable column, sequence& sequenceObj)	void				{return;}
-function SeqArrGetAt(variable row, variable column, sequence& sequenceObj)	void				{return;}
-function SeqArrElementAt(variable row, variable column, sequence& sequenceObj) void			{return;}
-function SeqArrAdd(variable row, sequence& sequenceObj) void										{return;}
-function SeqArrInsertElementAt(variable row, variable column, sequence& sequenceObj) void	{return;}
+function VarArrUpperBound() variable      {return(0);}
+function VarArrGetSize(
+   variable row) variableObj              {return(0);}
+function VarArrSetSize(
+   variable row, 
+   variable newSize) void                 {return;}
+function VarArrSetAt(
+   variable row, 
+   variable column, 
+   variable& variableObj) void            {return;}
+function VarArrGetAt(
+   variable row,
+   variable column) variable              {return(0);}
+function VarArrElementAt(
+   variable row,
+   variable column) variable              {return(0);}
+function VarArrAdd(
+   variable row,
+   variable& variableObj) void            {return;}
+function VarArrInsertElementAt(
+   variable row,
+   variable column,
+   variable& variableObj) void            {return;}
+function SeqArrUpperBound() variable      {return(0);}
+function SeqArrGetSize(
+   variable row) variable                 {return(0);}
+function SeqArrSetSize(
+   variable row,
+   variable newSize) void                 {return;}
+function SeqArrSetAt(
+   variable row,
+   variable column,
+   sequence& sequenceObj)  void           {return;}
+function SeqArrGetAt(
+   variable row,
+   variable column,
+   sequence& sequenceObj)  void           {return;}
+function SeqArrElementAt(
+   variable row,
+   variable column,
+   sequence& sequenceObj) void            {return;}
+function SeqArrAdd(
+   variable row,
+   sequence& sequenceObj) void            {return;}
+function SeqArrInsertElementAt(
+   variable row,
+   variable column,
+   sequence& sequenceObj) void            {return;}
 }
-#endif
+#endif   
 #endif
