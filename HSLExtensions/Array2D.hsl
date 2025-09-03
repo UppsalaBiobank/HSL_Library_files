@@ -1,15 +1,7 @@
 //----------------------------------------------------------------------------------------
-// Copyright (C) by HAMILTON Bonaduz AG, CH-7402 Bonaduz.
-// All rights reserved.
-//
 // Project              : HSL Extension Framework
 // Description          : Framework library with 2-dimensional array functions
-//
-// Software Version     : 4.3
-//
 // Revision history:
-// - Oliver Funke   2011.02.12   library created
-//
 //----------------------------------------------------------------------------------------
 
 #ifndef __HSLEXTENSIONS_ARRAY2D__
