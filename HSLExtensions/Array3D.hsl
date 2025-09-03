@@ -1,7 +1,15 @@
 //----------------------------------------------------------------------------------------
+// Copyright (C) by HAMILTON Bonaduz AG, CH-7402 Bonaduz.
+// All rights reserved.
+//
 // Project              : HSL Extension Framework
 // Description          : Framework library with 2-dimensional array functions
+//
+// Software Version     : 4.3
+//
 // Revision history:
+// - Oliver Funke   2011.02.13   library created
+//
 //----------------------------------------------------------------------------------------
 
 #ifndef __HSLEXTENSIONS_ARRAY3D__
@@ -18,12 +26,34 @@ namespace HSLExtensions
    //============================== Array3D ==============================
    namespace Array3D
    {
-	private function _GetSize(variable i_arrValues[], variable& o_intSizeX, variable& o_intSizeY, variable& o_intSizeZ) void {return;}
-	function Create(variable i_intSizeX, variable i_intSizeY, variable i_intSizeZ) variable {return(0);} //returnvalue is an array
-	function GetSize(variable i_arrValues[], variable& o_intSizeX, variable& o_intSizeY, variable& o_intSizeZ) void {return;}
-	function InitializeAllValues(variable& io_arrValues[], variable i_varValue) void {return;}
-	function SetValue(variable& io_arrValues[], variable i_intPositionX, variable i_intPositionY, variable i_intPositionZ, variable i_varValue) void {return;}
-	function GetValue(variable i_arrValues[], variable i_intPositionX, variable i_intPositionY,variable i_intPositionZ) variable {return(0);}
+	private function _GetSize(
+		variable i_arrValues[],
+		variable& o_intSizeX,
+		variable& o_intSizeY,
+		variable& o_intSizeZ) void		{return;}
+	function Create(
+		variable i_intSizeX,
+		variable i_intSizeY,
+		variable i_intSizeZ) variable 	{return(0);} //returnvalue is an array
+	function GetSize(
+		variable i_arrValues[],
+		variable& o_intSizeX,
+		variable& o_intSizeY,
+		variable& o_intSizeZ) void		{return;}
+	function InitializeAllValues(
+		variable& io_arrValues[],
+		variable i_varValue) void 		{return;}
+	function SetValue(
+		variable& io_arrValues[],
+		variable i_intPositionX,
+		variable i_intPositionY,
+		variable i_intPositionZ,
+		variable i_varValue) void 		{return;}
+	function GetValue(
+		variable i_arrValues[],
+		variable i_intPositionX,
+		variable i_intPositionY,
+		variable i_intPositionZ) variable {return(0);}
    } //end Array3D
 } //end HSLExtension
 #endif
