@@ -1,11 +1,7 @@
-// ======================================================================
-// This is a part of the HSL Report Lib.
-// ======================================================================
-#ifndef __HSLReportLib_hsl__
-#define __HSLReportLib_hsl__	1
-
 // ==========================================================================
-// Implementation of File library 
+// This is a part of the HSL Report Lib.
+//
+// Modification History
 // ==========================================================================
 #ifndef __HSLReportLib_hsl__
 #define __HSLReportLib_hsl__	1
