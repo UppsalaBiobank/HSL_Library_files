@@ -1,62 +1,8 @@
+// ----------------------------------------------------------------------------------------------------
 // This is a part of the HSL Device Library.
-// Copyright (C) by HAMILTON Bonaduz AG, CH-7402 Bonaduz.
-// All rights reserved.
 //
-// Modification History
-// 2001-06-26  bandenmatten : Removed onerror goto statements from library functions.
-// 2001-06-10  bandenmatten : Added library functions DevGetTemplateLabwareNames, and DevGetTemplateLabwareNameAt.
-// 2001-07-17  bandenmatten : Divided library into interface and implemenation.
-// 2001-07-19  bandenmatten : Added function DevComputeContainerVolume.
-// 2001-09-19  bandenmatten : Added parameter 'deckCoordinates' to function DevComputeContainerVolume.
-// 2001-10-30  bandenmatten : Added function DevGetSequenceRef.
-// 2001-10-31  bandenmatten : Added function DevResetSequence.
-// 2001-11-19  bandenmatten : Added function DevGetInstrumentName.
-// 2002-01-15  bandenmatten : Added functions DevLock and DevUnlock.
-// 2002-01-23  bandenmatten : Moved functions DevLock and DevUnlock to HSLUtilLib.hsl.
-// 2002-03-04  bandenmatten : Function DevGetInstrumentName didn't return a value. Fixed this bug.
-// 2002-03-12  bandenmatten : Added functions DevGetReleaseVersion and DevGetPositionsLabwareNames.
-// 2002-03-13  bandenmatten : Added functions DevGetCfgValueWithKey.
-// 2002-06-06  bandenmatten : Added function DevGetLabwarePositionEx2.
-// 2002-06-05  bandenmatten : Renamed parameter of function DevGetPositionsLabwareNames.
-// 2002-12-05  bandenmatten : Specified return values for exported library functions.
-// 2003-01-22  bandenmatten : Added functions DevAddLabwareToTemplate(), DevRemoveLabwareFromTemplate().
-// 2003-01-23  bandenmatten : Added function DevAddPreloadedLabware().
-// 2003-01-28  bandenmatten : Added function DevGetDeckLayoutFileName().
-// 2004-02-19  bandenmatten : Added functions DevGetBarcodeData(), DevSetBarcodeData().
-// 2004-02-19  bandenmatten : Added functions DevGetBarcodeData2(), DevSetBarcodeData2().
-// 2004-02-19  bandenmatten : Added functions DevGetBarcodeData3(), DevSetBarcodeData3().
-// 2005-05-17  bandenmatten : Added function DevComputeContainerVolume2(), that supports 'connectedContainers'.
-// 2005-06-07  bandenmatten : Added function DevCopyResetSequence().
-// 2005-06-13  jjenal       : Added function DevAddSequence2()
-// 2005-06-13  jjenal       : Added function DevEditSequences2()
-// 2005-09-19  bandenmatten : The functions listed below always added 
-//										the (optional) key HXP_LABWR_POSID to the pars package even when the 
-//										position name passed into these functions was empty (//>> 20050919). Fixed this bug.
-//										DevGetBarcodeData()
-//										DevSetBarcodeData()
-//										DevGetBarcodeData2()
-//										DevSetBarcodeData2()
-//										DevGetBarcodeData3()
-//										DevSetBarcodeData3()
-// 2006-02-09  bandenmatten : Added function DevIsValidLabwareForCurrentDeckLayout().
-// 2006-09-28  bandenmatten : Added function DevAddContainerToRack().
-// 2007-09-28  bandenmatten : Changed implementation of functions listed below using builtins GetBarcodeData() and 
-//							  			SetBarcodeData() instead of deck layout object :
-//										DevGetBarcodeData()
-//										DevSetBarcodeData()
-//										DevGetBarcodeData2()
-//										DevSetBarcodeData2()
-//										DevGetBarcodeData3()
-//										DevSetBarcodeData3()
-// 2007-09-28  bandenmatten : Added functions :
-//										DevGetUniqueBarcode()
-//										DevSetUniqueBarcode()
-//										DevGetUniqueBarcode2()
-//										DevSetUniqueBarcode2()
-//										DevGetUniqueBarcode3()
-//										DevSetUniqueBarcode3()
-// 2008-10-01  bandenmatten : Added function  :
-//										DevGetInstrumentViewName()
+// Modification History:
+// ----------------------------------------------------------------------------------------------------
 
 #ifndef __HSLDevLibImpl_hsl__
 #define __HSLDevLibImpl_hsl__	1
