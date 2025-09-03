@@ -706,6 +706,4 @@ function DevSetUniqueBarcode3(device& deviceObj, sequence& sequenceObj, variable
 		err.Raise();
 	}
 }
-
 #endif
-// $$author=Henrik$$valid=0$$time=2025-08-26 13:50$$checksum=68df7f03$$length=083$$
