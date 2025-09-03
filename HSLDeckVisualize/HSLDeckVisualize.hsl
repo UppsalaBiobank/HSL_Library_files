@@ -15,9 +15,21 @@
 #ifndef HSL_RUNTIME
 namespace DeckVisualize
 {
-	function UpdateUsedPositions(device& dev, sequence& positions, variable action, variable description) void {}
-	function UpdateUsedLabware(device& dev, variable labware[], variable action[], variable description) void {}
-	function UpdateLoadedLabware(device& dev, variable labware[], variable state[], variable description) void {}
+	function UpdateUsedPositions(
+		device& dev,
+		sequence& positions,
+		variable action,
+		variable description) void {}
+	function UpdateUsedLabware(
+		device& dev,
+		variable labware[],
+		variable action[],
+		variable description) void {}
+	function UpdateLoadedLabware(
+		device& dev,
+		variable labware[],
+		variable state[],
+		variable description) void {}
 } 
 #endif
 #endif
