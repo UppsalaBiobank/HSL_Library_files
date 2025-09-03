@@ -7,6 +7,12 @@
 // ==========================================================================
 // Implementation of File library 
 // ==========================================================================
+#ifndef __HSLReportLib_hsl__
+#define __HSLReportLib_hsl__	1
+
+// ==========================================================================
+// Implementation of File library 
+// ==========================================================================
 #ifdef HSL_RUNTIME
 #pragma once 
 #include "HSLReport/HSLReportLibImpl.hs_"
@@ -16,7 +22,7 @@
 #ifndef HSL_RUNTIME
 namespace HSLReport
 {
-	function AddToReportListFromLabware(
+   function AddToReportListFromLabware(
 		device& Device,
 		variable& Labware_id) variable 				{return(0);}
 
@@ -33,8 +39,7 @@ namespace HSLReport
 		variable completeList,
 		variable removeFromList,
 		variable& plateName) variable 				{return(0);}
-
 } // end of namespace HSLReport
-#endif //end of #ifndef HSL_RUNTIME
+#endif
 
-#endif /* end of #ifndef __HSLReportLib_hsl__ */
+#endif // end of #ifndef __HSLReportLib_hsl__ 
