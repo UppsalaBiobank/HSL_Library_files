@@ -17,18 +17,35 @@ namespace HSLExtensions
 {
    namespace Core
    {
-   function IsInteger(variable i_varValue) variable                                                {return(0);}
-   function IsString(variable i_varValue) variable                                                 {return(0);}
-   function IsFloat(variable i_varValue) variable                                                  {return(0);}
-   function IsBoolean(variable i_varValue) variable                                                {return(0);}
-   function IsNull(variable i_varValue) variable                                                   {return(0);}
-   function IsEmptyString(variable i_varValue) variable                                            {return(0);}
-   function GetValueType(variable i_varValue) variable                                             {return(0);}
-   function ConvertToString(variable i_varValue) variable                                          {return(0);}
-   function ConvertToBoolean(  variable i_varValue, variable& o_blnSuccessfulConverted) variable   {return(0);}
-   function ConvertToInteger( variable i_varValue, variable& o_blnSuccessfulConverted) variable    {return(0);}
-   function ConvertToFloat( variable i_varValue, variable& o_blnSuccessfulConverted) variable      {return(0);}
-   function IsBetween( variable i_varValue, variable i_varMinimum, variable i_varMaximum) variable {return(0);}
+   function IsInteger(
+		variable i_varValue) variable					{return(0);}
+   function IsString(
+		variable i_varValue) variable					{return(0);}
+   function IsFloat(
+		variable i_varValue) variable					{return(0);}
+   function IsBoolean(
+		variable i_varValue) variable					{return(0);}
+   function IsNull(
+		variable i_varValue) variable					{return(0);}
+   function IsEmptyString(
+		variable i_varValue) variable             {return(0);}
+   function GetValueType(
+		variable i_varValue) variable             {return(0);}
+   function ConvertToString(
+		variable i_varValue) variable             {return(0);}
+   function ConvertToBoolean(
+		variable i_varValue,
+		variable& o_blnSuccessfulConverted) variable	{return(0);}
+   function ConvertToInteger(
+		variable i_varValue,
+		variable& o_blnSuccessfulConverted) variable	{return(0);}
+   function ConvertToFloat(
+		variable i_varValue,
+		variable& o_blnSuccessfulConverted) variable	{return(0);}
+   function IsBetween(
+		variable i_varValue,
+		variable i_varMinimum,
+		variable i_varMaximum) variable 				{return(0);}
    } //end Core
 } //end HSLExtension
 #endif
