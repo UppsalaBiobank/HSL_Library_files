@@ -1,15 +1,7 @@
 //----------------------------------------------------------------------------------------
-// Copyright (C) by HAMILTON Bonaduz AG, CH-7402 Bonaduz.
-// All rights reserved.
-//
 // Project              : HSL Extension Framework
 // Description          : Framework library with drive functions
-//
-// Software Version     : 4.3
-//
 // Revision history:
-// - Oliver Funke   2011.02.16   library created
-//
 //----------------------------------------------------------------------------------------
 
 #ifndef __HSLEXTENSIONS_DRIVE__
@@ -47,5 +39,3 @@ namespace HSLExtensions
 } //end HSLExtensions
 #endif
 #endif //end __HSLEXTENSIONS_DRIVE__
-
-// $$author=Henrik$$valid=0$$time=2025-09-01 11:36$$checksum=dd89cd6b$$length=083$$
