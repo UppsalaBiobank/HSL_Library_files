@@ -1,22 +1,12 @@
-// Projekt: easyCodeII
+// : easyCodeII
 // ===================
 //
-// (C) 2010-2015 Hamilton Bonaduz AG
 //
 // Revisions:
 // ----------
-//
-// Rev 2.0.0   2013.11.14  16:53.00   sgluekler
-// - Many changes for the new easyCodeII V2.0.0 Beta B version
-// - New parameter for function ExportRackPicture()
-// Rev 3.0.0   2015.02.04  07:53.00   sgluekler
-// - Official release for easyCodeII V3.0.0
-// Rev 3.0.1   2015-04-08  ecaflisch
-// - New constant definitions for GROUPNAME
-// - New error code _NO_BARCODE_DEFINED
 
-#ifndef __EASYCODEII_LIBRARY_hsl__
-#define __EASYCODEII_LIBRARY_hsl__ 1
+#ifndef __EASYCODEII_LIBRARYOImpl_hsl__
+#define __EASYCODEII_LIBRARYImpl_hsl__ 1
 
 #pragma once
 #include "HSLUtils/HSLUtilLib.hsl"
