@@ -1,8 +1,16 @@
 //----------------------------------------------------------------------------------------
+// Copyright (C) by HAMILTON Bonaduz AG, CH-7402 Bonaduz.
+// All rights reserved.
+//
 // Project              : HSL Extension Framework
 // Description          : Framework library with Dictionary functions
-/
+//
+// Software Version     : 4.3
+//
 // Revision history:
+// - Oliver Funke   2011.02.12   library created
+// - Oliver Funke   2013.01.31   added functions: GetKeys, GetItems
+//
 //----------------------------------------------------------------------------------------
 
 #ifndef __HSLEXTENSIONS_DICTIONARY__
@@ -18,17 +26,35 @@ namespace HSLExtensions
 {
    namespace Dictionary
    {
-   function CreateDictionary(variable i_strDictionaryName,variable i_intDictionaryKeyType) variable {return(0);}
-   function ExistsDictionary(variable i_strDictionaryName) variable {return(0);}
-   function ExistsItem(variable i_strDictionaryName,variable i_varKey) variable {return(0);}
-   function DeleteAllDictionaries() variable {return(0);}
-   function DeleteDictionary(variable i_strDictionaryName) variable {return(0);}
-   function AddItem(variable i_strDictionaryName, variable i_varKey, variable i_varItem) variable {return(0);}
-   function GetItem(variable i_strDictionaryName, variable i_varKey) variable {return(0);}
-   function ChangeItem(variable i_strDictionaryName,variable i_varKey,variable i_varItem) variable {return(0);}
-   function GetKeys(variable i_strDictionaryName) variable {return(0);} //variable is an array
-   function GetItems(variable i_strDictionaryName) variable {return(0);} //variable is an array
+   function CreateDictionary(
+		variable i_strDictionaryName,
+		variable i_intDictionaryKeyType) variable 	{return(0);}
+   function ExistsDictionary(
+		variable i_strDictionaryName) variable 		{return(0);}
+   function ExistsItem(
+		variable i_strDictionaryName,
+		variable i_varKey) variable 				      {return(0);}
+   function DeleteAllDictionaries() variable 		{return(0);}
+   function DeleteDictionary(
+		variable i_strDictionaryName) variable 		{return(0);}
+   function AddItem(
+		variable i_strDictionaryName,
+		variable i_varKey,
+		variable i_varItem) variable 				      {return(0);}
+   function GetItem(
+		variable i_strDictionaryName,
+		variable i_varKey) variable 				      {return(0);}
+   function ChangeItem(
+		variable i_strDictionaryName,
+		variable i_varKey,
+		variable i_varItem) variable 			      	{return(0);}
+   function GetKeys(
+		variable i_strDictionaryName) variable 		{return(0);} //variable is an array
+   function GetItems(
+		variable i_strDictionaryName) variable 		{return(0);} //variable is an array
    } //end Dictionary
 } //end HSLExtensions
 #endif
 #endif //end __HSLEXTENSIONS_DICTIONARY__
+
+// $$author=Henrik$$valid=0$$time=2025-08-29 11:27$$checksum=1a3b7577$$length=083$$
