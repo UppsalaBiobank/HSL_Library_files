@@ -19,13 +19,30 @@ namespace HSLExtensions
 {
    namespace Sequence
    {
-      function Concat(sequence& i_seqSourceA, sequence& i_seqSourceB, variable i_blnConcatFullSequences) variable {return(0);} //variable==sequence
-      function Copy(sequence& i_seqSource, variable i_intSequenceCopyMode) variable {return(0);}
-      function CreateByLabwareData(variable i_arrLabwareIdentifiers[], variable i_arrPositionIdentifiers[]) variable {return(0);}
-      function GetOddEvenSequence(sequence i_seqSource, variable i_arrLabwarePositions[]) variable {return(0);}
-      function ReplaceLabwareIdentifier(sequence i_seqSource, variable i_strActualLabwareIdentifier, variable i_strNewLabwareIdentifier) variable {return(0);}
-      function RemovePositions(sequence i_seqSource, variable i_arrIntPositions[]) variable {return(0);}
-      function RemovePositionsByProperty(sequence& io_seqSource, variable i_strPropertyName, variable i_varPropertyValue) void {return;}
+      function Concat(
+      	sequence& i_seqSourceA, 
+      	sequence& i_seqSourceB,
+		variable i_blnConcatFullSequences) variable 	{return(0);} //variable==sequence
+      function Copy(
+      	sequence& i_seqSource,
+		variable i_intSequenceCopyMode) variable 		{return(0);}
+      function CreateByLabwareData(
+      	variable i_arrLabwareIdentifiers[],
+		variable i_arrPositionIdentifiers[]) variable 	{return(0);}
+      function GetOddEvenSequence(
+      	sequence i_seqSource,
+		variable i_arrLabwarePositions[]) variable 		{return(0);}
+      function ReplaceLabwareIdentifier(
+      	sequence i_seqSource,
+		variable i_strActualLabwareIdentifier,
+		variable i_strNewLabwareIdentifier) variable 	{return(0);}
+      function RemovePositions(
+      	sequence i_seqSource,
+		variable i_arrIntPositions[]) variable 			{return(0);}
+      function RemovePositionsByProperty(
+      	sequence& io_seqSource,
+		variable i_strPropertyName,
+		variable i_varPropertyValue) void 				{return;}
       function Randomize(sequence i_seqSource) variable {return(0);}
    } //end Sequence
 } //end HSLExtensions
