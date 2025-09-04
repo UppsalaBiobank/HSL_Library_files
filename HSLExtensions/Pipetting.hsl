@@ -19,13 +19,26 @@ namespace HSLExtensions
    //============================== Pipetting ==============================
    namespace Pipetting
    {
-      function Plate96PositionTextToPositionNumber(variable i_strPositionText, variable& o_intPositionNumber)variable {return(0);}
-      function Plate96PositionNumberToPositionText(variable i_intPositionNumber, variable& o_strPositionText) variable {return(0);}
-      function Plate384PositionTextToPositionNumber(variable i_strPositionText, variable& o_intPositionNumber)variable {return(0);}
-      function Plate384PositionNumberToPositionText(variable i_intPositionNumber, variable& o_strPositionText)variable {return(0);}
-      function CreateOrderedChannelPattern(variable i_intNumberOfUsedChannels, variable i_intTotalNumberOfChannels) variable {return(0);}
-      function CreateMixedChannelPattern(variable i_arrUseChannel[], variable i_intTotalNumberOfChannels) variable {return(0);}
-      function ParseChannelPattern(variable i_strChannelPattern) variable  {return(0);} //variable is an array
+      function Plate96PositionTextToPositionNumber(
+		variable i_strPositionText,
+		variable& o_intPositionNumber)variable 			{return(0);}
+      function Plate96PositionNumberToPositionText(
+		variable i_intPositionNumber,
+		variable& o_strPositionText) variable 			{return(0);}
+      function Plate384PositionTextToPositionNumber(
+		variable i_strPositionText,
+		variable& o_intPositionNumber)variable 			{return(0);}
+      function Plate384PositionNumberToPositionText(
+		variable i_intPositionNumber,
+		variable& o_strPositionText)variable 			{return(0);}
+      function CreateOrderedChannelPattern(
+		variable i_intNumberOfUsedChannels,
+		variable i_intTotalNumberOfChannels) variable 	{return(0);}
+      function CreateMixedChannelPattern(
+		variable i_arrUseChannel[],
+		variable i_intTotalNumberOfChannels) variable 	{return(0);}
+      function ParseChannelPattern(
+		variable i_strChannelPattern) variable 			{return(0);} //variable is an array
    } //end Pipetting
 } //end HSLExtension
 #endif
