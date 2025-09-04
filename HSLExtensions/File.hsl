@@ -1,7 +1,6 @@
 //----------------------------------------------------------------------------------------
 // Project              : HSL Extension Framework
 // Description          : Framework library with file functions
-//
 // Revision history:
 
 //----------------------------------------------------------------------------------------
@@ -20,19 +19,41 @@ namespace HSLExtensions
 {
    namespace File
    {
-      function CreateFullFileName(variable i_strDirectory, variable i_strShortFileName) variable {return(0);}
-      function GetFileName(variable i_strFullFileName) variable {return(0);}
-      function GetFileNameWithoutExtension(variable i_strFullFileName) variable {return(0);}
-      function GetFileExtension(variable i_strFullFileName) variable {return(0);}
-      function GetDriveName(variable i_strFullFileName) variable {return(0);}
-      function GetDirectoryName(variable i_strFullFileName) variable {return(0);}
-      function CreateTemporaryFileName() variable {return(0);}
-      function Exists(variable i_strFullFileName) variable {return(0);}
-      function Copy( variable i_strFullFileNameSource, variable i_strFullFileNameDestination, variable i_blnOverwriteExistingFile) variable {return(0);}
-      function Delete(variable i_strFullFileName) variable {return(0);}
-      function Move( variable i_strFullFileNameSource, variable i_strFullFileNameDestination, variable i_blnOverwriteExistingFile) variable {return(0);}
-      function Rename( variable i_strFullFileNameSource, variable i_strFullFileNameDestination, variable i_blnOverwriteExistingFile) variable {return(0);}
-      function GetFileInformation(variable i_strFullFileName, variable& o_intSizeInBytes, variable& o_blnIsReadOnly) variable {return(0);}
+      function CreateFullFileName(
+		   variable i_strDirectory,
+		   variable i_strShortFileName) variable 		{return(0);}
+      function GetFileName(
+		   variable i_strFullFileName) variable 		{return(0);}
+      function GetFileNameWithoutExtension(
+		   variable i_strFullFileName) variable 		{return(0);}
+      function GetFileExtension(
+		   variable i_strFullFileName) variable 		{return(0);}
+      function GetDriveName(
+		   variable i_strFullFileName) variable 		{return(0);}
+      function GetDirectoryName(
+		   variable i_strFullFileName) variable 		{return(0);}
+      function CreateTemporaryFileName() variable 	{return(0);}
+      function Exists(
+		   variable i_strFullFileName) variable 		{return(0);}
+      function Copy( 
+		   variable i_strFullFileNameSource,
+	   	variable i_strFullFileNameDestination,
+		   variable i_blnOverwriteExistingFile) variable {return(0);}
+      function Delete(
+	   	variable i_strFullFileName) variable 		{return(0);}
+      function Move( 
+	   	variable i_strFullFileNameSource,
+	   	variable i_strFullFileNameDestination,
+	   	variable i_blnOverwriteExistingFile) variable {return(0);}
+      function Rename( 
+	   	variable i_strFullFileNameSource,
+	   	variable i_strFullFileNameDestination,
+	   	variable i_blnOverwriteExistingFile) variable {return(0);}
+      function GetFileInformation(
+	   	variable i_strFullFileName,
+   		variable& o_intSizeInBytes,
+   
+   		variable& o_blnIsReadOnly) variable 		{return(0);}
    } //end File
 } //end HSLExtensions
 #endif
