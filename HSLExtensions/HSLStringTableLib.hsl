@@ -1,0 +1,27 @@
+//----------------------------------------------------------------------------------------
+// This is a part of the String Table Library.
+// Description: Check whether the file containing the string table exists. 
+//							If not, tried to load the file *Enu.hs_
+// Modification History
+//----------------------------------------------------------------------------------------
+
+#ifndef __HSLStringTableLib_hsl__
+#define __HSLStringTableLib_hsl__	1
+
+#ifdef HSL_RUNTIME
+#pragma once
+#include "HSLStringTableLibImpl.hs_"
+#endif
+
+// Interface to the String Table Library
+#ifndef HSL_RUNTIME
+namespace StringTable
+{
+function Init(variable& librayName) void                 {return;}
+function Insert(variable ids, variable& str) void        {return;}
+function Load(variable ids) variable                     {return(0);}
+function Dump() void                                     {return;}
+function Assert(variable expr, variable location) void	{return;}
+}
+#endif
+#endif
