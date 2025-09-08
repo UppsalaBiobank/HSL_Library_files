@@ -1,0 +1,99 @@
+//  ------------------------------------------------------------------------------------
+//  This is a part of the module HxSTCompCmd.
+//  Exported interfaces and data members of the STCC Template Library,
+//  used from the general steps in the method editor.
+//
+//  Modification History
+//  ------------------------------------------------------------------------------------
+
+#ifndef __HSLSTCCLib_hsl__
+#define __HSLSTCCLib_hsl__ 1
+
+#ifdef HSL_RUNTIME
+#include "HSLSTCCLibImpl.hs_"
+#endif
+#ifndef HSL_RUNTIME
+namespace STCC
+{
+
+	static function InitSTCCLibrary() variable                  {return(0);}
+
+	static function ResetFilterSequences() void							{return;}
+	static function AddFilterSequence(
+			device    deviceContext,
+			sequence& filterSequence) void								{return;}
+	static function GenerateMappingFile(
+			device    deviceContext,
+			sequence& targetSequence,
+			variable& strFilename,
+			variable& strPath,
+			variable& arrStrGeneratedFiles[]) void						{return;}
+	static function GenerateMappingFileEx1(
+			device    deviceContext,
+			sequence& targetSequence,
+			variable& strFilename,
+			variable& strPath) void										{return;}
+		static function GenerateMappingFileV43(
+			device    deviceContext,				
+			sequence& targetSequence,				
+    		variable  filterMode,                     
+    		variable& arrFilters[],                   
+    		variable  sortMode,                       
+    		variable& arrColumnIds[],                 
+    		variable& arrColumnNames[],               
+    		variable& arrExperiments[],               
+			variable& strFilename,					
+    		variable  createOneFile,                  
+    		variable  openFileToAppend,               
+			variable& strPath,								
+			variable  filterFlagsEx,						
+			variable& arrStrGeneratedFiles[]) void						{return;}
+		static function GenerateMappingFileV43Ex1(	
+			device    deviceContext,					
+    		sequence& targetSequence,					
+    		variable  filterMode,                     
+    		variable& arrFilters[],                   
+    		variable  sortMode,                       
+    		variable& arrColumnIds[],                 
+    		variable& arrColumnNames[],               
+    		variable& arrExperiments[],               
+			variable& strFilename,					
+    		variable  createOneFile,                
+			variable& strPath,						
+			variable  filterFlagsEx) void								{return;} 			
+		static function stpGenMapFileTraceStart() void					{return;}
+		static function stpGenMapFileTraceEnd(
+			variable endActionStatus) void								{return;}
+		static function stpGenMapFileCheckFilters(
+			variable& arrFilters[],
+			variable& errorDesc) void									{return;}
+		static function stpGenMapFileCheckColumnIdsAndColumnNames(
+			variable& arrColumnIds[],
+			variable& arrColumnNames[],
+			variable& errorDesc) void									{return;}
+		static function stpGenMapFileCheckExperiments(
+			variable& arrExperiments[],
+			variable& errorDesc) void									{return;}
+		static function SetElementBarcode(
+			device    deviceContext,
+			variable& labwareID,
+			variable& positionID,
+			variable& barcode) void										{return;}
+		static function SetElementBarcodeForSequencePos(
+			device    deviceContext,
+			sequence& targetSequence,
+			variable  sequencePosition,
+			variable  setBarcodeForRack,
+			variable& barcode) void										{return;}
+		static function RemoveElement(
+			device    deviceContext,
+			variable& labwareID,
+			variable& positionID) void									{return;}
+		static function RemoveElementAtSequencePos(
+			device    deviceContext,
+			sequence& targetSequence,
+			variable  sequencePosition,
+			variable  removeRack) void									{return;}
+}
+#endif
+#endif
