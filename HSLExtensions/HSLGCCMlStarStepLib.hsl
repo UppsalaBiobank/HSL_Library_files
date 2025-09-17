@@ -1,0 +1,427 @@
+//  ------------------------------------------------------------------------------------
+// This is a part of the GCC Microlab® STAR Step Library (aka Microlab® STAR Smart Steps).
+//
+// Modification History
+//  ------------------------------------------------------------------------------------
+
+#ifndef __HSLGCCMlStarStepLib_hsl__
+#define __HSLGCCMlStarStepLib_hsl__	1
+
+#ifdef HSL_RUNTIME
+#include "HSLGCCMlStarStelLibImpl.hs_"
+#endif
+
+#ifndef HSL_RUNTIME
+namespace MlStarSteps
+{
+		function StepInitialize(												// Initialize step
+		device& ML_STAR,														// i: pipetting device
+		variable initializeUseDefaultWaste,								// i: indicates whether to use the default waste (0 = Off, 1 = On)
+		sequence& initializeWasteDestination,							// i: initialize waste destination
+		variable initializeSequenceCounting,							// i: sequence counting (0 = manually, 1 = automatic)
+		variable& initializeChannelVariable,							// i: channel variable (0 = unused, 1 = used)
+		variable initializeChannelUse,									// i: channel use (1 = all sequence positions, 2 = channel pattern)
+		variable initializeAlways,											// i: initialize always flag
+		variable errorHandling,												// i: error handling (1 = abort method, 2 = cancel step, 3 = ignore and continue)
+      variable userResponseTime)											// i: user response time [s]
+	{}
+		function StepInitialize2(												// Initialize step
+		device& ML_STAR,														// i: pipetting device
+		variable initializeAlways,											// i: initialize always flag
+		variable errorHandling,												// i: error handling (1 = abort method, 2 = cancel step, 3 = ignore and continue)
+		variable userResponseTime)											// i: user response time [s]
+	{}
+
+	function StepInitialize_cer(											// Initialize step
+		device& ML_STAR,														// i: pipetting device
+		variable initializeAlways,											// i: initialize always flag
+				variable errorHandling,												// i: error handling (1 = abort method, 2 = cancel step, 3 = ignore and continue, 4 = custom)
+      variable customStepID,             								// i: identifier for used single step defined for custom error handling
+		variable userResponseTime)											// i: user response time [s]
+	{}
+
+	function StepTipPickup(													// Tip Pickup step
+		device& ML_STAR,														// i: pipetting device
+		sequence& tipPickupSequence,										// i: tip pickup sequence
+		variable tipPickupSequenceCounting,								// i: sequence counting (0 = manually, 1 = automatic)
+		variable& tipPickupChannelVariable,								// i: channel variable (0 = unused, 1 = used)
+		variable tipPickupChannelUse,										// i: channel use (1 = all sequence positions, 2 = channel pattern)
+		variable errorHandling,												// i: error handling (1 = abort method, 2 = cancel step, 3 = ignore and continue)
+		variable userResponseTime)											// i: user response time [s]
+	{}
+
+	function StepTipPickup_cer(											// Tip Pickup step
+		device& ML_STAR,														// i: pipetting device
+		sequence& tipPickupSequence,										// i: tip pickup sequence
+		variable tipPickupSequenceCounting,								// i: sequence counting (0 = manually, 1 = automatic)
+		variable& tipPickupChannelVariable,								// i: channel variable (0 = unused, 1 = used)
+		variable tipPickupChannelUse,										// i: channel use (1 = all sequence positions, 2 = channel pattern)
+		variable errorHandling,												// i: error handling (1 = abort method, 2 = cancel step, 3 = ignore and continue, 4 = custom)
+      variable customStepID,             								// i: identifier for used single step defined for custom error handling
+		variable userResponseTime)											// i: user response time [s]
+	{}
+
+	function StepTipPickupEx(												// Tip Pickup step, error handlig tailored to pickup needles
+		device& ML_STAR,														// i: pipetting device
+		sequence& tipPickupSequence,										// i: tip pickup sequence
+		variable tipPickupSequenceCounting,								// i: sequence counting (0 = manually, 1 = automatic)
+		variable& tipPickupChannelVariable,								// i: channel variable (0 = unused, 1 = used)
+		variable tipPickupChannelUse,										// i: channel use (1 = all sequence positions, 2 = channel pattern)
+		variable errorHandling,												// i: error handling (1 = abort method, 2 = cancel step, 3 = ignore and continue)
+		variable userResponseTime)											// i: user response time [s]
+	{}
+
+	function StepTipPickupEx_cer(											// Tip Pickup step, error handlig tailored to pickup needles
+		device& ML_STAR,														// i: pipetting device
+		sequence& tipPickupSequence,										// i: tip pickup sequence
+		variable tipPickupSequenceCounting,								// i: sequence counting (0 = manually, 1 = automatic)
+		variable& tipPickupChannelVariable,								// i: channel variable (0 = unused, 1 = used)
+		variable tipPickupChannelUse,										// i: channel use (1 = all sequence positions, 2 = channel pattern)
+		variable errorHandling,												// i: error handling (1 = abort method, 2 = cancel step, 3 = ignore and continue, 4 = custom)
+      variable customStepID,             								// i: identifier for used single step defined for custom error handling
+		variable userResponseTime)											// i: user response time [s]
+	{}
+
+	function StepTipEject(													// Tip Eject step
+		device& ML_STAR,														// i: pipetting device
+		variable tipEjectUseDefaultWaste,								// i: indicates whether to use the default waste (0 = Off, 1 = On)
+		sequence& tipEjectSequence,										// i: tip eject waste destination
+		variable tipEjectSequenceCounting,								// i: sequence counting (0 = manually, 1 = automatic)
+		variable& tipEjectChannelVariable,								// i: channel variable (0 = unused, 1 = used)
+		variable tipEjectChannelUse,										// i: channel use (1 = all sequence positions, 2 = channel pattern)
+		variable errorHandling,												// i: error handling (1 = abort method, 2 = cancel step, 3 = ignore and continue)
+		variable userResponseTime)											// i: user response time [s]
+	{}
+
+	function StepTipEject_cer(												// Tip Eject step
+		device& ML_STAR,														// i: pipetting device
+		variable tipEjectUseDefaultWaste,								// i: indicates whether to use the default waste (0 = Off, 1 = On)
+		sequence& tipEjectSequence,										// i: tip eject waste destination
+		variable tipEjectSequenceCounting,								// i: sequence counting (0 = manually, 1 = automatic)
+		variable& tipEjectChannelVariable,								// i: channel variable (0 = unused, 1 = used)
+		variable tipEjectChannelUse,										// i: channel use (1 = all sequence positions, 2 = channel pattern)
+		variable errorHandling,												// i: error handling (1 = abort method, 2 = cancel step, 3 = ignore and continue, 4 = custom)
+      variable customStepID,             								// i: identifier for used single step defined for custom error handling
+		variable userResponseTime)											// i: user response time [s]
+	{}
+
+	function StepAspirate(													// Aspirate step
+		device& ML_STAR,														// i: pipetting device
+		sequence& aspirateSequence,										// i: aspirate sequence
+		variable aspirateSequenceCounting,								// i: sequence counting (0 = manually, 1 = automatic)
+		variable aspirateVolume,											// i: aspirate volume [ul]
+		variable aspirateMode,												// i: aspirate mode (0 = aspiration, 1 = consecutive aspiration, 2 = empty cup aspiration)
+		variable aspirateCLLDSensitivity,								// i: capacitive liquid level detection (0 = off, 1 = very high, 2 = high, 3 = middle, 4 = low)
+		variable aspiratePLLDSensitivity,								// i: pressure liquid level detection (0 = off, 1 = very high, 2 = high, 3 = middle, 4 = low)
+		variable aspirateSubmergeDepth,									// i: submerge depth after the liquid level detection [mm]
+		variable aspirateFluidHeight,										// i: liquid height from bottom if liquid level detection is disabled
+		variable aspirateMaxHeightDiff,									// i: the maximum difference between the two liquid level detection measurements [mm]
+		variable& aspirateChannelVariable,								// i: channel variable (0 = unused, 1 = used)
+		variable aspirateChannelUse,										// i: channel use (1 = all sequence positions, 2 = channel pattern)
+		variable aspirateLiquidFollowing,								// i: liquid following during aspirate and mix (0 = disabled, 1 = enabled)
+		variable aspiratePrerinsingMixCycles,							// i: prerinsing / mix cycles 
+		variable aspiratePrerinsingMixPosition,						// i: prerinsing / mix position [mm]
+		variable aspiratePrerinsingMixVolume,							// i: prerinsing / mix volume [ul]
+		variable& aspirateUserDefinedLiquidClass,						// i: liquid class, will be automatically selected if not explicitly set
+		variable errorHandling,												// i: error handling (1 = abort method, 2 = cancel step, 3 = ignore and continue)
+		variable userResponseTime)											// i: user response time [s]
+	{}
+
+	function StepAspirate_cer(													// Aspirate step
+		device& ML_STAR,														// i: pipetting device
+		sequence& aspirateSequence,										// i: aspirate sequence
+		variable aspirateSequenceCounting,								// i: sequence counting (0 = manually, 1 = automatic)
+		variable aspirateVolume,											// i: aspirate volume [ul]
+		variable aspirateMode,												// i: aspirate mode (0 = aspiration, 1 = consecutive aspiration, 2 = empty cup aspiration)
+		variable aspirateCLLDSensitivity,								// i: capacitive liquid level detection (0 = off, 1 = very high, 2 = high, 3 = middle, 4 = low)
+		variable aspiratePLLDSensitivity,								// i: pressure liquid level detection (0 = off, 1 = very high, 2 = high, 3 = middle, 4 = low)
+		variable aspirateSubmergeDepth,									// i: submerge depth after the liquid level detection [mm]
+		variable aspirateFluidHeight,										// i: liquid height from bottom if liquid level detection is disabled
+		variable aspirateMaxHeightDiff,									// i: the maximum difference between the two liquid level detection measurements [mm]
+		variable& aspirateChannelVariable,								// i: channel variable (0 = unused, 1 = used)
+		variable aspirateChannelUse,										// i: channel use (1 = all sequence positions, 2 = channel pattern)
+		variable aspirateLiquidFollowing,								// i: liquid following during aspirate and mix (0 = disabled, 1 = enabled)
+		variable aspiratePrerinsingMixCycles,							// i: prerinsing / mix cycles 
+		variable aspiratePrerinsingMixPosition,						// i: prerinsing / mix position [mm]
+		variable aspiratePrerinsingMixVolume,							// i: prerinsing / mix volume [ul]
+		variable& aspirateUserDefinedLiquidClass,						// i: liquid class, will be automatically selected if not explicitly set
+		variable errorHandling,												// i: error handling (1 = abort method, 2 = cancel step, 3 = ignore and continue, 4 = custom)
+      variable customStepID,             								// i: identifier for used single step defined for custom error handling
+		variable userResponseTime)											// i: user response time [s]
+	{}
+
+	function StepAspirateEx(												// Aspirate step extension
+		device& ML_STAR,														// i: pipetting device
+		sequence& aspirateSequence,										// i: aspirate sequence
+		variable aspirateSequenceCounting,								// i: sequence counting (0 = manually, 1 = automatic)
+		variable& aspirateVolumes[],										// i: aspirate volumes per channel [ul]
+		variable aspirateMode,												// i: aspirate mode (0 = aspiration, 1 = consecutive aspiration, 2 = empty cup aspiration)
+		variable aspirateCLLDSensitivity,								// i: capacitive liquid level detection (0 = off, 1 = very high, 2 = high, 3 = middle, 4 = low)
+		variable aspiratePLLDSensitivity,								// i: pressure liquid level detection (0 = off, 1 = very high, 2 = high, 3 = middle, 4 = low)
+		variable aspirateSubmergeDepth,									// i: submerge depth after the liquid level detection [mm]
+		variable aspirateFluidHeight,										// i: liquid height from bottom if liquid level detection is disabled
+		variable aspirateMaxHeightDiff,									// i: the maximum difference between the two liquid level detection measurements [mm]
+		variable& aspirateChannelVariable,								// i: channel variable (0 = unused, 1 = used)
+		variable aspirateChannelUse,										// i: channel use (1 = all sequence positions, 2 = channel pattern)
+		variable aspirateLiquidFollowing,								// i: liquid following during aspirate and mix (0 = disabled, 1 = enabled)
+		variable aspiratePrerinsingMixCycles,							// i: prerinsing / mix cycles 
+		variable aspiratePrerinsingMixPosition,						// i: prerinsing / mix position [mm]
+		variable aspiratePrerinsingMixVolume,							// i: prerinsing / mix volume [ul]
+		variable& aspirateUserDefinedLiquidClass,						// i: liquid class, will be automatically selected if not explicitly set
+		variable errorHandling,												// i: error handling (1 = abort method, 2 = cancel step, 3 = ignore and continue)
+		variable userResponseTime)											// i: user response time [s]
+	{}
+
+	function StepAspirateEx_cer(											// Aspirate step extension
+		device& ML_STAR,														// i: pipetting device
+		sequence& aspirateSequence,										// i: aspirate sequence
+		variable aspirateSequenceCounting,								// i: sequence counting (0 = manually, 1 = automatic)
+		variable& aspirateVolumes[],										// i: aspirate volumes per channel [ul]
+		variable aspirateMode,												// i: aspirate mode (0 = aspiration, 1 = consecutive aspiration, 2 = empty cup aspiration)
+		variable aspirateCLLDSensitivity,								// i: capacitive liquid level detection (0 = off, 1 = very high, 2 = high, 3 = middle, 4 = low)
+		variable aspiratePLLDSensitivity,								// i: pressure liquid level detection (0 = off, 1 = very high, 2 = high, 3 = middle, 4 = low)
+		variable aspirateSubmergeDepth,									// i: submerge depth after the liquid level detection [mm]
+		variable aspirateFluidHeight,										// i: liquid height from bottom if liquid level detection is disabled
+		variable aspirateMaxHeightDiff,									// i: the maximum difference between the two liquid level detection measurements [mm]
+		variable& aspirateChannelVariable,								// i: channel variable (0 = unused, 1 = used)
+		variable aspirateChannelUse,										// i: channel use (1 = all sequence positions, 2 = channel pattern)
+		variable aspirateLiquidFollowing,								// i: liquid following during aspirate and mix (0 = disabled, 1 = enabled)
+		variable aspiratePrerinsingMixCycles,							// i: prerinsing / mix cycles 
+		variable aspiratePrerinsingMixPosition,						// i: prerinsing / mix position [mm]
+		variable aspiratePrerinsingMixVolume,							// i: prerinsing / mix volume [ul]
+		variable& aspirateUserDefinedLiquidClass,						// i: liquid class, will be automatically selected if not explicitly set
+		variable errorHandling,												// i: error handling (1 = abort method, 2 = cancel step, 3 = ignore and continue, 4 = custom)
+      variable customStepID,             								// i: identifier for used single step defined for custom error handling
+		variable userResponseTime)											// i: user response time [s]
+	{}
+
+	function StepDispense(													// Dispense step
+		device& ML_STAR,														// i: pipetting device
+		sequence& dispenseSequence,										// i: dispense sequence
+		variable dispenseSequenceCounting,								// i: sequence counting (0 = manually, 1 = automatic)
+		variable dispenseVolume,											// i: dispense volume [ul]
+		variable dispenseMode,												// i: dispense mode (0 = aspiration, 1 = consecutive dispense, 2 = empty cup aspiration)
+		variable dispenseCLLDSensitivity,								// i: capacitive liquid level detection (0 = off, 1 = very high, 2 = high, 3 = middle, 4 = low)
+		variable dispenseSubmergeDepth,									// i: submerge depth after the liquid level detection [mm]
+		variable dispenseFluidHeight,										// i: liquid height from bottom if liquid level detection is disabled
+		variable& dispenseChannelVariable,								// i: channel variable (0 = unused, 1 = used)
+		variable dispenseChannelUse,										// i: channel use (1 = all sequence positions, 2 = channel pattern)
+		variable dispenseLiquidFollowing,								// i: liquid following during dispense and mix (0 = disabled, 1 = enabled)
+		variable dispensePrerinsingMixCycles,							// i: prerinsing / mix cycles 
+		variable dispensePrerinsingMixPosition,						// i: prerinsing / mix position [mm]
+		variable dispensePrerinsingMixVolume,							// i: prerinsing / mix volume [ul]
+		variable& dispenseUserDefinedLiquidClass,						// i: liquid class, will be automatically selected if not explicitly set
+		variable errorHandling,												// i: error handling (1 = abort method, 2 = cancel step, 3 = ignore and continue)
+		variable userResponseTime)											// i: user response time [s]
+	{}
+
+	function StepDispense_cer(												// Dispense step
+		device& ML_STAR,														// i: pipetting device
+		sequence& dispenseSequence,										// i: dispense sequence
+		variable dispenseSequenceCounting,								// i: sequence counting (0 = manually, 1 = automatic)
+		variable dispenseVolume,											// i: dispense volume [ul]
+		variable dispenseMode,												// i: dispense mode (0 = aspiration, 1 = consecutive dispense, 2 = empty cup aspiration)
+		variable dispenseCLLDSensitivity,								// i: capacitive liquid level detection (0 = off, 1 = very high, 2 = high, 3 = middle, 4 = low)
+		variable dispenseSubmergeDepth,									// i: submerge depth after the liquid level detection [mm]
+		variable dispenseFluidHeight,										// i: liquid height from bottom if liquid level detection is disabled
+		variable& dispenseChannelVariable,								// i: channel variable (0 = unused, 1 = used)
+		variable dispenseChannelUse,										// i: channel use (1 = all sequence positions, 2 = channel pattern)
+		variable dispenseLiquidFollowing,								// i: liquid following during dispense and mix (0 = disabled, 1 = enabled)
+		variable dispensePrerinsingMixCycles,							// i: prerinsing / mix cycles 
+		variable dispensePrerinsingMixPosition,						// i: prerinsing / mix position [mm]
+		variable dispensePrerinsingMixVolume,							// i: prerinsing / mix volume [ul]
+		variable& dispenseUserDefinedLiquidClass,						// i: liquid class, will be automatically selected if not explicitly set
+		variable errorHandling,												// i: error handling (1 = abort method, 2 = cancel step, 3 = ignore and continue, 4 = custom)
+      variable customStepID,             								// i: identifier for used single step defined for custom error handling
+      variable dispenseType,                                   // i: dispenseType (0 = regular dispense, 1 = pre-dispense, 2 = post-dispense)
+		variable userResponseTime)											// i: user response time [s]
+	{}
+
+	function StepDispenseEx(												// Dispense step extension
+		device& ML_STAR,														// i: pipetting device
+		sequence& dispenseSequence,										// i: dispense sequence
+		variable dispenseSequenceCounting,								// i: sequence counting (0 = manually, 1 = automatic)
+		variable& dispenseVolumes[],										// i: dispense volumes per channel [ul]
+		variable dispenseMode,												// i: dispense mode (0 = aspiration, 1 = consecutive dispense, 2 = empty cup aspiration)
+		variable dispenseCLLDSensitivity,								// i: capacitive liquid level detection (0 = off, 1 = very high, 2 = high, 3 = middle, 4 = low)
+		variable dispenseSubmergeDepth,									// i: submerge depth after the liquid level detection [mm]
+		variable dispenseFluidHeight,										// i: liquid height from bottom if liquid level detection is disabled
+		variable& dispenseChannelVariable,								// i: channel variable (0 = unused, 1 = used)
+		variable dispenseChannelUse,										// i: channel use (1 = all sequence positions, 2 = channel pattern)
+		variable dispenseLiquidFollowing,								// i: liquid following during dispense and mix (0 = disabled, 1 = enabled)
+		variable dispensePrerinsingMixCycles,							// i: prerinsing / mix cycles 
+		variable dispensePrerinsingMixPosition,						// i: prerinsing / mix position [mm]
+		variable dispensePrerinsingMixVolume,							// i: prerinsing / mix volume [ul]
+		variable& dispenseUserDefinedLiquidClass,						// i: liquid class, will be automatically selected if not explicitly set
+		variable errorHandling,												// i: error handling (1 = abort method, 2 = cancel step, 3 = ignore and continue)
+		variable userResponseTime)											// i: user response time [s]
+	{}
+
+	function StepDispenseEx_cer(											// Dispense step extension
+		device& ML_STAR,														// i: pipetting device
+		sequence& dispenseSequence,										// i: dispense sequence
+		variable dispenseSequenceCounting,								// i: sequence counting (0 = manually, 1 = automatic)
+		variable& dispenseVolumes[],										// i: dispense volumes per channel [ul]
+		variable dispenseMode,												// i: dispense mode (0 = aspiration, 1 = consecutive dispense, 2 = empty cup aspiration)
+		variable dispenseCLLDSensitivity,								// i: capacitive liquid level detection (0 = off, 1 = very high, 2 = high, 3 = middle, 4 = low)
+		variable dispenseSubmergeDepth,									// i: submerge depth after the liquid level detection [mm]
+		variable dispenseFluidHeight,										// i: liquid height from bottom if liquid level detection is disabled
+		variable& dispenseChannelVariable,								// i: channel variable (0 = unused, 1 = used)
+		variable dispenseChannelUse,										// i: channel use (1 = all sequence positions, 2 = channel pattern)
+		variable dispenseLiquidFollowing,								// i: liquid following during dispense and mix (0 = disabled, 1 = enabled)
+		variable dispensePrerinsingMixCycles,							// i: prerinsing / mix cycles 
+		variable dispensePrerinsingMixPosition,						// i: prerinsing / mix position [mm]
+		variable dispensePrerinsingMixVolume,							// i: prerinsing / mix volume [ul]
+		variable& dispenseUserDefinedLiquidClass,						// i: liquid class, will be automatically selected if not explicitly set
+		variable errorHandling,												// i: error handling (1 = abort method, 2 = cancel step, 3 = ignore and continue, 4 = custom)
+      variable customStepID,             								// i: identifier for used single step defined for custom error handling
+      variable dispenseType,                                   // i: dispenseType (0 = regular dispense, 1 = pre-dispense, 2 = post-dispense)
+		variable userResponseTime)											// i: user response time [s]
+	{}
+
+	function StepLoadCarrier(												// Load Carrier step
+		device& ML_STAR,														// i: pipetting device
+		variable& loadCarrier,												// i: load carrier name
+		variable loadCarrierBarcodeFileName,							// i: load carrier barcode file name
+		variable errorHandling,												// i: error handling (1 = abort method, 2 = cancel step, 3 = ignore and continue)
+		variable userResponseTime)											// i: user response time [s]
+	{}
+
+	function StepLoadCarrierEx(											// Load Carrier step extension
+		device& ML_STAR,														// i: pipetting device
+		variable& loadCarrier,												// i: load carrier name
+		variable loadCarrierBarcodeFileName,							// i: load carrier barcode file name
+		variable barcodeReadPositions,									// i: load carrier barcode read positions
+		variable recoveryOptionContinue,									// i: visibility of recovery option Continue (0 = invisible, 1 = visible)
+		variable recoveryOptionExclude,									// i: visibility of recovery option Exclude (0 = invisible, 1 = visible)
+		variable recoveryOptionDefault,									// i: default of recovery options Continue and Exclude (0 = Continue, 1 = Exclude) 
+		variable errorHandling,												// i: error handling (1 = abort method, 2 = cancel step, 3 = ignore and continue)
+		variable userResponseTime)											// i: user response time [s]
+	{}
+
+	function StepLoadCarrierEx_cer(										// Load Carrier step extension
+		device& ML_STAR,														// i: pipetting device
+		variable& loadCarrier,												// i: load carrier name
+		variable loadCarrierBarcodeFileName,							// i: load carrier barcode file name
+		variable barcodeReadPositions,									// i: load carrier barcode read positions
+		variable recoveryOptionContinue,									// i: visibility of recovery option Continue (0 = invisible, 1 = visible)
+		variable recoveryOptionExclude,									// i: visibility of recovery option Exclude (0 = invisible, 1 = visible)
+		variable recoveryOptionDefault,									// i: default of recovery options Continue and Exclude (0 = Continue, 1 = Exclude) 
+		variable errorHandling,												// i: error handling (1 = abort method, 2 = cancel step, 3 = ignore and continue, 4 = custom)
+      variable customStepID,             								// i: identifier for used single step defined for custom error handling
+		variable userResponseTime)											// i: user response time [s]
+	{}
+
+	function StepLoadCarrierEx2(											// Load Carrier step extension for special use with Load And Match
+		device& ML_STAR,														// i: pipetting device
+		variable& loadCarrier,												// i: load carrier name
+		variable loadCarrierBarcodeFileName,							// i: load carrier barcode file name
+		variable barcodeReadPositions,									// i: load carrier barcode read positions
+		variable recoveryOptionContinue,									// i: visibility of recovery option Continue (0 = invisible, 1 = visible)
+		variable recoveryOptionExclude,									// i: visibility of recovery option Exclude (0 = invisible, 1 = visible)
+		variable recoveryOptionDefault,									// i: default of recovery options Continue and Exclude (0 = Continue, 1 = Exclude) 
+		variable errorHandling,												// i: error handling (1 = abort method, 2 = cancel step, 3 = ignore and continue)
+		variable userResponseTime)											// i: user response time [s]
+	{}
+
+	function StepLoadCarrierEx2_cer(										// Load Carrier step extension for special use with Load And Match
+		device& ML_STAR,														// i: pipetting device
+		variable& loadCarrier,												// i: load carrier name
+		variable loadCarrierBarcodeFileName,							// i: load carrier barcode file name
+		variable barcodeReadPositions,									// i: load carrier barcode read positions
+		variable recoveryOptionContinue,									// i: visibility of recovery option Continue (0 = invisible, 1 = visible)
+		variable recoveryOptionExclude,									// i: visibility of recovery option Exclude (0 = invisible, 1 = visible)
+		variable recoveryOptionDefault,									// i: default of recovery options Continue and Exclude (0 = Continue, 1 = Exclude) 
+		variable errorHandling,												// i: error handling (1 = abort method, 2 = cancel step, 3 = ignore and continue, 4 = custom)
+      variable customStepID,             								// i: identifier for used single step defined for custom error handling
+		variable userResponseTime)											// i: user response time [s]
+	{}
+
+	function StepUnloadCarrier(											// Unload Carrier step
+		device& ML_STAR,														// i: pipetting device
+		variable& unloadCarrier,											// i: unload carrier name
+		variable errorHandling,												// i: error handling (1 = abort method, 2 = cancel step, 3 = ignore and continue)
+		variable userResponseTime)											// i: user response time [s]
+	{}
+
+	function StepUnloadCarrier_cer(										// Unload Carrier step
+		device& ML_STAR,														// i: pipetting device
+		variable& unloadCarrier,											// i: unload carrier name
+		variable errorHandling,												// i: error handling (1 = abort method, 2 = cancel step, 3 = ignore and continue, 4 = custom)
+      variable customStepID,             								// i: identifier for used single step defined for custom error handling
+		variable userResponseTime)											// i: user response time [s]
+	{}
+
+	function StepCalibrate1536Plate(										// Calibrate Carrier step
+		device& ML_STAR,														// i: pipetting device
+		variable& calibrateCarrier,										// i: calibrate carrier name
+		variable calibrateCarrierChannel,								// i: calibrate carrier channel
+		variable errorHandling,												// i: error handling (1 = abort method, 2 = cancel step, 3 = ignore and continue)
+		variable userResponseTime)											// i: user response time [s]
+	{}
+
+	function StepCalibrate1536Plate_cer(								// Calibrate Carrier step
+		device& ML_STAR,														// i: pipetting device
+		variable& calibrateCarrier,										// i: calibrate carrier name
+		variable calibrateCarrierChannel,								// i: calibrate carrier channel
+		variable errorHandling,												// i: error handling (1 = abort method, 2 = cancel step, 3 = ignore and continue, 4 = custom)
+      variable customStepID,             								// i: identifier for used single step defined for custom error handling
+		variable userResponseTime)											// i: user response time [s]
+	{}
+
+	function StepWaitNeedleWashed(										// Wait Needle Washed step
+		device& ML_STAR,														// i: pipetting device
+		variable& washStation,												// i: wash station
+		variable errorHandling,												// i: error handling (1 = abort method, 2 = cancel step, 3 = ignore and continue)
+		variable userResponseTime)											// i: user response time [s]
+	{}
+
+	function StepWaitNeedleWashed_cer(									// Wait Needle Washed step
+		device& ML_STAR,														// i: pipetting device
+		variable& washStation,												// i: wash station
+		variable errorHandling,												// i: error handling (1 = abort method, 2 = cancel step, 3 = ignore and continue, 4 = custom)
+      variable customStepID,             								// i: identifier for used single step defined for custom error handling
+		variable userResponseTime)											// i: user response time [s]
+	{}
+
+	function StepStartNeedleWash(											// Start Needle Wash step
+		device& ML_STAR,														// i: pipetting device
+		variable& washStation,												// i: wash station
+		variable rinseTime1,													// i: rinse time [s]
+		variable soakTime1,													// i: soak time [s]
+		variable flowRate1,													// i: flow rate [ml/s]
+		variable rinseTime2,													// i: rinse time [s]
+		variable soakTime2,													// i: soak time [s]
+		variable flowRate2,													// i: flow rate [ml/s]
+		variable drainingTime,												// i: draining time [s]
+		variable startWashLiquid,											// i: start wash liquid
+		variable errorHandling,												// i: error handling (1 = abort method, 2 = cancel step, 3 = ignore and continue)
+		variable userResponseTime)											// i: user response time [s]
+	{}
+
+	function StepStartNeedleWash_cer(									// Start Needle Wash step
+		device& ML_STAR,														// i: pipetting device
+		variable& washStation,												// i: wash station
+		variable rinseTime1,													// i: rinse time [s]
+		variable soakTime1,													// i: soak time [s]
+		variable flowRate1,													// i: flow rate [ml/s]
+		variable rinseTime2,													// i: rinse time [s]
+		variable soakTime2,													// i: soak time [s]
+		variable flowRate2,													// i: flow rate [ml/s]
+		variable drainingTime,												// i: draining time [s]
+		variable startWashLiquid,											// i: start wash liquid
+		variable errorHandling,												// i: error handling (1 = abort method, 2 = cancel step, 3 = ignore and continue, 4 = custom)
+      variable customStepID,             								// i: identifier for used single step defined for custom error handling
+		variable userResponseTime)											// i: user response time [s]
+	{}
+
+	function StepFirmwareCommand(											// Executes a firmware command
+		device& ML_STAR,														// i: Specifies the device context.
+		variable& commandString,											// i: Command string.
+		variable& parameterString,											// i: Parameter string.
+		variable& returnValues[]) void									// o: Step return values.
+	{}
+}
+#endif
+#endif
+// $$author=Henrik$$valid=0$$time=2025-09-17 12:58$$checksum=1c9644d3$$length=085$$
