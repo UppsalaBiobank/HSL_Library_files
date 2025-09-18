@@ -6,7 +6,7 @@
 #define __HSLKitLotLib_hsl__	1
 
 #ifdef HSL_RUNTIME
-#include "HSLKitLotLib.hs_"
+#include "HSLKitLotLibImpl.hs_"
 #endif
 
 // Interface to Device library 
