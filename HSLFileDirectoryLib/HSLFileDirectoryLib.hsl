@@ -1,0 +1,30 @@
+// This is a part of the HSL File Directory Library.
+//
+// Modification History
+
+#ifndef __HSLFileDirectoryLib_hsl__
+#define __HSLFileDirectoryLib_hsl__ 1
+
+#ifdef HSL_RUNTIME
+#include HSLFileDirectoryLib/HSLFileDirectoryLibImpl.hs_
+#endif
+
+#ifndef HSL_RUNTIME
+namespace FileDirectoryLib
+{
+   function GetFilesInDirectory(variable& iPathDirectory, variable& iFileExtension, variable& oArrFiles[]) variable {return(0);}
+   function GetNumberOfFilesInDirectory(variable& iPathDirectory, variable& oNumberOfFiles) variable {return(0);}
+   function CopyFile(variable& iPathFileSource, variable& iPathFileDestination) variable {return(0);}
+   function MoveFile(variable& iPathFileSource, variable& iPathFileDestination) variable {return(0);}
+   function DeleteFile(variable& iPathFile) variable {return(0);}
+   function DeleteAllFilesInDirectory(variable& iPathDirectory) variable {return(0);} 
+   function RenameFile(variable& iPathFile, variable& iNewFileName) variable {return(0);}
+   function CheckIfFileExists(variable& iPathFile) variable {return(0);}
+   function DeleteDirectory(variable& iPathDirectory) variable {return(0);} 
+   function MoveDirectory(variable& iPathDirectorySource, variable& iPathDirectoryDestination) variable {return(0);}
+   function CreateDirectory(variable& iPathDirectory) variable {return(0);}
+   function GetSubdirectoriesOfDirectory(variable& iPathDirectory,variable& oArrSubdirectories[]) variable {return(0);}
+   function CheckIfDirectoryExists(variable& iPathDirectory) variable {return(0);} 
+}
+#endif
+#endif
