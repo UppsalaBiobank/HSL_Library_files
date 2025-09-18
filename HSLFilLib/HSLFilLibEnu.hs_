@@ -1,0 +1,17 @@
+// This is the language dependant part of the File Library.
+//
+// Modification History
+
+
+function StringTable()
+{
+	Insert(IDE::noError,								"No error."												);
+	Insert(IDE::shellOutEchoFailed,				"Failed to shell out echo command."				);
+	Insert(IDE::shellOutDirFailed,				"Failed to shell out dir command."				);
+	Insert(IDE::shellOutDeleteFailed,			"Failed to shell out delete command."			);
+	Insert(IDE::addFieldFailed,					"Failed to add field to record."					);
+	Insert(IDE::readRecordFailed,					"Failed to read record."							);
+	Insert(IDE::openFileFailed,					"Failed to open file : "							);
+	Insert(IDE::closeFileFailed,					"Failed to close file : "							);
+	Insert(IDS::helpFileName,						"HSLFilLibEnu.chm"									);
+}
