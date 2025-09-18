@@ -1,0 +1,692 @@
+// This is a part of the Excel Library.
+//
+// Modification History
+
+
+#ifndef __HSLXLLib_hsl__
+#define __HSLXLLib_hsl__	1
+
+#pragma once //use either "#pragma once" or "include guard", not both
+#include "HSLSynLib/HSLSynLib.hsl"
+
+// Interface to the Excel Library
+#ifndef HSL_RUNTIME
+namespace Xl
+{
+	function New(
+		variable& fileName,
+		variable& sheetName) variable																{return(0);}
+	function Open(
+		variable& fileName) variable																{return(0);}
+	function ReadCell(
+		variable& sheetName,
+		variable& cell) variable																	{return(0);}
+	function ReadCell2(
+		variable& sheetName,
+		variable row,
+		variable column) variable																	{return(0);}
+	function WriteCell(
+		variable& sheetName,
+		variable& cell,
+		variable& value) variable																	{return(0);}
+	function WriteCell2(
+		variable& sheetName,
+		variable row,
+		variable column,
+		variable& value) variable																	{return(0);}
+	function ClearCell(
+		variable& sheetName,
+		variable& cell) variable																	{return(0);}
+	function ClearCells(
+		variable& sheetName,
+		variable& cell1,
+		variable& cell2) variable																	{return(0);}
+	function GetActiveCell(
+		variable& row,
+		variable& column) variable																	{return(0);}
+	function SetVisible(
+		variable newValue) variable																{return(0);}
+	function RunMacro(
+		variable& macroName) variable																{return(0);}
+	function RunMacro1(
+		variable& macroName, 
+		variable& arg1) variable																	{return(0);}
+	function RunMacro2(
+		variable& macroName, 
+		variable& arg1, 
+		variable& arg2) variable																	{return(0);}
+	function RunMacro3(
+		variable& macroName, 
+		variable& arg1, 
+		variable& arg2, 
+		variable& arg3) variable																	{return(0);}
+	function Close() variable																		{return(0);}
+}
+#endif
+
+#ifdef HSL_RUNTIME
+namespace Xl
+{
+
+	// --------------------------------------------------------------------------------------
+	// Library Initialization 
+	// --------------------------------------------------------------------------------------
+
+	static variable initializedLib(hslFalse);							// initialization state of the Excel Library
+	static function InitXlLibrary() variable;							// initializes the Excel Library (only once)
+
+	// --------------------------------------------------------------------------------------
+	// Library Synchronization 
+	// --------------------------------------------------------------------------------------
+
+	static global variable xlCs(0);										// critical section
+
+	// --------------------------------------------------------------------------------------
+	// Library State
+	// --------------------------------------------------------------------------------------
+
+	static global object xlApp;											// Excel application
+
+	// --------------------------------------------------------------------------------------
+	// Functions
+	// --------------------------------------------------------------------------------------
+
+	static function OnAbortXlLib() void
+	{
+		object xlWorkbook;
+		// close any open workbook
+		if (!xlApp.IsNull())
+		{
+			xlWorkbook = xlApp.ActiveWorkbook;
+			onerror resume next;
+			xlWorkbook.Close(hslTrue);
+		}
+	}
+
+	static function InitXlLibrary() variable
+	{
+
+		// activate error handler
+		onerror goto Unexpected;
+
+		// initialize the Excel Library once only
+		if (!initializedLib)
+		{
+			if (0 == xlCs)
+				xlCs = SynInitializeCriticalSection();
+
+			// get access to global data
+			SynEnterCriticalSection(xlCs);
+
+			// create OLE object to MS Excel
+			xlApp.CreateObject("Excel.Application");
+
+			// register abort handler
+			RegisterAbortHandler("OnAbortXlLib");
+
+			initializedLib = hslTrue;
+
+			// release access to global data
+			SynLeaveCriticalSection(xlCs);
+		}
+		return(initializedLib);
+
+		Unexpected:
+		{
+			// release access to global data
+			SynLeaveCriticalSection(xlCs);
+
+			// re-raise error
+			err.Raise();
+		}
+	}
+
+	function Close() variable
+	{
+		object xlWorkbook;
+
+		// initialize Tip Counting Library
+		InitXlLibrary();
+
+		// activate error handler
+		onerror goto Unexpected;
+
+		// get access to global data
+		SynEnterCriticalSection(xlCs);
+
+		// close any open workbook
+		xlWorkbook = xlApp.ActiveWorkbook;
+		onerror resume next;
+		if (!xlWorkbook.IsNull())
+			xlWorkbook.Close(hslTrue);
+		onerror goto Unexpected;
+
+		// release access to global data
+		SynLeaveCriticalSection(xlCs);
+
+		return(hslTrue);
+
+		Unexpected:
+		{
+			// release access to global data
+			SynLeaveCriticalSection(xlCs);
+
+			// re-raise error
+			err.Raise();
+		}
+	}
+
+	function New(
+		variable& fileName,
+		variable& sheetName) variable
+	{
+		object xlWorkbooks;
+		object xlWorksheets;
+		object xlWorksheet;
+		object xlWorkbook;
+
+		// initialize Tip Counting Library
+		InitXlLibrary();
+
+		// activate error handler
+		onerror goto Unexpected;
+
+		// close any open workbook
+		Close();
+
+		// get access to global data
+		SynEnterCriticalSection(xlCs);
+
+		// create workbook
+		xlWorkbooks = xlApp.Workbooks;
+		xlWorkbook = xlWorkbooks.Add();
+		xlWorksheets = xlWorkbook.Worksheets;
+		xlWorksheet = xlWorksheets.Add();
+		xlWorksheet.Name = sheetName;
+		xlWorkbook.SaveAs(fileName);
+
+		// release access to global data
+		SynLeaveCriticalSection(xlCs);
+
+		return(hslTrue);
+
+		Unexpected:
+		{
+			// release access to global data
+			SynLeaveCriticalSection(xlCs);
+
+			// re-raise error
+			err.Raise();
+		}
+	}
+
+	function Open(
+		variable& fileName) variable
+	{
+		object xlWorkbooks;
+		object xlWorkbook;
+
+		// initialize xl library
+		InitXlLibrary();
+
+		// activate error handler
+		onerror goto Unexpected;
+
+		// close any open workbook
+		Close();
+
+		// get access to global data
+		SynEnterCriticalSection(xlCs);
+
+		// open workbook
+		xlWorkbooks = xlApp.Workbooks;
+		xlWorkbook = xlWorkbooks.Open(fileName);
+
+		// release access to global data
+		SynLeaveCriticalSection(xlCs);
+
+		return(hslTrue);
+
+		Unexpected:
+		{
+			// release access to global data
+			SynLeaveCriticalSection(xlCs);
+
+			// re-raise error
+			err.Raise();
+		}
+	}
+
+	function ReadCell(
+		variable& sheetName,
+		variable& cell) variable
+	{
+		object xlWorkbook;
+		object xlWorksheet;
+		object xlRange;
+		variable value;
+
+		// initialize Tip Counting Library
+		InitXlLibrary();
+
+		// activate error handler
+		onerror goto Unexpected;
+
+		// get access to global data
+		SynEnterCriticalSection(xlCs);
+
+		// read cell
+		xlWorkbook = xlApp.ActiveWorkbook;
+		xlWorksheet = xlWorkbook.Worksheets(sheetName);
+		xlRange = xlWorksheet.Range(cell);
+		value = xlRange.Value;
+
+		// release access to global data
+		SynLeaveCriticalSection(xlCs);
+
+		return(value);
+
+		Unexpected:
+		{
+			// release access to global data
+			SynLeaveCriticalSection(xlCs);
+
+			// re-raise error
+			err.Raise();
+		}
+	}
+
+	function ReadCell2(
+		variable& sheetName,
+		variable row,
+		variable column) variable
+	{
+		object xlWorkbook;
+		object xlWorksheet;
+		object xlRange;
+		variable value;
+
+		// initialize Tip Counting Library
+		InitXlLibrary();
+
+		// activate error handler
+		onerror goto Unexpected;
+
+		// get access to global data
+		SynEnterCriticalSection(xlCs);
+
+		// read cell
+		xlWorkbook = xlApp.ActiveWorkbook;
+		xlWorksheet = xlWorkbook.Worksheets(sheetName);
+		xlRange = xlWorksheet.Cells(row, column);
+		value = xlRange.Value;
+
+		// release access to global data
+		SynLeaveCriticalSection(xlCs);
+
+		return(value);
+
+		Unexpected:
+		{
+			// release access to global data
+			SynLeaveCriticalSection(xlCs);
+
+			// re-raise error
+			err.Raise();
+		}
+	}
+
+	function WriteCell(
+		variable& sheetName,
+		variable& cell,
+		variable& value) variable
+	{
+		object xlWorkbook;
+		object xlWorksheet;
+		object xlRange;
+
+		// initialize Tip Counting Library
+		InitXlLibrary();
+
+		// activate error handler
+		onerror goto Unexpected;
+
+		// get access to global data
+		SynEnterCriticalSection(xlCs);
+
+		// write cell
+		xlWorkbook = xlApp.ActiveWorkbook;
+		xlWorksheet = xlWorkbook.Worksheets(sheetName);
+		xlRange = xlWorksheet.Range(cell);
+		xlRange.Value = value;
+
+		// release access to global data
+		SynLeaveCriticalSection(xlCs);
+
+		return(hslTrue);
+
+		Unexpected:
+		{
+			// release access to global data
+			SynLeaveCriticalSection(xlCs);
+
+			// re-raise error
+			err.Raise();
+		}
+	}
+
+	function WriteCell2(
+		variable& sheetName,
+		variable row,
+		variable column,
+		variable& value) variable
+	{
+		object xlWorkbook;
+		object xlWorksheet;
+		object xlRange;
+
+		// initialize Tip Counting Library
+		InitXlLibrary();
+
+		// activate error handler
+		onerror goto Unexpected;
+
+		// get access to global data
+		SynEnterCriticalSection(xlCs);
+
+		// write cell
+		xlWorkbook = xlApp.ActiveWorkbook;
+		xlWorksheet = xlWorkbook.Worksheets(sheetName);
+		xlRange = xlWorksheet.Cells(row, column);
+		xlRange.Value = value;
+
+		// release access to global data
+		SynLeaveCriticalSection(xlCs);
+
+		return(hslTrue);
+
+		Unexpected:
+		{
+			// release access to global data
+			SynLeaveCriticalSection(xlCs);
+
+			// re-raise error
+			err.Raise();
+		}
+	}
+
+	function ClearCell(
+		variable& sheetName,
+		variable& cell) variable
+	{
+		object xlWorkbook;
+		object xlWorksheet;
+		object xlRange;
+
+		// initialize Tip Counting Library
+		InitXlLibrary();
+
+		// activate error handler
+		onerror goto Unexpected;
+
+		// get access to global data
+		SynEnterCriticalSection(xlCs);
+
+		// clear cell
+		xlWorkbook = xlApp.ActiveWorkbook;
+		xlWorksheet = xlWorkbook.Worksheets(sheetName);
+		xlRange = xlWorksheet.Range(cell);
+		xlRange.Clear();
+
+		// release access to global data
+		SynLeaveCriticalSection(xlCs);
+
+		return(hslTrue);
+
+		Unexpected:
+		{
+			// release access to global data
+			SynLeaveCriticalSection(xlCs);
+
+			// re-raise error
+			err.Raise();
+		}
+	}
+
+	function ClearCells(
+		variable& sheetName,
+		variable& cell1,
+		variable& cell2) variable
+	{
+		object xlWorkbook;
+		object xlWorksheet;
+		object xlRange;
+
+		// initialize Tip Counting Library
+		InitXlLibrary();
+
+		// activate error handler
+		onerror goto Unexpected;
+
+		// get access to global data
+		SynEnterCriticalSection(xlCs);
+
+		// clear cell
+		xlWorkbook = xlApp.ActiveWorkbook;
+		xlWorksheet = xlWorkbook.Worksheets(sheetName);
+		xlRange = xlWorksheet.Range(cell1, cell2);
+		xlRange.Clear();
+
+		// release access to global data
+		SynLeaveCriticalSection(xlCs);
+
+		return(hslTrue);
+
+		Unexpected:
+		{
+			// release access to global data
+			SynLeaveCriticalSection(xlCs);
+
+			// re-raise error
+			err.Raise();
+		}
+	}
+
+	function GetActiveCell(
+		variable& row,
+		variable& column) variable
+	{
+		object xlWorksheet;
+		object xlRange;
+
+		// initialize Tip Counting Library
+		InitXlLibrary();
+
+		// activate error handler
+		onerror goto Unexpected;
+
+		// init output params
+		row = 0;
+		column = 0;
+
+		// get access to global data
+		SynEnterCriticalSection(xlCs);
+
+		// get active cell
+		xlRange = xlApp.ActiveCell;
+		row = xlRange.Row();
+		column = xlRange.Column();
+
+		// release access to global data
+		SynLeaveCriticalSection(xlCs);
+
+		return(hslTrue);
+
+		Unexpected:
+		{
+			// release access to global data
+			SynLeaveCriticalSection(xlCs);
+
+			// re-raise error
+			err.Raise();
+		}
+	}
+
+	function SetVisible(
+		variable newValue) variable
+	{
+		// initialize Tip Counting Library
+		InitXlLibrary();
+
+		// activate error handler
+		onerror goto Unexpected;
+
+		// get access to global data
+		SynEnterCriticalSection(xlCs);
+
+		// set visible
+		xlApp.Visible = newValue;
+
+		// release access to global data
+		SynLeaveCriticalSection(xlCs);
+
+		return(hslTrue);
+
+		Unexpected:
+		{
+			// release access to global data
+			SynLeaveCriticalSection(xlCs);
+
+			// re-raise error
+			err.Raise();
+		}
+	}
+
+	// Runs an excel macro written in Visual Basic.
+	function RunMacro(
+		variable& macroName) variable
+	{
+		variable returnValue(0);							// Return value of macro
+
+		// activate error handler
+		onerror goto Unexpected;
+
+		// get access to global data
+		SynEnterCriticalSection(xlCs);
+
+		// Run excel macro written in Visual Basic
+		returnValue = xlApp.Run(macroName);
+
+		// release access to global data
+		SynLeaveCriticalSection(xlCs);
+
+		return(returnValue);
+
+		Unexpected:
+		{
+			// release access to global data
+			SynLeaveCriticalSection(xlCs);
+
+			// re-raise error
+			err.Raise();
+		}
+	}
+
+	// Runs an excel macro written in Visual Basic.
+	function RunMacro1(
+		variable& macroName, 
+		variable& arg1) variable
+	{
+		variable returnValue(0);							// Return value of macro
+
+		// activate error handler
+		onerror goto Unexpected;
+
+		// get access to global data
+		SynEnterCriticalSection(xlCs);
+
+		// Run excel macro written in Visual Basic
+		returnValue = xlApp.Run(macroName, arg1);
+
+		// release access to global data
+		SynLeaveCriticalSection(xlCs);
+
+		return(returnValue);
+
+		Unexpected:
+		{
+			// release access to global data
+			SynLeaveCriticalSection(xlCs);
+
+			// re-raise error
+			err.Raise();
+		}
+	}
+
+	// Runs an excel macro written in Visual Basic.
+	function RunMacro2(
+		variable& macroName, 
+		variable& arg1, 
+		variable& arg2) variable
+	{
+		variable returnValue(0);							// Return value of macro
+
+		// activate error handler
+		onerror goto Unexpected;
+
+		// get access to global data
+		SynEnterCriticalSection(xlCs);
+
+		// Run excel macro written in Visual Basic
+		returnValue = xlApp.Run(macroName, arg1, arg2);
+
+		// release access to global data
+		SynLeaveCriticalSection(xlCs);
+
+		return(returnValue);
+
+		Unexpected:
+		{
+			// release access to global data
+			SynLeaveCriticalSection(xlCs);
+
+			// re-raise error
+			err.Raise();
+		}
+	}
+
+	// Runs an excel macro written in Visual Basic.
+	function RunMacro3(
+		variable& macroName, 
+		variable& arg1, 
+		variable& arg2, 
+		variable& arg3) variable
+	{
+		variable returnValue(0);							// Return value of macro
+
+		// activate error handler
+		onerror goto Unexpected;
+
+		// get access to global data
+		SynEnterCriticalSection(xlCs);
+
+		// Run excel macro written in Visual Basic
+		returnValue = xlApp.Run(macroName, arg1, arg2, arg3);
+
+		// release access to global data
+		SynLeaveCriticalSection(xlCs);
+
+		return(returnValue);
+
+		Unexpected:
+		{
+			// release access to global data
+			SynLeaveCriticalSection(xlCs);
+
+			// re-raise error
+			err.Raise();
+		}
+	}
+}
+#endif
+#endif
