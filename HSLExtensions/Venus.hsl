@@ -12,6 +12,7 @@
 #include "HSLExtensions/VenusImpl.hs_"
 #endif
 
+#ifndef HSL_RUNTIME
 //============================== HSLExtensions ==============================
 namespace HSLExtensions
 {
@@ -33,5 +34,5 @@ namespace HSLExtensions
       function GetCurrentUserRights() variable {return(0);}
    } //end String
 } //end HSLExtensions
-
+#endif
 #endif //end __HSLEXTENSIONS_STRING__
