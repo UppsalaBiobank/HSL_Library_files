@@ -2,13 +2,13 @@
 //
 // Modification History
 
+
 #ifndef __HSLKitLotLibImpl_hsl__
 #define __HSLKitLotLibImpl_hsl__	1
-
 #pragma once
 #include "HSLSynLib/HSLSynLib.hsl"
 #include "HSLStrLib/HSLStrLib.hsl"
-#include "HSLExtensions/HSLStringTableLib.hs_"
+#include "HSLExtensions/HSLStringTableLib.hsl"
 
 namespace HSLKitLot
 {
@@ -21,15 +21,11 @@ namespace HSLKitLot
 	static global string HSLKitLot_KitLotIdCol("KitLotID");
 	static global string HSLKitLot_KitLotDateCol("Date");
 	static global string HSLKitLot_KitLotTimeCol("Time");
-
 	static variable timeBetween(0.5); 	// wait seconds before try again
 	static variable isInit(hslFalse);
-
 	const string generalDelimiter("\\");
 	const string generalJoker("%");
 	const string emptyBarcodeJoker("$");
-
-
 
 	// --------------------------------------------------------------------------------------
 	// Error Ids
@@ -298,7 +294,6 @@ namespace HSLKitLot
 		variable posInMask(0);
 		variable posInBarcode(0);
 		variable check(1);
-
 		string mask("");
 		string barcode("");
 
@@ -378,17 +373,13 @@ namespace HSLKitLot
 
 		string kitLot("");
 		string lotFile("");
-
 		string sql("");
 		string kID("");
 		string kDate("");
 		string kTime("");
-
 		file fKitLot;
-
 		string mask("");
 		string barcode("");
-
 		string traceSource("");
 		string traceAction("");
 		string expDate;
@@ -533,13 +524,10 @@ namespace HSLKitLot
 
 		string kitLot("");
 		string lotFile("");
-
 		string sql("");
 		string kValue("");
 		string kID("");
-
 		file fKitLot;
-
 		string mask("");
 		string barcode("");
 
@@ -703,7 +691,5 @@ namespace HSLKitLot
 		HSLKitLot_KitLotTimeCol = name;
 		SynLeaveCriticalSection(HSLKitLot_Sync);
 	}
-
-
 } // end of namespace HSLKitLot
 #endif
