@@ -11,7 +11,7 @@
 #include "HSLStrLib/HSLStrLib.hsl"
 #include "HSLSynLib/HSLSynLib.hsl"
 #include "HSLUtils/HSLUtilLib.hsl"
-#include "HSLExtensions/HSLStringTableLib.hs_"
+#include "HSLExtensions/HSLStringTableLib.hsl"
 
 // --------------------------------------------------------------------------------------
 // Implementation of File library 
