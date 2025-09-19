@@ -62,6 +62,4 @@ function MthNRandDraw() variable																{return(0);}
 function MthFCeiling(variable number) variable											{return(0);}
 function MthFFloor(variable number) variable												{return(0);}
 #endif
-
 #endif
-// $$author=Henrik$$valid=0$$time=2025-08-15 13:56$$checksum=91741356$$length=085$$
