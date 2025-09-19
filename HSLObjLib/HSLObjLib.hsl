@@ -1,0 +1,69 @@
+//---------------------------------------------------------------
+// This is a part of the HSL Object Library.
+//
+// Modification History
+//---------------------------------------------------------------
+
+#ifndef __HSLObjLib_hsl__
+#define __HSLObjLib_hsl__ 1
+
+#ifdef HSL_RUNTIME
+#include "__HSLObjLibImpl_hs___"
+#endif
+
+#ifndef  HSL_RUNTIME
+namespace Object
+{
+    function CreateObject(variable& programId) variable {return(0);}
+  function ReleaseObject(variable objectId) variable {return(0);}
+  function PropertyGet(variable objectId, variable& propertyName) variable {return(0);}
+  function PropertySet(variable objectId, variable& propertyName, variable& propertyValue) void {return;}
+  function Invoke0(
+    variable objectId,
+    variable& functionName) variable {return(0);}
+  function Invoke1(
+    variable objectId,
+    variable& functionName,
+    variable& parameter1) variable {return(0);}
+  function Invoke2(
+    variable objectId, 
+    variable& functionName, 
+    variable& parameter1, 
+    variable& parameter2) variable  {return(0);}
+  function Invoke3(
+    variable objectId, 
+    variable& functionName, 
+    variable& parameter1, 
+    variable& parameter2, 
+    variable& parameter3) variable {return(0);}
+  function Invoke4(
+    variable objectId, 
+    variable& functionName, 
+    variable& parameter1, 
+    variable& parameter2, 
+    variable& parameter3, 
+    variable& parameter4) variable {return(0);}
+  function Invoke5(
+    variable objectId, 
+    variable& functionName, 
+    variable& parameter1, 
+    variable& parameter2, 
+    variable& parameter3, 
+    variable& parameter4, 
+    variable& parameter5) variable    {return(0);}
+  function SetResultObject(variable objectId) void {return;}
+  function ResetResultObject() void {return;}
+  function SetNumberOfParameters(variable numberOfParameters) void {return;}
+  function GetNumberOfParameters() variable {return(0);}
+  function AddParameter(variable& parameter) void {return;}
+  function SetParameterAt(variable index, variable& parameter) void {return;}
+  function GetParameterAt(variable index) variable {return(0);}
+  function RemoveAllParameters() void {return;}
+  function Invoke(variable objectId, variable& functionName) variable {return(0);}
+  function IsNull(variable objectId) variable {return(0);}
+  function EnumNext(variable objectId, variable& nextItem) variable {return(0);}
+  function EnumReset(variable objectId) variable {return(0);}
+}
+#endif
+#endif
+// $$author=Henrik$$valid=0$$time=2025-09-19 12:16$$checksum=22d2d28e$$length=085$$
