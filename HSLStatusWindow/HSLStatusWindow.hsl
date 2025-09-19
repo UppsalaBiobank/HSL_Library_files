@@ -1,0 +1,31 @@
+//--------------------------------------------------------------------------------------------------
+// This is a part of the HSL StatusWindow Library.
+//
+// This Library represents a status window with a user defined status message. The GUI contains a window 
+// with an textbox to display status messages. The status window will be located in the top right corner 
+// on the screen.
+//
+// Modification History
+//
+//--------------------------------------------------------------------------------------------------
+
+#ifndef __HSLStatusWindow_hsl__
+#define __HSLStatusWindow_hsl__ 1
+
+#ifdef HSL_RUNTIME
+#include "HSLStatusWindowImpl.hs"
+#endif
+
+#ifndef HSL_RUNTIME
+namespace HSLStatusWindow
+{
+  private function ComObjectIsValid() variable ;
+  function Init( );
+  function Close( ) variable;
+  function SetStatusText(variable i_strStatusText) void ;
+  function AppendStatusText(variable i_strTextToAppend) void ;
+  function GetWndHandle( object &o_WndHandle ) variable ;
+  function SetWndHandle( object &io_WndHandle );
+}
+#endif
+#endif
