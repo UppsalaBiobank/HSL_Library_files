@@ -1,0 +1,111 @@
+//---------------------------------------------------------------------------
+// This is a part of the Microlab Star Deck Definition Library.
+//
+// Modification History
+//
+//---------------------------------------------------------------------------
+
+#ifndef __HSLMlStarStepReturnLib_hsl__
+#define __HSLMlStarStepReturnLib_hsl__  1
+
+#ifdef HSL_RUNTIME
+#include "HSLMlStarStepRetrunLibImpl.hs"
+#endif
+
+#ifndef HSL_RUNTIME
+namespace StepReturn
+{
+  function GetErrorCode(                         // Returns the error contained in the step return (integer)
+    variable& stepReturn) variable                  // [in] Step return value 3
+  {return(0);}
+
+  function GetNumberOfPositions(                    // Retrieves the number of positions in the given step return (integer)
+    variable& stepReturn) variable                  // [in] Step return value 3
+  {return(0);}
+
+  function GetPosition(                         // Retrieves the position for a specified position (integer)
+    variable position,                          // [in] Position
+    variable& stepReturn) variable                  // [in] Step return value 3
+  {return(0);}
+
+  function GetMainError(                          // Retrieves the main error for a specified position (integer)
+    variable position,                          // [in] Position
+    variable& stepReturn) variable                  // [in] Step return value 3
+  {return(0);}
+
+  function GetSlaveError(                         // Retrieves the slave error for a specified position (integer)
+    variable position,                          // [in] Position
+    variable& stepReturn) variable                  // [in] Step return value 3
+  {return(0);}
+
+  function GetRecoveryButton(                     // Retrieves the id of the recovery button for a specified position (integer)
+    variable position,                          // [in] Position
+    variable& stepReturn) variable                  // [in] Step return value 3
+  {return(0);}
+
+  function GetBarcode(                            // Retrieves the barcode for a specified position (string)
+    variable position,                          // [in] Position
+    variable& stepReturn) variable                  // [in] Step return value 3 or 4 of LoadCarrier step 
+  {return(0);}
+
+  function GetBarcodeMask(                        // Retrieves the barcode mask for a specified position (string)
+    variable position,                          // [in] Position
+    variable& stepReturn) variable                  // [in] Step return value 5 of LoadCarrier step 
+  {return(0);}
+
+  function GetBarcodePosition(                      // Retrieves the barcode position for a specified position (string)
+    variable position,                          // [in] Position
+    variable& stepReturn) variable                  // [in] Step return value 6 of LoadCarrier step 
+  {return(0);}
+
+  function GetLastLiquidLevel(                      // Retrieves the last liquid level for a specified position (string)
+    variable position,                          // [in] Position
+    variable& stepReturn) variable                  // [in] Step return value 3
+  {return(0);}
+
+  function GetLabwareId(                          // Retrieves the labware id for a specified position (string)
+    variable position,                          // [in] Position
+    variable& stepReturn) variable                  // [in] Step return value 3
+  {return(0);}
+
+  function GetPositionId(                         // Retrieves the position id for a specified position (string)
+    variable position,                          // [in] Position
+    variable& stepReturn) variable                  // [in] Step return value 3
+  {return(0);}
+
+  function GetStepData(                         // generic function to retrieve the step data  for a specified position (string).
+    variable position,                          // [in] Position
+    variable& stepReturn) variable                  // [in] any step return value 3
+  {return(0);}
+
+  function GetLabwarePositionIds(                   // Retrieves the labware identifiers with associated position identifiers  for a specified position (array of variables).
+    variable position,                          // [in] Position
+    variable& stepReturn,                       // [in] The step return value 4 of a LoadCarrier step (string)
+    variable& labwareIds[],                       // [out] A reference to an array of variables to retrieve the labware identifiers (array of variables)
+    variable& positionIds[]) void                   // [out] A reference to an array of variables to retrieve the associated position identifiers (array of variables)
+  {return;}
+
+  function GetPositionFromNum(                      // Searches a step return value for the first match of a specified num value (integer). Returns the one-based position (block delimiter number) of the first match of the specified num value.
+    variable num,                             // [in] The num value to search for (integer, a value as returned by the function GetPosition)
+    variable& stepReturn) variable                  // [in] Any step return value containing a position field (string)
+  {return(0);}
+
+  function SetFieldDelimiter(                     // Sets the field delimiter, defaults to ","
+    variable& fieldDelimiter) variable                // [in] Field delimiter
+  {return(0);}
+
+  function SetBlockDelimiter(                     // Sets the block delimiter, defaults to "["
+    variable& blockDelimiter) variable                // [in] Field delimiter (string)
+  {return(0);}
+
+  function SetFieldDelimiterEx(                     // Sets the field delimiter, defaults to ","
+    device& ML_STAR) variable                     // [in] The device where to query the field delimiter
+  {return(0);}
+
+  function SetBlockDelimiterEx(                     // Sets the block delimiter, defaults to "["
+    device& ML_STAR) variable                     // [in] The device where to query the block delimiter
+  {return(0);}
+}
+#endif
+#endif
+// $$author=Henrik$$valid=0$$time=2025-09-19 10:22$$checksum=7a6dc916$$length=085$$
