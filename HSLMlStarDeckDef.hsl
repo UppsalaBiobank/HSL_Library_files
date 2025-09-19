@@ -1,0 +1,49 @@
+//---------------------------------------------------------------------------
+// This is a part of the Microlab Star Deck Definition Library.
+//
+// Modification History
+//
+//---------------------------------------------------------------------------
+
+#ifndef __HSLMlStarDeckDef_hs___
+#define __HSLMlStarDeckDef_hs___  1
+
+#ifdef HSL_RUNTIME
+#include "HSLMlStarDeckDefImpl.hs_"
+#endif
+
+#ifndef HSL_RUNTIME
+namespace MlStarDeckDef
+{
+  function Init(device& ML_STAR) void;
+  function GetCarrierAtDeckSite(
+    device& ML_STAR,
+    variable deckSite,
+    variable& carrierNames[]) variable  {return(0);}
+  function GetLabwareAtDeckSite(
+    device& ML_STAR,
+    variable deckSite,
+    variable& carrierName,
+    variable& labwareNames[],
+    variable& templateSites[]) variable {return(0);}
+  function GetCarrierForLabware(
+    device& ML_STAR,
+    variable& labwareName,
+    variable& carrierName,
+    variable& deckSite,
+    variable& templateSite) variable    {return(0);}
+  function GetLoadedLabwareForCarrier2(
+    device& ML_STAR,
+    variable& carrierName,
+    sequence& loadedSampleSequence,
+    variable checkBarcode,
+    variable& labwareNames[],
+    variable& positionNames[]) variable  {return(0);}
+  static function FormatPosition(
+    string& position, 
+    variable alphaWidth,
+    variable numWidth) variable          {return(0);}
+}
+#endif
+#endif
+// $$author=Henrik$$valid=0$$time=2025-09-19 10:01$$checksum=ebec4623$$length=083$$
