@@ -1,0 +1,10 @@
+//----------------------------------------------------------------------------------------
+// This is the language dependant part of the Microlab® STAR Step Return Library.
+// Modification History
+//----------------------------------------------------------------------------------------
+function StringTable()
+{
+	Insert(IDE::noError,								"No error."												);
+	Insert(IDE::invalidParameter,					"The parameter is incorrect."						);
+	Insert(IDS::helpFileName,						"HSLMlStarStepReturnLibEnu.chm"					);
+}
