@@ -1,0 +1,145 @@
+//-----------------------------------------------------
+// This is a part of the HSL Sequence Library.
+//
+// Modification History
+//-----------------------------------------------------
+
+#ifndef __HSLSeqLib_hsl__
+#define __HSLSeqLib_hsl__ 1
+
+#ifdef HSL_RUNTIME
+#include "HSLSeqLibImpl.hs_"
+#endif
+
+
+// Interface to Sequence library 
+#ifndef HSL_RUNTIME
+namespace Seq
+{
+function SeqGetLabwareIds(
+  sequence& sequenceObj, 
+  variable& labwareIds[]) variable   {return(0);}
+function SeqGetPositionCountForCurrLabware(sequence& sequenceObj) variable          {return(0);}
+function SeqGetTotal(sequence& sequenceObj) variable                        {return(0);}
+function SeqGetName(sequence& sequenceObj) variable                       {return(0);}
+function SeqGetNext(sequence& sequenceObj) variable                       {return(0);}
+function SeqGetMax(sequence& sequenceObj) variable                          {return(0);}
+function SeqSetMax(sequence& sequenceObj, variable max) variable                {return(0);}
+function SeqIncrement(
+  sequence& sequenceObj, 
+  variable increment) variable         {return(0);}
+function SeqCopySequence(
+  sequence& targetSequence, 
+  sequence& sourceSequence) void   {return;}
+function SeqOperatorAssignSeq(
+  sequence& targetSequence, 
+  sequence& sourceSequence) void  {return;}
+function SeqOperatorInc(sequence& sequenceObj) variable                     {return(0);}
+function SeqOperatorDec(sequence& sequenceObj) variable                     {return(0);}
+function SeqRemoveAt(
+  sequence& sequenceObj, 
+  variable position) void             {return;}
+function SeqRemoveAll(sequence& sequenceObj) void                         {return;}
+function SeqInsertAt(
+  sequence& sequenceObj, 
+  variable position, 
+  variable& labwareId, 
+  variable& positionId) void                         {return;}
+function SeqAdd(
+  sequence& sequenceObj, 
+  variable& labwareId, 
+  variable& positionId) void  {return;}
+function SeqAddEx(
+  sequence& sequenceObj, 
+  variable& labwareId, 
+  variable& positionId, 
+  device& deviceContext) void {return;}
+function SeqLookupPosition(
+  sequence& sequenceObj, 
+  variable& labwareId, 
+  variable& positionId, 
+  variable start,
+  variable forward) variable                                        {return(0);}
+function SeqEdit(
+  sequence& sequenceObj, 
+  device& deviceContext, 
+  variable& title, 
+  variable& prompt,
+  variable timeout,
+  variable initFromCfg,
+  variable first,
+  variable last,
+  variable editable,
+  variable& cfgFile) void                                         {return;}
+function SeqEdit2(
+  sequence& sequenceObj, 
+  device& deviceContext, 
+  variable& title, 
+  variable& prompt,
+  variable timeout,
+  variable sound,
+  variable initFromCfg,
+  sequence& editedSequenceObj, 
+  variable editable,
+  variable& cfgFile) void                                         {return;}
+function SeqGetPositionId(sequence& sequenceObj) variable                   {return(0);}
+function SeqGetLabwareId(sequence& sequenceObj) variable                      {return(0);}
+function SeqGetUsedPositions(sequence& sequenceObj) variable                  {return(0);}
+function SeqSetUsedPositions(
+  sequence& sequenceObj, 
+  variable usedPositions) void      {return;}
+function SeqWriteCurrentPosition(
+  variable& dataSource, 
+  variable& layoutName, 
+  variable& sequenceName, 
+  variable& currentPosition)  variable                                  {return(0);}
+function SeqReadCurrentPosition(
+  variable& dataSource, 
+  variable& layoutName, 
+  variable& sequenceName) variable                                    {return(0);}
+function SeqReadFromFile(
+  sequence& sequenceObj, 
+  device& deviceContext, 
+  variable indexesOnly, 
+  variable& cfgFile) variable                                     {return(0);}
+function SeqWriteToFile(
+  sequence& sequenceObj, 
+  device& deviceContext, 
+  variable indexesOnly, 
+  variable& cfgFile) void                                         {return;}
+function SeqMPH48SortLike96(
+  sequence& sequenceObj, 
+  variable Q1,
+  variable Q2,
+  variable Q3,
+  variable Q4) variable                                         {return(0);}
+function SeqEqualSequences(
+  sequence& sequenceObj_1, 
+  sequence& sequenceObj_2) variable {return(0);}
+function SeqResetSequenceIndexes(
+  sequence& sequenceObj) void                  {return;}
+function SeqSetProperty(
+  sequence& sequenceObj, 
+  variable position, 
+  variable& propertyName, 
+  variable& propertyValue) void {return;}
+function SeqSetPropertyRange(
+  sequence& sequenceObj, 
+  variable startPosition, 
+  variable endPosition, 
+  variable& propertyName, 
+  variable& propertyValue) void {return;}
+function SeqGetProperty(
+  sequence& sequenceObj, 
+  variable position, 
+  variable& propertyName) variable {return(0);}
+function SeqRemoveProperty(
+  sequence& sequenceObj, 
+  variable position, 
+  variable& propertyName) void {return;}
+function SeqRemoveAllProperties(
+  sequence& sequenceObj, 
+  variable position) void {return;}
+}
+#endif
+#endif
