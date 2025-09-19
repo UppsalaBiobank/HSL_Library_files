@@ -19,7 +19,7 @@ namespace Arr
 {
 function VarArrUpperBound() variable      {return(0);}
 function VarArrGetSize(
-   variable row) variableObj              {return(0);}
+   variable row) variable              {return(0);}
 function VarArrSetSize(
    variable row, 
    variable newSize) void                 {return;}
