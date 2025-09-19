@@ -98,7 +98,6 @@ namespace HSLML_STAR
 		variable& worklistFileName,
 		variable& liquidClass) variable { return(0); }
 }
+#endif
+#endif
 
-#endif
-#endif
-// $$author=Henrik$$valid=0$$time=2025-09-19 09:52$$checksum=c70a18ca$$length=083$$
