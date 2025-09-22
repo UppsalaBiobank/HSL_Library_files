@@ -602,7 +602,7 @@ namespace HSLTime
 
         return(returnvalue);
     }
-   function TimWaitTimer(timer& timerObj, variable show) variable
+   function TimeWaitTimer(timer& timerObj, variable show) variable
    {
 	   return(timerObj.WaitTimer(show));
    }
