@@ -1,0 +1,34 @@
+// ======================================================================
+// This is a part of the Trace Library.
+//
+// ======================================================================
+//
+// Modification History
+//
+// ======================================================================
+
+#ifndef __HSLTrcLib_hsl__
+#define __HSLTrcLib_hsl__ 1
+
+#ifdef HSL_RUNTIME
+#include "HSLTrcLibImpl.hs_"
+#endif
+
+#ifndef HSL_RUNTIME
+function TrcInputBox(variable& prompt, variable& title, variable type) variable   {return(0);}
+function TrcMessageBox(variable& message, variable& title, variable type) variable  {return(0);}
+function TrcTrace(variable variable1, variable variable2) void                {return;}
+function TrcTrace4(variable variable1, variable variable2, variable variable3, variable variable4) void {return;}
+function TrcTrace8(variable variable1, variable variable2, variable variable3, variable variable4, variable variable5, variable variable6, variable variable7, variable variable8) void {return;}
+function TrcTrace12(variable variable1, variable variable2, variable variable3, variable variable4, variable variable5, variable variable6, variable variable7, variable variable8, variable variable9, variable variable10, variable variable11, variable variable12) void {return;}
+function TrcFormatTrace(variable& source, variable& action, variable status, variable variable1, variable variable2) void {return;}
+function TrcFormatTrace4(variable& source, variable& action, variable status, variable variable1, variable variable2, variable variable3, variable variable4) void  {return;}
+function TrcFormatTrace8(variable& source, variable& action, variable status, variable variable1, variable variable2, variable variable3, variable variable4, variable variable5, variable variable6, variable variable7, variable variable8) void  {return;}
+function TrcFormatTrace12(variable& source, variable& action, variable status, variable variable1, variable variable2, variable variable3, variable variable4, variable variable5, variable variable6, variable variable7, variable variable8, variable variable9, variable variable10, variable variable11, variable variable12) void  {return;}
+function TrcTraceSequence(sequence& sequenceObj) void                     {return;}
+function TrcGetMethodFileName() variable                              {return(0);}
+static function TrcGetFileName() variable                             {return(0);}
+static function TrcGetFunctionName() variable                         {return(0);}
+static function TrcGetLineNumber() variable                           {return(0);}
+#endif
+#endif
