@@ -30,7 +30,7 @@ namespace HSLTime
   function GetUnixTimespan( variable i_intUnixTimeStart, variable i_intUnixTimeEnd, variable i_strUnits, variable& o_fltTimespan ) variable {return(0);} 
   function GetDateTimeOffset( variable i_strDateTime, variable i_intDays, variable i_intHours, variable i_intMinutes, variable i_intSeconds, variable& o_strDateTime ) variable {return(0);} 
   function GetTimespan( variable i_strDateTimeStart, variable i_strDateTimeEnd, variable i_strUnits, variable& o_fltTimespan ) variable {return(0);}
-  static function TimeWaitTimer(timer& timerObj, variable show) variable	{return(0);}
+  function TimeWaitTimer(timer& timerObj, variable show) variable	{return(0);}
 }
 #endif
 #endif
