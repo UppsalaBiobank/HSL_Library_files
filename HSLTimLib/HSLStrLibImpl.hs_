@@ -1,0 +1,606 @@
+// ======================================================================
+// Library: HSL Time Library
+// 
+// ======================================================================
+//
+// Modification History
+//
+// ======================================================================
+
+#ifndef __HSLTimeImpl_hs___
+#define __HSLTimeImpl_hs___  1
+
+#pragma once
+#include "HSLMthLib/HSLMthLib.hsl"
+#include "HSLStrLib/HSLStrLib.hsl"
+
+namespace HSLTime
+{
+   //global object
+   private object Time;
+   
+   //return constants 
+    private const variable CMD_FAIL(0);
+    private const variable CMD_START(1);
+    private const variable CMD_COMPLETE(2);
+    private const variable CMD_ERROR(3);
+    private const variable CMD_PROGRESS(4);
+    private const variable CMD_ERRCOMPLETE(5);
+    
+    function SetDateTimeFormat( variable i_strFormat ) variable 
+    {
+        variable returnvalue(0);
+        variable strDateTime("");
+
+
+        FormatTrace(GetFunctionName(), "", CMD_START, "Selected DateTime Format: ", i_strFormat );
+
+        if ( Time.IsNull() )
+        {
+            FormatTrace(GetFunctionName(), "", CMD_PROGRESS, "Creating DateTime object" );
+
+            if ( !Time.CreateObject( "Hamilton.HSLTime" ) ) 
+            {
+                returnvalue = 1;
+                FormatTrace( GetFunctionName(), "()", CMD_ERROR, "Hamilton.Time object could not be created." );
+                FormatTrace(GetFunctionName(), "", CMD_COMPLETE, "Return: ", returnvalue);
+                return(returnvalue);
+            }
+        }
+
+        returnvalue = Time.SetDateTimeFormat( i_strFormat );
+
+        Time.GetDateTimeNow( strDateTime );
+
+        FormatTrace(GetFunctionName(), "", CMD_COMPLETE, "Formatted Current DateTime: ", strDateTime);
+
+
+        return(returnvalue);
+    }
+
+
+    function GetTimeZone( variable& o_strTimezone ) variable 
+    {
+        variable returnvalue(0);
+
+        o_strTimezone = "";
+
+        if ( Time.IsNull() )
+        {
+            if ( !Time.CreateObject( "Hamilton.HSLTime" ) ) 
+            {
+                returnvalue = 1;
+                FormatTrace(GetFunctionName(), "()", CMD_ERROR, "Hamilton.Time object could not be created.");
+                FormatTrace(GetFunctionName(), "", CMD_COMPLETE, "Return: ", returnvalue);
+                return(returnvalue);
+            }
+        }
+
+
+        returnvalue = Time.GetTimeZone( o_strTimezone );
+        
+        FormatTrace(GetFunctionName(), "", CMD_COMPLETE, "Timezone: UTC", o_strTimezone);
+
+        return(returnvalue);
+    }
+
+
+    function GetTimeZoneOffset( variable& o_intTimezoneOffset ) variable 
+    {
+        variable returnvalue(0);
+        variable strTimezone("");
+        variable intTimezone(0);
+        variable Zero(08);
+        o_intTimezoneOffset = 0;
+
+        if ( Time.IsNull() )
+        {
+            if ( !Time.CreateObject( "Hamilton.HSLTime" ) ) 
+            {
+                returnvalue = 1;
+                FormatTrace(GetFunctionName(), "()", CMD_ERROR, "Hamilton.Time object could not be created.");
+                FormatTrace(GetFunctionName(), "", CMD_COMPLETE, "Return: ", returnvalue);
+                return(returnvalue);
+            }
+        }
+
+        returnvalue = Time.GetTimeZone( strTimezone );
+
+        FormatTrace(GetFunctionName(), "", CMD_COMPLETE, "UTC Timezone Offset (str): ", strTimezone);
+
+        strTimezone = Str::StrLeft(strTimezone, 3);
+        intTimezone = Str::StrIVal(strTimezone);
+
+        o_intTimezoneOffset = intTimezone;
+
+        FormatTrace(GetFunctionName(), "", CMD_COMPLETE, "UTC Timezone Offset (int): ", o_intTimezoneOffset);
+        
+        return(returnvalue);
+    }
+
+    function GetDateTimeNow( variable& o_strDateTimeNow ) variable 
+    {
+        variable returnvalue(0);
+        o_strDateTimeNow = "";
+
+        if ( Time.IsNull() )
+        {
+            FormatTrace(GetFunctionName(), "", CMD_PROGRESS, "Creating Time object" );
+            if ( !Time.CreateObject( "Hamilton.HSLTime" ) ) 
+            {
+                returnvalue = 1;
+                FormatTrace(GetFunctionName(), "()", CMD_ERROR, "Hamilton.Time object could not be created.");
+                FormatTrace(GetFunctionName(), "", CMD_COMPLETE, "Return: ", returnvalue);
+                return(returnvalue);
+            }
+        }
+
+
+        returnvalue = Time.GetDateTimeNow( o_strDateTimeNow );
+        
+        FormatTrace(GetFunctionName(), "", CMD_COMPLETE, "DateTime Now: ", o_strDateTimeNow);
+
+        return(returnvalue);
+    }
+
+    function GetDateTime( variable i_intYear, variable i_intMonth, variable i_intDay, variable i_intHour, variable i_intMinute, variable i_intSecond, variable& o_strDateTime ) variable 
+    {
+        variable returnvalue(0);
+        o_strDateTime = "";
+
+        //Year input validation
+        if( i_intYear < 1 || i_intYear > 9999 )
+        {
+            returnvalue = 1;
+            FormatTrace(GetFunctionName(), "", CMD_ERROR, "Year input: ", i_intYear, " is invalid. Select a year in range [1..9999].");
+            return(returnvalue);
+        }
+
+        //Month input validation
+        if( i_intMonth < 0 || i_intMonth > 12 )
+        {
+            returnvalue = 1;
+            FormatTrace(GetFunctionName(), "", CMD_ERROR, "Month input: ", i_intMonth, " is invalid. Select a month in range [1..12].");
+            return(returnvalue);
+        }
+        else if( i_intMonth == 0 )
+        {
+            i_intMonth = 1;
+        }
+
+
+        //Day input validation
+        if( i_intDay < 0 || i_intDay > 31 )
+        {
+            returnvalue = 1;
+            FormatTrace(GetFunctionName(), "", CMD_ERROR, "Day input: ", i_intDay, " is invalid. Select a day in range [1..31].");
+            return(returnvalue);
+        }
+        else if( i_intDay == 0 )
+        {
+            i_intDay = 1;
+        }
+
+        //Hour input validation
+        if( i_intHour < 0 || i_intHour > 23 )
+        {
+            returnvalue = 1;
+            FormatTrace(GetFunctionName(), "", CMD_ERROR, "Hour input: ", i_intHour, " is invalid. Select an hour in range [0..23]");
+            return(returnvalue); 
+        }
+
+        //Minute input validation
+        if( i_intMinute < 0 || i_intMinute > 59 )
+        {
+            returnvalue = 1;
+            FormatTrace(GetFunctionName(), "", CMD_ERROR, "Minute input: ", i_intMinute, " is invalid. Select a minute in range [0..59].");
+            return(returnvalue); 
+        }
+
+        //Second input validation
+        if( i_intSecond < 0 || i_intSecond > 59 )
+        {
+            returnvalue = 1;
+            FormatTrace(GetFunctionName(), "", CMD_ERROR, "Second input: ", i_intSecond, " is invalid. Select a second in range [0..59].");
+            return(returnvalue); 
+        }
+
+
+        if ( Time.IsNull() )
+        {
+            FormatTrace(GetFunctionName(), "", CMD_PROGRESS, "Creating Time object" );
+            if ( !Time.CreateObject( "Hamilton.HSLTime" ) ) 
+            {
+                returnvalue = 1;
+                FormatTrace(GetFunctionName(), "()", CMD_ERROR, "Hamilton.Time object could not be created.");
+                return(returnvalue);
+            }
+        }
+
+
+        returnvalue = Time.GetDateTime( i_intYear, i_intMonth, i_intDay, i_intHour, i_intMinute, i_intSecond, o_strDateTime );
+        
+        FormatTrace(GetFunctionName(), "", CMD_COMPLETE, "Time: ", o_strDateTime);
+
+        return(returnvalue);
+    }
+
+    function DateTimeParse( variable i_strDateTime, variable& o_strDateTime ) variable 
+    {
+        variable returnvalue(0);
+        o_strDateTime = "";
+
+        FormatTrace(GetFunctionName(), "", CMD_START);
+        FormatTrace(GetFunctionName(), "", CMD_PROGRESS, "DateTime In:  ", i_strDateTime );
+
+        if ( Time.IsNull() )
+        {
+            if ( !Time.CreateObject( "Hamilton.HSLTime" ) ) 
+            {
+                returnvalue = 1;
+                FormatTrace(GetFunctionName(), "()", CMD_ERROR, "Hamilton.Time object could not be created.");
+                return(returnvalue);
+            }
+        }
+
+        returnvalue = Time.DateTimeParse( i_strDateTime, o_strDateTime );
+        
+        FormatTrace(GetFunctionName(), "", CMD_COMPLETE, "DateTime Out:  ", o_strDateTime );
+
+        return(returnvalue);
+    }
+
+
+    function GetUnixTimeNow( variable& o_intUnixTime ) variable 
+    {
+        variable returnvalue(0);
+        o_intUnixTime = 0;
+
+        FormatTrace(GetFunctionName(), "", CMD_START);
+
+        if ( Time.IsNull() )
+        {
+            if ( !Time.CreateObject( "Hamilton.HSLTime" ) ) 
+            {
+                returnvalue = 1;
+                FormatTrace(GetFunctionName(), "()", CMD_ERROR, "Hamilton.Time object could not be created.");
+                return(returnvalue);
+            }
+        }
+
+
+        returnvalue = Time.GetUnixTimeNow( o_intUnixTime );
+        FormatTrace(GetFunctionName(), "", CMD_COMPLETE, "Unix Time: ", o_intUnixTime);
+
+        return(returnvalue);
+    }
+
+    function GetUnixTimeOffset( variable i_intUnixTime, variable i_intDays, variable i_intHours, variable i_intMinutes, variable i_intSeconds, variable& o_intUnixTime ) variable 
+    {
+        variable returnvalue(0);
+        o_intUnixTime = "";
+
+        FormatTrace(GetFunctionName(), "", CMD_START, "UnixTime:  ", i_intUnixTime );
+
+        if ( Time.IsNull() )
+        {
+            if ( !Time.CreateObject( "Hamilton.HSLTime" ) ) 
+            {
+                returnvalue = 1;
+                FormatTrace(GetFunctionName(), "()", CMD_ERROR, "Hamilton.Time object could not be created.");
+                return(returnvalue);
+            }
+        }
+
+
+        returnvalue = Time.GetUnixTimeOffset( i_intUnixTime, i_intDays, i_intHours, i_intMinutes, i_intSeconds, o_intUnixTime );
+        
+        FormatTrace(GetFunctionName(), "", CMD_COMPLETE, "DateTime Offset:  ", o_intUnixTime );
+
+        return(returnvalue);
+    }
+
+    function GetUnixTime( variable i_intYear, variable i_intMonth, variable i_intDay, variable i_intHour, variable i_intMinute, variable i_intSecond, variable& o_intUnixTime ) variable 
+    {
+        variable returnvalue(0);
+        variable intTimezone(0);
+        variable intUnixTimeTemp(0);
+        o_intUnixTime = 0;
+
+        FormatTrace(GetFunctionName(), "", CMD_START);
+
+        //Year input validation
+        if( i_intYear < 1970 || i_intYear > 2038 )
+        {
+            returnvalue = 1;
+            FormatTrace(GetFunctionName(), "", CMD_ERROR, "Year input: ", i_intYear, " is invalid. Select a year in range [1..9999].");
+            return(returnvalue);
+        }
+
+        //Month input validation
+        if( i_intMonth < 0 || i_intMonth > 12 )
+        {
+            returnvalue = 1;
+            FormatTrace(GetFunctionName(), "", CMD_ERROR, "Month input: ", i_intMonth, " is invalid. Select a month in range [1..12].");
+            return(returnvalue);
+        }
+        else if( i_intMonth == 0 )
+        {
+            i_intMonth = 1;
+        }
+
+
+        //Day input validation
+        if( i_intDay < 0 || i_intDay > 31 )
+        {
+            returnvalue = 1;
+            FormatTrace(GetFunctionName(), "", CMD_ERROR, "Day input: ", i_intDay, " is invalid. Select a day in range [1..31].");
+            return(returnvalue);
+        }
+        else if( i_intDay == 0 )
+        {
+            i_intDay = 1;
+        }
+
+        //Hour input validation
+        if( i_intHour < 0 || i_intHour > 23 )
+        {
+            returnvalue = 1;
+            FormatTrace(GetFunctionName(), "", CMD_ERROR, "Hour input: ", i_intHour, " is invalid. Select an hour in range [0..23]");
+            return(returnvalue); 
+        }
+
+        //Minute input validation
+        if( i_intMinute < 0 || i_intMinute > 59 )
+        {
+            returnvalue = 1;
+            FormatTrace(GetFunctionName(), "", CMD_ERROR, "Minute input: ", i_intMinute, " is invalid. Select a minute in range [0..59].");
+           return(returnvalue); 
+        }
+
+        //Second input validation
+        if( i_intSecond < 0 || i_intSecond > 59 )
+        {
+            returnvalue = 1;
+            FormatTrace(GetFunctionName(), "", CMD_ERROR, "Second input: ", i_intSecond, " is invalid. Select a second in range [0..59].");
+            return(returnvalue); 
+        }
+
+
+        if ( Time.IsNull() )
+        {
+            FormatTrace(GetFunctionName(), "", CMD_PROGRESS, "Creating Time object" );
+            if ( !Time.CreateObject( "Hamilton.HSLTime" ) ) 
+            {
+                returnvalue = 1;
+                FormatTrace(GetFunctionName(), "()", CMD_ERROR, "Hamilton.Time object could not be created.");
+                return(returnvalue);
+            }
+        }
+
+        returnvalue = Time.GetUnixTime( i_intYear, i_intMonth, i_intDay, i_intHour, i_intMinute, i_intSecond, o_intUnixTime );
+
+        //GetTimeZoneOffset( intTimezone );
+        //ntTimezone = intTimezone * -1;
+        //GetUnixTimeOffset( intUnixTimeTemp, 0, intTimezone, 0, 0, o_intUnixTime);
+        
+        FormatTrace(GetFunctionName(), "", CMD_COMPLETE, "Time: ", o_intUnixTime);
+
+        return(returnvalue);
+    }    
+
+    function UnixTimeParse( variable i_intUnixTime, variable& o_strDateTime ) variable 
+    {
+        variable returnvalue(0);
+        o_strDateTime = "";
+
+        FormatTrace(GetFunctionName(), "", CMD_START, "Unix Time In:  ", i_intUnixTime );
+
+        if ( Time.IsNull() )
+        {
+            if ( !Time.CreateObject( "Hamilton.HSLTime" ) ) 
+            {
+                returnvalue = 1;
+                FormatTrace(GetFunctionName(), "()", CMD_ERROR, "Hamilton.Time object could not be created.");
+                return(returnvalue);
+            }
+        }
+
+
+        returnvalue = Time.UnixTimeParse( i_intUnixTime, o_strDateTime );
+        
+        FormatTrace(GetFunctionName(), "", CMD_COMPLETE, "DateTime Out:  ", o_strDateTime );
+
+        return(returnvalue);
+    }
+
+    
+    function GetUnixTimespan( variable i_intUnixTimeStart, variable i_intUnixTimeEnd, variable i_strUnits, variable& o_fltTimespan ) variable 
+    {
+        variable returnvalue(0);
+        variable strTypeStart("");
+        variable strTypeEnd("");
+
+        FormatTrace(GetFunctionName(), "", CMD_PROGRESS, "Timespan Start:  ", i_intUnixTimeStart );
+        FormatTrace(GetFunctionName(), "", CMD_PROGRESS, "Timespan End  :  ", i_intUnixTimeEnd );
+
+        o_fltTimespan = 0.0;
+
+        //Check input type
+        strTypeStart = GetType(i_intUnixTimeStart);
+        strTypeEnd   = GetType(i_intUnixTimeEnd);
+
+        if ( strTypeStart == "i" )
+        {
+            if ( i_intUnixTimeStart < 0 )
+            {
+                returnvalue = 1;
+                FormatTrace(GetFunctionName(), "", CMD_ERROR, "Invalid Input: i_intUnixTimeStart: ", i_intUnixTimeStart, " must be a number > 0.");
+                return(returnvalue);  
+            }
+        } 
+        else if ( strTypeStart == "f") 
+        {
+            //convert float to integer - this may result in minor (millisecond-duration) rounding errors 
+            i_intUnixTimeStart = MthRound(i_intUnixTimeStart, 0);
+            if ( i_intUnixTimeStart < 0 )
+            {
+                returnvalue = 1;
+                FormatTrace(GetFunctionName(), "", CMD_ERROR, "Invalid Input: i_intUnixTimeStart: ", i_intUnixTimeStart, " must be a number > 0.");
+                return(returnvalue);  
+            }
+        } 
+        else
+        { 
+                returnvalue = 1;
+                FormatTrace(GetFunctionName(), "", CMD_ERROR, "Invalid Input: i_intUnixTimeStart: ", i_intUnixTimeStart, " must be a number > 0.");
+                return(returnvalue); 
+        }
+
+        if ( strTypeEnd == "i" )
+        {
+            if ( i_intUnixTimeEnd < 0 )
+            {
+                returnvalue = 1;
+                FormatTrace(GetFunctionName(), "", CMD_ERROR, "Invalid Input: i_intUnixTimeEnd: ", i_intUnixTimeEnd, " must be a number > 0.");
+                return(returnvalue);  
+            }
+        } 
+        else if ( strTypeEnd == "f") 
+        {
+            //convert float to integer - this may result in minor (millisecond-duration) rounding errors 
+            i_intUnixTimeEnd = MthRound(i_intUnixTimeEnd, 0);
+            if ( i_intUnixTimeEnd < 0 )
+            {
+                returnvalue = 1;
+                FormatTrace(GetFunctionName(), "", CMD_ERROR, "Invalid Input: i_intUnixTimeEnd: ", i_intUnixTimeEnd, " must be a number > 0.");
+                return(returnvalue);  
+            }
+        } 
+        else
+        {
+                returnvalue = 1;
+                FormatTrace(GetFunctionName(), "", CMD_ERROR, "Invalid Input: i_intUnixTimeEnd: ", i_intUnixTimeEnd, " must be a number > 0.");
+                return(returnvalue); 
+        }
+
+
+        if ( i_strUnits == "d" || i_strUnits == "days" || i_strUnits == "D" || i_strUnits == "Days" )
+        {
+            i_strUnits = "Days";
+        }
+        else if ( i_strUnits == "h" || i_strUnits == "hours" || i_strUnits == "H" || i_strUnits == "Hours" )
+        {
+            i_strUnits = "Hours";
+        }
+        else if ( i_strUnits == "m" || i_strUnits == "minutes" || i_strUnits == "M" || i_strUnits == "Minutes" )
+        {
+            i_strUnits = "Minutes";
+        }
+        else if ( i_strUnits == "s" || i_strUnits == "seconds" || i_strUnits == "S" || i_strUnits == "Seconds" )
+        {
+            i_strUnits = "Seconds";
+        }
+        else 
+        {
+                returnvalue = 1;
+                FormatTrace(GetFunctionName(), "", CMD_ERROR, "Invalid units selected: ", i_strUnits);
+                return(returnvalue);            
+        }
+
+        if ( Time.IsNull() )
+        {
+            if ( !Time.CreateObject( "Hamilton.HSLTime" ) ) 
+            {
+                returnvalue = 1;
+                FormatTrace(GetFunctionName(), "()", CMD_ERROR, "Hamilton.Time object could not be created.");
+                return(returnvalue);
+            }
+        }
+
+        returnvalue = Time.GetUnixTimeSpan( i_intUnixTimeStart, i_intUnixTimeEnd, i_strUnits, o_fltTimespan );
+
+        o_fltTimespan = MthRound(o_fltTimespan, 3);
+        
+        FormatTrace(GetFunctionName(), "", CMD_COMPLETE, "Timespan: ", o_fltTimespan, " ", i_strUnits );
+
+        return(returnvalue);
+    }
+
+
+    function GetDateTimeOffset( variable i_strDateTime, variable i_intDays, variable i_intHours, variable i_intMinutes, variable i_intSeconds, variable& o_strDateTime ) variable 
+    {
+        variable returnvalue(0);
+        o_strDateTime = "";
+
+        FormatTrace(GetFunctionName(), "", CMD_START, "DateTime:  ", i_strDateTime );
+
+        if ( Time.IsNull() )
+        {
+            if ( !Time.CreateObject( "Hamilton.HSLTime" ) ) 
+            {
+                returnvalue = 1;
+                FormatTrace(GetFunctionName(), "()", CMD_ERROR, "Hamilton.Time object could not be created.");
+                return(returnvalue);
+            }
+        }
+
+
+        returnvalue = Time.GetDateTimeOffset( i_strDateTime, i_intDays, i_intHours, i_intMinutes, i_intSeconds, o_strDateTime );
+        
+        FormatTrace(GetFunctionName(), "", CMD_COMPLETE, "DateTime Offset:  ", o_strDateTime );
+
+        return(returnvalue);
+    }
+
+    function GetTimespan( variable i_strDateTimeStart, variable i_strDateTimeEnd, variable i_strUnits, variable& o_fltTimespan ) variable 
+    {
+        variable returnvalue(0);
+        o_fltTimespan = 0.0;
+
+        FormatTrace(GetFunctionName(), "", CMD_PROGRESS, "Timespan Start:  ", i_strDateTimeStart );
+        FormatTrace(GetFunctionName(), "", CMD_PROGRESS, "Timespan End  :  ", i_strDateTimeEnd );
+
+        if ( i_strUnits == "d" || i_strUnits == "days" || i_strUnits == "D" || i_strUnits == "Days" )
+        {
+            i_strUnits = "Days";
+        }
+        else if ( i_strUnits == "h" || i_strUnits == "hours" || i_strUnits == "H" || i_strUnits == "Hours" )
+        {
+            i_strUnits = "Hours";
+        }
+        else if ( i_strUnits == "m" || i_strUnits == "minutes" || i_strUnits == "M" || i_strUnits == "Minutes" )
+        {
+            i_strUnits = "Minutes";
+        }
+        else if ( i_strUnits == "s" || i_strUnits == "seconds" || i_strUnits == "S" || i_strUnits == "Seconds" )
+        {
+            i_strUnits = "Seconds";
+        }
+        else 
+        {
+                returnvalue = 1;
+                FormatTrace(GetFunctionName(), "", CMD_ERROR, "Invalid units selected: ", i_strUnits);
+                return(returnvalue);            
+        }
+
+        if ( Time.IsNull() )
+        {
+            if ( !Time.CreateObject( "Hamilton.HSLTime" ) ) 
+            {
+                returnvalue = 1;
+                FormatTrace(GetFunctionName(), "()", CMD_ERROR, "Hamilton.Time object could not be created.");
+                return(returnvalue);
+            }
+        }
+
+        returnvalue = Time.GetTimeSpan( i_strDateTimeStart, i_strDateTimeEnd, i_strUnits, o_fltTimespan );
+
+        o_fltTimespan = MthRound(o_fltTimespan, 3);
+        
+        FormatTrace(GetFunctionName(), "", CMD_COMPLETE, "Timespan: ", o_fltTimespan, " ", i_strUnits );
+
+        return(returnvalue);
+    }
+}
+#endif
