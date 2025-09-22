@@ -1,0 +1,35 @@
+// ======================================================================
+// This is a part of the Tip Counting Library.
+//
+// ======================================================================
+//
+// Modification History
+//
+// ======================================================================
+
+#ifndef __HSLTipContingLib_hsl__
+#define __HSLTipContingLib_hsl__  1
+
+#ifdef HSL_RUNTIME
+#include "HSLTipCountingLibImpl.hs_"
+#endif
+
+#ifdef HSL_RUNTIME 
+namespace TipCount
+{
+  function Write2(
+      sequence& sequenceObj, 
+      variable& tipCounter,
+      device& deviceContext)  variable {return ( 0);}
+  function Read2(
+      sequence& sequenceObj, 
+      variable& tipCounter,
+      device& deviceContext)  variable {return (-1);}
+  function Edit2(
+      sequence& sequenceObj, 
+      variable& tipCounter,
+      device& deviceContext, 
+      variable timeout)       variable {return (-1);}
+}
+#endif
+#endif
