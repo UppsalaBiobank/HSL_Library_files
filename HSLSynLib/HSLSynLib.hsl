@@ -1,0 +1,31 @@
+// ======================================================================
+// This is a part of the HSL Synchronization Library.
+//
+// Modification History
+//
+// ======================================================================
+
+#ifndef __HSLSynLib_hsl__
+#define __HSLSynLib_hsl__ 1
+
+#ifdef HSL_RUNTIME
+#include "HSLSynLib/HSLSynLib.hs_"
+#endif
+
+  // Interface to Synchronization library 
+#ifndef HSL_RUNTIME
+function SynInitializeCriticalSection() variable                    {return(0);}
+synchronized function SynEnterCriticalSection(variable criticalSection) void  {return;}
+synchronized function SynLeaveCriticalSection(variable criticalSection) void  {return;}
+    
+namespace SyncLib
+{
+  function Connect(variable HostName, variable HostPort, variable LocalPort, variable& SyncHandle) variable   {return(0);}
+  function CloseConnection(variable SyncHandle) variable                                    {return(0);}  
+  function SendData(variable DataToSend, variable SyncHandle) variable                            {return(0);}
+  function GetReceivedData(variable SyncHandle, variable TimeOut, variable& ReceivedData) variable        {return(0);}
+  function GetAllReceivedData(variable SyncHandle, variable& ReceivedData) variable                 {return(0);}
+  function ResetBuffer(variable SyncHandle) variable                                        {return(0);}
+}
+#endif
+#endif
