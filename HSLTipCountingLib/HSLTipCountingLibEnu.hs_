@@ -24,4 +24,3 @@ function StringTable()
 	Insert(IDS::traceLibName,						"HSLTipCountingLib"									);
 	Insert(IDS::changeTipCounterName,			"Warning! Renamed tip counter '%s1' to '%s2' (reason: invalid characters within given tip counter name)" );
 }
-// $$author=wbarmettler$$valid=1$$time=2017-03-14 13:14$$checksum=9720e18c$$length=090$$
