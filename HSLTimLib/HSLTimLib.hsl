@@ -1,0 +1,35 @@
+// ======================================================================
+// Library: HSL Time Library
+// 
+// ======================================================================
+//
+// Modification History
+//
+// ======================================================================
+
+#ifndef __HSLTime_hsl__
+#define __HSLTime_hsl__  1
+
+#ifdef HSL_RUNTIME
+#include "HSLTimeImpl.hs_"
+#endif
+
+#ifndef HSL_RUNTIME
+namespace HSLTime
+{
+  function SetDateTimeFormat( variable i_strFormat ) variable {return(0);}
+  function GetTimeZone( variable& o_strTimezone ) variable {return(0);}
+  function GetTimeZoneOffset( variable& o_intTimezoneOffset ) variable {return(0);}
+  function GetDateTimeNow( variable& o_strDateTimeNow ) variable {return(0);}
+  function GetDateTime( variable i_intYear, variable i_intMonth, variable i_intDay, variable i_intHour, variable i_intMinute, variable i_intSecond, variable& o_strDateTime ) variable {return(0);} 
+  function DateTimeParse( variable i_strDateTime, variable& o_strDateTime ) variable {return(0);}
+  function GetUnixTimeNow( variable& o_intUnixTime ) variable {return(0);}
+  function GetUnixTimeOffset( variable i_intUnixTime, variable i_intDays, variable i_intHours, variable i_intMinutes, variable i_intSeconds, variable& o_intUnixTime ) variable {return(0);} 
+  function GetUnixTime( variable i_intYear, variable i_intMonth, variable i_intDay, variable i_intHour, variable i_intMinute, variable i_intSecond, variable& o_intUnixTime ) variable {return(0);} 
+  function UnixTimeParse( variable i_intUnixTime, variable& o_strDateTime ) variable {return(0);} 
+  function GetUnixTimespan( variable i_intUnixTimeStart, variable i_intUnixTimeEnd, variable i_strUnits, variable& o_fltTimespan ) variable {return(0);} 
+  function GetDateTimeOffset( variable i_strDateTime, variable i_intDays, variable i_intHours, variable i_intMinutes, variable i_intSeconds, variable& o_strDateTime ) variable {return(0);} 
+  function GetTimespan( variable i_strDateTimeStart, variable i_strDateTimeEnd, variable i_strUnits, variable& o_fltTimespan ) variable {return(0);} 
+}
+#endif
+#endif
