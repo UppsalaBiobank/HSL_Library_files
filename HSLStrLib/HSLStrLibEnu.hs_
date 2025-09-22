@@ -1,0 +1,16 @@
+// This is the language dependant part of the String Library.
+//
+// Modification History
+//
+
+function StringTable()
+{
+	Insert(IDE::noError,								"No error."												);
+	Insert(IDE::unknownType,						"Unknown type : "										);
+	Insert(IDE::addFieldFailed,					"Failed to add field to record."					);
+	Insert(IDE::openFileFailed,					"Failed to open file : "							);
+	Insert(IDE::closeFileFailed,					"Failed to close file : "							);
+	Insert(IDE::writeRecordFailed,				"Failed to write record."							);
+	Insert(IDE::shellOutDeleteFailed,			"Failed to shell out delete command."			);
+	Insert(IDS::helpFileName,						"HSLStrLibEnu.chm"									);
+}
