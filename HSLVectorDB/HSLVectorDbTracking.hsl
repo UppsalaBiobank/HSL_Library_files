@@ -1,0 +1,266 @@
+// ======================================================================
+// This is a part of the Vector Database Tracking Library.
+//
+// ======================================================================
+// Modification History
+//
+// ======================================================================
+
+#ifndef __HSLVectorDbTracking_hsl__
+#define __HSLVectorDbTracking_hsl__ 1
+
+#ifdef HSL_RUNTIME
+#pragma once
+#include "HSLVectorDbTrackingImpl.hs_"
+#endif
+
+// Interface to the Vector Database Tracking Library
+#ifndef HSL_RUNTIME
+
+namespace VectorDb_Deck
+{
+   function GetDeckID(
+		variable& instrumentName) variable {return(0);}
+
+   function GetDeckID2(
+      device& instrument) variable {return(0);}
+}
+
+
+namespace VectorDb_Run
+{
+   function GetRunID() variable {return(0);}
+
+   function GetRuns(
+		variable& runIDs[], variable& methodNames[], variable& runGUIDs[], variable& startTimes[], 
+      variable& endTimes[], variable& runStates[], variable namedFormat) variable   {return(0);}
+}
+
+namespace VectorDb_Labware
+{
+   function GetAllLabwareOnDeck(
+		variable deckID, variable labwareLevel, variable& elementIDs[], variable& parentElementIDs[], 
+      variable& labwareLevels[], variable& labwareNames[], variable& labwareBarcodes[]) variable  {return(0);}
+
+   function LoadLabware(
+		device& instrument, variable& labwareId, variable& positionId) variable   {return(0);}
+
+   function IsLabwareLoaded(
+		variable& labwareAccessName) variable  {return(0);}
+
+   function IsLabwareLoadedByLabwareId(
+		variable deckID, variable& labwareId) {return(0);}
+
+   function IsLabwareLoadedByLabwareIdPositionId(
+		variable deckID, variable& labwareId, variable& positionId)   {return(0);}
+
+   function IsBarcodeLoaded(
+		variable deckID, variable& barcode) variable   {return(0);}
+
+   function IsBarcodeLoadedEx(
+		variable deckID, variable& barcode) variable[] {variable dummy[]; return(dummy);}
+
+   function CheckBarcodeByLabwareIdPositionId(
+		variable& barcode,  device& instrument, variable& labwareId, variable& positionId) variable   {return(0);}
+
+   function GetElementID(
+		variable& labwareAccessName) variable  {return(0);}
+
+   function GetElementIDByDeckIDLabwareId(
+		variable deckID, variable& labwareId) variable {return(0);}
+
+   function GetLabwareLoadingTime(
+		variable& labwareAccessName, variable namedFormat) variable   {return(0);}
+
+   function GetLabwareLoadingTimeByElementID(
+		variable deckID, variable elementID, variable namedFormat) variable   {return(0);}
+
+   function AssignLabwareToJob(
+		variable jobID,  variable sourceElementID, variable targetElementID) variable  {return(0);}
+
+   function AssignLoadedLabwareToJobs(
+		variable deckID) variable  {return(0);} 
+
+   function GetLabware(
+		variable& labwareAccessName,variable& deckID, variable& parentElementID, variable& elementID, variable& labwareName, 
+      variable& labwareLevel, variable& barcode, variable& volume, variable& labwareState, variable& userLabwareState, 
+      variable& deckCoordinateX, variable& deckCoordinateY, variable& deckCoordinateZ, variable& userLabwareTypeID) variable  {return(0);}
+
+   function GetLabwareByElementID(
+		variable elementID, variable& deckID, variable& parentElementID, variable& labwareName, variable& labwareLevel, 
+      variable& barcode, variable& volume, variable& labwareState, variable& userLabwareState, variable& deckCoordinateX, 
+      variable& deckCoordinateY, variable& deckCoordinateZ, variable& userLabwareTypeID) variable  {return(0);}
+
+   function GetLabwareBarcode(
+		variable& labwareAccessName) variable  {return(0);}
+
+   function GetLabwareBarcodeByElementID(
+		variable elementID) variable {return(0);}
+
+   function GetLabwareVolume(
+		variable& labwareAccessName) variable  {return(0);}
+
+   function GetLabwareVolumeByElementID(
+		variable elementID) variable  {return(0);}
+
+   function GetAllChildLabware(
+		variable elementID) variable []  {variable arrChildElementIDs[]; return(arrChildElementIDs);}
+
+   function GetLabwareOfLastLoadAction(
+		variable& elementIDs[], variable& parentElementIDs[], variable& initialLabwareAccessNames[], 
+      variable& labwareNames[], variable& labwareLevels[], variable& barcodes[]) variable   {return(0);}
+
+   function GetElementIDByCurrentPositionOfSequence(
+		variable deckID, sequence& Sequence) variable  {return(0);}
+
+   function GetLabwareHierarchyByCurrentPositionOfSequence(
+      variable deckID, sequence& Sequence, variable templateID, variable rackID) variable  {return(0);}
+
+   function GetElementIDsOfSequencePositions(
+      variable deckID, sequence& Sequences[]) variable []  {variable arrElementIDs[]; return(arrElementIDs);}
+
+   function CreateSequenceForRacks(
+   variable deckID, variable& rackElementIDs[], variable rackSortingCritera, variable wellSortingCriteria, 
+   sequence& Sequence) variable  {return(0);}
+
+   function GetLabwareAccessName(
+   variable& elementID) variable {return("");}
+
+   function GetLabwareOfRun(
+   variable runID, variable labwareLevel, variable& elementIDs[], variable& initialParentElementIDs[], 
+   variable& initialLabwareAccessNames[], variable& initialLabwareNames[], variable& barcodes[], variable& labwareLevels[], 
+   variable& labwareStates[], variable& loadingTimes[], variable namedFormat) variable   {return(0);}
+
+   function ReloadLabware(
+   variable currentRunElementID, variable previousRunElementID) variable   {return(0);}
+
+   function AddLabwareAdditionalData(
+   variable elementID, variable additionalDataKey, variable additionalDataValue) variable {return(0);}
+
+   function GetLabwareAdditionalData(
+   variable elementID, variable& additionalDataIDs[], variable& additionalDataKeys[], variable& additionalDataTypes[], 
+   variable& additionalDataValues[]) variable   {return(0);}
+
+   function GetLabwareAdditionalDataByKey(
+   variable elementID, variable additionalDataKey, variable& additionalDataID, variable& additionalDataType, 
+   variable& additionalDataValue)   variable {return(0);}
+
+   function DeleteLabwareAdditionalData(
+   variable elementID, variable additionalDataKey) variable   {return(0);}
+}
+
+
+namespace VectorDb_Misc
+
+{
+   static function TrackingEnabled() variable   {return(0);}
+}
+
+
+namespace VectorDb_Experiment
+{
+   function StartExperimentTracking(
+   variable& name, variable& description, variable& sourceAccessName) variable  {return(0);} 
+
+   function StartExperimentTrackingByElementID(
+   variable& name, variable& description, variable sourceElementID) variable {return(0);} 
+
+
+   function StartExperimentTrackingByElementIDs(
+   variable& name, variable& description, variable& sourceElementIDs[]) variable   {return(0);}
+
+
+   function GetAllExperiments(
+   variable& experimentIDs[], variable& names[], variable& descriptions[], variable& experimentTimes[], variable namedFormat) variable  {return(0);} 
+
+   function GetExperimentSourceLabware(
+   variable experimentID) variable {return(0);} 
+
+   function GetExperimentSourceLabwareEx(
+   variable experimentID) variable[]   {variable dummy[]; return(dummy);}
+
+   function GetAllExperimentLabware(
+   variable experimentID, variable& elementIDs[]) variable   {return(0);} 
+
+   function GetExperiment(
+   variable experimentID, variable& name, variable& description, variable& experimentTime, variable namedFormat) variable   {return(0);} 
+
+   function AddExperimentLabware(
+   variable experimentID, variable elementID) variable  {return(0);}
+
+   function AddExperimentSourceLabware(
+   variable experimentID, variable sourceElementID) variable  {return(0);}
+
+   function DeleteExperiment(
+   variable experimentID) variable  {return(0);}
+
+   function RemoveExperimentLabware(
+   variable experimentID, variable elementID) variable  {return(0);}
+}
+
+namespace VectorDb_TrackAction
+{
+   function CustomAction(
+   variable& labwareAccessName, variable actionState, variable additionalData_Key, variable additionalData_Value) variable   {return(0);}
+}
+
+namespace VectorDb_LabwareType
+{
+   function CreateSequenceForLabwareTypes(
+   variable deckID, variable& rackLabwareTypeIDs[], variable& wellLabwareTypeIDs[],  variable rackSortingCritera,  
+   variable wellSortingCriteria, sequence& Sequence) variable  {return(0);}
+
+   function SetLabwareType(
+   variable& mainTypeName, variable& typeName, variable& accessName) variable   {return(0);}
+
+   function SetLabwareTypeByElementID(
+   variable& mainTypeName, variable& typeName, variable elementID) variable  {return(0);}
+
+   function SetLabwareTypeID(
+   variable labwareTypeID, variable& accessName) variable   {return(0);}
+
+   function SetLabwareTypeIDByElementID(
+   variable labwareTypeID, variable elementID) variable  {return(0);}
+
+   function GetLabwareTypeID(
+   variable& accessName) variable   {return(0);}
+
+   function GetLabwareTypeIDByElementID(
+   variable elementID) variable  {return(0);}
+
+   function GetLabwareTypeIDByTypeName(
+   variable& mainTypeName, variable& typeName, variable createIfNotExist) variable {return(0);}
+
+   function GetLabwareMainTypeIDByTypeName(
+   variable& mainTypeName, variable createIfNotExist) variable {return(0);}
+
+   function GetLabwareMainTypes(
+   variable& mainTypeIDs[], variable& mainTypeNames[]) variable {return(0);}
+
+   function GetLabwareTypesOfMainType(
+   variable& mainType, variable& mainTypeIDs[], variable& typeNames[]) variable  {return(0);}
+
+   function GetLabwareTypesOfMainTypeByMainTypeID(
+   variable mainTypeID, variable& mainTypeIDs[], variable& typeNames[]) variable  {return(0);}
+
+   function DeleteLabwareMainType(
+   variable& mainTypeName) variable {return(0);}
+
+   function DeleteLabwareMainTypeByMainTypeID(
+   variable mainTypeID) variable {return(0);}
+
+   function DeleteLabwareType(
+   variable& mainTypeName, 
+   variable& typeName) variable  {return(0);}
+
+   function DeleteLabwareTypeByTypeID(
+   variable typeID) variable  {return(0);}
+
+   function GetLoadedLabwareByLabwareTypeID(
+   variable deckID, variable labwareLevel,variable labwareTypeID, variable& elementIDs[], variable& labwareTypeIDs[]) variable   {return(0);}
+
+   function GetLoadedChildrenLabwareByLabwareTypeID(
+   variable deckID, variable parentElementID, variable labwareTypeID, variable& elementIDs[], variable& labwareTypeIDs[]) variable   {return(0);}
+}
+#endif
+#endif
