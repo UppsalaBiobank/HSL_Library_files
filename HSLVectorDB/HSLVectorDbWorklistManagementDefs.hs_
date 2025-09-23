@@ -1,0 +1,67 @@
+// ======================================================================
+// This is a part of the Vector Database Worklist Management Library.
+//
+// ======================================================================
+// Modification History
+//
+// ======================================================================
+
+#ifndef __HSLVectorDbWorklistManagementDefs_hs___
+#define __HSLVectorDbWorklistManagementDefs_hs___	1
+
+// Definitions of the Vector Database Worklist Management Library.
+// Re-initialized at runtime using type library.
+
+namespace VectorDb_JobState
+{
+    variable Unprocessed(1);
+    variable Assigned(8);
+    variable Processed(128);
+    variable Filter_Any(0);
+}
+
+namespace VectorDb_SortingDirection
+{
+    variable Ascending(1);
+    variable Descending(2);
+}
+
+namespace VectorDb_LabwareUsageType
+{
+    variable Source(8);
+    variable Target(128);
+    variable Filter_Any(0);
+    variable Filter_All(255);
+}
+
+
+// Column names supported by 'HSL Vector Database Worklist Management' in the SQL search condition and the SQL sort expression are:
+namespace VectorDb_WorklistColumnName
+{
+	const variable jobID("JobID");
+	const variable jobName("JobName");
+	const variable jobPriority("JobPriority");
+	const variable jobState("JobState");
+	const variable jobUserState("JobUserState");
+	const variable sourceElementID("SourceElementID");
+	const variable sourceBarcode("SourceBarcode");
+	const variable sourceLabwareId("SourceLabwareId");
+	const variable sourcePositionId("SourcePositionId");
+	const variable sourceRequired("SourceRequired");
+	const variable targetElementID("TargetElementID");
+	const variable targetBarcode("TargetBarcode");
+	const variable targetLabwareId("TargetLabwareId");
+	const variable targetPositionId("TargetPositionId");
+	const variable targetVolume("TargetVolume");
+
+	const variable sourceLoadingTime("SourceLoadingTime");
+	const variable sourceXCoordinate("SourceXCoordinate");
+	const variable sourceYCoordinate("SourceYCoordinate");
+	const variable sourceZCoordinate("SourceZCoordinate");
+	const variable targetLoadingTime("TargetLoadingTime");
+	const variable targetXCoordinate("TargetXCoordinate");
+	const variable targetYCoordinate("TargetYCoordinate");
+	const variable targetZCoordinate("TargetZCoordinate");
+}
+
+#endif
