@@ -1,0 +1,291 @@
+// ======================================================================
+// This is a part of the Vector Database Worklist Management Library.
+//
+// ======================================================================
+// Modification History
+//
+// ======================================================================
+
+#ifndef __HSLVectorDbWorklistManagement_hsl__
+#define __HSLVectorDbWorklistManagement_hsl__   1
+
+// Implementation of the Vector Database Worklist Management Library
+#ifdef HSL_RUNTIME
+#include "HSLVectorDbWorklistManagementImpl.hs_"
+#endif
+
+// Interface to the Vector Database Worklist Management Library
+#ifndef HSL_RUNTIME
+namespace VectorDb
+{
+   function AddJob(
+      variable& jobName,                  
+      variable  jobPriority,              
+      variable  jobState,                 
+      variable  jobUserState,             
+      variable& sourceBarcode,            
+      variable& sourceLabwareId,          
+      variable& sourcePositionId,         
+      variable  sourceRequired,           
+      variable& targetBarcode,            
+      variable& targetLabwareId,          
+      variable& targetPositionId,         
+      variable  targetVolume) variable    
+   {return(0);} 
+
+   function AddJobAdditionalData(
+      variable jobID,                           
+      variable& additionalDataKey,              
+      variable& additionalDataValue) variable   
+   {return(0);} 
+
+   function RemoveJob(
+      variable jobID) variable                  
+   {return(0);} 
+
+   function RemoveJobAdditionalData(
+      variable jobID,                           
+      variable& additionalDataKey) variable     
+   {return(0);} 
+
+   function RemoveAllJobs(
+      variable jobStateFilter) variable         
+   {return(0);} 
+
+   function GetJobs(
+      variable jobStateFilter,            
+      variable& jobIDs[],                 
+      variable& jobNames[],               
+      variable& jobPriorities[],          
+      variable& jobStates[],              
+      variable& jobUserStates[],          
+      variable& sourceElementIDs[],       
+      variable& sourceBarcodes[],         
+      variable& sourceLabwareIds[],       
+      variable& sourcePositionIds[],      
+      variable& sourceRequiredFlags[],    
+      variable& targetElementIDs[],       
+      variable& targetBarcodes[],         
+      variable& targetLabwareIds[],       
+      variable& targetPositionIds[],      
+      variable& targetVolumes[]) variable 
+   {return(0);} 
+
+   function GetJobIDs(
+      variable& searchCondition,          
+      variable& orderByExpression,        
+      variable queryJobAdditionalData,                                
+      variable queryJobLabwareData) variable[] 
+   {variable _0[]; return(_0);} 
+
+   function GetJob(
+      variable jobID,                     
+      variable& jobName,                  
+      variable& jobPriority,              
+      variable& jobState,                 
+      variable& jobUserState,             
+      variable& sourceElementID,          
+      variable& sourceBarcode,            
+      variable& sourceLabwareId,          
+      variable& sourcePositionId,         
+      variable& sourceRequired,           
+      variable& targetElementID,          
+      variable& targetBarcode,            
+      variable& targetLabwareId,          
+      variable& targetPositionId,         
+      variable& targetVolume) variable    
+   {return(0);} 
+
+   function GetJobAdditionalData(
+      variable jobID,                              
+      variable& additionalDataKeys[],              
+      variable& additionalDataValues[]) variable   
+   {return(0);} 
+
+   function GetJobsSortedByPriority(
+      variable jobStateFilter,            
+      variable sortingDirection,          
+      variable& jobIDs[],                 
+      variable& jobNames[],               
+      variable& jobPriorities[],          
+      variable& jobStates[],              
+      variable& jobUserStates[],          
+      variable& sourceElementIDs[],       
+      variable& sourceBarcodes[],         
+      variable& sourceLabwareIds[],       
+      variable& sourcePositionIds[],      
+      variable& sourceRequiredFlags[],    
+      variable& targetElementIDs[],       
+      variable& targetBarcodes[],         
+      variable& targetLabwareIds[],       
+      variable& targetPositionIds[],      
+      variable& targetVolumes[]) variable 
+   {return(0);} 
+
+   function GetJobsForLabware(
+      variable& labwareId,                
+      variable& positionId,               
+      variable labwareUsageType,          
+      variable jobStateFilter,            
+      variable& jobIDs[],                 
+      variable& jobNames[],               
+      variable& jobPriorities[],          
+      variable& jobStates[],              
+      variable& jobUserStates[],          
+      variable& sourceElementIDs[],       
+      variable& sourceBarcodes[],         
+      variable& sourceLabwareIds[],       
+      variable& sourcePositionIds[],      
+      variable& sourceRequiredFlags[],    
+      variable& targetElementIDs[],       
+      variable& targetBarcodes[],         
+      variable& targetLabwareIds[],       
+      variable& targetPositionIds[],      
+      variable& targetVolumes[]) variable 
+   {return(0);} 
+
+   function GetJobsForLabwareSortedByPriority(
+      variable& labwareId,                
+      variable& positionId,               
+      variable labwareUsageType,          
+      variable jobStateFilter,            
+      variable sortingDirection,          
+      variable& jobIDs[],                 
+      variable& jobNames[],               
+      variable& jobPriorities[],          
+      variable& jobStates[],              
+      variable& jobUserStates[],          
+      variable& sourceElementIDs[],       
+      variable& sourceBarcodes[],         
+      variable& sourceLabwareIds[],       
+      variable& sourcePositionIds[],      
+      variable& sourceRequiredFlags[],    
+      variable& targetElementIDs[],       
+      variable& targetBarcodes[],         
+      variable& targetLabwareIds[],       
+      variable& targetPositionIds[],      
+      variable& targetVolumes[]) variable 
+   {return(0);} 
+
+   function GetJobsForBarcode(
+      variable& barcode,                  
+      variable labwareUsageType,          
+      variable jobStateFilter,            
+      variable& jobIDs[],                 
+      variable& jobNames[],               
+      variable& jobPriorities[],          
+      variable& jobStates[],              
+      variable& jobUserStates[],          
+      variable& sourceElementIDs[],       
+      variable& sourceBarcodes[],         
+      variable& sourceLabwareIds[],       
+      variable& sourcePositionIds[],      
+      variable& sourceRequiredFlags[],    
+      variable& targetElementIDs[],       
+      variable& targetBarcodes[],         
+      variable& targetLabwareIds[],       
+      variable& targetPositionIds[],      
+      variable& targetVolumes[]) variable 
+   {return(0);} 
+
+   function GetJobsForBarcodeSortedByPriority(
+      variable& barcode,                  
+      variable labwareUsageType,          
+      variable jobStateFilter,            
+      variable sortingDirection,          
+      variable& jobIDs[],                 
+      variable& jobNames[],               
+      variable& jobPriorities[],          
+      variable& jobStates[],              
+      variable& jobUserStates[],          
+      variable& sourceElementIDs[],       
+      variable& sourceBarcodes[],         
+      variable& sourceLabwareIds[],       
+      variable& sourcePositionIds[],      
+      variable& sourceRequiredFlags[],    
+      variable& targetElementIDs[],       
+      variable& targetBarcodes[],         
+      variable& targetLabwareIds[],       
+      variable& targetPositionIds[],      
+      variable& targetVolumes[]) variable 
+   {return(0);} 
+
+   function GetJobsForElementID(
+      variable runID,                     
+      variable elementID,                 
+      variable labwareUsageType,          
+      variable jobStateFilter,            
+      variable& jobIDs[],                 
+      variable& jobNames[],               
+      variable& jobPriorities[],          
+      variable& jobStates[],              
+      variable& jobUserStates[],          
+      variable& sourceElementIDs[],       
+      variable& sourceBarcodes[],         
+      variable& sourceLabwareIds[],       
+      variable& sourcePositionIds[],      
+      variable& sourceRequiredFlags[],    
+      variable& targetElementIDs[],       
+      variable& targetBarcodes[],         
+      variable& targetLabwareIds[],       
+      variable& targetPositionIds[],      
+      variable& targetVolumes[]) variable 
+   {return(0);} 
+
+   function GetJobsForElementIDSortedByPriority(
+      variable runID,                     
+      variable elementID,                 
+      variable labwareUsageType,          
+      variable jobStateFilter,            
+      variable sortingDirection,          
+      variable& jobIDs[],                 
+      variable& jobNames[],               
+      variable& jobPriorities[],          
+      variable& jobStates[],              
+      variable& jobUserStates[],          
+      variable& sourceElementIDs[],       
+      variable& sourceBarcodes[],         
+      variable& sourceLabwareIds[],       
+      variable& sourcePositionIds[],      
+      variable& sourceRequiredFlags[],    
+      variable& targetElementIDs[],       
+      variable& targetBarcodes[],         
+      variable& targetLabwareIds[],       
+      variable& targetPositionIds[],      
+      variable& targetVolumes[]) variable 
+   {return(0);} 
+
+   function GetJobState(
+      variable jobID) variable 
+   {return(0);} 
+
+   function SetJobState(
+      variable jobID,                     
+      variable jobState) variable 
+   {return(0);} 
+
+   function RemoveJobsForLabware(
+      variable& labwareId,                
+      variable& positionId,               
+      variable labwareUsageType,          
+      variable jobStateFilter) variable   
+   {return(0);} 
+
+   function RemoveJobsForBarcode(
+      variable& barcode,                  
+      variable labwareUsageType,          
+      variable jobStateFilter) variable   
+   {return(0);} 
+
+   function RemoveJobsForElementID(
+      variable runID,                     
+      variable elementID,                 
+      variable labwareUsageType,          
+      variable jobStateFilter) variable   
+   {return(0);} 
+
+   static function WorklistManagementEnabled() variable
+   {return(0);} 
+}
+#endif
+#endif
