@@ -1,0 +1,61 @@
+// ======================================================================
+// This is a part of the Utility Library.
+//
+// ======================================================================
+// Modification History
+//
+// ======================================================================
+
+#ifndef __HSLUtilLib_hsl__
+#define __HSLUtilLib_hsl__ 1
+
+#ifdef HSL_RUNTIME
+#include "HSLUtilLibImpl.hs_"
+#endif
+
+#ifndef HSL_RUNTIME
+namespace Util
+{
+      function Min(variable var1, variable var2) variable {return(0);}
+      function Max(variable var1, variable var2) variable {return(0);}
+      function IsString(variable var) variable {return(0);}
+      function IsNumber(variable var) variable {return(0);}
+      function IsInteger(variable var) variable {return(0);}
+      function IsFloat(variable var) variable {return(0);}
+      function IsNegative(variable number) variable {return(0);}
+      function Abs(variable number) variable {return(0);}
+      function Lookup(variable& varArr[],variable& value,variable& index) variable {return(0);}
+      function Sort(variable& values[], variable& keys[]) void {return;}
+      function SyncShell(variable& pathname, variable windowstyle, variable& exitCode) variable {return(0);}
+      function AsyncShell(variable& pathname, variable windowstyle, event& eventObj, variable& exitCode) variable {return(0);}
+      function Pause() void {return;}
+      function Lock() void {return;}
+      function Unlock() void {return;}
+      function GetUserName() variable {return(0);}
+      function AddCheckSum(variable& fileName, variable& commentDelimiter) variable {return(0);}
+      function VerifyCheckSum(variable& fileName) variable {return(0);}
+      function GetLanguage() variable {return(0);}
+      function GetIVDSystem() variable {return(0);}
+      function GetBarcodeJoker(variable& barcodeJokerKey) variable {return(0);}
+      function GetUniqueRunId() variable {return(0);}
+      function GetHWnd() variable {return(0);}
+      function RegisterAbortHandler(variable& abortHandler) void {return;}
+      function UnregisterAbortHandler(variable& abortHandler) void {return;}
+      function SendEMail(variable to, variable subject, variable body) variable {return(0);}
+      function GetEMailAddressOfSender() variable {return(0);}
+      function SetEMailAddressOfSender(variable& newEMailAddressOfSender) void  {}
+      function GetSMTPServerHostName() variable {return(0);}
+      function SetSMTPServerHostName(variable& newSMTPServerHostName) void {}
+      function GetSimulationMode() variable {return(0);}
+      function GetTimerViewName(timer timerObject) variable {return(0);}
+      function SetTimerViewName(timer timerObject, variable& timerViewName) void {}
+      function GetTimeScaleFactor() variable {return(0);}
+      function SetTimeScaleFactor(variable timeScaleFactor) void {}
+      function GetCurrentMethodViewName() variable {return(0);}
+      function GetCurrentActionViewName() variable {return(0);}
+      function SetCurrentMethodViewName(variable& methodViewName) void {}
+      function SetCurrentMethodDescription(variable& methodDescription) void {}
+      function SetCurrentActionDescription(variable& actionDescription) void {}
+}
+#endif
+#endif
