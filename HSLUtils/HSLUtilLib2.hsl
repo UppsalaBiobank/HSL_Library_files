@@ -1,0 +1,185 @@
+// ======================================================================
+// This is a part of the Utility Library 2.
+//
+// ======================================================================
+// Modification History
+//
+// ======================================================================
+
+#ifndef __HSLUtilLib2_hsl__
+#define __HSLUtilLib2_hsl__ 1
+
+#ifdef HSL_RUNTIME
+#include "HSLUtilLib2Impl.hs_"
+#endif
+
+#ifndef HSL_RUNTIME
+namespace Util2
+{
+   function CheckValueType(
+      variable& valueToCheck,                  
+      variable& typeToCheck,                 
+      variable& addErrorDescription) void {}
+
+   function CheckValueRange(
+      variable& valueToCheck,                
+      variable rangeToCheck,                 
+      variable& addErrorDescription) void {}
+
+   function CheckValueRangeMinMax(
+      variable& valueToCheck,       
+      variable minValue,                     
+      variable maxValue,                     
+      variable& addErrorDescription) void {}
+
+   function CheckValueTypeAndRange(
+      variable& valueToCheck,             
+      variable& typeToCheck,                 
+      variable rangeToCheck,                 
+      variable& addErrorDescription) void {}
+
+   function CheckValueTypeAndRangeMinMax(
+      variable& valueToCheck,                                  
+      variable& typeToCheck,                 
+      variable  minValue,                    
+      variable  maxValue,                    
+      variable& addErrorDescription) void {}
+
+   function ToString(variable var) variable {return(0);}
+
+   function RoundVolume(variable& volume) void {}
+
+   function RoundVolumeUp(variable& volume) void {}
+
+   function RoundVolumeDown(variable& volume) void {}
+
+   function GetLabwarePosXYZ(
+      device&   deviceObj,                   
+      variable& labwareId,                   
+      variable& positionId,                  
+      variable& xCoord,                      
+      variable& yCoord,                      
+      variable& zCoord) void {}
+
+   namespace Error
+   {
+      function RaiseRuntimeError(            
+         variable majorID,                   
+         variable minorID,                   
+         variable errorCode,                 
+         variable& errorDescription,         
+         variable& helpFileName,             
+         variable& fileName,                 
+         variable& functionName,             
+         variable& lineNumber) void {}
+
+      function RaiseRuntimeErrorInclPrevErrDesc(
+         variable majorID,                   
+         variable minorID,                   
+         variable errorCode,                 
+         variable& errorDescription,         
+         variable& helpFileName,             
+         variable& fileName,                 
+         variable& functionName,             
+         variable& lineNumber) void {}
+
+      function RaiseLast() void {}
+
+      function MakeHxResult(
+         variable majorID,
+         variable minorID,
+         variable errorCode) variable {return(0);}
+   }
+
+   // --------------------------------------------------------------------------------------
+   // Array index checking
+   // --------------------------------------------------------------------------------------
+
+   function VarArrCheckIndex(                
+      variable& varArray[],                  
+      variable index,                        
+      variable& varArrayName) void {}
+
+   function SeqArrCheckIndex(                
+      sequence& seqArray[],                  
+      variable index,                        
+      variable& seqArrayName) void {}
+
+   function VarArrGetAt(                      
+      variable& varArray[],                  
+      variable index,                        
+      variable& varArrayName) variable {return(0);}
+
+   function SeqArrGetAt(                      
+      sequence& seqArray[],                  
+      variable index,                        
+      variable& seqArrayName) sequence {sequence s; return(s);}
+
+   // ----------------------------------------------------------------------------------------------------
+   // Debugging and tracing
+   // ----------------------------------------------------------------------------------------------------
+
+   namespace Debug
+   {
+      // Trace name, indexes and all LabIDs PosIDs of the sequence.
+      function TraceSequence(
+         sequence& sequenceObj) void {}
+
+      function TraceSequenceAndData_1(
+         variable& description,
+         sequence& sequenceObj,
+         variable& array[]) void {}
+
+      function TraceSequenceAndData_2(
+         variable& description,
+         sequence& sequenceObj,
+         variable& array_1[],
+         variable& array_2[]) void {}
+
+      function TraceSequencesAndData_2(
+         variable& description,
+         sequence& sequenceObj_1,
+         sequence& sequenceObj_2,
+         variable& array_1[],
+         variable& array_2[]) void {}
+
+      function TraceSequencesAndData_1(
+         variable& description,
+         sequence& sequenceObj_1,
+         sequence& sequenceObj_2,
+         variable& array[]) void {}
+
+      // Sets the current settings to trace multiple arrays.
+      function SetTraceArraySettings(
+         variable indexWidth, 
+         variable elementWidth) void {}
+
+      // Traces all elements of the given array.
+      function TraceArray(
+         variable& description,
+         variable& array[]) void {}
+
+      // Traces all elements of the given arrays. Arrays must have same size.
+      function TraceArray_2(
+         variable& description,
+         variable& array_1[],
+         variable& array_2[]) void {}
+
+      // Traces all elements of the given arrays. Arrays must have same size.
+      function TraceArray_3(
+         variable& description,
+         variable& array_1[],
+         variable& array_2[],
+         variable& array_3[]) void {}
+
+      // Traces all elements of the given arrays. Arrays must have same size.
+      function TraceArray_4(
+         variable& description,
+         variable& array_1[],
+         variable& array_2[],
+         variable& array_3[],
+         variable& array_4[]) void {}
+   }
+}
+#endif
+#endif
