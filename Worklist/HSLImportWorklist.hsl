@@ -1,0 +1,80 @@
+// ======================================================================
+// This is a part of the Import Worklist Library.
+//
+// ======================================================================
+// Modification History
+//
+// ======================================================================
+
+#ifndef __HSLImportWorklist_hsl__
+#define __HSLImportWorklist_hsl__   1
+
+// Implementation of to the Import Worklist Library
+#ifdef HSL_RUNTIME
+#include "HSLImportWorklistImpl.hs_"
+#endif
+
+
+#ifndef HSL_RUNTIME
+namespace ImportWorklist
+{
+
+   function ImportMdbWorklist(
+      variable& fileName, 
+      variable& tableName,
+      variable& searchCondition,
+      variable& orderByExpression,
+      variable removeJobStateFilter,
+      variable importMode,
+      variable& sourceColumnNames[],
+      variable& sourceColumnTypes[],
+      variable& targetColumnNames[]) variable
+   {return(0);}
+
+   function ImportXlsWorklist(
+      variable& fileName, 
+      variable& sheetName,
+      variable& searchCondition,
+      variable& orderByExpression,
+      variable& importRange,
+      variable firstRowContainsColumnHeaders,
+      variable removeJobStateFilter,
+      variable importMode,
+      variable& sourceColumnNames[],
+      variable& sourceColumnTypes[],
+      variable& targetColumnNames[]) variable
+   {return(0);}
+
+   function ImportTxtWorklist(
+      variable& fileName, 
+      variable& searchCondition,
+      variable& orderByExpression,
+      variable& delimiter,
+      variable& textDelimiter,
+      variable startImportAtLine,
+      variable firstRowContainsColumnHeaders,
+      variable removeJobStateFilter,
+      variable importMode,
+      variable& sourceColumnNames[],
+      variable& sourceColumnTypes[],
+      variable& targetColumnNames[]) variable
+   {return(0);}
+
+   function SetColumnDefault(
+      variable defaultInteger, 
+      variable defaultFloat,
+      variable& defaultString) void
+   {}
+
+   function GetColumnDefault(
+      variable& defaultInteger, 
+      variable& defaultFloat,
+      variable& defaultString) void
+   {}
+
+   function SqlStr(
+      variable& value) variable
+   {return(0);}
+}
+#endif
+#endif
