@@ -1,0 +1,23 @@
+// ======================================================================
+// This is a part of the Import Worklist Library.
+//
+// ======================================================================
+// Modification History
+//
+// ======================================================================
+
+
+#ifndef __HSLImportWorklistDefs_hs___
+#define __HSLImportWorklistDefs_hs___	1
+
+// Definitions of the Import Worklist Library.
+
+namespace ImportWorklist_ColumnType				// Specifies the column data type.
+{
+    const variable Standard(0);					// Type for standard columns 
+    const variable Integer(1);					// Type for custom columns of type integer
+    const variable Float(2);						// Type for custom columns of type float
+    const variable String(3);						// Type for custom columns of type string
+}
+
+#endif
