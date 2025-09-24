@@ -1,0 +1,49 @@
+
+#ifndef __ReplaceCharacterInAsciiTextFile_hsl__
+#define __ReplaceCharacterInAsciiTextFile_hsl__ 1
+
+#pragma once
+#include "HSLStrLib/HSLStrLib.hsl"
+
+// Replaces all the specified old character with the specifed new character in the given ascii text file.
+// Returns nonzero if the given ascii text file was found, otherwise zero.
+
+function ReplaceCharacterInAsciiTextFile(
+   variable& fileName,                    // [i]: Full path and file name of the ascii text file, e.g. "C:\\Temp\\Test.csv"
+   variable& oldCharacter,                // [i]: The old character, e.g. "."
+   variable& newCharacter) variable       // [i]: The new character, e.g. ","
+{
+   variable write(hslFalse);
+   object fso;
+   object f;
+   variable text("");
+   variable vbFalse(0);
+   variable vbTrue(-1);
+   variable forReading(1);
+   variable forWriting(2);
+
+   onerror goto Unexpected;
+   fso.CreateObject("Scripting.FileSystemObject");
+   if (fso.FileExists(fileName))
+   {
+
+      f = fso.OpenTextFile(fileName, forReading, vbFalse);
+      text = f.ReadAll();
+      f.Close();
+      fso.DeleteFile(fileName);
+      f = fso.OpenTextFile(fileName, forWriting, vbTrue);
+      Str::StrReplace(text, oldCharacter, newCharacter);
+      f.Write(text);
+      f.Close();
+      return(hslTrue);
+   }
+   return(hslFalse);
+
+   Unexpected:
+   {
+      if (!f.IsNull())
+         f.Close();
+      return(hslFalse);
+   }
+}
+#endif
