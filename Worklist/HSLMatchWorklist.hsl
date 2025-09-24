@@ -1,0 +1,44 @@
+// ======================================================================
+// This is a part of the Match Worklist Library.
+//
+// ======================================================================
+// Modification History
+//
+// ======================================================================
+
+#ifndef __HSLMatchWorklist_hsl__
+#define __HSLMatchWorklist_hsl__ 1
+
+#ifdef HSL_RUNTIME
+#include "HSLMatchWorklistImpl.hs_"
+#endif
+
+#ifndef HSL_RUNTIME
+namespace MatchWorklist
+{
+   function MatchJobData(
+      device& ML_STAR,
+      variable& jobName,
+      variable  matchSourceSequence,
+      sequence& sourceSequence,
+      variable  matchTargetSequence,
+      sequence& targetSequence,
+      variable  matchTargetVolume,
+      variable& targetVolumes[],
+      variable& sortColumns[],
+      variable& sortCriterions[],
+      variable& sortDirections[]) variable
+   {return(0);}
+
+   function MatchCustomJobData(
+      device& ML_STAR,
+      variable& jobName,
+      variable& customDataName,
+      variable& customDataArray[],
+      variable& sortColumns[],
+      variable& sortCriterions[],
+      variable& sortDirections[]) variable
+   {return(0);}
+}
+#endif
+#endif
