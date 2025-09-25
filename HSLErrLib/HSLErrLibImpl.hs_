@@ -10,9 +10,6 @@
 #include "HSLMthLib/HSLMthLib.hsl"
 #include "HSLStrLib/HSLStrLib.hsl"
 
-// --------------------------------------------------------------------------------------
-// Implementation of File library 
-// --------------------------------------------------------------------------------------
 namespace HSLErrLib
 {
 function ErrGetId() variable
@@ -99,14 +96,15 @@ function ErrDisplayError(variable& title) variable
 		style = hslError;
 		id = err.GetId();
 		message = "ERR: ";
-		message = message + StrHexIStr(ErrMajor(id));
+		message = message + Str::StrHexIStr(ErrMajor(id));
 		message = message + ", ";
-		message = message + StrHexIStr(ErrMinor(id));
+		message = message + Str::StrHexIStr(ErrMinor(id));
 		message = message + ", ";
-		message = message + StrHexIStr(ErrCode(id));
+		message = message + Str::StrHexIStr(ErrCode(id));
 		message = message + "\n\n";
 		message = message + err.GetDescription();
 		return(MessageBox(message, title, style));
 	}
 }
+
 #endif
