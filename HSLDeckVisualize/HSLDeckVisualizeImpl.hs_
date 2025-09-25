@@ -7,7 +7,7 @@
 #pragma once // use either pragma once or include guard not both
 #include "HSLUtils/HSLUtilLib.hsl"
 #include "HSLStrLib/HSLStrLib.hsl"
-#include "HSLExtensions/HSLStringTableLib.hs_"
+#include "HSLExtensions/HSLStringTableLib.hsl"
 
 
 namespace DeckVisualize
@@ -56,7 +56,7 @@ function ErrRaiseInvalidParameter(					// raises an invalid parameter error
 {
 	variable errorDesc;
 	errorDesc = StringTable::Load(IDS::errInvalidParameter);
-	StrReplace(errorDesc, "%s", parameterName);
+	Str::StrReplace(errorDesc, "%s", parameterName);
 	errorDesc = fileName + "(" + lineNumber + ") : " + functionName + "()\n" + errorDesc;
 	err.SetDescription(errorDesc);
 	err.Raise(IDS::errInvalidParameter, err.GetDescription());
@@ -223,4 +223,3 @@ function UpdateLoadedLabware(device& dev, variable labware[], variable state[], 
 
 }	// namespace DeckVisualize
 #endif
-// $$author=Henrik$$valid=0$$time=2025-08-26 12:54$$checksum=55d6a3ec$$length=085$$
