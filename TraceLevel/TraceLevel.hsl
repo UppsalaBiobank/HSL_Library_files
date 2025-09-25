@@ -1,0 +1,101 @@
+// ======================================================================
+// TraceLevel library for dependent traces
+//
+// ======================================================================
+// Modification History ;
+//
+// ======================================================================
+
+#ifndef __TraceLevel_hsl__
+  #define __TraceLevel_hsl__ 1
+
+#ifdef HSL_RUNTIME
+#include "TraceLevelImpl.hs_"
+#endif
+
+#ifndef HSL_RUNTIME
+namespace TRACELEVEL
+{
+  function GetTraceLevel() variable;
+
+    function SetTraceLevel(variable i_intTraceLevel) void;
+
+    function SetStringIndicator(variable i_strStringIndicator) void;
+
+    function Trace_02(variable i_intTraceLevel,
+                      variable i_varToTrace_01,
+                      variable i_varToTrace_02) void;
+
+    function Trace_04(variable i_intTraceLevel,
+                      variable i_varToTrace_01,
+                      variable i_varToTrace_02,
+                      variable i_varToTrace_03,
+                      variable i_varToTrace_04) void;
+
+    function Trace_06(variable i_intTraceLevel,
+                      variable i_varToTrace_01,
+                      variable i_varToTrace_02,
+                      variable i_varToTrace_03,
+                      variable i_varToTrace_04,
+                      variable i_varToTrace_05,
+                      variable i_varToTrace_06) void;
+
+    function Trace_08(variable i_intTraceLevel,
+                      variable i_varToTrace_01,
+                      variable i_varToTrace_02,
+                      variable i_varToTrace_03,
+                      variable i_varToTrace_04,
+                      variable i_varToTrace_05,
+                      variable i_varToTrace_06,
+                      variable i_varToTrace_07,
+                      variable i_varToTrace_08) void;
+
+    function Trace_10(variable i_intTraceLevel,
+                      variable i_varToTrace_01,
+                      variable i_varToTrace_02,
+                      variable i_varToTrace_00,
+                      variable i_varToTrace_04,
+                      variable i_varToTrace_05,
+                      variable i_varToTrace_06,
+                      variable i_varToTrace_07,
+                      variable i_varToTrace_08,
+                      variable i_varToTrace_09,
+                      variable i_varToTrace_10) void;
+
+    function TraceArray(variable i_intTraceLevel,
+                        variable i_strDescription,
+                        variable i_arrvarToTrace[]) void;
+
+    function TraceArrayHorizontally(variable i_intTraceLevel,
+                                    variable i_strDescription,
+                                    variable i_arrvarToTrace[]) void;
+
+    function TraceArraysFaceToFace(variable i_intTraceLevel,
+                                   variable i_strDescription_1,
+                                   variable i_strDescription_2,
+                                   variable i_arrvarToTrace_1[],
+                                   variable i_arrvarToTrace_2[]) void;
+
+    function TraceSequence(variable i_intTraceLevel,
+                           sequence i_seqToTrace) void;
+
+    function TraceSequenceParameter(variable i_intTraceLevel,
+                                    sequence i_seqToTrace) void;
+
+    function TraceSequencePositions(device ML_STAR,
+                                    variable i_intTraceLevel,
+                                    sequence i_seqToTrace,
+                                    variable i_blnCurrentPositionOnly) void;
+
+    function TraceAction(variable i_intTraceLevel,
+                         variable i_intAction,
+                         variable i_strFunctionName,
+                         variable i_strMethodName,
+                         variable i_strComment) void;
+
+    function SetActionIndicator(variable i_intAction,
+                                variable i_strIndicator) void;
+}
+#endif
+#endif
+// $$author=Henrik$$valid=0$$time=2025-09-25 08:28$$checksum=cfb0cd90$$length=083$$
