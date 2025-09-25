@@ -10,7 +10,7 @@
 
 #pragma once
 #include "HSLStrLib/HSLStrLib.hsl"
-#include "HSLExtensions/HSLStringTableLib.hs_"
+#include "HSLExtensions/HSLStringTableLib.hsl"
 
 // ======================================================================
 // Implementation of HSLBarcodeReader library 
@@ -195,9 +195,9 @@ namespace HSLBarcodeReader
 		// Trace completion of SetSimulation
 		traceEx = StringTable::Load(stringID::traceAdditionalSetSimulation);
 		if(mg_isSimulation)
-			StrReplace(traceEx, "%s", StringTable::Load(stringID::traceTextOn));
+			Str::StrReplace(traceEx, "%s", StringTable::Load(stringID::traceTextOn));
 		else
-			StrReplace(traceEx, "%s", StringTable::Load(stringID::traceTextOff));
+			Str::StrReplace(traceEx, "%s", StringTable::Load(stringID::traceTextOff));
 		
 		FormatTrace(traceSource, traceAction, 2, traceEx); 
 
@@ -245,7 +245,7 @@ namespace HSLBarcodeReader
 	
 		// Trace completion of SetComPort	
 		traceEx = StringTable::Load(stringID::traceAdditionalSetComPort);
-		StrReplace(traceEx, "%s", mg_comPort);
+		Str::StrReplace(traceEx, "%s", mg_comPort);
 		FormatTrace(traceSource, traceAction, 2, traceEx); 
 	
 		return(0);
@@ -296,7 +296,7 @@ namespace HSLBarcodeReader
 		else
 		{
 			traceEx = StringTable::Load(stringID::traceAdditionalSetTimeout);
-			StrReplace(traceEx, "%s", IStr(timeout));
+			Str::StrReplace(traceEx, "%s", IStr(timeout));
 		}
 	
 		mg_readTimeout = timeout;
@@ -407,7 +407,7 @@ namespace HSLBarcodeReader
 
 			// Trace completion of Read
 			traceEx = StringTable::Load(stringID::traceAdditionalRead);
-			StrReplace(traceEx, "%s", mg_barcode);
+			Str::StrReplace(traceEx, "%s", mg_barcode);
 			FormatTrace(traceSource, traceAction, 2, traceEx); 
 
 			return(mg_barcode);
@@ -452,8 +452,8 @@ namespace HSLBarcodeReader
 				mg_barcode = inputBarcode;
 				
 				traceRecovery = StringTable::Load(stringID::traceRecManEnteredBC);
-				StrReplace(traceRecovery, "%s1", mg_barcode);
-				StrReplace(traceRecovery, "%s2", userName);
+				Str::StrReplace(traceRecovery, "%s1", mg_barcode);
+				Str::StrReplace(traceRecovery, "%s2", userName);
 				FormatTrace(traceSource, traceAction, 2, traceRecovery);
 			}
 			else // Input Dialog leaved with Cancel
@@ -461,7 +461,7 @@ namespace HSLBarcodeReader
 				mg_barcode = "";
 
 				traceRecovery = StringTable::Load(stringID::traceRecCancelPressed);
-				StrReplace(traceRecovery, "%s", userName);
+				Str::StrReplace(traceRecovery, "%s", userName);
 				FormatTrace(traceSource, traceAction, 2, traceRecovery);		
 			}
 
@@ -479,7 +479,7 @@ namespace HSLBarcodeReader
 
 		// Trace completion of Read
 		traceEx = StringTable::Load(stringID::traceAdditionalRead);
-		StrReplace(traceEx, "%s", mg_barcode);
+		Str::StrReplace(traceEx, "%s", mg_barcode);
 		FormatTrace(traceSource, traceAction, 2, traceEx); 
 
 		return(mg_barcode);
@@ -619,4 +619,5 @@ namespace HSLBarcodeReader
 	}
 
 } // end of name space HSLBarcodeReader
+
 #endif  // end of '#ifndef __HSLBarcodeReaderImpl_hsl__'
