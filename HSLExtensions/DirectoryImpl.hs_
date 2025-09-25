@@ -104,15 +104,15 @@ namespace HSLExtensions
          while(hslTrue)
          {
             //search next delimiter
-            intIndex = StrFind(strRemaining, i_strDelimiter);
+            intIndex = Str::StrFind(strRemaining, i_strDelimiter);
 
             //split
             if(intIndex != -1)
             {  
-               strCurrent = StrLeft(strRemaining, intIndex);
-               strRemaining = StrRight(strRemaining, StrGetLength(strRemaining) - StrGetLength(i_strDelimiter) - intIndex);
+               strCurrent = Str::StrLeft(strRemaining, intIndex);
+               strRemaining = Str::StrRight(strRemaining, Str::StrGetLength(strRemaining) - Str::StrGetLength(i_strDelimiter) - intIndex);
                
-               if(StrGetLength(strCurrent) > 0)
+               if(Str::StrGetLength(strCurrent) > 0)
                {
                   arrValues.AddAsLast(strCurrent);
                }
@@ -120,7 +120,7 @@ namespace HSLExtensions
             //dont split but save remaining
             else
             {
-               if(StrGetLength(strRemaining) > 0)
+               if(Str::StrGetLength(strRemaining) > 0)
                {
                   arrValues.AddAsLast(strRemaining);
                }
@@ -1098,6 +1098,7 @@ namespace HSLExtensions
             return(strScriptResult);
          }
       } 
+
    } //end Directory
 } //end HSLExtensions
 #endif //end __HSLEXTENSIONS_DIRECTORY__
