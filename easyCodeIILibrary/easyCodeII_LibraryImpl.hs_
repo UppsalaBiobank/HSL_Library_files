@@ -5,8 +5,8 @@
 // Revisions:
 // ----------
 
-#ifndef __EASYCODEII_LIBRARYOImpl_hsl__
-#define __EASYCODEII_LIBRARYImpl_hsl__ 1
+#ifndef __EASYCODEII_LIBRARY_hsl__
+#define __EASYCODEII_LIBRARY_hsl__ 1
 
 #pragma once
 #include "HSLUtils/HSLUtilLib.hsl"
@@ -2268,8 +2268,8 @@
       {
         variable strNullen;
 
-         strNullen = "000000000000000000" + StrIStr(Zahl);
-         strNullen= StrRight(strNullen,TotalLaenge);
+         strNullen = "000000000000000000" + Str::StrIStr(Zahl);
+         strNullen= Str::StrRight(strNullen,TotalLaenge);
 
          return(strNullen);
       }
@@ -2474,7 +2474,7 @@
 
            strEinzen = "11111111111111111111111111111111";
            strNullen = "00000000000000000000000000000000";
-           ChannelPattern= StrLeft( StrLeft(strEinzen,iNumberOfChannels) + strNullen ,iTotalNumberOfChannels);
+           ChannelPattern= Str::StrLeft( Str::StrLeft(strEinzen,iNumberOfChannels) + strNullen ,iTotalNumberOfChannels);
 
            if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName()," ChannelPattern=\"",ChannelPattern,"\"");
 
@@ -2500,7 +2500,7 @@
 
            strEinzen = "11111111111111111111111111111111";
            strNullen = "00000000000000000000000000000000";
-           ChannelPattern= StrRight( strNullen + StrLeft(strEinzen,iNumberOfChannels) ,iTotalNumberOfChannels);
+           ChannelPattern= Str::StrRight( strNullen + Str::StrLeft(strEinzen,iNumberOfChannels) ,iTotalNumberOfChannels);
 
            if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName()," ChannelPattern=\"",ChannelPattern,"\"");
 
@@ -2525,7 +2525,7 @@
                                                                                   ")");
 
            strNullen = "00000000000000000000000000000000";
-           ChannelPattern= StrLeft( StrLeft(strNullen,iSingleChannel-1) + "1" + strNullen ,iTotalNumberOfChannels);
+           ChannelPattern= Str::StrLeft( Str::StrLeft(strNullen,iSingleChannel-1) + "1" + strNullen ,iTotalNumberOfChannels);
 
            if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName()," ChannelPattern=\"",ChannelPattern,"\"");
 
@@ -2611,7 +2611,7 @@
 
           for (index = 0;index < iArray.GetSize(); index++)
           {         
-             arrayString = arrayString + "[" + StrIStr(index) + "]=\"" + iArray.GetAt(index) + "\"";
+             arrayString = arrayString + "[" + Str::StrIStr(index) + "]=\"" + iArray.GetAt(index) + "\"";
              if (index<iArray.GetSize()-1) arrayString = arrayString + ",";
           }
 
@@ -2637,7 +2637,7 @@
 
           for (index = 0;index < iArray.GetSize(); index++)
           {         
-             arrayString = arrayString + "[" + StrIStr(index) + "]=" + StrIStr(iArray.GetAt(index)) + "";
+             arrayString = arrayString + "[" + Str::StrIStr(index) + "]=" + Str::StrIStr(iArray.GetAt(index)) + "";
              if (index<iArray.GetSize()-1) arrayString = arrayString + ",";
           }
 
@@ -2663,7 +2663,7 @@
 
           for (index = 0;index < iArray.GetSize(); index++)
           {         
-             arrayString = arrayString + "[" + StrIStr(index) + "]=" + StrFStr(iArray.GetAt(index)) + "";
+             arrayString = arrayString + "[" + Str::StrIStr(index) + "]=" + Str::StrFStr(iArray.GetAt(index)) + "";
              if (index<iArray.GetSize()-1) arrayString = arrayString + ",";
           }
 
@@ -2709,7 +2709,7 @@
           if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName()," oSequence=\"",oSequence.GetName(),"\"");
 
           // Sequence zuerst loeschen
-          SeqRemoveAll(oSequence);
+          Seq::SeqRemoveAll(oSequence);
 
           return(ERROR::_NONE);
         }
@@ -2732,7 +2732,7 @@
                                                                                  ",oDestinationSequence=\"",oDestinationSequence.GetName(),"\"");
 
           // Delete sequence first
-          SeqRemoveAll(oDestinationSequence);
+          Seq::SeqRemoveAll(oDestinationSequence);
 
           // set count to total
           iSourceSequence1.SetCount(iSourceSequence1.GetTotal());
@@ -2747,7 +2747,7 @@
           }
 
           // Set sequence pointer to beginning
-          SeqSetMax(tmp_DestinationSequence,SeqGetTotal(tmp_DestinationSequence));
+          Seq::SeqSetMax(tmp_DestinationSequence,Seq::SeqGetTotal(tmp_DestinationSequence));
           tmp_DestinationSequence.SetCurrentPosition(1);
 
           oDestinationSequence = tmp_DestinationSequence;
@@ -2772,7 +2772,7 @@
                                                                                  ",oDestinationSequence=\"",oDestinationSequence.GetName(),"\"");
 
           // Sequence zuerst loeschen
-          SeqRemoveAll(oDestinationSequence);
+          Seq::SeqRemoveAll(oDestinationSequence);
 
           tmp_CurrentPosititionSourceSequence = iSourceSequence.GetCurrentPosition();
 
@@ -2784,7 +2784,7 @@
           }
 
           // Set sequence pointer to beginning
-          SeqSetMax(tmp_DestinationSequence,SeqGetTotal(tmp_DestinationSequence));
+          Seq::SeqSetMax(tmp_DestinationSequence,Seq::SeqGetTotal(tmp_DestinationSequence));
           tmp_DestinationSequence.SetCurrentPosition(tmp_CurrentPosititionSourceSequence);
 
           oDestinationSequence = tmp_DestinationSequence;
@@ -3109,4 +3109,3 @@
   } // namespace EASYCODEII
 
 #endif
-// $$author=Henrik$$valid=0$$time=2025-08-25 09:17$$checksum=321d579d$$length=083$$
