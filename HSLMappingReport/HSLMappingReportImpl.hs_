@@ -354,10 +354,10 @@ namespace HSLMapReport
 		// Note: The help for this library must be located in same directory as this file.
 		// Evaluate the path to concatniate it with the MolduleName+Extension.
 		thisFilePath = GetFileName();
-		lastBackSlashPos = StrReverseFind(thisFilePath, "\\");
+		lastBackSlashPos = Str::StrReverseFind(thisFilePath, "\\");
 		if ( -1 < lastBackSlashPos )
 		{
-			thisFilePath = StrLeft(thisFilePath, lastBackSlashPos+1);
+			thisFilePath = Str::StrLeft(thisFilePath, lastBackSlashPos+1);
 		}
 
 		helpFile = thisFilePath + StrConst::libraryName + GetLanguage() + StrConst::helpFileExtension;		// current language
@@ -740,7 +740,7 @@ namespace HSLMapReport
 		{
 			// due to empty sequence, no element will be found
 			traceInfo = StringTable::Load(IDS::noElementFoundWithinTargetSeq);
-			StrReplace(traceInfo, "%s", targetSequence.GetName());
+			Str::StrReplace(traceInfo, "%s", targetSequence.GetName());
 			Error::RaiseEx(IDE::elementNotFound, traceInfo, GetFileName(), GetFunctionName(), GetLineNumber());
 		}
 
@@ -804,7 +804,7 @@ namespace HSLMapReport
 
 					// trace progress
 					traceInfo = StringTable::Load(IDS::generateReportFile);
-					StrReplace(traceInfo, "%s", labwareAccessName);
+					Str::StrReplace(traceInfo, "%s", labwareAccessName);
 					FormatTrace(traceSource, traceAction, TraceStatus::progress, traceInfo);
 				
 					onerror goto ErrGenerateLabwareHistory;
@@ -824,7 +824,7 @@ namespace HSLMapReport
 				if(isLabwareLoaded == hslFalse)
 				{
 					traceInfo = StringTable::Load(IDS::noElementFoundWithinTargetSeq);
-					StrReplace(traceInfo, "%s", targetSequence.GetName());
+					Str::StrReplace(traceInfo, "%s", targetSequence.GetName());
 
 					// trace progress
 					FormatTrace(traceSource, traceAction, TraceStatus::progress, traceInfo);
@@ -970,9 +970,9 @@ namespace HSLMapReport
 			index = sFileName.Find(StrConst::noPlaceholder);
 		}
 
-		StrReplace(sParsedFileName, StrConst::barcodePlaceholder, barcode);
-		StrReplace(sParsedFileName, StrConst::labIdPlaceholder, labwareId);
-		replacedCharactersOfPlaceholder_No = StrReplace(sParsedFileName, StrConst::noPlaceholder, IStr(number));
+		Str::StrReplace(sParsedFileName, StrConst::barcodePlaceholder, barcode);
+		Str::StrReplace(sParsedFileName, StrConst::labIdPlaceholder, labwareId);
+		replacedCharactersOfPlaceholder_No = Str::StrReplace(sParsedFileName, StrConst::noPlaceholder, IStr(number));
 
 		return (sParsedFileName);
 	}
@@ -1102,7 +1102,7 @@ namespace HSLMapReport
 					}
 					else
 					{
-						StrReplace(sqlFragment, "%s", IStr(state));
+						Str::StrReplace(sqlFragment, "%s", IStr(state));
 
 						if(index == 0)
 							sql_where = sql_where + sqlFragment;
@@ -1223,13 +1223,13 @@ namespace HSLMapReport
 					if(reportMappingFile.GetSize() == 0 && createOneFile) //trace once only
 					{
 						traceInfo = StringTable::Load(IDS::createReportMappingFile);
-						StrReplace(traceInfo, "%s", sFilePathName);
+						Str::StrReplace(traceInfo, "%s", sFilePathName);
 						FormatTrace(traceSource, traceAction, TraceStatus::progress, traceInfo);
 					}
 					else if(!createOneFile)
 					{
 						traceInfo = StringTable::Load(IDS::createReportMappingFile);
-						StrReplace(traceInfo, "%s", sFilePathName);
+						Str::StrReplace(traceInfo, "%s", sFilePathName);
 						FormatTrace(traceSource, traceAction, TraceStatus::progress, traceInfo);
 					}
 
@@ -1384,7 +1384,7 @@ namespace HSLMapReport
 			variable errorDesc;
 
 			errorDesc = StringTable::Load(IDE::failedToDeleteFile);
-			StrReplace(errorDesc, "%s", sFilePathName);
+			Str::StrReplace(errorDesc, "%s", sFilePathName);
 			FormatTrace(traceSource, traceAction, TraceStatus::completeWithError, errorDesc);
 
 			// re-throw the error 
@@ -1401,7 +1401,7 @@ namespace HSLMapReport
 				fso.DeleteFile(reportFilePathName);
 
 			traceInfo = StringTable::Load(IDS::reportMappingFileGenerationFailed);
-			StrReplace(traceInfo, "%s", sFilePathName);
+			Str::StrReplace(traceInfo, "%s", sFilePathName);
 			// trace progress
 			FormatTrace(traceSource, traceAction, TraceStatus::completeWithError, traceInfo);
 
@@ -1419,7 +1419,7 @@ namespace HSLMapReport
 				fso.DeleteFile(reportFilePathName);
 
 			traceInfo = StringTable::Load(IDS::reportMappingFileGenerationFailed);
-			StrReplace(traceInfo, "%s", sFilePathName);
+			Str::StrReplace(traceInfo, "%s", sFilePathName);
 			// trace progress
 			FormatTrace(traceSource, traceAction, TraceStatus::completeWithError, traceInfo);
 
@@ -1541,17 +1541,17 @@ namespace HSLMapReport
 		if(!Util::IsString(filename))
 			Error::Raise(IDE::invalidParameter, GetFileName(), GetFunctionName(), GetLineNumber());
 
-		StrTrimLeft(filename, StrConst::blank);
-		StrTrimRight(filename, StrConst::blank);
+		Str::StrTrimLeft(filename, StrConst::blank);
+		Str::StrTrimRight(filename, StrConst::blank);
 		if(StrConst::emptyString == filename)
 			Error::Raise(IDE::invalidFileName, GetFileName(), GetFunctionName(), GetLineNumber());
 
 		// lookup for invalid characters \ / : * ? " < > |
 		sFileName = filename;
 		sFileName.MakeLower();
-		StrReplace(sFileName, StrConst::barcodePlaceholder, StrConst::emptyString);
-		StrReplace(sFileName, StrConst::labIdPlaceholder, StrConst::emptyString);
-		StrReplace(sFileName, StrConst::noPlaceholder, StrConst::emptyString);
+		Str::StrReplace(sFileName, StrConst::barcodePlaceholder, StrConst::emptyString);
+		Str::StrReplace(sFileName, StrConst::labIdPlaceholder, StrConst::emptyString);
+		Str::StrReplace(sFileName, StrConst::noPlaceholder, StrConst::emptyString);
 
 		if(-1 != sFileName.Find(StrConst::backslash) ||
 			-1 != sFileName.Find(StrConst::slash) ||
@@ -1564,7 +1564,7 @@ namespace HSLMapReport
 			-1 != sFileName.Find(StrConst::orSign))
 		{
 			errorDesc = StringTable::Load(IDE::fileNameInvalidCharacter);
-			StrReplace(errorDesc, "%s", filename);
+			Str::StrReplace(errorDesc, "%s", filename);
 			Error::RaiseEx(IDE::fileNameInvalidCharacter, errorDesc, GetFileName(), GetFunctionName(), GetLineNumber());
 		}
 
@@ -1575,7 +1575,7 @@ namespace HSLMapReport
 			0 != sExtension.Compare(StrConst::access))
 		{
 			errorDesc = StringTable::Load(IDE::invalidFileExtension);
-			StrReplace(errorDesc, "%s", filename);
+			Str::StrReplace(errorDesc, "%s", filename);
 			Error::RaiseEx(IDE::invalidFileExtension, errorDesc, GetFileName(), GetFunctionName(), GetLineNumber());
 		}
 
@@ -1591,8 +1591,8 @@ namespace HSLMapReport
 		if(!Util::IsString(path))
 			Error::Raise(IDE::invalidParameter, GetFileName(), GetFunctionName(), GetLineNumber());	
 
-		StrTrimLeft(path, StrConst::blank);
-		StrTrimRight(path, StrConst::blank);
+		Str::StrTrimLeft(path, StrConst::blank);
+		Str::StrTrimRight(path, StrConst::blank);
 		if(StrConst::emptyString == path)
 		{
 			path = GetLogFilesPath();
@@ -1603,7 +1603,7 @@ namespace HSLMapReport
 			if(!fso.FolderExists(path))
 			{
 				errorDesc = StringTable::Load(IDE::invalidPath);
-				StrReplace(errorDesc, "%s", path);
+				Str::StrReplace(errorDesc, "%s", path);
 				Error::RaiseEx(IDE::invalidPath, errorDesc, GetFileName(), GetFunctionName(), GetLineNumber());
 			}
 		}
@@ -1619,7 +1619,7 @@ namespace HSLMapReport
 			if(StrConst::elementNotFound == arrReportFileName.GetAt(index))
 			{
 				errorDesc = StringTable::Load(IDE::elementNotFound);
-				StrReplace(errorDesc, "%s", arrLabwareAccessName.GetAt(index));
+				Str::StrReplace(errorDesc, "%s", arrLabwareAccessName.GetAt(index));
 			
 				Error::RaiseEx(IDE::elementNotFound, errorDesc, GetFileName(), GetFunctionName(), GetLineNumber());
 			}
@@ -1627,7 +1627,7 @@ namespace HSLMapReport
 			if(StrConst::failedToCreateReportFile == arrReportFileName.GetAt(index))
 			{
 				errorDesc = StringTable::Load(IDE::failedToCreateReportFile);
-				StrReplace(errorDesc, "%s", arrLabwareAccessName.GetAt(index));
+				Str::StrReplace(errorDesc, "%s", arrLabwareAccessName.GetAt(index));
 			
 				Error::RaiseEx(IDE::failedToCreateReportFile, errorDesc, GetFileName(), GetFunctionName(), GetLineNumber());
 			}
@@ -1773,13 +1773,13 @@ namespace HSLMapReport
 
 		// trace progress			
 		traceInfo = StringTable::Load(IDS::elementOfFilterSequence);
-		StrReplace(traceInfo, "%s", filterSequence.GetName());
+		Str::StrReplace(traceInfo, "%s", filterSequence.GetName());
 		FormatTrace(traceSource, traceAction, TraceStatus::progress, traceInfo);
 
 		if(m_EnhancedLibraryTrace)
 		{
 			traceInfo = StringTable::Load(IDS::filterSequence);
-			StrReplace(traceInfo, "%s", filterSequence.GetName());				
+			Str::StrReplace(traceInfo, "%s", filterSequence.GetName());				
 			// trace completion with error of function
 			FormatTrace(traceSource, traceAction, TraceStatus::complete, traceInfo);
 		}
@@ -1791,7 +1791,7 @@ namespace HSLMapReport
 			if(m_EnhancedLibraryTrace)
 			{
 				traceInfo = StringTable::Load(IDS::filterSequence);
-				StrReplace(traceInfo, "%s", filterSequence.GetName());				
+				Str::StrReplace(traceInfo, "%s", filterSequence.GetName());				
 				// trace completion with error of function
 				FormatTrace(traceSource, traceAction, TraceStatus::completeWithError, traceInfo);
 			}
@@ -1861,7 +1861,7 @@ namespace HSLMapReport
 			FormatTrace(traceSource, traceAction, TraceStatus::start);
 			
 			traceInfo = StringTable::Load(IDS::listSeparator);
-			StrReplace(traceInfo, "%s", mg_listSeparator);
+			Str::StrReplace(traceInfo, "%s", mg_listSeparator);
 		
 			// trace completion of function
 			FormatTrace(traceSource, traceAction, TraceStatus::complete, traceInfo);
@@ -1937,7 +1937,7 @@ namespace HSLMapReport
 			if(m_EnhancedLibraryTrace)
 			{
 				errorDesc = StringTable::Load(IDE::fileNotFound);
-				StrReplace(errorDesc, "%s", filename);
+				Str::StrReplace(errorDesc, "%s", filename);
 				// trace file not found
 				FormatTrace(traceSource, traceAction, TraceStatus::complete, errorDesc);
 			}
@@ -1947,7 +1947,7 @@ namespace HSLMapReport
 		if(m_EnhancedLibraryTrace)
 		{
 			traceInfo = StringTable::Load(IDS::fileDeleted);
-			StrReplace(traceInfo, "%s", filePathName);
+			Str::StrReplace(traceInfo, "%s", filePathName);
 			// trace completion of deleting
 			FormatTrace(traceSource, traceAction, TraceStatus::complete, traceInfo);
 		}
@@ -1959,7 +1959,7 @@ namespace HSLMapReport
 			if(m_EnhancedLibraryTrace)
 			{
 				errorDesc = StringTable::Load(IDE::failedToDeleteFile);
-				StrReplace(errorDesc, "%s", filePathName);
+				Str::StrReplace(errorDesc, "%s", filePathName);
 				FormatTrace(traceSource, traceAction, TraceStatus::completeWithError, errorDesc);
 			}
 			
@@ -2022,16 +2022,16 @@ namespace HSLMapReport
 			Error::Raise(IDE::invalidParameter, GetFileName(), GetFunctionName(), GetLineNumber());
 
 		// trimm leading and successional blanks
-		StrTrimLeft(labwareId, StrConst::blank);
-		StrTrimRight(labwareId, StrConst::blank);
+		Str::StrTrimLeft(labwareId, StrConst::blank);
+		Str::StrTrimRight(labwareId, StrConst::blank);
 
 		instrumentName = deviceContext.GetInstrumentName( );	// Get Instrument name
 
 		if (StrConst::emptyString == labwareId)
 		{
 			traceInfo = StringTable::Load(IDE::unknownLabwareId);
-			StrReplace(traceInfo, "%s1", labwareId);
-			StrReplace(traceInfo, "%s2", instrumentName);
+			Str::StrReplace(traceInfo, "%s1", labwareId);
+			Str::StrReplace(traceInfo, "%s2", instrumentName);
 			Error::RaiseEx(IDE::unknownLabwareId, traceInfo, GetFileName(), GetFunctionName(), GetLineNumber());
 		}
 
@@ -2039,8 +2039,8 @@ namespace HSLMapReport
 			Error::Raise(IDE::invalidParameter, GetFileName(), GetFunctionName(), GetLineNumber());
 
 		// trimm leading and successional blanks
-		StrTrimLeft(positionId, StrConst::blank);
-		StrTrimRight(positionId, StrConst::blank);
+		Str::StrTrimLeft(positionId, StrConst::blank);
+		Str::StrTrimRight(positionId, StrConst::blank);
 
 		if (!Util::IsString(barcode))
 			Error::Raise(IDE::invalidParameter, GetFileName(), GetFunctionName(), GetLineNumber());
@@ -2088,8 +2088,8 @@ namespace HSLMapReport
 		{
 			// labware with given Id not found within decklayout
 			traceInfo = StringTable::Load(IDE::unknownLabwareId);
-			StrReplace(traceInfo, "%s1", labwareId);
-			StrReplace(traceInfo, "%s2", instrumentName);
+			Str::StrReplace(traceInfo, "%s1", labwareId);
+			Str::StrReplace(traceInfo, "%s2", instrumentName);
 			Error::RaiseEx(IDE::unknownLabwareId, traceInfo, GetFileName(), GetFunctionName(), GetLineNumber());
 		}
 
@@ -2130,8 +2130,8 @@ namespace HSLMapReport
 
 		// trace start of SetElementBarcode
 		traceInfo = StringTable::Load(IDS::setBarcodeOnLabId);
-		StrReplace(traceInfo, "%s1", barcode);
-		StrReplace(traceInfo, "%s2", labwareAccessName);
+		Str::StrReplace(traceInfo, "%s1", barcode);
+		Str::StrReplace(traceInfo, "%s2", labwareAccessName);
 		if(m_EnhancedLibraryTrace)
 			FormatTrace(traceSource, traceAction, TraceStatus::complete, traceInfo);
 		else
@@ -2142,8 +2142,8 @@ namespace HSLMapReport
 		WrongSpelledPositionId:
 		{
 			traceInfo = StringTable::Load(IDE::unknownPositionId);
-			StrReplace(traceInfo, "%s1", positionId);
-			StrReplace(traceInfo, "%s2", labwareId);
+			Str::StrReplace(traceInfo, "%s1", positionId);
+			Str::StrReplace(traceInfo, "%s2", labwareId);
 			Error::RaiseEx(IDE::unknownPositionId, traceInfo, GetFileName(), GetFunctionName(), GetLineNumber());		
 		}
 
@@ -2201,16 +2201,16 @@ namespace HSLMapReport
 			Error::Raise(IDE::invalidParameter, GetFileName(), GetFunctionName(), GetLineNumber());
 
 		// trimm leading and successional blanks
-		StrTrimLeft(labwareId, StrConst::blank);
-		StrTrimRight(labwareId, StrConst::blank);
+		Str::StrTrimLeft(labwareId, StrConst::blank);
+		Str::StrTrimRight(labwareId, StrConst::blank);
 
 		instrumentName = deviceContext.GetInstrumentName( );	// Get Instrument name
 
 		if (StrConst::emptyString == labwareId)
 		{
 			traceInfo = StringTable::Load(IDE::unknownLabwareId);
-			StrReplace(traceInfo, "%s1", labwareId);
-			StrReplace(traceInfo, "%s2", instrumentName);
+			Str::StrReplace(traceInfo, "%s1", labwareId);
+			Str::StrReplace(traceInfo, "%s2", instrumentName);
 			Error::RaiseEx(IDE::unknownLabwareId, traceInfo, GetFileName(), GetFunctionName(), GetLineNumber());
 		}
 
@@ -2218,8 +2218,8 @@ namespace HSLMapReport
 			Error::Raise(IDE::invalidParameter, GetFileName(), GetFunctionName(), GetLineNumber());
 
 		// trimm leading and successional blanks
-		StrTrimLeft(positionId, StrConst::blank);
-		StrTrimRight(positionId, StrConst::blank);
+		Str::StrTrimLeft(positionId, StrConst::blank);
+		Str::StrTrimRight(positionId, StrConst::blank);
 
 		// Search Template name depending on the labwareId
 		deviceContext.GetTemplateLabwareNames(templateNames, labwareNames);
@@ -2287,15 +2287,15 @@ namespace HSLMapReport
 		else
 		{
 			traceInfo = StringTable::Load(IDE::unknownLabwareId);
-			StrReplace(traceInfo, "%s1", labwareId);
-			StrReplace(traceInfo, "%s2", instrumentName);
+			Str::StrReplace(traceInfo, "%s1", labwareId);
+			Str::StrReplace(traceInfo, "%s2", instrumentName);
 			Error::RaiseEx(IDE::unknownLabwareId, traceInfo, GetFileName(), GetFunctionName(), GetLineNumber());		
 		}
 
 		// trace completion of RemoveElement
 		traceInfo = StringTable::Load(IDS::removedElementFromDevice);
-		StrReplace(traceInfo, "%s1", labwareAccessName);
-		StrReplace(traceInfo, "%s2", instrumentName);
+		Str::StrReplace(traceInfo, "%s1", labwareAccessName);
+		Str::StrReplace(traceInfo, "%s2", instrumentName);
 		if(m_EnhancedLibraryTrace)
 			FormatTrace(traceSource, traceAction, TraceStatus::complete, traceInfo);
 		else
@@ -2306,8 +2306,8 @@ namespace HSLMapReport
 		WrongSpelledPositionId:
 		{
 			traceInfo = StringTable::Load(IDE::unknownPositionId);
-			StrReplace(traceInfo, "%s1", positionId);
-			StrReplace(traceInfo, "%s2", labwareId);
+			Str::StrReplace(traceInfo, "%s1", positionId);
+			Str::StrReplace(traceInfo, "%s2", labwareId);
 			Error::RaiseEx(IDE::unknownPositionId, traceInfo, GetFileName(), GetFunctionName(), GetLineNumber());		
 		}
 		
