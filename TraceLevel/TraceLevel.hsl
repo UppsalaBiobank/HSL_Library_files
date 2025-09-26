@@ -16,7 +16,20 @@
 #ifndef HSL_RUNTIME
 namespace TRACELEVEL
 {
-  function GetTraceLevel() variable;
+    const global variable TRACE_LEVEL_NONE            (0);
+    const global variable TRACE_LEVEL_RELEASE         (1);
+    const global variable TRACE_LEVEL_DEBUG           (2);
+    
+    namespace ACTION
+    {
+      const variable START                (1);
+      const variable COMPLETE             (2);
+      const variable ERROR                (3);
+      const variable PROGRESS             (4);
+      const variable COMPLETE_WITH_ERROR  (5);
+    }
+
+    function GetTraceLevel() variable;
 
     function SetTraceLevel(variable i_intTraceLevel) void;
 
@@ -98,4 +111,3 @@ namespace TRACELEVEL
 }
 #endif
 #endif
-// $$author=Henrik$$valid=0$$time=2025-09-25 08:28$$checksum=cfb0cd90$$length=083$$
