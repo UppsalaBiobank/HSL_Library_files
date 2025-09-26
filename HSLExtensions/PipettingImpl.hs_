@@ -63,15 +63,15 @@ namespace HSLExtensions
          }
 
          //get row id and column id
-         if(StrGetLength(i_strPositionText) == 2)
+         if(Str::StrGetLength(i_strPositionText) == 2)
          {
-            strRowID = StrLeft(i_strPositionText, 1);
-            strColumnID = StrRight(i_strPositionText, 1);
+            strRowID = Str::StrLeft(i_strPositionText, 1);
+            strColumnID = Str::StrRight(i_strPositionText, 1);
          }
-         else if(StrGetLength(i_strPositionText) == 3)
+         else if(Str::StrGetLength(i_strPositionText) == 3)
          {
-            strRowID = StrLeft(i_strPositionText, 1);
-            strColumnID = StrRight(i_strPositionText, 2);
+            strRowID = Str::StrLeft(i_strPositionText, 1);
+            strColumnID = Str::StrRight(i_strPositionText, 2);
          }
          else
          {
@@ -243,15 +243,15 @@ namespace HSLExtensions
          }
 
          //get row id and column id
-         if(StrGetLength(i_strPositionText) == 2)
+         if(Str::StrGetLength(i_strPositionText) == 2)
          {
-            strRowID = StrLeft(i_strPositionText, 1);
-            strColumnID = StrRight(i_strPositionText, 1);
+            strRowID = Str::StrLeft(i_strPositionText, 1);
+            strColumnID = Str::StrRight(i_strPositionText, 1);
          }
-         else if(StrGetLength(i_strPositionText) == 3)
+         else if(Str::StrGetLength(i_strPositionText) == 3)
          {
-            strRowID = StrLeft(i_strPositionText, 1);
-            strColumnID = StrRight(i_strPositionText, 2);
+            strRowID = Str::StrLeft(i_strPositionText, 1);
+            strColumnID = Str::StrRight(i_strPositionText, 2);
          }
          else
          {
@@ -591,11 +591,11 @@ namespace HSLExtensions
          }
 
          //analyse string
-         intSize = StrGetLength(i_strChannelPattern);
+         intSize = Str::StrGetLength(i_strChannelPattern);
          
          for(i=0; i<intSize; i++)
          {
-            strActualCharacter = StrMid(i_strChannelPattern, i, 1);
+            strActualCharacter = Str::StrMid(i_strChannelPattern, i, 1);
 
             if(strActualCharacter == "1")
             {
@@ -620,6 +620,9 @@ namespace HSLExtensions
 			HSLExtensions::Framework::Trace::FunctionResultArrayTrace(strFunctionName, arrIsChannelUsed);
          return(arrIsChannelUsed);
       }
+
+     
    } //end Pipetting
 } //end HSLExtension
+
 #endif //end __HSLEXTENSION_ARRAY__
