@@ -59,8 +59,8 @@ namespace HSLExtensions
          strSizeY = seqY.GetPositionId();                
 
          // convert string to int
-         intSizeX = StrIVal(strSizeX);
-         intSizeY = StrIVal(strSizeY);
+         intSizeX = Str::StrIVal(strSizeX);
+         intSizeY = Str::StrIVal(strSizeY);
 
          // double check conversion (strings are converted to 0, floats are truncated)                           
 
@@ -177,8 +177,8 @@ namespace HSLExtensions
 
          //create aray - add 2 header values and store dimensions
          arrValues.SetSize(i_intSizeX * i_intSizeY + 2);
-         seqX.Add("X", StrIStr(i_intSizeX));
-         seqY.Add("Y", StrIStr(i_intSizeY));
+         seqX.Add("X", Str::StrIStr(i_intSizeX));
+         seqY.Add("Y", Str::StrIStr(i_intSizeY));
          seqX.SetCurrentPosition(1);
          seqY.SetCurrentPosition(1);
          arrValues[0] = seqX;
@@ -670,13 +670,15 @@ namespace HSLExtensions
          }
 
          //increase array size info
-         seqNewX.Add("X", StrIStr(intSizeY+1));
+         seqNewX.Add("X", Str::StrIStr(intSizeY+1));
          seqNewX.SetCurrentPosition(1);
          io_arrValues[1] = seqNewX;
 
          //trace result
          HSLExtensions::Framework::Trace::FunctionOutputArrayTrace(strFunctionName, "io_arrValues after update", _CreateTraceOfSequenceArray(io_arrValues));
-      }
+      }       
+
    } //end SeqArray2D
 } //end HSLExtensions
+
 #endif //end __HSLEXTENSION_SEQARRAY2D__
