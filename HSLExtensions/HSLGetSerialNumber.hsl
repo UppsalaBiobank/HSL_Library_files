@@ -5,7 +5,7 @@
 #ifndef __HSLGetSerialNumber_hsl__
 #define __HSLGetSerialNumber_hsl__	1
 
-//this function has been added to HSLExtensionsFramework/HSLExtensionsFrameworkImpl
+//couldn't really be bothered to create an impl-file.
 #pragma once
 #include "HSLStrLib/HSLStrLib.hsl"
 
@@ -23,9 +23,8 @@ function GetSerialNumber(device& ML_STAR) variable
 	rc = ML_STAR.FirmwareCommand( "1e78330b_4cb4_456b_84d80d3b33e97e73" );
 	if (4 == rc.GetSize())
    {
-		serialNumber = StrMid(rc.ElementAt(3), StrFind(rc.ElementAt(3), "sn"), 6);
+		serialNumber = Str::StrMid(rc.ElementAt(3), Str::StrFind(rc.ElementAt(3), "sn"), 6);
    }
-	return(StrMakeUpper(serialNumber));
+	return(Str::StrMakeUpper(serialNumber));
 }
 #endif
-// $$author=Henrik$$valid=0$$time=2025-09-01 13:27$$checksum=b6042929$$length=083$$
