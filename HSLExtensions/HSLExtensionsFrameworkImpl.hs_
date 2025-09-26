@@ -1,14 +1,15 @@
 //----------------------------------------------------------------------------------------
-// This is part of the HSL Extensions Framework
+// Project              : HSL Extensions Framework
 // Description          : Framework library with common functions
+// Revision history:
 //----------------------------------------------------------------------------------------
 
-#ifndef __HSLExtensionsFrameworkImpl_hsl__
-#define __HSLExtensionsFrameworkImpl_hsl__ 1
+#ifndef __HSLEXTENSIONS_FRAMEWORK__
+#define __HSLEXTENSIONS_FRAMEWORK__ 1
 
 //============================== includes ==============================
 #pragma once //use either "#pragma once" or "include guard", not both
-#include "TraceLevel.hsl"
+#include "TraceLevel/TraceLevel.hsl"
 #include "HSLExtensions/Enumerators.hsl"
 #include "HSLStrLib/HSLStrLib.hsl"
 
@@ -24,36 +25,38 @@ namespace HSLExtensions
       //============================== Informations ==============================
       namespace Informations
       {
-		//------------------------------------------------------
-        // Get the framework version
-        //
-        // [return] version (string)
-        //------------------------------------------------------
-        function GetVersion() variable
-	    {
-			return("1.1.0");
-	    }
-		//------------------------------------------------------
-		// Gets the serial number from the instrument (instrument must be initialized)
-		// [return] serialnumber (string)
-		//------------------------------------------------------
-		function GetSerialNumber(device& ML_STAR) variable
-		{
-		variable command("");                        // Command string
-		variable parameter("");                      // Parameter string
-		variable serialNumber("");                   // Serial number
-		variable rc[];                               // Low level step return values
+         //------------------------------------------------------
+         // Get the framework version
+         //
+         // [return] version (string)
+         //------------------------------------------------------
+         function GetVersion() variable
+         {
+            return("1.1.0");
+         }
 
-		// Get serial number
-		command = "C0RI";          // Request Installation data
-		parameter = "";
-		rc = ML_STAR.FirmwareCommand( "1e78330b_4cb4_456b_84d80d3b33e97e73" );
-		if (4 == rc.GetSize())
-		{
-			serialNumber = StrMid(rc.ElementAt(3), StrFind(rc.ElementAt(3), "sn"), 6);
-		}
-		return(StrMakeUpper(serialNumber));
-		}
+      //------------------------------------------------------
+      // Gets the serial number from the instrument (instrument must be initialized)
+      // [return] serialnumber (string)
+      //------------------------------------------------------
+      function GetSerialNumber(device& ML_STAR) variable
+      {
+      variable command("");                        // Command string
+      variable parameter("");                      // Parameter string
+      variable serialNumber("");                   // Serial number
+      variable rc[];                               // Low level step return values
+
+      // Get serial number
+      command = "C0RI";          // Request Installation data
+      parameter = "";
+      rc = ML_STAR.FirmwareCommand( "1e78330b_4cb4_456b_84d80d3b33e97e73" );
+      if (4 == rc.GetSize())
+      {
+         serialNumber = Str::StrMid(rc.ElementAt(3), Str::StrFind(rc.ElementAt(3), "sn"), 6);
+      }
+      return(Str::StrMakeUpper(serialNumber));
+      }  
+
       } //end Informations
 
       //============================== Types ==============================
@@ -66,7 +69,7 @@ namespace HSLExtensions
          // [return] 'true' if value is of type integer, otherwise 'false'
          //------------------------------------------------------
          function IsInteger(variable i_varValue) variable
-	      {
+         {
             string strTypeIdentifier("");
 
             strTypeIdentifier = GetType(i_varValue);
@@ -77,7 +80,7 @@ namespace HSLExtensions
             }
 
             return(hslFalse);
-	      }
+         }
       
          //------------------------------------------------------
          // Get whether the value is of type string
@@ -86,7 +89,7 @@ namespace HSLExtensions
          // [return] 'true' if value is of type string, otherwise 'false'
          //------------------------------------------------------
          function IsString(variable i_varValue) variable
-	      {
+         {
             string strTypeIdentifier("");
 
             strTypeIdentifier = GetType(i_varValue);
@@ -97,7 +100,7 @@ namespace HSLExtensions
             }
             
             return(hslFalse);
-	      }
+         }
 
          //------------------------------------------------------
          // Get whether the value is of type float
@@ -106,7 +109,7 @@ namespace HSLExtensions
          // [return] 'true' if value is of type float, otherwise 'false'
          //------------------------------------------------------
          function IsFloat(variable i_varValue) variable
-	      {
+         {
             string strTypeIdentifier("");
 
             strTypeIdentifier = GetType(i_varValue);
@@ -117,7 +120,7 @@ namespace HSLExtensions
             }
 
             return(hslFalse);
-	      }
+         }
 
          //------------------------------------------------------
          // Get whether the value is of type boolean
@@ -127,7 +130,7 @@ namespace HSLExtensions
          // [return] 'true' if value is of type boolean, otherwise 'false'
          //------------------------------------------------------
          function IsBoolean(variable i_varValue) variable
-	      {
+         {
             string strTypeIdentifier("");
 
             strTypeIdentifier = GetType(i_varValue);
@@ -142,7 +145,7 @@ namespace HSLExtensions
             }
 
             return(hslFalse);
-	      }
+         }
 
          //------------------------------------------------------
          // Get whether the value is null
@@ -151,7 +154,7 @@ namespace HSLExtensions
          // [return] 'true' if value is null, otherwise 'false'
          //------------------------------------------------------
          function IsNull(variable i_varValue) variable
-	      {
+         {
             string strTypeIdentifier("");
 
             strTypeIdentifier = GetType(i_varValue);
@@ -162,7 +165,7 @@ namespace HSLExtensions
             }
 
             return(hslFalse);
-	      }
+         }
 
          //------------------------------------------------------
          // Get whether the value is an empty string
@@ -171,7 +174,7 @@ namespace HSLExtensions
          // [return] 'true' if value is an empty string, otherwise 'false'
          //------------------------------------------------------
          function IsEmptyString(variable i_varValue) variable
-	      {
+         {
             variable bIsString(hslFalse);
 
             bIsString = IsString(i_varValue);
@@ -185,7 +188,7 @@ namespace HSLExtensions
             }
 
             return(hslFalse);
-	      }
+         }
 
          //------------------------------------------------------
          // Get the type of the value
@@ -195,7 +198,7 @@ namespace HSLExtensions
          // [return] value type (see enumerator Types::Type)
          //------------------------------------------------------
          function GetValueType(variable i_varValue) variable
-	      {
+         {
             if(IsInteger(i_varValue) == hslTrue)
             {
                return(HSLExtensions::Framework::Enumerators::Type::Integer);
@@ -212,7 +215,7 @@ namespace HSLExtensions
             {
                return(HSLExtensions::Framework::Enumerators::Type::Null);
             }
-	      }
+         }
 
          //------------------------------------------------------
          // Check whether the array contains only integer values
@@ -222,7 +225,7 @@ namespace HSLExtensions
          // [return] 'true' if all values are of type integer, otherwise 'false'
          //------------------------------------------------------
          function IsIntegerArray(variable i_arrValues[]) variable
-	      {
+         {
             variable intSize;
             variable i;
 
@@ -242,7 +245,7 @@ namespace HSLExtensions
             }
 
             return(hslTrue);
-	      }
+         }
 
          //------------------------------------------------------
          // Check whether the array contains only string values
@@ -252,7 +255,7 @@ namespace HSLExtensions
          // [return] 'true' if all values are of type string, otherwise 'false'
          //------------------------------------------------------
          function IsStringArray(variable i_arrValues[]) variable
-	      {
+         {
             variable intSize;
             variable i;
 
@@ -272,7 +275,7 @@ namespace HSLExtensions
             }
 
             return(hslTrue);
-	      }
+         }
 
          //------------------------------------------------------
          // Check whether the array contains only float values
@@ -282,7 +285,7 @@ namespace HSLExtensions
          // [return] 'true' if all values are of type float, otherwise 'false'
          //------------------------------------------------------
          function IsFloatArray(variable i_arrValues[]) variable
-	      {
+         {
             variable intSize;
             variable i;
 
@@ -302,7 +305,7 @@ namespace HSLExtensions
             }
 
             return(hslTrue);
-	      }
+         }
 
          //------------------------------------------------------
          // Check whether the array contains only boolean values
@@ -312,7 +315,7 @@ namespace HSLExtensions
          // [return] 'true' if all values are of type boolean, otherwise 'false'
          //------------------------------------------------------
          function IsBooleanArray(variable i_arrValues[]) variable
-	      {
+         {
             variable intSize;
             variable i;
 
@@ -332,7 +335,7 @@ namespace HSLExtensions
             }
 
             return(hslTrue);
-	      }
+         }
       }
 
       //============================== Converter ==============================
@@ -345,7 +348,7 @@ namespace HSLExtensions
          // [return] type string
          //------------------------------------------------------
          function ConvertTypeToString(variable i_intType) variable
-	      {
+         {
             //check parameter
             if(HSLExtensions::Framework::Types::IsInteger(i_intType) == hslFalse)
             {
@@ -353,7 +356,7 @@ namespace HSLExtensions
             }
 
             //convert  
-		      if(i_intType == HSLExtensions::Framework::Enumerators::Type::Integer)
+            if(i_intType == HSLExtensions::Framework::Enumerators::Type::Integer)
             {
                return("Type.Integer");
             }
@@ -377,7 +380,7 @@ namespace HSLExtensions
             {
                return("Unknown");
             }
-	      }
+         }
 
          //------------------------------------------------------
          // remove not needed zeros from a float value string
@@ -396,7 +399,7 @@ namespace HSLExtensions
             variable strNewValue(i_strValue);
 
             //get string length
-            intLength = StrGetLength(i_strValue);
+            intLength = Str::StrGetLength(i_strValue);
 
             if(intLength < 1)
             {
@@ -404,7 +407,7 @@ namespace HSLExtensions
             }
 
             //search '.'
-            intIndexOfPoint = StrReverseFind(i_strValue, ".");
+            intIndexOfPoint = Str::StrReverseFind(i_strValue, ".");
 
             if(intIndexOfPoint < 0)
             {
@@ -415,9 +418,9 @@ namespace HSLExtensions
             while(intIndexOfPoint < (intLength-2))
             {
                //ends with '0'?
-               if(StrRight(strNewValue, 1) == "0")
+               if(Str::StrRight(strNewValue, 1) == "0")
                {
-                  strNewValue = StrLeft(strNewValue, intLength-1);
+                  strNewValue = Str::StrLeft(strNewValue, intLength-1);
                   intLength = intLength - 1;
                }
                else
@@ -532,12 +535,12 @@ namespace HSLExtensions
                   blnConvertedValue = hslFalse;
                   o_bSuccessfulConverted = hslTrue;
                }
-               else if(StrMakeLower(i_varValue) == "true")
+               else if(Str::StrMakeLower(i_varValue) == "true")
                {
                   blnConvertedValue = hslTrue;
                   o_bSuccessfulConverted = hslTrue;
                }
-               else if(StrMakeLower(i_varValue) == "false")
+               else if(Str::StrMakeLower(i_varValue) == "false")
                {
                   blnConvertedValue = hslFalse;
                   o_bSuccessfulConverted = hslTrue;
@@ -629,7 +632,7 @@ namespace HSLExtensions
                //check string
                //allowed is: '-', '+', '0x', '0..9'
             
-               intLength = StrGetLength(i_varValue);
+               intLength = Str::StrGetLength(i_varValue);
             
                if(intLength < 1)
                {
@@ -641,21 +644,21 @@ namespace HSLExtensions
                   strTest = i_varValue;
                
                   //remove leading signs
-                  if(StrLeft(i_varValue, 1) == "+")
+                  if(Str::StrLeft(i_varValue, 1) == "+")
                   {
-                     strTest = StrRight(strTest, intLength - 1);
+                     strTest = Str::StrRight(strTest, intLength - 1);
                   }
-                  else if(StrLeft(i_varValue, 1) == "-")
+                  else if(Str::StrLeft(i_varValue, 1) == "-")
                   {
-                     strTest = StrRight(strTest, intLength - 1);
+                     strTest = Str::StrRight(strTest, intLength - 1);
                   }
-                  else if(StrLeft(i_varValue, 2) == "0x")
+                  else if(Str::StrLeft(i_varValue, 2) == "0x")
                   {
-                     strTest = StrRight(strTest, intLength - 2);
+                     strTest = Str::StrRight(strTest, intLength - 2);
                      blnIsHexString = hslTrue;
                   }
 
-                  intLength = StrGetLength(strTest);
+                  intLength = Str::StrGetLength(strTest);
                   if(intLength == 0)
                   {
                      intConvertedValue = 0;
@@ -663,36 +666,36 @@ namespace HSLExtensions
                   }
 
                   //remove alowed characters
-                  StrReplace(strTest, "0", "");
-                  StrReplace(strTest, "1", "");
-                  StrReplace(strTest, "2", "");
-                  StrReplace(strTest, "3", "");
-                  StrReplace(strTest, "4", "");
-                  StrReplace(strTest, "5", "");
-                  StrReplace(strTest, "6", "");
-                  StrReplace(strTest, "7", "");
-                  StrReplace(strTest, "8", "");
-                  StrReplace(strTest, "9", "");
+                  Str::StrReplace(strTest, "0", "");
+                  Str::StrReplace(strTest, "1", "");
+                  Str::StrReplace(strTest, "2", "");
+                  Str::StrReplace(strTest, "3", "");
+                  Str::StrReplace(strTest, "4", "");
+                  Str::StrReplace(strTest, "5", "");
+                  Str::StrReplace(strTest, "6", "");
+                  Str::StrReplace(strTest, "7", "");
+                  Str::StrReplace(strTest, "8", "");
+                  Str::StrReplace(strTest, "9", "");
                
                   if(blnIsHexString == hslTrue)
                   {
-                     StrReplace(strTest, "a", "");
-                     StrReplace(strTest, "b", "");
-                     StrReplace(strTest, "c", "");
-                     StrReplace(strTest, "d", "");
-                     StrReplace(strTest, "e", "");
-                     StrReplace(strTest, "f", "");
-                     StrReplace(strTest, "A", "");
-                     StrReplace(strTest, "B", "");
-                     StrReplace(strTest, "C", "");
-                     StrReplace(strTest, "D", "");
-                     StrReplace(strTest, "E", "");
-                     StrReplace(strTest, "F", "");
+                     Str::StrReplace(strTest, "a", "");
+                     Str::StrReplace(strTest, "b", "");
+                     Str::StrReplace(strTest, "c", "");
+                     Str::StrReplace(strTest, "d", "");
+                     Str::StrReplace(strTest, "e", "");
+                     Str::StrReplace(strTest, "f", "");
+                     Str::StrReplace(strTest, "A", "");
+                     Str::StrReplace(strTest, "B", "");
+                     Str::StrReplace(strTest, "C", "");
+                     Str::StrReplace(strTest, "D", "");
+                     Str::StrReplace(strTest, "E", "");
+                     Str::StrReplace(strTest, "F", "");
                   }
 
 
                   //all alowed signs are removed, string has to be empty
-                  intLength = StrGetLength(strTest);
+                  intLength = Str::StrGetLength(strTest);
                   if(intLength != 0)
                   {
                      intConvertedValue = 0;
@@ -764,7 +767,7 @@ namespace HSLExtensions
                //check string
                //allowed is: '-', '+', '.', 'E', 'e'
             
-               intLength = StrGetLength(i_varValue);
+               intLength = Str::StrGetLength(i_varValue);
             
                if(intLength < 1)
                {
@@ -776,16 +779,16 @@ namespace HSLExtensions
                   strTest = i_varValue;
                
                   //remove leading signs
-                  if(StrLeft(i_varValue, 1) == "+")
+                  if(Str::StrLeft(i_varValue, 1) == "+")
                   {
-                     strTest = StrRight(strTest, intLength - 1);
+                     strTest = Str::StrRight(strTest, intLength - 1);
                   }
-                  else if(StrLeft(i_varValue, 1) == "-")
+                  else if(Str::StrLeft(i_varValue, 1) == "-")
                   {
-                     strTest = StrRight(strTest, intLength - 1);
+                     strTest = Str::StrRight(strTest, intLength - 1);
                   }
                
-                  intLength = StrGetLength(strTest);
+                  intLength = Str::StrGetLength(strTest);
                   if(intLength == 0)
                   {
                      fltConvertedValue = 0.0;
@@ -793,25 +796,25 @@ namespace HSLExtensions
                   }
 
                   //remove alowed characters
-                  StrReplace(strTest, "0", "");
-                  StrReplace(strTest, "1", "");
-                  StrReplace(strTest, "2", "");
-                  StrReplace(strTest, "3", "");
-                  StrReplace(strTest, "4", "");
-                  StrReplace(strTest, "5", "");
-                  StrReplace(strTest, "6", "");
-                  StrReplace(strTest, "7", "");
-                  StrReplace(strTest, "8", "");
-                  StrReplace(strTest, "9", "");
+                  Str::StrReplace(strTest, "0", "");
+                  Str::StrReplace(strTest, "1", "");
+                  Str::StrReplace(strTest, "2", "");
+                  Str::StrReplace(strTest, "3", "");
+                  Str::StrReplace(strTest, "4", "");
+                  Str::StrReplace(strTest, "5", "");
+                  Str::StrReplace(strTest, "6", "");
+                  Str::StrReplace(strTest, "7", "");
+                  Str::StrReplace(strTest, "8", "");
+                  Str::StrReplace(strTest, "9", "");
                
-                  StrReplace(strTest, "e", "");
-                  StrReplace(strTest, "E", "");
-                  StrReplace(strTest, ".", "");
-                  StrReplace(strTest, "+", "");
-                  StrReplace(strTest, "-", "");
+                  Str::StrReplace(strTest, "e", "");
+                  Str::StrReplace(strTest, "E", "");
+                  Str::StrReplace(strTest, ".", "");
+                  Str::StrReplace(strTest, "+", "");
+                  Str::StrReplace(strTest, "-", "");
 
                   //all alowed signs are removed, string has to be empty
-                  intLength = StrGetLength(strTest);
+                  intLength = Str::StrGetLength(strTest);
                   if(intLength != 0)
                   {
                      fltConvertedValue = 0.0;
@@ -835,9 +838,9 @@ namespace HSLExtensions
          // [in] i_intTraceLevel: trace level (see ASWStandard::TraceLevel)
          //------------------------------------------------------
          function SetTraceLevel(variable i_intTraceLevel) void
-	      {
-		      gHSLExtensions_Framework_intTraceLevel = i_intTraceLevel;
-	      }
+         {
+            gHSLExtensions_Framework_intTraceLevel = i_intTraceLevel;
+         }
 
          //------------------------------------------------------
          // Write a debug trace
@@ -849,12 +852,12 @@ namespace HSLExtensions
          function DebugTrace( variable i_strFunctionName,
                               variable i_strText                              
                            ) void
-	      {
+         {
             if(gHSLExtensions_Framework_intTraceLevel == TRACE_LEVEL_DEBUG)
             {
                Trace("HSLExtensionsFramework debug: ", i_strFunctionName, ": ", i_strText);
-		      }
-	      }
+            }
+         }
 
          //------------------------------------------------------
          // Write a warning trace
@@ -866,13 +869,13 @@ namespace HSLExtensions
          function WarningTrace( variable i_strFunctionName,
                               variable i_strText                              
                            ) void
-	      {
+         {
             if( (gHSLExtensions_Framework_intTraceLevel == TRACE_LEVEL_DEBUG) ||
                 (gHSLExtensions_Framework_intTraceLevel == TRACE_LEVEL_RELEASE) )
             {
                Trace("HSLExtensionsFramework warning: ", i_strFunctionName, ": ", i_strText);
-		      }
-	      }
+            }
+         }
 
          //------------------------------------------------------
          // Write a warning trace - parameter type error
@@ -887,7 +890,7 @@ namespace HSLExtensions
                               variable i_intExcpectedType,
                               variable i_varParameter
                            ) void
-	      {
+         {
             variable intActualType;
 
             if( (gHSLExtensions_Framework_intTraceLevel == TRACE_LEVEL_DEBUG) ||
@@ -903,8 +906,8 @@ namespace HSLExtensions
                      "(parameter type = '",  HSLExtensions::Framework::Converter::ConvertTypeToString(intActualType), "')",
                      "(parameter = '",  i_varParameter, "')"
                      );
-		      }
-	      }
+            }
+         }
       
       
          //------------------------------------------------------
@@ -917,13 +920,13 @@ namespace HSLExtensions
          function ErrorTrace( variable i_strFunctionName,
                               variable i_strText                              
                            ) void
-	      {
+         {
             if( (gHSLExtensions_Framework_intTraceLevel == TRACE_LEVEL_DEBUG) ||
                 (gHSLExtensions_Framework_intTraceLevel == TRACE_LEVEL_RELEASE) )
             {
                Trace("HSLExtensionsFramework error: ", i_strFunctionName, ": ", i_strText);
-		      }
-	      }
+            }
+         }
 
          //------------------------------------------------------
          // Write a error trace - parameter type error
@@ -938,7 +941,7 @@ namespace HSLExtensions
                               variable i_intExcpectedType,
                               variable i_varParameter
                            ) void
-	      {
+         {
             variable intActualType;
 
             if( (gHSLExtensions_Framework_intTraceLevel == TRACE_LEVEL_DEBUG) ||
@@ -954,8 +957,8 @@ namespace HSLExtensions
                      "parameter type = '",  HSLExtensions::Framework::Converter::ConvertTypeToString(intActualType), "', ",
                      "parameter = '",  i_varParameter, "')"
                      );
-		      }
-	      }
+            }
+         }
 
          //------------------------------------------------------
          // Write a error trace - parameter out of range error
@@ -970,7 +973,7 @@ namespace HSLExtensions
                               variable i_strParameterName,
                               variable i_varParameter
                            ) void
-	      {
+         {
             variable intActualType;
 
             if( (gHSLExtensions_Framework_intTraceLevel == TRACE_LEVEL_DEBUG) ||
@@ -985,8 +988,8 @@ namespace HSLExtensions
                      "(parameter type = '",  HSLExtensions::Framework::Converter::ConvertTypeToString(intActualType), "', ",
                      "parameter = '",  i_varParameter, "')"
                      );
-		      }
-	      }
+            }
+         }
 
          //------------------------------------------------------
          // Write a function parameter trace (input, output and result)
@@ -1003,7 +1006,7 @@ namespace HSLExtensions
                               variable i_strParameterName,
                               variable i_varParameter
                            ) void
-	      {
+         {
             variable intActualType;
             variable strExtendedParameterName(" ");
 
@@ -1027,8 +1030,8 @@ namespace HSLExtensions
                      i_varParameter,
                      "' (type = '",  HSLExtensions::Framework::Converter::ConvertTypeToString(intActualType), "')"
                      );
-		      }
-	      }
+            }
+         }
 
          //------------------------------------------------------
          // Write a function input parameter trace
@@ -1043,9 +1046,9 @@ namespace HSLExtensions
                               variable i_strParameterName,
                               variable i_varParameter
                            ) void
-	      {
+         {
             _FunctionParameterTrace(i_strFunctionName, "[in]", i_strParameterName, i_varParameter);
-	      }
+         }
 
          //------------------------------------------------------
          // Write a function ouput parameter trace
@@ -1060,9 +1063,9 @@ namespace HSLExtensions
                               variable i_strParameterName,
                               variable i_varParameter
                            ) void
-	      {
+         {
             _FunctionParameterTrace(i_strFunctionName, "[out]", i_strParameterName, i_varParameter);
-	      }
+         }
 
          //------------------------------------------------------
          // Write a function result parameter trace
@@ -1075,9 +1078,9 @@ namespace HSLExtensions
                               variable i_strFunctionName,
                               variable i_varParameter
                            ) void
-	      {
+         {
             _FunctionParameterTrace(i_strFunctionName, "[result]", "", i_varParameter);
-	      }
+         }
 
          //------------------------------------------------------
          // Write a function array trace (input, output and result)
@@ -1094,7 +1097,7 @@ namespace HSLExtensions
                               variable i_strParameterName,
                               variable i_arrParameter[]
                            ) void
-	      {
+         {
             variable intActualType;
             variable varActualValue;
             variable i;
@@ -1127,8 +1130,8 @@ namespace HSLExtensions
                      "' (type = '", HSLExtensions::Framework::Converter::ConvertTypeToString(intActualType), "')"
                      );
                }               
-		      }
-	      }
+            }
+         }
 
          //------------------------------------------------------
          // Write a function input array trace
@@ -1143,9 +1146,9 @@ namespace HSLExtensions
                               variable i_strParameterName,
                               variable i_arrParameter[]
                            ) void
-	      {
+         {
             _FunctionArryTrace(i_strFunctionName, "", i_strParameterName, i_arrParameter);
-	      }
+         }
 
          //------------------------------------------------------
          // Write a function input array trace
@@ -1160,9 +1163,9 @@ namespace HSLExtensions
                               variable i_strParameterName,
                               variable i_arrParameter[]
                            ) void
-	      {
+         {
             _FunctionArryTrace(i_strFunctionName, "[in]", i_strParameterName, i_arrParameter);
-	      }
+         }
 
          //------------------------------------------------------
          // Write a function input array trace
@@ -1177,9 +1180,9 @@ namespace HSLExtensions
                               variable i_strParameterName,
                               variable i_arrParameter[]
                            ) void
-	      {
+         {
             _FunctionArryTrace(i_strFunctionName, "[out]", i_strParameterName, i_arrParameter);
-	      }
+         }
 
          //------------------------------------------------------
          // Write a function input array trace
@@ -1192,10 +1195,14 @@ namespace HSLExtensions
                               variable i_strFunctionName,
                               variable i_arrParameter[]
                            ) void
-	      {
+         {
             _FunctionArryTrace(i_strFunctionName, "[return]", "array", i_arrParameter);
-	      }
+         }
+
       } //end Trace
+      
+      
    } //end Framework
 } //end HSLExtensions
+
 #endif //end __HSLEXTENSIONS_FRAMEWORK__
