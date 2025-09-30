@@ -630,8 +630,8 @@ namespace HSLLabwState
 		if (IsValidLabwareLevel(labwareLevel_, LabwareLevels::deck) == hslFalse)
 			Error::RaiseEx(IDE::invalidLabwareLevel, StringTable::Load(IDE::invalidLabwareLevel), StrConst::libraryImplFullFileName, "", GetLineNumber());
 
-		labware_id_Well = SeqGetPositionId(sequence_);
-		labware_id_Plate = SeqGetLabwareId(sequence_);
+		labware_id_Well = Seq::SeqGetPositionId(sequence_);
+		labware_id_Plate = Seq::SeqGetLabwareId(sequence_);
 
 		// Search Template name depending on the labware_id_Plate
 		device_.GetTemplateLabwareNames(templateNames, labwareNames);
@@ -738,7 +738,7 @@ namespace HSLLabwState
 		// release access to global data
 		SynLeaveCriticalSection(mg_HSLLabwState_cs);
 
-		return (SeqGetLabwareId(Sequence));
+		return (Seq::SeqGetLabwareId(Sequence));
 
 		Unexpected:
 		{
@@ -933,7 +933,7 @@ namespace HSLLabwState
 		
 		if ( !decklayout.IsNull() )
 		{
-			labware = decklayout.Labware(SeqGetLabwareId(Sequence));
+			labware = decklayout.Labware(Seq::SeqGetLabwareId(Sequence));
 			if ( !labware.IsNull() )
 			{
 				labware.GetObject(Interfaces::IEditLabware, editLabware);
@@ -944,7 +944,7 @@ namespace HSLLabwState
 					{
 						pars.Add("", LabwareConst::barcodeValue);
 						if (LabwareLevel == LabwareLevels::container)
-							pars.Add(SeqGetPositionId(Sequence), LabwareConst::positionID);
+							pars.Add(Seq::SeqGetPositionId(Sequence), LabwareConst::positionID);
 						editLabware.GetBarcodeProperties(pars);
 						barcodeMask = pars.Item1(LabwareConst::barcodeValue);
 						pars.ReleaseObject();
@@ -1032,7 +1032,7 @@ namespace HSLLabwState
 
 		if ( !decklayout.IsNull() )
 		{
-			labware = decklayout.Labware(SeqGetLabwareId(Sequence));
+			labware = decklayout.Labware(Seq::SeqGetLabwareId(Sequence));
 			if ( !labware.IsNull() )
 			{
 				labware.GetObject(Interfaces::IEditLabware, editLabware);
@@ -1043,7 +1043,7 @@ namespace HSLLabwState
 					{
 						pars.Add(BarcodeMask, LabwareConst::barcodeValue);
 						if (LabwareLevel == LabwareLevels::container)
-							pars.Add(SeqGetPositionId(Sequence), LabwareConst::positionID);
+							pars.Add(Seq::SeqGetPositionId(Sequence), LabwareConst::positionID);
 						editLabware.SetBarcodeProperties(pars);
 						pars.ReleaseObject();
 					}
@@ -1785,8 +1785,8 @@ namespace HSLLabwState
 			Error::RaiseEx(IDE::invalidLabwareLevel, StringTable::Load(IDE::invalidLabwareLevel), StrConst::libraryImplFullFileName, traceAction, GetLineNumber());
 
 		instrumentName = Device.GetInstrumentName();
-		labware_id_Plate = SeqGetLabwareId(Sequence);
-		labware_id_Well = SeqGetPositionId(Sequence);
+		labware_id_Plate = Seq::SeqGetLabwareId(Sequence);
+		labware_id_Well = Seq::SeqGetPositionId(Sequence);
 
 		Device.GetTemplateLabwareNames(templateNames, labwareNames);
 		size = labwareNames.GetSize();
@@ -1878,8 +1878,8 @@ namespace HSLLabwState
 			Error::RaiseEx(IDE::invalidVisibility, StringTable::Load(IDE::invalidVisibility), StrConst::libraryImplFullFileName, traceAction, GetLineNumber());
 
 		decklayout = Device.GetDeckLayoutObject();
-		labware_id_Plate = SeqGetLabwareId(Sequence);
-		labware_id_Well = SeqGetPositionId(Sequence);
+		labware_id_Plate = Seq::SeqGetLabwareId(Sequence);
+		labware_id_Well = Seq::SeqGetPositionId(Sequence);
 
 		Device.GetTemplateLabwareNames(templateNames, labwareNames);
 		size = labwareNames.GetSize();
@@ -2000,8 +2000,8 @@ namespace HSLLabwState
 			Error::RaiseEx(IDE::invalidLabwareLevel, StringTable::Load(IDE::invalidLabwareLevel), StrConst::libraryImplFullFileName, traceAction, GetLineNumber());
 
 		decklayout = Device.GetDeckLayoutObject();
-		labware_id_Plate = SeqGetLabwareId(Sequence);
-		labware_id_Well = SeqGetPositionId(Sequence);
+		labware_id_Plate = Seq::SeqGetLabwareId(Sequence);
+		labware_id_Well = Seq::SeqGetPositionId(Sequence);
 
 		Device.GetTemplateLabwareNames(templateNames, labwareNames);
 		size = labwareNames.GetSize();
@@ -2114,7 +2114,7 @@ namespace HSLLabwState
 
 		if ( !decklayout.IsNull() )
 		{
-			labware = decklayout.Labware(SeqGetLabwareId(Sequence));
+			labware = decklayout.Labware(Seq::SeqGetLabwareId(Sequence));
 
 			if ( !labware.IsNull() )
 			{
