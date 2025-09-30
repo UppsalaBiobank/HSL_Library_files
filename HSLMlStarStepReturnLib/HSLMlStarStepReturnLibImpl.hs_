@@ -54,10 +54,6 @@ namespace StepReturn
 		static const variable last(first);								// guard
 	}
 
-//	#ifndef __HSLStringTableLib_hsl__
-//	#include "HSLStringTableLib.hs_"
-//	#endif
-
 	// --------------------------------------------------------------------------------------
 	// Library Initialization 
 	// --------------------------------------------------------------------------------------
