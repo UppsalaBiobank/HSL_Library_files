@@ -320,13 +320,13 @@ static function SeqSplitPath(
    fil = ext = tab = "";
    pathName = Seq__(dataSource);
    length = pathName.GetLength();
-   index = StrReverseFind(pathName, "\\");
+   index = Str::StrReverseFind(pathName, "\\");
    path = pathName.Mid(0, index + 1);
    fileName = pathName.Mid(index + 1, length);
    table = fileName;
-   StrTrimLeft(fileName, "");
-   StrTrimRight(fileName, "");
-   offset = StrReverseFind(fileName, ".");
+   Str::StrTrimLeft(fileName, "");
+   Str::StrTrimRight(fileName, "");
+   offset = Str::StrReverseFind(fileName, ".");
    str = fileName.Right(fileName.GetLength() - offset - 1);
    index = str.Find(" ");
    if (0 < index)
@@ -334,14 +334,14 @@ static function SeqSplitPath(
       table = fileName.Mid(offset + index + 1, length);
       fileName = fileName.Mid(0, offset + index + 1);
    }
-   index = StrReverseFind(fileName, ".");
+   index = Str::StrReverseFind(fileName, ".");
    extension = fileName.Mid(index + 1, length);
-   StrTrimLeft(extension, "");
-   StrTrimRight(extension, "");
-   StrTrimLeft(table, "");
-   StrTrimRight(table, "");
-   StrTrimLeft(fileName, "");
-   StrTrimRight(fileName, "");
+   Str::StrTrimLeft(extension, "");
+   Str::StrTrimRight(extension, "");
+   Str::StrTrimLeft(table, "");
+   Str::StrTrimRight(table, "");
+   Str::StrTrimLeft(fileName, "");
+   Str::StrTrimRight(fileName, "");
 
    fil = fileName;
    tab = table;
@@ -389,10 +389,10 @@ function SeqWriteCurrentPosition(
    txtDataSource = (0 < table.GetLength()) && !xlsDataSource && !mdbDataSource;
    if (txtDataSource)
    {
-      StrReplace(table, ".","#");
-      StrReplace(table, ";","_");
-      StrReplace(table, ":","_");
-      StrReplace(table, "*","_");
+      Str::StrReplace(table, ".","#");
+      Str::StrReplace(table, ";","_");
+      Str::StrReplace(table, ":","_");
+      Str::StrReplace(table, "*","_");
    }
 
    sqlStatement = "SELECT * FROM [" + Seq__(table) + "] WHERE Layout ";
@@ -513,10 +513,10 @@ function SeqReadCurrentPosition(
    txtDataSource = (0 < table.GetLength()) && !xlsDataSource && !mdbDataSource;
    if (txtDataSource)
    {
-      StrReplace(table, ".","#");
-      StrReplace(table, ";","_");
-      StrReplace(table, ":","_");
-      StrReplace(table, "*","_");
+      Str::StrReplace(table, ".","#");
+      Str::StrReplace(table, ";","_");
+      Str::StrReplace(table, ":","_");
+      Str::StrReplace(table, "*","_");
    }
 
    sqlStatement = "SELECT CurrentPos FROM [" + Seq__(table) + "] WHERE Layout ";
