@@ -18,10 +18,6 @@
 
 namespace HSLBarcodeReader
 {
-//	#ifndef __HSLStringTableLib_hsl__
-//	#include "HSLStringTableLib.hs_"
-//	#endif
-
 	namespace errorID
 	{
 		static const variable first(0);											// guard
