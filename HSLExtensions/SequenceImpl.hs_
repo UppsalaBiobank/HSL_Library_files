@@ -830,7 +830,7 @@ namespace HSLExtensions
 
          //generate random array for sorting
          strTime = TimGetFormattedTime("%H%M%S");
-         intTime = StrIVal(strTime);
+         intTime = Str::StrIVal(strTime);
          intPositionValue = intTime%intCount;
 
          for (k=0;k<intCount;k++)
@@ -847,7 +847,10 @@ namespace HSLExtensions
          seqTarget = CreateByLabwareData(arrStrLabwareIdentifiers, arrStrPositionIdentifiers);
          seqTarget.SetCurrentPosition(1);
          return(seqTarget);
-      }
+      }           
+                    
+
    } //end Sequence
 } //end HSLExtensions
+
 #endif //end __HSLEXTENSIONS_SEQUENCE__
