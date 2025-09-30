@@ -314,7 +314,7 @@ namespace HSLReport
          {
             // trace progress
             traceActionEx = StringTable::Load(IDS::traceElement);
-            StrReplace(traceActionEx, "%s", labId.GetAt(i));
+            Str::StrReplace(traceActionEx, "%s", labId.GetAt(i));
             FormatTrace(traceSource, traceAction, TraceStatus::progress, traceActionEx);
          }
          else
@@ -332,7 +332,7 @@ namespace HSLReport
             {
                variable errorDesc;
                errorDesc = StringTable::Load(IDE::elementNotLoaded);
-               StrReplace(errorDesc, "%s", labId.GetAt(i));
+               Str::StrReplace(errorDesc, "%s", labId.GetAt(i));
          
                FormatTrace(traceSource, traceAction, TraceStatus::error_);
                Error::RaiseEx(IDE::elementNotLoaded, errorDesc, GetFileName(), GetFunctionName(), GetLineNumber());
@@ -397,7 +397,7 @@ namespace HSLReport
       {  
          variable traceEx;
          traceEx = StringTable::Load(IDS::traceElement);
-         StrReplace(traceEx, "%s", Labware_id);
+         Str::StrReplace(traceEx, "%s", Labware_id);
          FormatTrace(traceSource, traceAction, TraceStatus::complete, traceEx);
       }
       else
@@ -414,7 +414,7 @@ namespace HSLReport
          if(retVal == 0) // the element was not found
          {
             errorDesc = StringTable::Load(IDE::elementNotLoaded);
-            StrReplace(errorDesc, "%s", Labware_id);
+            Str::StrReplace(errorDesc, "%s", Labware_id);
          
             FormatTrace(traceSource, traceAction, TraceStatus::error_);
             Error::RaiseEx(IDE::elementNotLoaded, errorDesc, GetFileName(), GetFunctionName(), GetLineNumber());
@@ -537,9 +537,9 @@ namespace HSLReport
       path = GetBinPath() + "\\HxAtFilter /CY /RQ /TI60";
    
       // trim leading spaces
-      StrTrimLeft(plateName, " ");
+      Str::StrTrimLeft(plateName, " ");
       // trim postfix spaces
-      StrTrimRight(plateName, " ");
+      Str::StrTrimRight(plateName, " ");
    
       // plate name is an optional parameter
       if("" != plateName)
@@ -595,13 +595,13 @@ namespace HSLReport
                if(exitCode == 0) 
                {
                   traceActionEx = StringTable::Load(IDS::traceElement);
-                  StrReplace(traceActionEx, "%s", m_elementAccessName.GetAt(i));
+                  Str::StrReplace(traceActionEx, "%s", m_elementAccessName.GetAt(i));
                   FormatTrace(traceSource, traceAction, TraceStatus::progress, traceActionEx);
                }
                else  // HxATFilter returns with an error
                {
                   traceActionEx = StringTable::Load(IDE::traceElementNotCreate);
-                  StrReplace(traceActionEx, "%s", m_elementAccessName.GetAt(i));
+                  Str::StrReplace(traceActionEx, "%s", m_elementAccessName.GetAt(i));
                   FormatTrace(traceSource, traceAction, TraceStatus::progress, traceActionEx);
                   // release access to global data
                   SynLeaveCriticalSection(m_cs);
@@ -651,13 +651,13 @@ namespace HSLReport
             if(exitCode == 0) 
             {
                traceActionEx = StringTable::Load(IDS::traceElement);
-               StrReplace(traceActionEx, "%s", m_elementAccessName.GetAt(i));
+               Str::StrReplace(traceActionEx, "%s", m_elementAccessName.GetAt(i));
                FormatTrace(traceSource, traceAction, TraceStatus::progress, traceActionEx);
             }
             else
             {
                traceActionEx = StringTable::Load(IDE::traceElementNotCreate);
-               StrReplace(traceActionEx, "%s", m_elementAccessName.GetAt(i));
+               Str::StrReplace(traceActionEx, "%s", m_elementAccessName.GetAt(i));
                FormatTrace(traceSource, traceAction, TraceStatus::progress, traceActionEx);
 
                // release access to global data
@@ -702,4 +702,4 @@ namespace HSLReport
       }
    }
 } // end of namespace HSLReport
-#endif  // end of '#ifndef __HSLReportImpl_hsl__'
+#endif  
