@@ -1,0 +1,73 @@
+// ======================================================================.
+// Library: HSL_LiquidClassLib.hsl
+//
+// ======================================================================
+// Modification History
+//
+// ======================================================================
+#ifndef __HSL_LiquidClassLib_hsl__
+#define __HSL_LiquidClassLib_hsl__ 1
+
+#ifdef HSL_RUNTIME
+#include "HSL_LiquidClassLibImpl.hs_"
+#endif
+
+#ifndef HSL_RUNTIME
+namespace LiquidClassLib
+{
+      namespace LIQUIDCLASS_PARAMS
+      {
+      function GetLiquidClassNamesFiltered( 
+            variable liquidDeviceFilter, 
+            variable liquidNameFilter,
+            variable tipTypeFilter,
+            variable dispenseModeFilter,
+            variable& outLiquidClassNames[])  variable {return(0);}
+      function SelectLiquidClass( variable inLiquidClassName) void {return;}
+      function GetCorrectionCurve( variable& outXWerte[], variable& outYWerte[])  variable {return(0);}
+      function UpdateCorrectionCurve( variable inXWerte[], variable inYWerte[]) void {return;}
+      function SetLiquidClassAspirateParameter (variable aspirateParameter, variable paramValue) void {return;}
+      function SetLiquidClassDispenseParameter (variable dispenseParameter, variable paramValue) void {return;}
+      function GetLiquidClassParameter( variable param)  variable {return(0);}
+      function GetLiquidClassParameter_Object( variable param, object& outObject) void {return;}
+      function GetLiquidClassAspirateParameter( variable aspirateParameter)  variable {return(0);}
+      function GetLiquidClassDispenseParameter( variable dispenseParameter)  variable {return(0);}
+      function EnableTadm() void {return;}
+      function GetTimeStamp()  variable {return(0);}
+      function ExportLiquidClass( variable liquidDbFile) void {return;}
+      function GetLiquidDbName()  variable {return(0);}
+      function GetLiquidDevicesFromLiqClass(
+            variable  i_liquidClassName,  
+            variable& o_arrayDeviceIDs[], 
+            variable& o_arrayDeviceNames[]) void {return;}
+      function GetLiquidDevicesFromCfgFile(
+            variable& o_arrayDeviceIDs[], 
+            variable& o_arrayDeviceNames[]) void {return;}
+      }
+      namespace DESCRIPTION_SECTIONS
+      {
+      function GetLiquidClassDescription()  variable {return(0);}
+      function getTipTypesNames(variable& oArrTipID[], variable& oArrTipNames[])  variable {return(0);}
+      function SetStateOriginalLiquid(variable iState) void {return;}
+      function GetTADMToleranceBand(
+            variable i_strLiquidClassName,
+            variable i_fltVolume, 
+            variable i_paramTadmAspOrDispStep, 
+            variable i_paramTadmUpperOrLowerBand,
+            variable& o_x_TADMBand_time_ms[], 
+            variable& o_y_TADMBand_pressure_Pa[]) void {return;}
+      function GetLiquidClassDesignHistory (variable i_liquidClassName ,                    
+            variable& o_arr_designHistory_user[],           
+            variable& o_arr_designHistory_description[],    
+            variable& o_arr_designHistory_formattedTime[],  
+            variable& o_arr_designHistory_unixTime[]) void {return;}      
+      function GetTADMVolumes(
+            variable i_liquidClassName,          
+            variable& o_arrayTADM_Asp_Volumes[], 
+            variable& o_arrayTADM_Disp_Volumes[]) void {return;}
+      function GetLiquidNames(variable o_liquidNames[]) void {return;}
+      function GetLiqClassChecksum(variable i_liquidClassName, variable o_int_checksum , variable i_bln_trace ) void {return;}
+      }
+}
+#endif
+#endif
