@@ -71,19 +71,19 @@ namespace HSLExtensions
          }
 
          //empty string?
-         if(StrGetLength(i_strValue) == 0)
+         if(Str::StrGetLength(i_strValue) == 0)
          {
             HSLExtensions::Framework::Trace::FunctionResultArrayTrace(strFunctionName, arrValues);
             return(arrValues);
          }
 
          //empty delimiter?
-         if(StrGetLength(i_strDelimiter) == 0)
+         if(Str::StrGetLength(i_strDelimiter) == 0)
          {
             if(i_blnTrimWhitespaces == hslTrue)
             {
-               StrTrimLeft(strRemaining, "");
-               StrTrimRight(strRemaining, "");
+               Str::StrTrimLeft(strRemaining, "");
+               Str::StrTrimRight(strRemaining, "");
             }
 
             arrValues.AddAsLast(strRemaining);
@@ -96,18 +96,18 @@ namespace HSLExtensions
          while(hslTrue)
          {
             //search next delimiter
-            intIndex = StrFind(strRemaining, i_strDelimiter);
+            intIndex = Str::StrFind(strRemaining, i_strDelimiter);
 
             //split
             if(intIndex != -1)
             {  
-               strCurrent = StrLeft(strRemaining, intIndex);
-               strRemaining = StrRight(strRemaining, StrGetLength(strRemaining) - StrGetLength(i_strDelimiter) - intIndex);
+               strCurrent = Str::StrLeft(strRemaining, intIndex);
+               strRemaining = Str::StrRight(strRemaining, Str::StrGetLength(strRemaining) - Str::StrGetLength(i_strDelimiter) - intIndex);
                
                if(i_blnTrimWhitespaces == hslTrue)
                {
-                  StrTrimLeft(strCurrent, "");
-                  StrTrimRight(strCurrent, "");
+                  Str::StrTrimLeft(strCurrent, "");
+                  Str::StrTrimRight(strCurrent, "");
                }
 
                arrValues.AddAsLast(strCurrent);
@@ -117,8 +117,8 @@ namespace HSLExtensions
             {
                if(i_blnTrimWhitespaces == hslTrue)
                {
-                  StrTrimLeft(strRemaining, "");
-                  StrTrimRight(strRemaining, "");
+                  Str::StrTrimLeft(strRemaining, "");
+                  Str::StrTrimRight(strRemaining, "");
                }
 
                arrValues.AddAsLast(strRemaining);
@@ -155,8 +155,8 @@ namespace HSLExtensions
          
          //trim
          strOut = i_strValue;
-         StrTrimLeft(strOut, "");
-         StrTrimRight(strOut, "");
+         Str::StrTrimLeft(strOut, "");
+         Str::StrTrimRight(strOut, "");
 
          //trace output
          HSLExtensions::Framework::Trace::FunctionResultParameterTrace(strFunctionName, strOut);
@@ -196,13 +196,13 @@ namespace HSLExtensions
          }
          
          //convert
-         intSize = StrGetLength(i_strValue);
+         intSize = Str::StrGetLength(i_strValue);
          strRemainingString = i_strValue;
          
          for(i=0; i<intSize; i++)
          {
-            strActualChar = StrLeft(strRemainingString, 1);
-            strRemainingString = StrRight(strRemainingString, intSize - i - 1);
+            strActualChar = Str::StrLeft(strRemainingString, 1);
+            strRemainingString = Str::StrRight(strRemainingString, intSize - i - 1);
 
             arrChars.AddAsLast(strActualChar);
          }
@@ -244,15 +244,15 @@ namespace HSLExtensions
          }
          
          //convert
-         intSize = StrGetLength(i_strValue);
+         intSize = Str::StrGetLength(i_strValue);
          strRemainingString = i_strValue;
          
          for(i=0; i<intSize; i++)
          {
-            strActualChar = StrLeft(strRemainingString, 1);
-            strRemainingString = StrRight(strRemainingString, intSize - i - 1);
+            strActualChar = Str::StrLeft(strRemainingString, 1);
+            strRemainingString = Str::StrRight(strRemainingString, intSize - i - 1);
 
-            arrAscii.AddAsLast(StrStrToAscii(strActualChar));
+            arrAscii.AddAsLast(Str::StrStrToAscii(strActualChar));
          }
 
          HSLExtensions::Framework::Trace::FunctionResultArrayTrace(strFunctionName, arrAscii);
@@ -296,7 +296,7 @@ namespace HSLExtensions
          
          for(i=0; i<intSize; i++)
          {
-            strCurrentChar = StrAsciiToStr(i_arrAsciiValues[i]);  //return -1 on error
+            strCurrentChar = Str::StrAsciiToStr(i_arrAsciiValues[i]);  //return -1 on error
 
             if(HSLExtensions::Framework::Types::IsInteger(strCurrentChar) == hslTrue)
             {
@@ -415,6 +415,8 @@ namespace HSLExtensions
          HSLExtensions::Framework::Trace::FunctionResultParameterTrace(strFunctionName, strOut);
          return(strOut);
       }
+      
    } //end String
 } //end HSLExtensions
+
 #endif //end __HSLEXTENSIONS_STRING__
