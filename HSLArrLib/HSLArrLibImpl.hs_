@@ -1,10 +1,11 @@
 // This is a part of the HSL Array Library.
 //
 // Modification History
-#ifndef __HSLArrLibImpl_hsl__
-#define __HSLArrLibImpl_hsl__	1
+
+#ifndef __HSLArrLibImpl_hs___
+#define __HSLArrLibImpl_hs___	1
 #pragma once //use either "#pragma once" or "include guard", not both
-#include "HSLExtensions/HSLStringTableLib.hs_"
+#include "HSLExtensions/HSLStringTableLib.hsl"
 
 // Implementation of Array library 
 namespace Arr
@@ -32,10 +33,6 @@ namespace Arr
 		static const variable helpFileName(first + 1);				// help file name
 		static const variable last(first + 1);							// guard
 	}
-
-//	#ifndef __HSLStringTableLib_hsl__
-//	#include "HSLExtensions/HSLStringTableLib.hs_"
-//	#endif
 
 	// --------------------------------------------------------------------------------------
 	// Library Initialization 
@@ -658,4 +655,3 @@ function SeqArrInsertElementAt(variable row, variable column, sequence& sequence
 	return;
 }
 #endif
-// $$author=Henrik$$valid=0$$time=2025-08-26 12:44$$checksum=522ed297$$length=085$$
