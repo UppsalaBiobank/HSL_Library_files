@@ -14,7 +14,7 @@
 #include "HSLTipCountingLibImpl.hs_"
 #endif
 
-#ifdef HSL_RUNTIME 
+#ifndef HSL_RUNTIME 
 namespace TipCount
 {
   function Write2(
