@@ -19,13 +19,12 @@
 #ifndef HSL_RUNTIME
 namespace HSLStatusWindow
 {
-  private function ComObjectIsValid() variable ;
-  function Init( );
-  function Close( ) variable;
-  function SetStatusText(variable i_strStatusText) void ;
-  function AppendStatusText(variable i_strTextToAppend) void ;
-  function GetWndHandle( object &o_WndHandle ) variable ;
-  function SetWndHandle( object &io_WndHandle );
+  function Init( ) void {return;}
+  function Close( ) variable {return(0);}
+  function SetStatusText(variable i_strStatusText) void {return;}
+  function AppendStatusText(variable i_strTextToAppend) void {return;}
+  function GetWndHandle( object &o_WndHandle ) variable {return(0);}
+  function SetWndHandle( object &io_WndHandle ) void {return;}
 }
 #endif
 #endif
