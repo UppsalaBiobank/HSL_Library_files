@@ -17,55 +17,54 @@ namespace HSLLabwrAccess
     function ValueForKeyGetForPropertiesOfLabwareID(device&   io_devDevice,
                                                     variable& o_strPropertyValue,
                                                     variable  i_strPropertyKey,
-                                                    variable  i_strLabwareID) variable;
+                                                    variable  i_strLabwareID) variable {return(0);}
 
     function ValueForKeySetForPropertiesOfLabwareID(device&  io_devDevice,
                                                     variable i_strPropertyValue,
                                                     variable i_strPropertyKey,
-                                                    variable i_strLabwareID) variable;
+                                                    variable i_strLabwareID) variable {return(0);}
 
     function AbsolutePositionValuesSetForLabwareID(device&  io_devDevice,
                                                    variable i_strLabwareID,
                                                    variable i_fltPositionX,
                                                    variable i_fltPositionY,
                                                    variable i_fltPositionZ,
-                                                   variable i_fltPositionR) variable;
+                                                   variable i_fltPositionR) variable {return(0);}
 
     function AbsolutePositionValuesGetForLabwareID(device&   io_devDevice,
                                                    variable  i_strLabwareID,
                                                    variable& o_fltPositionX,
                                                    variable& o_fltPositionY,
                                                    variable& o_fltPositionZ,
-                                                   variable& o_fltPositionR) variable;
+                                                   variable& o_fltPositionR) variable {return(0);}
 
     function RelativePositionValuesSetForLabwareID(device&  io_devDevice,
                                                    variable i_strLabwareID,
                                                    variable i_fltPositionX,
                                                    variable i_fltPositionY,
                                                    variable i_fltPositionZ,
-                                                   variable i_fltPositionR) variable;
+                                                   variable i_fltPositionR) variable {return(0);}
 
-    function SaveChangesToDecklayout(device& io_devDevice) variable;
+    function SaveChangesToDecklayout(device& io_devDevice) variable {return(0);}
 
     function SaveChangesToSpecificDecklayout(device&  io_devDevice,
-                                             variable i_strDecklayoutName) variable;
+                                             variable i_strDecklayoutName) variable {return(0);}
 
     function GetConfigurationFilename(device&   io_devDevice,
                                       variable  i_strLabwareID,
-                                      variable& o_strConfigurationFilename) variable;
+                                      variable& o_strConfigurationFilename) variable {return(0);}
 
     function GetDefaultSequenceForLabwareID(device&   io_devDevice,
                                             variable& i_strLabwareID,
                                             variable  i_intEnumSorting,
-                                            sequence& o_seqDefaultSequence) variable;
+                                            sequence& o_seqDefaultSequence) variable {return(0);}
 
     function GetRowAndColumnCountForLabwareID(device&   io_devDevice,
                                               variable  i_strLabwareID,
                                               variable& o_intNumberOfRows,
-                                              variable& o_intNumberOfColumns) variable;
+                                              variable& o_intNumberOfColumns) variable {return(0);}
 
-    function SetTraceLevel(variable i_intTraceLevel) variable;
+    function SetTraceLevel(variable i_intTraceLevel) variable {return(0);}
 }
 #endif
 #endif
-// $$author=Henrik$$valid=0$$time=2025-09-18 13:02$$checksum=92e969df$$length=085$$
