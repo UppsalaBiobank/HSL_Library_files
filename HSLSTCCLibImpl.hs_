@@ -6,9 +6,10 @@
 //  --------------------
 //
 //  ------------------------------------------------------------------------------------
+#ifndef __HSLSTCCLibImpl_hsl__
+#define __HSLSTCCLibImpl_hsl__  1
 
 #pragma once
-
 #include "HSLUtils/HSLUtilLib2.hsl"
 #include "HSLUtils/HSLUtilLib2Def.hs_"
 #include "HSLMappingReport/HSLMappingReportImpl.hs_"
@@ -1350,36 +1351,5 @@ namespace STCC
 		location = fileName + "("+lineNumber+") : " + functionName + "().";
 		return( location );
 	}
-
-
-/* currently not used
-	static function Error::ASSERT(
-		variable expression,
-		variable& description,
-		variable& fileName,
-		variable& functionName,
-		variable& lineNumber) void
-	{
-		#ifndef _DEBUG_STCC
-		return;
-		#endif
-
-		if ( hslFalse == expression )
-		{
-			variable retVal(hslRetry);
-
-			while ( hslRetry == retVal )
-			{
-				retVal = MessageBox(Error::GetLocationDescription(fileName, functionName, lineNumber) + 
-										  "\n\n" + description + "\n\n",
-										  "DEBUG ASSERTION FAILED",
-										  hslExclamation | hslAbortRetryIgnore | hslDefButton3);
-				if ( hslAbort == retVal )
-				{
-					abort;
-				}
-			}
-		}
-	}
-*/
 }	// namespace STCC
+#endif
