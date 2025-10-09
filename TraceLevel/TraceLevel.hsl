@@ -29,21 +29,21 @@ namespace TRACELEVEL
       const variable COMPLETE_WITH_ERROR  (5);
     }
 
-    function GetTraceLevel() variable;
+    function GetTraceLevel() variable {return(0);}
 
-    function SetTraceLevel(variable i_intTraceLevel) void;
+    function SetTraceLevel(variable i_intTraceLevel) void {return;}
 
-    function SetStringIndicator(variable i_strStringIndicator) void;
+    function SetStringIndicator(variable i_strStringIndicator) void {return;}
 
     function Trace_02(variable i_intTraceLevel,
                       variable i_varToTrace_01,
-                      variable i_varToTrace_02) void;
+                      variable i_varToTrace_02) void {return;}
 
     function Trace_04(variable i_intTraceLevel,
                       variable i_varToTrace_01,
                       variable i_varToTrace_02,
                       variable i_varToTrace_03,
-                      variable i_varToTrace_04) void;
+                      variable i_varToTrace_04) void {return;}
 
     function Trace_06(variable i_intTraceLevel,
                       variable i_varToTrace_01,
@@ -51,7 +51,7 @@ namespace TRACELEVEL
                       variable i_varToTrace_03,
                       variable i_varToTrace_04,
                       variable i_varToTrace_05,
-                      variable i_varToTrace_06) void;
+                      variable i_varToTrace_06) void {return;}
 
     function Trace_08(variable i_intTraceLevel,
                       variable i_varToTrace_01,
@@ -61,7 +61,7 @@ namespace TRACELEVEL
                       variable i_varToTrace_05,
                       variable i_varToTrace_06,
                       variable i_varToTrace_07,
-                      variable i_varToTrace_08) void;
+                      variable i_varToTrace_08) void {return;}
 
     function Trace_10(variable i_intTraceLevel,
                       variable i_varToTrace_01,
@@ -73,41 +73,41 @@ namespace TRACELEVEL
                       variable i_varToTrace_07,
                       variable i_varToTrace_08,
                       variable i_varToTrace_09,
-                      variable i_varToTrace_10) void;
+                      variable i_varToTrace_10) void {return;}
 
     function TraceArray(variable i_intTraceLevel,
                         variable i_strDescription,
-                        variable i_arrvarToTrace[]) void;
+                        variable i_arrvarToTrace[]) void {return;}
 
     function TraceArrayHorizontally(variable i_intTraceLevel,
                                     variable i_strDescription,
-                                    variable i_arrvarToTrace[]) void;
+                                    variable i_arrvarToTrace[]) void {return;}
 
     function TraceArraysFaceToFace(variable i_intTraceLevel,
                                    variable i_strDescription_1,
                                    variable i_strDescription_2,
                                    variable i_arrvarToTrace_1[],
-                                   variable i_arrvarToTrace_2[]) void;
+                                   variable i_arrvarToTrace_2[]) void {return;}
 
     function TraceSequence(variable i_intTraceLevel,
-                           sequence i_seqToTrace) void;
+                           sequence i_seqToTrace) void {return;}
 
     function TraceSequenceParameter(variable i_intTraceLevel,
-                                    sequence i_seqToTrace) void;
+                                    sequence i_seqToTrace) void {return;}
 
     function TraceSequencePositions(device ML_STAR,
                                     variable i_intTraceLevel,
                                     sequence i_seqToTrace,
-                                    variable i_blnCurrentPositionOnly) void;
+                                    variable i_blnCurrentPositionOnly) void {return;}
 
     function TraceAction(variable i_intTraceLevel,
                          variable i_intAction,
                          variable i_strFunctionName,
                          variable i_strMethodName,
-                         variable i_strComment) void;
+                         variable i_strComment) void {return;}
 
     function SetActionIndicator(variable i_intAction,
-                                variable i_strIndicator) void;
+                                variable i_strIndicator) void {return;}
 }
 #endif
 #endif
