@@ -27,12 +27,9 @@
 #include "HSLMappingReport/HSLMappingReportImpl.hs_"
 #include "HSLExtensions/HSLStringTableLib.hsl"
 
-
-
-//device ML_STAR;
-
 namespace PTL
 {
+
 	// --------------------------------------------------------------------------------------
 	// Debugging
 	// --------------------------------------------------------------------------------------
@@ -2406,7 +2403,7 @@ namespace PTL
 		fieldDelimiter = ML_STAR.GetCfgValueWithKey(MlStarCfgKey::wordSeparator);
 		if (fieldDelimiter != StringConstants::csvDelimiter)
 		{
-			StrReplace(csv, StringConstants::csvDelimiter, fieldDelimiter);
+			Str::StrReplace(csv, StringConstants::csvDelimiter, fieldDelimiter);
 		}
 		return(csv);
 	}
@@ -2475,7 +2472,7 @@ namespace PTL
 		{
 			variable errorDesc;
 			errorDesc = StringTable::Load(IDE::createObjectFailed);
-			StrReplace(errorDesc, "%s", "HXREGLib.HxRegistry");
+			Str::StrReplace(errorDesc, "%s", "HXREGLib.HxRegistry");
 			Error::RaiseEx(IDE::createObjectFailed, errorDesc, GetFileName(), GetFunctionName(), GetLineNumber());
 		}
 		isFileValidationEnabled = hxRegistryPtr.FileValidation();
@@ -2497,14 +2494,14 @@ namespace PTL
 			{
 				variable errorDesc;
 				errorDesc = StringTable::Load(IDE::createObjectFailed);
-				StrReplace(errorDesc, "%s", "Hamilton.HxSecurityCom");
+				Str::StrReplace(errorDesc, "%s", "Hamilton.HxSecurityCom");
 				Error::RaiseEx(IDE::createObjectFailed, errorDesc, GetFileName(), GetFunctionName(), GetLineNumber());
 			}
 			if ( 0 == hxSecurityComPtr.GetObject("IHxSecurityFileCom", hxSecurityFileComPtr) )
 			{
 				variable errorDesc;
 				errorDesc = StringTable::Load(IDE::queryInterfaceFailed);
-				StrReplace(errorDesc, "%s", "IHxSecurityFileCom");
+				Str::StrReplace(errorDesc, "%s", "IHxSecurityFileCom");
 				Error::RaiseEx(IDE::queryInterfaceFailed, errorDesc, GetFileName(), GetFunctionName(), GetLineNumber());
 			}
 			//>> 20060523
@@ -3130,7 +3127,7 @@ namespace PTL
 					{
 						variable errorDesc;
 						errorDesc = StringTable::Load(IDE::invalidStepType);
-						StrReplace(errorDesc, "%s", stepType);
+						Str::StrReplace(errorDesc, "%s", stepType);
 						Error::RaiseEx(IDE::invalidStepType, errorDesc, GetFileName(), GetFunctionName(), GetLineNumber());
 					}
 
@@ -3162,7 +3159,7 @@ namespace PTL
 					// allowed to have five step return fields
 					variable errorDesc;
 					errorDesc = StringTable::Load(IDE::unexpectedStepReturn);
-					StrReplace(errorDesc, "%s", stepType);
+					Str::StrReplace(errorDesc, "%s", stepType);
 					Error::RaiseEx(IDE::unexpectedStepReturn, errorDesc, GetFileName(), GetFunctionName(), GetLineNumber());
 				}
 
@@ -3199,7 +3196,7 @@ namespace PTL
 					{
 						variable errorDesc;
 						errorDesc = StringTable::Load(IDE::invalidStepType);
-						StrReplace(errorDesc, "%s", stepType);
+						Str::StrReplace(errorDesc, "%s", stepType);
 						Error::RaiseEx(IDE::invalidStepType, errorDesc, GetFileName(), GetFunctionName(), GetLineNumber());
 					}
 				}
@@ -3229,7 +3226,7 @@ namespace PTL
 					// allowed to have five step return fields
 					variable errorDesc;
 					errorDesc = StringTable::Load(IDE::unexpectedStepReturn);
-					StrReplace(errorDesc, "%s", stepType);
+					Str::StrReplace(errorDesc, "%s", stepType);
 					Error::RaiseEx(IDE::unexpectedStepReturn, errorDesc, GetFileName(), GetFunctionName(), GetLineNumber());
 				}
 			}
@@ -3870,7 +3867,7 @@ namespace PTL
 			{
 				variable errorDesc;
 				errorDesc = StringTable::Load(IDE::invalidStepType);
-				StrReplace(errorDesc, "%s", stepType);
+				Str::StrReplace(errorDesc, "%s", stepType);
 				Error::RaiseEx(IDE::invalidStepType, errorDesc, GetFileName(), GetFunctionName(), GetLineNumber());
 			}
 
@@ -3949,7 +3946,7 @@ namespace PTL
 			{
 				variable errorDesc;
 				errorDesc = StringTable::Load(IDE::invalidStepType);
-				StrReplace(errorDesc, "%s", stepType);
+				Str::StrReplace(errorDesc, "%s", stepType);
 				Error::RaiseEx(IDE::invalidStepType, errorDesc, GetFileName(), GetFunctionName(), GetLineNumber());
 			}
 
@@ -4378,13 +4375,13 @@ namespace PTL
 				variable xorPattern("");		// xor pattern
 
 				// iterate over channels
-				length = PTL_Util::Min(StrGetLength(copyPattern), StrGetLength(prevTipPresence));
+				length = PTL_Util::Min(Str::StrGetLength(copyPattern), Str::StrGetLength(prevTipPresence));
 				for (index = 0; index < length; index++)
 				{
-					if ("0" == StrMid(prevTipPresence, index, 1))
+					if ("0" == Str::StrMid(prevTipPresence, index, 1))
 						xorPattern = xorPattern + "0";
 					else
-						xorPattern = xorPattern + StrMid(copyPattern, index, 1);
+						xorPattern = xorPattern + Str::StrMid(copyPattern, index, 1);
 				}
 				return(xorPattern);
 			}
@@ -5322,7 +5319,7 @@ namespace PTL
 			// occasionally gets imported from a mehtod package into the Methods directory)
 			variable myDirectory("");
 			myDirectory = GetFileName();
-			myDirectory = StrLeft(myDirectory, StrReverseFind(myDirectory, "\\") + 1);
+			myDirectory = Str::StrLeft(myDirectory, Str::StrReverseFind(myDirectory, "\\") + 1);
 			StringTable::Init(myDirectory + "HSLPTLStringTable");
 			//StringTable::Init("HSLPTLStringTable");
 			//<< 20060913
@@ -5352,14 +5349,14 @@ namespace PTL
 				{
 					variable errorDesc;
 					errorDesc = StringTable::Load(IDE::createObjectFailed);
-					StrReplace(errorDesc, "%s", "Hamilton.HxCoreLiquidClass");
+					Str::StrReplace(errorDesc, "%s", "Hamilton.HxCoreLiquidClass");
 					Error::RaiseEx(IDE::createObjectFailed, errorDesc, GetFileName(), GetFunctionName(), GetLineNumber());
 				}
 				if ( 0 == objTemp.GetObject("IHxCoreLiquidClass", TipVolume::objHxStarLiquid) )
 				{
 					variable errorDesc;
 					errorDesc = StringTable::Load(IDE::queryInterfaceFailed);
-					StrReplace(errorDesc, "%s", "IHxCoreLiquidClass");
+					Str::StrReplace(errorDesc, "%s", "IHxCoreLiquidClass");
 					Error::RaiseEx(IDE::queryInterfaceFailed, errorDesc, GetFileName(), GetFunctionName(), GetLineNumber());
 				}
 				objTemp.ReleaseObject();
@@ -5371,7 +5368,7 @@ namespace PTL
 				{
 					variable errorDesc;
 					errorDesc = StringTable::Load(IDE::createObjectFailed);
-					StrReplace(errorDesc, "%s", "Hamilton.HxCoreTipTypes");
+					Str::StrReplace(errorDesc, "%s", "Hamilton.HxCoreTipTypes");
 					Error::RaiseEx(IDE::createObjectFailed, errorDesc, GetFileName(), GetFunctionName(), GetLineNumber());
 				}
 				// QI to "IHxCoreTipTypes"
@@ -5379,7 +5376,7 @@ namespace PTL
 				{
 					variable errorDesc;
 					errorDesc = StringTable::Load(IDE::queryInterfaceFailed);
-					StrReplace(errorDesc, "%s", "IHxCoreTipTypes");
+					Str::StrReplace(errorDesc, "%s", "IHxCoreTipTypes");
 					Error::RaiseEx(IDE::queryInterfaceFailed, errorDesc, GetFileName(), GetFunctionName(), GetLineNumber());
 				}
 				objTemp.ReleaseObject();
@@ -5391,7 +5388,7 @@ namespace PTL
 				{
 					variable errorDesc;
 					errorDesc = StringTable::Load(IDE::createObjectFailed);
-					StrReplace(errorDesc, "%s", "Hamilton.HxServicesGeneralSettings");
+					Str::StrReplace(errorDesc, "%s", "Hamilton.HxServicesGeneralSettings");
 					Error::RaiseEx(IDE::createObjectFailed, errorDesc, GetFileName(), GetFunctionName(), GetLineNumber());
 				}
 				// QI to "IHxServicesGeneralSettings2"
@@ -5399,7 +5396,7 @@ namespace PTL
 				{
 					variable errorDesc;
 					errorDesc = StringTable::Load(IDE::queryInterfaceFailed);
-					StrReplace(errorDesc, "%s", "IHxServicesGeneralSettings2");
+					Str::StrReplace(errorDesc, "%s", "IHxServicesGeneralSettings2");
 					Error::RaiseEx(IDE::queryInterfaceFailed, errorDesc, GetFileName(), GetFunctionName(), GetLineNumber());
 				}
 				objTemp.ReleaseObject();
@@ -6391,7 +6388,7 @@ namespace PTL
 			//MessageBox("DebugBreak", "Dispense pre-aliquot");
 			#endif
 
-			if ( 0 <= StrFind(channelPattern, "1") )		// 2009-12-16/cjoerg: Added to prevent error if aspirateSequence is gone
+			if ( 0 <= Str::StrFind(channelPattern, "1") )		// 2009-12-16/cjoerg: Added to prevent error if aspirateSequence is gone
 																		// empty because of AspirateErrors and enabled copyPattern/excludeErrorPostions
 																		// Only if a channel is active we must try to re-dispense
 			{
@@ -6619,7 +6616,7 @@ namespace PTL
 				// we are not recovering from an error
 				channelPattern = DispenseChannelVariable;
 
-			if ( 0 <= StrFind(channelPattern, "1") )		// 2009-12-16/cjoerg: Added to prevent error if aspirateSequence is gone
+			if ( 0 <= Str::StrFind(channelPattern, "1") )		// 2009-12-16/cjoerg: Added to prevent error if aspirateSequence is gone
 																		// empty because of AspirateErrors and enabled copyPattern/excludeErrorPostions
 																		// Only if a channel is active we must try to re-dispense
 			{
@@ -6915,7 +6912,7 @@ namespace PTL
 
 			// update tip presence
 			PCB::SetTipPresence(TipEjectChannelVariable, 
-									  StrGetLength(TipEjectChannelVariable), hslFalse);
+									  Str::StrGetLength(TipEjectChannelVariable), hslFalse);
 
 			// reset TipPickupEnabled control setting
 			TipPickupEnabled = hslTrue;
@@ -9472,7 +9469,7 @@ namespace PTL
 				// 20050629 cjoerg: Added this error handling
 				variable errorDesc;
 				errorDesc = StringTable::Load(IDE::createObjectFailed);
-				StrReplace(errorDesc, "%s", "HXPARAMSLib.HxPars");
+				Str::StrReplace(errorDesc, "%s", "HXPARAMSLib.HxPars");
 				Error::RaiseEx(IDE::createObjectFailed, errorDesc, GetFileName(), GetFunctionName(), GetLineNumber());
 			}
 			TipVolume::objHxStarLiquid.GetLiquidClass(liquidClassName, resultPars, hslFalse);
@@ -9685,12 +9682,12 @@ namespace PTL
 
 			// set volumes
 			// we have to map the volumes to the channels, because we supply volumes per channel to the Aspirate/Dispense step
-			length = StrGetLength(channelPattern);
+			length = Str::StrGetLength(channelPattern);
 			AspirateVolumes.SetSize(0);
 			DispenseVolumes.SetSize(0);
 			for (i = j = 0; i < length && j < numberOfVolumes; i++)
 			{
-				if ("1" == StrMid(channelPattern, i, 1))
+				if ("1" == Str::StrMid(channelPattern, i, 1))
 				{
 					AspirateVolumes.AddAsLast(volumes.ElementAt(j));
 					DispenseVolumes.AddAsLast(volumes.ElementAt(j));
@@ -10156,7 +10153,7 @@ namespace PTL
 				// desired deck sequence was not found
 				variable errorDesc;
 				errorDesc = StringTable::Load(IDE::defaultWasteNotFound);
-				StrReplace(errorDesc, "%s", defaultWasteSequenceName);
+				Str::StrReplace(errorDesc, "%s", defaultWasteSequenceName);
 				Error::RaiseEx(IDE::defaultWasteNotFound, errorDesc, GetFileName(), GetFunctionName(), GetLineNumber());
 				return(hslFalse);
 			}
@@ -11754,15 +11751,15 @@ namespace PTL
 			string shortFileName("");
 			variable foundAt(-1);
 			shortFileName = fileName;
-			foundAt = StrReverseFind(shortFileName, ".");
+			foundAt = Str::StrReverseFind(shortFileName, ".");
 			if (0 <= foundAt)
 			{
-				shortFileName = StrLeft(shortFileName, foundAt);
+				shortFileName = Str::StrLeft(shortFileName, foundAt);
 			}
-			foundAt = StrReverseFind(shortFileName, "\\");
+			foundAt = Str::StrReverseFind(shortFileName, "\\");
 			if (0 <= foundAt)
 			{
-				shortFileName = StrRight(shortFileName, shortFileName.GetLength() - foundAt - 1);
+				shortFileName = Str::StrRight(shortFileName, shortFileName.GetLength() - foundAt - 1);
 			}
 			return(shortFileName);
 		}
@@ -11982,12 +11979,12 @@ namespace PTL
 					methodName = GetWorkflowFileName();
 				}
 				//<< 20060523
-				index1 = StrReverseFind(methodName, ".");
+				index1 = Str::StrReverseFind(methodName, ".");
 				if (0 <= index1)
-					methodName = StrLeft(methodName, index1);
-				index1 = StrReverseFind(methodName, "\\");
+					methodName = Str::StrLeft(methodName, index1);
+				index1 = Str::StrReverseFind(methodName, "\\");
 				if (0 <= index1)
-					methodName = StrMid(methodName, index1 + 1, StrGetLength(methodName));
+					methodName = Str::StrMid(methodName, index1 + 1, Str::StrGetLength(methodName));
 				LoadCarrierBarcodeFileName = GetLogFilesPath() + "\\" + methodName + StringConstants::barcodeFileExt;
 			}
 
@@ -13131,7 +13128,7 @@ namespace PTL
 								{
 									variable errorDesc;
 									errorDesc = StringTable::Load(IDE::advancedLoadSettingsConflict);
-									StrReplace(errorDesc, "%s", carrierNames.ElementAt(arrIndex));
+									Str::StrReplace(errorDesc, "%s", carrierNames.ElementAt(arrIndex));
 									Error::RaiseEx(IDE::advancedLoadSettingsConflict, errorDesc, GetFileName(), GetFunctionName(), GetLineNumber());
 								}
 							}
@@ -13509,7 +13506,7 @@ namespace PTL
 		if (drivingMode < DrivingMode::first || DrivingMode::last < drivingMode)
 			Error::Raise(IDE::invalidDrivingMode, GetFileName(), GetFunctionName(), GetLineNumber());
 
-		if (TipCountingEnabled && 0 == StrGetLength(TipCountingIdentifier))
+		if (TipCountingEnabled && 0 == Str::StrGetLength(TipCountingIdentifier))
 			Error::Raise(IDE::invalidTipCountingIdentifier, GetFileName(), GetFunctionName(), GetLineNumber());
 
 		// if the aliquot option is enabled, ...
@@ -13684,7 +13681,7 @@ namespace PTL
       while(file1.Eof() == 0)
       {
          file1.ReadRecord();
-         SeqAdd(mergedSequenceDistinctively, labId, posId);
+         Seq::SeqAdd(mergedSequenceDistinctively, labId, posId);
       }
 
       file1.Close();
@@ -13934,7 +13931,7 @@ namespace PTL
 
 		// set tip presence
 		PCB::SetTipPresence(TipPickupChannelVariable, 
-								  StrGetLength(TipPickupChannelVariable), !TipPickupEnabled);
+								  Str::StrGetLength(TipPickupChannelVariable), !TipPickupEnabled);
 
 		// select liquid class
 		PCB::SelectLiquidClass();
@@ -15177,7 +15174,7 @@ namespace PTL
 					variable warnText;
 					action   = StringTable::Load(IDS::actionLoad);
 					warnText = StringTable::Load(IDS::loadSettingsNotForCurrentTaskId);
-					StrReplace(warnText, "%s", sequenceId);
+					Str::StrReplace(warnText, "%s", sequenceId);
 					PTL_Util::TraceWarningIfNotValidated(action, warnText);
 				}
 
@@ -15235,7 +15232,7 @@ namespace PTL
 					variable warnText;
 					action   = StringTable::Load(IDS::actionLoad);
 					warnText = StringTable::Load(IDS::loadSettingsNotForCurrentTaskId);
-					StrReplace(warnText, "%s", sequenceId);
+					Str::StrReplace(warnText, "%s", sequenceId);
 					PTL_Util::TraceWarningIfNotValidated(action, warnText);
 				}
 			}
@@ -15787,7 +15784,7 @@ namespace PTL
 			// check tipCountIdentifier to be valid
 			if (!PTL_Util::IsString(tipCountIdentifier))
 				Error::Raise(IDE::invalidTipCountingIdentifier, GetFileName(), GetFunctionName(), GetLineNumber());
-			if (readTipCount && 0 == StrGetLength(tipCountIdentifier))
+			if (readTipCount && 0 == Str::StrGetLength(tipCountIdentifier))
 				Error::Raise(IDE::invalidTipCountingIdentifier, GetFileName(), GetFunctionName(), GetLineNumber());
 			
 			// set sequence
@@ -15871,7 +15868,7 @@ namespace PTL
 					length = hexBitPatternStr.GetLength();
 					for (index = length - 1; 0 <= index ; index--)
 					{
-						binBitPatternStr = StrFillLeft(BinIStr(IVal("0x" + hexBitPatternStr.Mid(index, 1))), "0", 4) + binBitPatternStr;
+						binBitPatternStr = Str::StrFillLeft(BinIStr(IVal("0x" + hexBitPatternStr.Mid(index, 1))), "0", 4) + binBitPatternStr;
 					}
 					length = binBitPatternStr.GetLength();
 					for (index = length - 1; 0 <= index ; index--)
@@ -16043,8 +16040,8 @@ namespace PTL
 
 			MlStarSteps::StepFirmwareCommand(ML_STAR,command,parameter,rc);
 			if (4 == rc.GetSize())
-				serialNumber = StrMid(rc.ElementAt(3), StrFind(rc.ElementAt(3), "sn"), 6);
-			return(StrMakeUpper(serialNumber));
+				serialNumber = Str::StrMid(rc.ElementAt(3), Str::StrFind(rc.ElementAt(3), "sn"), 6);
+			return(Str::StrMakeUpper(serialNumber));
 		}
 
 		private function WriteUnusedSampleTubesReport(
@@ -16141,18 +16138,18 @@ namespace PTL
 
 			text = text + 	StringTable::Load(IDS::unusedSampleTubesReportText) + "\n";
 			text = text + "-------------------------------------------------------------------------------------------------------------\n";
-			text = text + 	StrFillRight(StringTable::Load(IDS::carrierNameColumnName), " ", 60) + 
-					 StrFillRight(StringTable::Load(IDS::carrierBarcodeColumnName), " ", 40) + 
-					 StrFillRight(StringTable::Load(IDS::labwarePositionColumnName), " ", 20) + 
-					 StrFillRight(StringTable::Load(IDS::labwareBarcodeColumnName), " ", 40) + "\n";
+			text = text + 	Str::StrFillRight(StringTable::Load(IDS::carrierNameColumnName), " ", 60) + 
+					 Str::StrFillRight(StringTable::Load(IDS::carrierBarcodeColumnName), " ", 40) + 
+					 Str::StrFillRight(StringTable::Load(IDS::labwarePositionColumnName), " ", 20) + 
+					 Str::StrFillRight(StringTable::Load(IDS::labwareBarcodeColumnName), " ", 40) + "\n";
 			text = text + "-----------------------------------------------------------------------------------------------------------------------------\n";
 			size = carrierBarcodes.GetSize();
 			for (i = 0; i < size; i++)
 			{
-				text = text + 	StrFillRight(carrierNames.ElementAt(i), " ", 40) + 
-									StrFillRight(carrierBarcodes.ElementAt(i), " ", 40) + 
-									StrFillRight(labwarePositions.ElementAt(i), " ", 20) + 
-									StrFillRight(labwareBarcodes.ElementAt(i), " ", 40) + "\n";
+				text = text + 	Str::StrFillRight(carrierNames.ElementAt(i), " ", 40) + 
+									Str::StrFillRight(carrierBarcodes.ElementAt(i), " ", 40) + 
+									Str::StrFillRight(labwarePositions.ElementAt(i), " ", 20) + 
+									Str::StrFillRight(labwareBarcodes.ElementAt(i), " ", 40) + "\n";
 			}
 			text = text + "-----------------------------------------------------------------------------------------------------------------------------\n";
 			
@@ -16182,28 +16179,28 @@ namespace PTL
 
 			text = text + 	StringTable::Load(IDS::requiredSampleTubesReportText) + "\n";
 			text = text + "---------------------------------------------------------------------------------------------------------------------------------------------------------------------\n";
-         text = text + 	StrFillRight(StringTable::Load(IDS::sourceBarcodeColumnName), " ", 50) + // SCR 1299
-                        StrFillRight(StringTable::Load(IDS::carrierNameColumnName), " ", 60) + 
-					         StrFillRight(StringTable::Load(IDS::carrierBarcodeColumnName), " ", 40) + 
-					         StrFillRight(StringTable::Load(IDS::labwarePositionColumnName), " ", 20) + "\n";
+         text = text + 	Str::StrFillRight(StringTable::Load(IDS::sourceBarcodeColumnName), " ", 50) + // SCR 1299
+                        Str::StrFillRight(StringTable::Load(IDS::carrierNameColumnName), " ", 60) + 
+					         Str::StrFillRight(StringTable::Load(IDS::carrierBarcodeColumnName), " ", 40) + 
+					         Str::StrFillRight(StringTable::Load(IDS::labwarePositionColumnName), " ", 20) + "\n";
 			text = text + "---------------------------------------------------------------------------------------------------------------------------------------------------------------------\n";
 
          size1 = sourceBarcodes.GetSize();
    		for (i = 0; i < size1; i++) // SCR 1299
 			{
-				text = text + 	StrFillRight(sourceBarcodes.ElementAt(i), " ", 50) + 
-                           StrFillRight(StringTable::Load(IDS::requiredAtAnyFreePos), " ", 60) + 
-									StrFillRight(" ", " ", 40) + 
-									StrFillRight(" ", " ", 20) + "\n";
+				text = text + 	Str::StrFillRight(sourceBarcodes.ElementAt(i), " ", 50) + 
+                           Str::StrFillRight(StringTable::Load(IDS::requiredAtAnyFreePos), " ", 60) + 
+									Str::StrFillRight(" ", " ", 40) + 
+									Str::StrFillRight(" ", " ", 20) + "\n";
 			}
 
          size2 = carrierBarcodes.GetSize();
    		for (i = 0; i < size2; i++)
    		{
-				text = text + 	StrFillRight(" ", " ", 50) + 
-                           StrFillRight(carrierNames.ElementAt(i), " ", 60) + 
-									StrFillRight(carrierBarcodes.ElementAt(i), " ", 40) + 
-									StrFillRight(labwarePositions.ElementAt(i), " ", 20) + "\n";
+				text = text + 	Str::StrFillRight(" ", " ", 50) + 
+                           Str::StrFillRight(carrierNames.ElementAt(i), " ", 60) + 
+									Str::StrFillRight(carrierBarcodes.ElementAt(i), " ", 40) + 
+									Str::StrFillRight(labwarePositions.ElementAt(i), " ", 20) + "\n";
    		}
    		
          text = text + "---------------------------------------------------------------------------------------------------------------------------------------------------------------------\n";
@@ -16408,7 +16405,7 @@ namespace PTL
 				  0 < currentPos;
 				  currentPos = fullSampleSequence.Increment(1))
 			{
-				maxPositionIdWidth = PTL_Util::Max(maxPositionIdWidth, StrGetLength(fullSampleSequence.GetPositionId()));
+				maxPositionIdWidth = PTL_Util::Max(maxPositionIdWidth, Str::StrGetLength(fullSampleSequence.GetPositionId()));
 			}
 			// Iterate over full sample sequence from position 1 to end position and collect positions of unused samples 
 			for (currentPos = fullSampleSequence.SetCurrentPosition(1);
@@ -16667,12 +16664,12 @@ namespace PTL
 						{
 							methodName = GetWorkflowFileName();
 						}
-						i = StrReverseFind(methodName, ".");
+						i = Str::StrReverseFind(methodName, ".");
 						if (0 <= i)
-							methodName = StrLeft(methodName, i);
-						i = StrReverseFind(methodName, "\\");
+							methodName = Str::StrLeft(methodName, i);
+						i = Str::StrReverseFind(methodName, "\\");
 						if (0 <= i)
-							methodName = StrMid(methodName, i + 1, StrGetLength(methodName));
+							methodName = Str::StrMid(methodName, i + 1, Str::StrGetLength(methodName));
 						LoadCarrierBarcodeFileName = GetLogFilesPath() + "\\" + methodName + StringConstants::barcodeFileExt;
 					}
 
@@ -16920,7 +16917,7 @@ namespace PTL
 				  0 < currentPos;
 				  currentPos = fullSampleSequence.Increment(1))
 			{
-				maxPositionIdWidth = PTL_Util::Max(maxPositionIdWidth, StrGetLength(fullSampleSequence.GetPositionId()));
+				maxPositionIdWidth = PTL_Util::Max(maxPositionIdWidth, Str::StrGetLength(fullSampleSequence.GetPositionId()));
 			}
 
 			// Iterate over full sample sequence from position 1 to end position and collect positions of required samples 
@@ -17106,12 +17103,12 @@ namespace PTL
 						{
 							methodName = GetWorkflowFileName();
 						}
-						i = StrReverseFind(methodName, ".");
+						i = Str::StrReverseFind(methodName, ".");
 						if (0 <= i)
-							methodName = StrLeft(methodName, i);
-						i = StrReverseFind(methodName, "\\");
+							methodName = Str::StrLeft(methodName, i);
+						i = Str::StrReverseFind(methodName, "\\");
 						if (0 <= i)
-							methodName = StrMid(methodName, i + 1, StrGetLength(methodName));
+							methodName = Str::StrMid(methodName, i + 1, Str::StrGetLength(methodName));
 						LoadCarrierBarcodeFileName = GetLogFilesPath() + "\\" + methodName + StringConstants::barcodeFileExt;
 					}
 
@@ -17675,12 +17672,12 @@ namespace PTL
 					methodName = GetWorkflowFileName();
 				}
 				//<< 20060523
-				index1 = StrReverseFind(methodName, ".");
+				index1 = Str::StrReverseFind(methodName, ".");
 				if (0 <= index1)
-					methodName = StrLeft(methodName, index1);
-				index1 = StrReverseFind(methodName, "\\");
+					methodName = Str::StrLeft(methodName, index1);
+				index1 = Str::StrReverseFind(methodName, "\\");
 				if (0 <= index1)
-					methodName = StrMid(methodName, index1 + 1, StrGetLength(methodName));
+					methodName = Str::StrMid(methodName, index1 + 1, Str::StrGetLength(methodName));
 				LoadCarrierBarcodeFileName = GetLogFilesPath() + "\\" + methodName + StringConstants::barcodeFileExt;
 			}
 
@@ -18632,7 +18629,7 @@ namespace PTL
 					// no kit lot in barcode mask
 					variable errorDesc;
 					errorDesc = StringTable::Load(IDE::noKitLotInBarcodeMask);
-					StrReplace(errorDesc, "%s", barcodeMask);
+					Str::StrReplace(errorDesc, "%s", barcodeMask);
 					Error::RaiseEx(IDE::noKitLotInBarcodeMask, errorDesc, GetFileName(), GetFunctionName(), GetLineNumber());
 				}
 				if (-2 == status)
@@ -18640,8 +18637,8 @@ namespace PTL
 					// invalid barcode value or barcode mask
 					variable errorDesc;
 					errorDesc = StringTable::Load(IDE::invalidBarcodeValueOrBarcodeMask);
-					StrReplace(errorDesc, "%s1", barcodeValue);
-					StrReplace(errorDesc, "%s2", barcodeMask);
+					Str::StrReplace(errorDesc, "%s1", barcodeValue);
+					Str::StrReplace(errorDesc, "%s2", barcodeMask);
 					Error::RaiseEx(IDE::invalidBarcodeValueOrBarcodeMask, errorDesc, GetFileName(), GetFunctionName(), GetLineNumber());
 				}
 				if (-3 == status)
@@ -18649,7 +18646,7 @@ namespace PTL
 					// kit lot not defined
 					variable errorDesc;
 					errorDesc = StringTable::Load(IDE::kitLotNotDefined);
-					StrReplace(errorDesc, "%s", HSLKitLot::SplitBarcode(barcodeMask, kitLotJoker, barcodeValue));
+					Str::StrReplace(errorDesc, "%s", HSLKitLot::SplitBarcode(barcodeMask, kitLotJoker, barcodeValue));
 					Error::RaiseEx(IDE::kitLotNotDefined, errorDesc, GetFileName(), GetFunctionName(), GetLineNumber());
 				}
 				if (-4 == status)
@@ -18665,7 +18662,7 @@ namespace PTL
 					// kit lot file not found
 					variable errorDesc;
 					errorDesc = StringTable::Load(IDE::kitLotFileNotFound);
-					StrReplace(errorDesc, "%s", GetSystemPath() + "\\" + StringConstants::kitLotFileName);
+					Str::StrReplace(errorDesc, "%s", GetSystemPath() + "\\" + StringConstants::kitLotFileName);
 					Error::RaiseEx(IDE::kitLotFileNotFound, errorDesc, GetFileName(), GetFunctionName(), GetLineNumber());
 				}
 				// end
@@ -19146,7 +19143,7 @@ namespace PTL
 						variable warnText;
 						action   = StringTable::Load(IDS::actionNeedleWash);
 						warnText = StringTable::Load(IDS::washSettingsNotForCurrentTaskId);
-						StrReplace(warnText, "%s", washStation);
+						Str::StrReplace(warnText, "%s", washStation);
 						PTL_Util::TraceWarningIfNotValidated(action, warnText);
 					}
 
@@ -19178,7 +19175,7 @@ namespace PTL
 						variable warnText;
 						action   = StringTable::Load(IDS::actionNeedleWash);
 						warnText = StringTable::Load(IDS::washSettingsNotForCurrentTaskId);
-						StrReplace(warnText, "%s", washStation);
+						Str::StrReplace(warnText, "%s", washStation);
 						PTL_Util::TraceWarningIfNotValidated(action, warnText);
 					}
 				}
@@ -19976,7 +19973,7 @@ namespace PTL
 			onerror goto Unexpected;
 
 			// initalize output parameters
-			SeqRemoveAll(WashSequence);
+			Seq::SeqRemoveAll(WashSequence);
 			channelPattern = Limits::channelVariable16;
 			errorHandling = ErrorHandling::continue;
 			userResponseTime = Limits::maxTimeInterval;
@@ -21359,7 +21356,7 @@ namespace PTL
 			PTL::TipEjectWasteDestinationReducible = TipEjectWasteDestinationReducible;
 
 			// initialize settings 
-			PTL::InitializeChannelVariable = StrLeft("1111111111111111", StrGetLength(TipPickupChannelVariable));
+			PTL::InitializeChannelVariable = Str::StrLeft("1111111111111111", Str::StrGetLength(TipPickupChannelVariable));
 			PTL::InitializeWasteDestinationReloadable = hslFalse;
 
 			// aspirate settings 
@@ -21415,4 +21412,3 @@ namespace PTL
 	}
 }
 #endif
-// $$author=Henrik$$valid=0$$time=2025-08-21 15:09$$checksum=c4a2aca8$$length=083$$
