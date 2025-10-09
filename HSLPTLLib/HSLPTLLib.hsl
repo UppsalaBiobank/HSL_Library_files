@@ -15,6 +15,26 @@
 #ifndef HSL_RUNTIME
 namespace PTL
 {
+   namespace LCB
+   {
+   function GetStateEx(                                     // retrives the loading information for a specified loading control setting
+      device& ML_STAR,                                      // i: the loading device (a Microlab® STAR)
+      sequence& sequenceObj,                                // i: the loading sequence
+      variable& lcbKey,                                     // i: the key of the loading control setting (string)
+      variable& lcbValue,                                   // i: a reference to a variable to retrieve the values of the loading control setting (integer, float, or string)
+      variable bWarnLoadSettingsNotForTask)                 // i: If true a warning is traced if the load settings are not defined for current task  
+      variable {return(0);}                
+
+   function SetStateEx(                                     // sets the loading information for a specified loading control setting
+      device& ML_STAR,                                      // i: the loading device (a Microlab® STAR)
+      sequence& sequenceObj,                                // i: the loading sequence
+      variable& lcbKey,                                     // i: the key of the loading control setting (string)
+      variable& lcbValue)                                 // i: the value of the loading control setting (integer, float, or string)
+      variable {return(0);}
+
+   function ValidateStateEx() variable {return(0);}         // validates the loading information
+   }
+
   // --------------------------------------------------------------------------------------
   // Pipetting
   // --------------------------------------------------------------------------------------
@@ -25,7 +45,7 @@ namespace PTL
 
   function GetPipettingState(
     variable& pcbKey,                           // i: the name of the pipetting control setting
-    variable& pcbValue);                          // o: a reference to a variable to retrieve the value of the pipetting control setting
+    variable& pcbValue) variable {return(0);}                          // o: a reference to a variable to retrieve the value of the pipetting control setting
 
   // The GetPipettingSequence function retrives the pipetting information 
   // for a specified pipetting sequence. The structure that specifies 
@@ -33,7 +53,7 @@ namespace PTL
 
   function GetPipettingSequence(
     variable& pcbKey,                           // i: the name of the pipetting sequence
-    sequence& pcbValue);                          // o: a reference to a sequence to retrieve the value of the pipetting sequence
+    sequence& pcbValue) variable {return(0);}                          // o: a reference to a sequence to retrieve the value of the pipetting sequence
 
   // The SetPipettingState function sets the pipetting information 
   // for a specified pipetting control setting. The structure that specifies 
@@ -41,7 +61,7 @@ namespace PTL
 
   function SetPipettingState(
     variable& pcbKey,                           // i: the name of the pipetting control setting
-    variable& pcbValue);                          // i: the value of the pipetting control setting
+    variable& pcbValue) variable {return(0);}                          // i: the value of the pipetting control setting
 
   // The SetPipettingSequence function sets the pipetting information 
   // for a specified pipetting sequence. The structure that specifies 
@@ -49,7 +69,7 @@ namespace PTL
 
   function SetPipettingSequence(
     variable& pcbKey,                           // i: the name of the pipetting sequence
-    sequence& pcbValue);                          // i: the value of the pipetting sequence
+    sequence& pcbValue) variable {return(0);}                          // i: the value of the pipetting sequence
 
   // The ResetPipettingStateAndSequences function resets the pipetting information 
   // for all pipetting control settings and sequences to their default 
@@ -57,7 +77,7 @@ namespace PTL
   // is the Pipetting Control Block (PCB).
 
   function ResetPipettingStateAndSequences(
-    variable& pipettingCfgFile);                    // i: the name of a file that specifies one or more values of the pipetting control settings (string; may be empty)
+    variable& pipettingCfgFile) variable {return(0);}                    // i: the name of a file that specifies one or more values of the pipetting control settings (string; may be empty)
    
 
   // The Pipette function implements a simple pipetting procedure on a Microlab® STAR 
@@ -76,7 +96,7 @@ namespace PTL
     variable tipRenewalCycleSeq,                    // i: tip renewal cycle in the sequence loop (integer)
     variable tipRenewalCycleMul,                    // i: tip renewal cycle in the multiplicity loop (integer)
     variable tipRenewalCycleVol,                    // i: tip renewal cycle in the volume loop (integer)
-    variable& tipType);                         // i: tip type, one of {"LowVolumeTip", "StandardVolumeTip", "HighVolumeTip", "LowVolumeTipWithFilter", "StandardVolumeTipWithFilter", "HighVolumeTipWithFilter"}
+    variable& tipType) variable {return(0);}                         // i: tip type, one of {"LowVolumeTip", "StandardVolumeTip", "HighVolumeTip", "LowVolumeTipWithFilter", "StandardVolumeTipWithFilter", "HighVolumeTipWithFilter"}
 
   function Pipette2(
     device& ML_STAR,                            // i: pipetting device
@@ -91,7 +111,7 @@ namespace PTL
     variable tipRenewalCycleSeq,                    // i: tip renewal cycle in the sequence loop (integer)
     variable tipRenewalCycleMul,                    // i: tip renewal cycle in the multiplicity loop (integer)
     variable tipRenewalCycleVol,                    // i: tip renewal cycle in the volume loop (integer)
-    variable& tipType);                         // i: tip type, one of {"LowVolumeTip", "StandardVolumeTip", "HighVolumeTip", "LowVolumeTipWithFilter", "StandardVolumeTipWithFilter", "HighVolumeTipWithFilter"}
+    variable& tipType) variable {return(0);}                         // i: tip type, one of {"LowVolumeTip", "StandardVolumeTip", "HighVolumeTip", "LowVolumeTipWithFilter", "StandardVolumeTipWithFilter", "HighVolumeTipWithFilter"}
 
   function Pipette3(
     device& ML_STAR,                            // i: pipetting device
@@ -108,7 +128,7 @@ namespace PTL
     variable tipRenewalCycleVol,                    // i: tip renewal cycle in the volume loop (integer)
     variable& tipType,                          // i: tip type, UNUSED, one of {"LowVolumeTip", "StandardVolumeTip", "HighVolumeTip", "LowVolumeTipWithFilter", "StandardVolumeTipWithFilter", "HighVolumeTipWithFilter"}
       sequence& seqMergedAspirate,                             // o: merged aspirate sequence 
-      sequence& seqMergedDispense);                            // o: merged dispense sequence
+      sequence& seqMergedDispense) variable {return(0);}                            // o: merged dispense sequence
 
   function Pipette4(
     device& ML_STAR,                            // i: pipetting device
@@ -125,7 +145,7 @@ namespace PTL
     variable tipRenewalCycleVol,                    // i: tip renewal cycle in the volume loop (integer)
     variable& tipType,                          // i: tip type, UNUSED, one of {"LowVolumeTip", "StandardVolumeTip", "HighVolumeTip", "LowVolumeTipWithFilter", "StandardVolumeTipWithFilter", "HighVolumeTipWithFilter"}
       sequence& seqMergedAspirate,                             // o: merged aspirate sequence 
-      sequence& seqMergedDispense);                            // o: merged dispense sequence
+      sequence& seqMergedDispense) variable {return(0);}                            // o: merged dispense sequence
 
   // --------------------------------------------------------------------------------------
   // Loading
@@ -139,7 +159,7 @@ namespace PTL
     device& ML_STAR,                            // i: the loading device (a Microlab® STAR)
     sequence& sequenceObj,                        // i: the loading sequence
     variable& lcbKey,                           // i: the key of the loading control setting (string)
-    variable& lcbValue);                          // i: a reference to a variable to retrieve the values of the loading control setting (integer, float, or string)
+    variable& lcbValue) variable {return(0);}                          // i: a reference to a variable to retrieve the values of the loading control setting (integer, float, or string)
 
   // The SetLoadingStateEx function sets the washing information for a specified loading control 
   // setting. The structure that specifies the loading control settings is the Loading Control 
@@ -150,14 +170,14 @@ namespace PTL
     sequence& sequenceObj,                        // i: the loading sequence
     variable& lcbKey,                           // i: the loading sequence
     variable& lcbValue,                         // i: the value of the loading control setting (integer, float, or string)
-    variable lcbStatus);                          // i: the status of the SetLoadingStateEx function (0 = start, 1 = progress, 2 = complete)
+    variable lcbStatus) variable {return(0);}                          // i: the status of the SetLoadingStateEx function (0 = start, 1 = progress, 2 = complete)
 
   // The ResetLoadingStateEx function resets the loading information of all advanced loading 
   // control settings of the specified sequence to their default values.
 
   function ResetLoadingStateEx(
   device& ML_STAR,                              // i: the loading device (a Microlab® STAR)
-  sequence& sequenceObj);                         // i: the loading sequence
+  sequence& sequenceObj) variable {return(0);}                         // i: the loading sequence
 
   // The GetLoadingState function retrives the loading information 
   // for a specified loading control setting. The structure that specifies 
@@ -165,7 +185,7 @@ namespace PTL
 
   function GetLoadingState(
     variable& lcbKey,                           // i: the name of the loading control setting
-    variable& lcbValue);                          // o: a reference to a variable to retrieve the value of the loading control setting
+    variable& lcbValue) variable {return(0);}                          // o: a reference to a variable to retrieve the value of the loading control setting
 
   // The SetLoadingState function sets the loading information 
   // for a specified loading control setting. The structure that specifies 
@@ -173,14 +193,14 @@ namespace PTL
 
   function SetLoadingState(
     variable& lcbKey,                           // i: the name of the loading control setting
-    variable& lcbValue);                          // i: the value of the loading control setting
+    variable& lcbValue) variable {return(0);}                          // i: the value of the loading control setting
 
   // Establishes the loading size. Since indexes are zero-based, 
   // the loading size is 1 greater than the largest index.
 
   function GetLoadingStateDefault(
     variable& lcbKey,                           // i: the key of the loading control setting (string)
-    variable& lcbValue);                          // i: a reference to a variable to retrieve the default value of the specified loading control setting (integer, float, or string)
+    variable& lcbValue) variable {return(0);}                          // i: a reference to a variable to retrieve the default value of the specified loading control setting (integer, float, or string)
 
   // The SetLoadingStateDefault function sets the loading state default for a specified 
   // loading control setting. The structure that specifies the loading control settings 
@@ -188,15 +208,15 @@ namespace PTL
 
   function SetLoadingStateDefault(
     variable& lcbKey,                           // i: the key of the loading control setting (string)
-    variable& lcbValue);                        // i: the default value of the loading control setting (integer, float, or string)
+    variable& lcbValue) variable {return(0);}                        // i: the default value of the loading control setting (integer, float, or string)
 
   function SetLoadingSize(
-    variable newSize);                          // i: the new loading size (number of sequences)
+    variable newSize) variable {return(0);}                          // i: the new loading size (number of sequences)
 
   // Returns the loading size. Since indexes are zero-based, the 
   // loading size is 1 greater than the largest index.
 
-  function GetLoadingSize();
+  function GetLoadingSize() variable {return(0);}
 
   // Sets the sequence to load at the specified index.
 
@@ -207,26 +227,26 @@ namespace PTL
     variable last,                              // i: the last position in the sequence (integer)
     variable editable,                          // i: specifies whether sequence editing by the user is enabled (hslTrue or hslFalse)
     variable readTipCount,                        // i: specifies whether to read the tip count from the file HxTipCount.xls in the LogFiles directory (hslTrue or hslFalse)
-    variable& tipCountIdentifier);                  // i: tip count identifier (string)
+    variable& tipCountIdentifier) variable {return(0);}                  // i: tip count identifier (string)
 
   // Gets the sequence loaded at the specified index.
 
   function GetLoadingSequence(
     variable index,                           // i: an integer index that is greater than or equal to 0 and less than the value returned by GetLoadSize()
-    sequence& sequenceObj);                       // i: a reference to a sequence to retrieve the sequence loaded at the specified index
+    sequence& sequenceObj) variable {return(0);}                       // i: a reference to a sequence to retrieve the sequence loaded at the specified index
 
   // The ResetLoadingStateAndSequences function resets the loading 
   // information for all loading control settings and sequences to 
   // their default values.
 
-  function ResetLoadingStateAndSequences();
+  function ResetLoadingStateAndSequences() variable {return(0);}
 
   // The Load function loads all sequences previously set via the SetLoadSequence 
   // and provides a way to reduce these sequences graphically.
 
   function Load(
     device& ML_STAR,                            // i: the loading device 
-    variable calibrateSequences);                   // i: indicates if carriers should be calibrated (if supported)
+    variable calibrateSequences) variable {return(0);}                   // i: indicates if carriers should be calibrated (if supported)
 
   // The Load2 function loads the sequence previously set via the SetLoadSequence 
   // and provides a way to reduce this sequence graphically (supports Smart Step 'Load and Match').
@@ -235,7 +255,7 @@ namespace PTL
     device& ML_STAR,                            // [in] The loading device 
     variable calibrateSequences,                    // [in] Indicates whether carriers should be calibrated (0 = don't calibrate, 1 = calibrate if supported)
     variable scanAutoloadTray,                      // [in] Indicates whether to scan the the Microlab® STAR's autoload try and to load only those carriers that have been detected (0 = don't scan, 1 = scan)
-    variable unloadUnusedSampleTubes) variable;         // [in] Indicates whether to unload unused sample tubes (0 = don't unload, 1 = unload)
+    variable unloadUnusedSampleTubes) variable {return(0);}         // [in] Indicates whether to unload unused sample tubes (0 = don't unload, 1 = unload)
 
   // --------------------------------------------------------------------------------------
   // Unloading
@@ -247,7 +267,7 @@ namespace PTL
 
   function GetUnloadingState(
     variable& ucbKey,                           // i: the name of the loading control setting
-    variable& ucbValue);                          // o: a reference to a variable to retrieve the value of the loading control setting
+    variable& ucbValue) variable {return(0);}                          // o: a reference to a variable to retrieve the value of the loading control setting
 
   // The SetUnloadingState function sets the unloading information 
   // for a specified unloading control setting. The structure that specifies 
@@ -255,18 +275,18 @@ namespace PTL
 
   function SetUnloadingState(
     variable& ucbKey,                           // i: the name of the unloading control setting
-    variable& ucbValue);                          // i: the value of the unloading control setting
+    variable& ucbValue) variable {return(0);}                          // i: the value of the unloading control setting
 
   // Establishes the unloading size. Since indexes are zero-based, 
   // the unloading size is 1 greater than the largest index.
 
   function SetUnloadingSize(
-    variable newSize);                          // i: the new unloading size (number of sequences)
+    variable newSize) variable {return(0);}                          // i: the new unloading size (number of sequences)
 
   // Returns the unloading size. Since indexes are zero-based, 
   // the unloading size is 1 greater than the largest index.
 
-  function GetUnloadingSize();
+  function GetUnloadingSize() variable {return(0);}
 
   // Sets the sequence to be unloaded at the specified index.
 
@@ -274,13 +294,13 @@ namespace PTL
     variable index,                           // i: an integer index that is greater than or equal to 0 and less than the value returned by GetUnloadSize()
     sequence& sequenceObj,                        // i: the sequence object 
     variable writeTipCount,                       // i: specifies whether to write the tip count to the file HxTipCount.xls in the LogFiles directory (hslTrue or hslFalse)
-    variable& tipCountIdentifier);                  // i: tip count identifier (string)
+    variable& tipCountIdentifier) variable {return(0);}                 // i: tip count identifier (string)
 
   // Gets the sequence to be unloaded at the specified index.
 
   function GetUnloadingSequence(
     variable index,                           // i: an integer index that is greater than or equal to 0 and less than the value returned by GetUnloadSize()
-    sequence& sequenceObj);                       // i: a reference to a sequence to retrieve the sequence to be unloaded at the specified index
+    sequence& sequenceObj) variable {return(0);}                      // i: a reference to a sequence to retrieve the sequence to be unloaded at the specified index
 
   // The ResetUnloadingStateAndSequences function resets the unloading 
   // information for all unloading control settings and sequences to 
@@ -291,7 +311,7 @@ namespace PTL
   // The Unload function unloads all sequences previously set via the SetUnloadSequence.
 
   function Unload(
-    device& ML_STAR);                           // i: the unloading device 
+    device& ML_STAR) variable {return(0);}                         // i: the unloading device 
 
   // --------------------------------------------------------------------------------------
   // Washing
@@ -307,7 +327,7 @@ namespace PTL
     sequence& washSequence,                       // i: the wash sequence
     variable& wcbKey,                           // i: the name of the washing control setting
     variable& wcbValue[],                       // o: a reference to an array of variables to retrieve the values of the washing control setting per wash station
-    variable& wcbLabId[]);                        // o: a reference to an array of variables to retrieve the labware ids of the wash station
+    variable& wcbLabId[]) variable {return(0);}                       // o: a reference to an array of variables to retrieve the labware ids of the wash station
 
   // The SetWashingState function sets the washing information 
   // for a specified wash sequence and washing control setting. 
@@ -319,7 +339,7 @@ namespace PTL
     sequence& washSequence,                       // i: the wash sequence
     variable& wcbKey,                           // i: the name of the washing control setting
     variable& wcbValue,                         // i: the value of the washing control setting
-    variable wcbStatus);                          // i: the status of the SetWashingState function (0 = start, 1 = progress, 2 = complete)
+    variable wcbStatus) variable {return(0);}                         // i: the status of the SetWashingState function (0 = start, 1 = progress, 2 = complete)
 
   // The ResetWashingState function resets the washing 
   // information of all washing control settings of the 
@@ -327,7 +347,7 @@ namespace PTL
 
   function ResetWashingState(
     device& ML_STAR,                            // i: the washing device 
-    sequence& washSequence);                      // i: the wash sequence
+    sequence& washSequence) variable {return(0);}                     // i: the wash sequence
 
   // The GetWashingStateDefault function gets the washing state 
   // default for a specified washing control setting out of the 
@@ -343,7 +363,7 @@ namespace PTL
 
   function GetWashingStateDefault(
     variable& wcbKey,                           // i: the name of the washing control setting
-    variable& wcbValue);                          // o: a reference to a variable to retrieve the value of the washing control setting
+    variable& wcbValue) variable {return(0);}                         // o: a reference to a variable to retrieve the value of the washing control setting
 
   // The SetWashingStateDefault function sets the washing state 
   // default for a specified washing control setting out of the 
@@ -359,21 +379,31 @@ namespace PTL
 
   function SetWashingStateDefault(
     variable& wcbKey,                           // i: the name of the washing control setting
-    variable& wcbValue);                          // i: the default value of the washing control setting
+    variable& wcbValue) variable {return(0);}                          // i: the default value of the washing control setting
 
   // The NeedlePickup function picks up needls from the given wash sequence.
+   namespace WCB
+      {
+      function NeedlePickup(
+         device& ML_STAR,                            // i: the washing device 
+         sequence& washSequence,                       // i/o: wash sequence
+         variable autoIncrement) variable {return(0);}                     // i: specifies whether the wash sequence should be incremented automatically (hslTrue or hslFalse)
 
-  function NeedlePickup(
-    device& ML_STAR,                            // i: the washing device 
-    sequence& washSequence,                       // i/o: wash sequence
-    variable autoIncrement);                      // i: specifies whether the wash sequence should be incremented automatically (hslTrue or hslFalse)
+  // The NeedleEject function ejects needls to the given wash seq uence.
 
-  // The NeedleEject function ejects needls to the given wash sequence.
+      function NeedleEject(
+         device& ML_STAR,                            // i: the washing device 
+         sequence& washSequence,                       // i/o: wash sequence
+         variable startWash) variable {return(0);}                         // i: specifies whether the needls should be washed after they have been ejected (hslTrue or hslFalse)
 
-  function NeedleEject(
-    device& ML_STAR,                            // i: the washing device 
-    sequence& washSequence,                       // i/o: wash sequence
-    variable startWash);                          // i: specifies whether the needls should be washed after they have been ejected (hslTrue or hslFalse)
+      function IsWashStation(
+         device& ML_STAR,
+         variable& labId) variable {return(0);}
+      
+      function IsNeedleRack(
+         device& ML_STAR,
+         variable& labId) variable {return(0);}
+      }
 
   // --------------------------------------------------------------------------------------
   // Tip Handling
@@ -384,9 +414,9 @@ namespace PTL
   // The structure that specifies the tip handling control settings is 
   // the Tip Handling Control Block (TCB).
 
-  function GetTipHandlingState(
+   function GetTipHandlingState(
     variable& tcbKey,                           // i: the name of the tip handling control setting
-    variable& tcbValue);                          // o: a reference to a variable to retrieve the value of the tip handling control setting
+    variable& tcbValue) variable {return(0);}                         // o: a reference to a variable to retrieve the value of the tip handling control setting
 
   // The SetTipHandlingState function sets the tip handling information 
   // for a specified tip handling control setting. 
@@ -395,7 +425,7 @@ namespace PTL
 
   function SetTipHandlingState(
     variable& tcbKey,                           // i: the name of the tip handling control setting
-    variable& tcbValue);                          // i: the value of the tip handling control setting
+    variable& tcbValue) variable {return(0);}                          // i: the value of the tip handling control setting
 
   // The ResetTipHandlingState function resets the tip handling 
   // information of all tip handling control settings to their 
@@ -404,32 +434,16 @@ namespace PTL
   function ResetTipHandlingState();
 
   // The TipPickup function picks up tips from the given tip pickup sequence.
-
-  function TipPickup(
-    device& ML_STAR,                            // i: the tip handling device 
-    sequence& tipPickupSequence);                   // i/o: tip pickup sequence
+  namespace TCB
+  {
+   function TipPickup(
+      device& ML_STAR,                            // i: the tip handling device 
+      sequence& tipPickupSequence) variable {return(0);}                  // i/o: tip pickup sequence
 
   // The TipEject function ejects tips to the default waste destination.
-
-  function TipEject(
-    device& ML_STAR);                           // i: the tip handling device 
-
-  // --------------------------------------------------------------------------------------
-  // Error Handling
-  // --------------------------------------------------------------------------------------
-
-  static function RaiseRuntimeError(                  // raises a runtime error
-    variable errorId,                           // i: error id (integer)
-    variable stepNameStrTblId,                      // i: step name string table id (integer)
-    variable errorDescriptionStrTblId,                // i: error description string table id (integer)
-    variable& moduleName);                        // i: name of module supplying help for the errorId (string), e.g. HxGruCompCmd
-  
-  // --------------------------------------------------------------------------------------
-  // String Ids
-  // --------------------------------------------------------------------------------------
-
-  
-}
+   function TipEject(
+      device& ML_STAR) variable {return(0);}                           // i: the tip handling device 
+   }
 
 namespace IDS
   {
@@ -448,6 +462,6 @@ namespace IDS
     static const variable smartStepPipette;         // smart step name
     static const variable smartStepLoadAndMatch;        // smart step name
   }
-
+}
 #endif
 #endif
