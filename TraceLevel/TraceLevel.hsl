@@ -16,98 +16,126 @@
 #ifndef HSL_RUNTIME
 namespace TRACELEVEL
 {
-    const global variable TRACE_LEVEL_NONE            (0);
-    const global variable TRACE_LEVEL_RELEASE         (1);
-    const global variable TRACE_LEVEL_DEBUG           (2);
+   const global variable TRACE_LEVEL_NONE            (0);
+   const global variable TRACE_LEVEL_RELEASE         (1);
+   const global variable TRACE_LEVEL_DEBUG           (2);
     
-    namespace ACTION
-    {
+   namespace ACTION
+   {
       const variable START                (1);
       const variable COMPLETE             (2);
       const variable ERROR                (3);
       const variable PROGRESS             (4);
       const variable COMPLETE_WITH_ERROR  (5);
-    }
+   }
 
-    function GetTraceLevel() variable {return(0);}
+   function GetTraceLevel() variable {return(0);}
 
-    function SetTraceLevel(variable i_intTraceLevel) void {return;}
+   function SetTraceLevel(variable i_intTraceLevel) void {return;}
 
-    function SetStringIndicator(variable i_strStringIndicator) void {return;}
+   function SetStringIndicator(variable i_strStringIndicator) void {return;}
 
-    function Trace_02(variable i_intTraceLevel,
-                      variable i_varToTrace_01,
-                      variable i_varToTrace_02) void {return;}
+   function Trace_02(variable i_intTraceLevel,
+                     variable i_varToTrace_01,
+                     variable i_varToTrace_02) void {return;}
 
-    function Trace_04(variable i_intTraceLevel,
-                      variable i_varToTrace_01,
-                      variable i_varToTrace_02,
-                      variable i_varToTrace_03,
-                      variable i_varToTrace_04) void {return;}
+   function Trace_04(variable i_intTraceLevel,
+                     variable i_varToTrace_01,
+                     variable i_varToTrace_02,
+                     variable i_varToTrace_03,
+                     variable i_varToTrace_04) void {return;}
 
-    function Trace_06(variable i_intTraceLevel,
-                      variable i_varToTrace_01,
-                      variable i_varToTrace_02,
-                      variable i_varToTrace_03,
-                      variable i_varToTrace_04,
-                      variable i_varToTrace_05,
-                      variable i_varToTrace_06) void {return;}
+   function Trace_06(variable i_intTraceLevel,
+                     variable i_varToTrace_01,
+                     variable i_varToTrace_02,
+                     variable i_varToTrace_03,
+                     variable i_varToTrace_04,
+                     variable i_varToTrace_05,
+                     variable i_varToTrace_06) void {return;}
 
-    function Trace_08(variable i_intTraceLevel,
-                      variable i_varToTrace_01,
-                      variable i_varToTrace_02,
-                      variable i_varToTrace_03,
-                      variable i_varToTrace_04,
-                      variable i_varToTrace_05,
-                      variable i_varToTrace_06,
-                      variable i_varToTrace_07,
-                      variable i_varToTrace_08) void {return;}
+   function Trace_08(variable i_intTraceLevel,
+                     variable i_varToTrace_01,
+                     variable i_varToTrace_02,
+                     variable i_varToTrace_03,
+                     variable i_varToTrace_04,
+                     variable i_varToTrace_05,
+                     variable i_varToTrace_06,
+                     variable i_varToTrace_07,
+                     variable i_varToTrace_08) void {return;}
 
-    function Trace_10(variable i_intTraceLevel,
-                      variable i_varToTrace_01,
-                      variable i_varToTrace_02,
-                      variable i_varToTrace_00,
-                      variable i_varToTrace_04,
-                      variable i_varToTrace_05,
-                      variable i_varToTrace_06,
-                      variable i_varToTrace_07,
-                      variable i_varToTrace_08,
-                      variable i_varToTrace_09,
-                      variable i_varToTrace_10) void {return;}
+   function Trace_10(variable i_intTraceLevel,
+                     variable i_varToTrace_01,
+                     variable i_varToTrace_02,
+                     variable i_varToTrace_00,
+                     variable i_varToTrace_04,
+                     variable i_varToTrace_05,
+                     variable i_varToTrace_06,
+                     variable i_varToTrace_07,
+                     variable i_varToTrace_08,
+                     variable i_varToTrace_09,
+                     variable i_varToTrace_10) void {return;}
 
-    function TraceArray(variable i_intTraceLevel,
-                        variable i_strDescription,
-                        variable i_arrvarToTrace[]) void {return;}
+   function TraceArray(variable i_intTraceLevel,
+                       variable i_strDescription,
+                       variable i_arrvarToTrace[]) void {return;}
 
-    function TraceArrayHorizontally(variable i_intTraceLevel,
-                                    variable i_strDescription,
-                                    variable i_arrvarToTrace[]) void {return;}
+   function TraceArrayHorizontally(variable i_intTraceLevel,
+                                   variable i_strDescription,
+                                   variable i_arrvarToTrace[]) void {return;}
 
-    function TraceArraysFaceToFace(variable i_intTraceLevel,
-                                   variable i_strDescription_1,
-                                   variable i_strDescription_2,
-                                   variable i_arrvarToTrace_1[],
-                                   variable i_arrvarToTrace_2[]) void {return;}
+   function TraceArraysFaceToFace(variable i_intTraceLevel,
+                                  variable i_strDescription_1,
+                                  variable i_strDescription_2,
+                                  variable i_arrvarToTrace_1[],
+                                  variable i_arrvarToTrace_2[]) void {return;}
 
-    function TraceSequence(variable i_intTraceLevel,
-                           sequence i_seqToTrace) void {return;}
+   function TraceSequence(variable i_intTraceLevel,
+                          sequence i_seqToTrace) void {return;}
 
-    function TraceSequenceParameter(variable i_intTraceLevel,
-                                    sequence i_seqToTrace) void {return;}
+   function TraceSequenceParameter(variable i_intTraceLevel,
+                                   sequence i_seqToTrace) void {return;}
 
-    function TraceSequencePositions(device ML_STAR,
-                                    variable i_intTraceLevel,
-                                    sequence i_seqToTrace,
-                                    variable i_blnCurrentPositionOnly) void {return;}
+   function TraceSequencePositions(device ML_STAR,
+                                   variable i_intTraceLevel,
+                                   sequence i_seqToTrace,
+                                   variable i_blnCurrentPositionOnly) void {return;}
 
-    function TraceAction(variable i_intTraceLevel,
-                         variable i_intAction,
-                         variable i_strFunctionName,
-                         variable i_strMethodName,
-                         variable i_strComment) void {return;}
+   function TraceAction(variable i_intTraceLevel,
+                        variable i_intAction,
+                        variable i_strFunctionName,
+                        variable i_strMethodName,
+                        variable i_strComment) void {return;}
 
-    function SetActionIndicator(variable i_intAction,
+   function SetActionIndicator(variable i_intAction,
                                 variable i_strIndicator) void {return;}
+   // --------------------------------------------------------------------------------------
+   // static functions to please Vector Custom Dialogs
+   // --------------------------------------------------------------------------------------
+   static function Debug_Trace2(variable i_varToTrace_1,
+                                variable i_varToTrace_2) void {return;}
+   
+   static function Release_Trace2(variable i_varToTrace_1,
+                                  variable i_varToTrace_2) void {return;}
+
+   static function Debug_Trace4(variable i_varToTrace_1,
+                                variable i_varToTrace_2,
+                                variable i_varToTrace_3,
+                                variable i_varToTrace_4) void {return;}
+   
+   static function Release_Trace4(variable i_varToTrace_1,
+                                  variable i_varToTrace_2,
+                                  variable i_varToTrace_3,
+                                  variable i_varToTrace_4) void {return;}
+
+   static function Debug_TraceSequence(sequence i_seqToTrace) void {return;}
+
+   static function Release_TraceSequence(sequence i_seqToTrace) void {return;}
+
+   static function Debug_TraceArray(variable i_arrvarToTrace[],
+                                    variable i_strDescription) void {return;}
+
+   static function Release_TraceArray(variable i_arrvarToTrace[],
+                                      variable i_strDescription) void {return;}
 }
 #endif
 #endif
