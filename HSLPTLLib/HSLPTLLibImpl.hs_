@@ -33,14 +33,6 @@
 
 namespace PTL
 {
-   /*#ifndef __HSLMappingReportImpl_hs___
-   #include "HSLMappingReportImpl.hs_"
-   #endif
-
-	#ifndef __HSLStringTableLib_hsl__
-	#include "HSLStringTableLib.hs_"
-   #endif*/
-
 	// --------------------------------------------------------------------------------------
 	// Debugging
 	// --------------------------------------------------------------------------------------
