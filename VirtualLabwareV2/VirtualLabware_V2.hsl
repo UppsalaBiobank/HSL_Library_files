@@ -17,19 +17,19 @@
 #ifndef HSL_RUNTIME
 namespace VIRTUALLABWARE_V2
 {
-   function GetVirtualPlate( device & MLInstr, sequence & i_seq, sequence & o_seq, variable i_rowNr, variable i_colNr, variable i_heightDelta ) void ;
-   function MoveCloneSeq( device & MLInstr, sequence & i_seq, sequence & o_seq, variable i_xDelta, variable i_yDelta, variable i_zDelta ) void ;
-   function MoveSeq( device & MLInstr, sequence & i_seq, variable i_xDelta, variable i_yDelta, variable i_zDelta ) void ;
-   function MoveSeqAll( device & MLInstr, sequence & i_seq, variable i_xDelta, variable i_yDelta, variable i_zDelta ) void ;
-   function RackSettings( variable i_rowDist, variable i_colDist ) void ;
-//   function TiltPlate( device & MLInstr, sequence & i_seq, sequence & o_seq, variable i_angle, variable i_xHinge, variable i_yHinge, variable i_zHinge ) void ;
-   function TraceSeqCoords( device & MLInstr, sequence & i_seq ) void ;
-   function GetContainerOfLabware (device d, variable labwareId, variable posID) variable;
-   function GetFileNameOfLabware (device & ML_STAR, variable & labwareId) variable;
+   function GetVirtualPlate( device & MLInstr, sequence & i_seq, sequence & o_seq, variable i_rowNr, variable i_colNr, variable i_heightDelta ) void {return;}
+   function MoveCloneSeq( device & MLInstr, sequence & i_seq, sequence & o_seq, variable i_xDelta, variable i_yDelta, variable i_zDelta ) void {return;}
+   function MoveSeq( device & MLInstr, sequence & i_seq, variable i_xDelta, variable i_yDelta, variable i_zDelta ) void {return;}
+   function MoveSeqAll( device & MLInstr, sequence & i_seq, variable i_xDelta, variable i_yDelta, variable i_zDelta ) void {return;}
+   function RackSettings( variable i_rowDist, variable i_colDist ) void {return;}
+//   function TiltPlate( device & MLInstr, sequence & i_seq, sequence & o_seq, variable i_angle, variable i_xHinge, variable i_yHinge, variable i_zHinge ) void {return;}
+   function TraceSeqCoords( device & MLInstr, sequence & i_seq ) void {return;}
+   function GetContainerOfLabware (device d, variable labwareId, variable posID) variable {return(0);}
+   function GetFileNameOfLabware (device & ML_STAR, variable & labwareId) variable {return(0);}
    function TiltSeq (device & MLInstr, sequence & i_seq, sequence & o_seq, variable i_xHinge, variable i_zHinge, variable i_angle) void;
    function TraceLabwarePos( device & MLInstr, sequence & i_seq, string & posID) void;
    function getLabwareTemplateAndPos(device & MLInstr, sequence i_seq, variable &o_template, variable &o_pos) void;
-   function getZRackContainerBaseDiff(device & MLInstr, string labID, posID) variable;
+   function getZRackContainerBaseDiff(device & MLInstr, string labID, posID) variable {return(0);}
 }
 #endif
 #endif
