@@ -13,7 +13,7 @@
 #define __HSLStatusWindow_hsl__ 1
 
 #ifdef HSL_RUNTIME
-#include "HSLStatusWindowImpl.hs"
+#include "HSLStatusWindowImpl.hs_"
 #endif
 
 #ifndef HSL_RUNTIME
