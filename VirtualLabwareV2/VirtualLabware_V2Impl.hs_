@@ -7,8 +7,8 @@
 //
 // ======================================================================
 
-#ifndef __HSLVirtLabware_V2Impl_hsl__
-#define __HSLVirtLabware_V2Impl_hsl__ 1
+#ifndef __HSLVirtualLabware_V2Impl_hsl__
+#define __HSLVirtualLabware_V2Impl_hsl__ 1
 
 #pragma once
 #include "HSLUtils/HSLUtilLib.hsl"
