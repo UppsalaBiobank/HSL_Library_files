@@ -9,7 +9,7 @@
 #define __HSLSynLib_hsl__ 1
 
 #ifdef HSL_RUNTIME
-#include "HSLSynLib/HSLSynLib.hs_"
+#include "HSLSynLib/HSLSynLibImpl.hs_"
 #endif
 
   // Interface to Synchronization library 
