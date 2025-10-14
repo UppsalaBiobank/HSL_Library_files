@@ -11,7 +11,7 @@
 #define __HSLVirtualLabware_V2_hsl__ 1
 
 #ifdef HSL_RUNTIME
-#include __HSLVirtualLabware_V2Impl_hs___
+#include "VirtualLabware_V2Impl.hs_"
 #endif 
 
 #ifndef HSL_RUNTIME
