@@ -17,7 +17,71 @@
 #ifndef HSL_RUNETIME
 	namespace EASYCODEII
 	{
-		namespace INIT
+      const variable _TRACE_LEVEL_NONE(0);
+      const variable _TRACE_LEVEL_NORMAL(1);
+      const variable _TRACE_LEVEL_FULL(2);
+      
+      const variable _DATABASE_RETURN_VALUE_NO_ID_FOUND(-1);
+      const variable _HSLTRUE(hslTrue);
+      const variable _HSLFALSE(hslFalse);
+      const variable _SIMULATION_MODE_OFF(hslFalse);                           
+      const variable _SIMULATION_MODE_ON(hslTrue);                             
+      global variable _EASYCODEII_SimulationMode;
+      
+      namespace EASYCODEII_HELPER
+      {
+         namespace LIGHTSOURCE
+         {
+            const variable _NO_LIGHT                     (0);   // None
+            const variable _MLSTAR_DIV2_PWM1             (1);   // DIV2
+            const variable _MLSTAR_DIV2_PWM2             (2);   // DIV2
+            const variable _MLSTAR_DIV3_PWM3             (3);   // DIV3
+            const variable _MLSTAR_DIV3_PWM4             (4);   // DIV3
+            const variable _CAMERA_CHANNEL               (5);   // Camera Channel
+            const variable _CAMERA_FLASH_OUTPUTPORT      (6);   // Camera Flash Output Port
+         } // namespace LIGHTSOURCE
+         namespace SORTORDER
+         {
+            const variable _ASCENDING                    (0);   // Ascending
+            const variable _COLUMN_BY_COLUMN             (1);   // Column by column
+         } // namespace SORTORDER
+        	namespace GROUPNAME
+        	{
+        		const variable _RACK                         ("Side");      // 1D Rack side code
+        		const variable _TUBES                        ("Tubes");     // Tubes
+        		const variable _BOTTOM_TL                    ("Bottom_TL"); // 2D Rack bottom code top left
+        		const variable _BOTTOM_BR                    ("Bottom_BR"); // 2D Rack bottom code bottom right
+      	} // namespace GROUPNAME
+    	} // namespace EASYCODEII_HELPER
+      
+    // Errors (Return values of all functions)
+    	namespace ERROR
+    	{
+      	const variable _NONE                           (0);   // No error
+      	namespace GENERAL
+      	{
+      		const variable _LIBRARY                      (1);   // HSL-Library error
+      		const variable _MLSTAR                       (2);   // MLStar-Library error
+      		const variable _APPLICATION                  (3);   // Application error
+      	} // namespace GENERAL
+      	namespace DATABASE
+      	{
+      		const variable _READ                         (87);  // Database read error
+      		const variable _WRITE                        (88);  // Database write error
+      		const variable _UPDATE                       (89);  // Database update error
+      	} // namespace DATABASE
+      	namespace BARCODE
+      	{
+      		const variable _MORE_THAN_ONE_BARCODE_FOUND  (103);
+      	  	const variable _NO_BARCODE_DECOED            (104);
+      	  	const variable _WRONG_BARCODE_MASK           (105);
+      	  	const variable _NO_BARCODE_DETECTED          (106);
+      	 	const variable _NO_READABLE_CHARACTERS       (107);
+      	  	const variable _NO_BARCODE_DEFINED           (140);
+      	} // namespace BARCODE
+    	} // namespace ERROR
+
+      namespace INIT
 		{
 			function Init(
 				device	& ML_STAR,					// Device
@@ -501,3 +565,4 @@
 	}// namespace EASYCODEII
 #endif
 #endif
+// $$author=Henrik$$valid=0$$time=2025-08-26 11:10$$checksum=8f62f785$$length=085$$
