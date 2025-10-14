@@ -40,11 +40,13 @@
             const variable _CAMERA_CHANNEL               (5);   // Camera Channel
             const variable _CAMERA_FLASH_OUTPUTPORT      (6);   // Camera Flash Output Port
          } // namespace LIGHTSOURCE
+         
          namespace SORTORDER
          {
             const variable _ASCENDING                    (0);   // Ascending
             const variable _COLUMN_BY_COLUMN             (1);   // Column by column
          } // namespace SORTORDER
+        	
         	namespace GROUPNAME
         	{
         		const variable _RACK                         ("Side");      // 1D Rack side code
@@ -58,18 +60,21 @@
     	namespace ERROR
     	{
       	const variable _NONE                           (0);   // No error
+      	
       	namespace GENERAL
       	{
       		const variable _LIBRARY                      (1);   // HSL-Library error
       		const variable _MLSTAR                       (2);   // MLStar-Library error
       		const variable _APPLICATION                  (3);   // Application error
       	} // namespace GENERAL
+      	
       	namespace DATABASE
       	{
       		const variable _READ                         (87);  // Database read error
       		const variable _WRITE                        (88);  // Database write error
       		const variable _UPDATE                       (89);  // Database update error
       	} // namespace DATABASE
+      	
       	namespace BARCODE
       	{
       		const variable _MORE_THAN_ONE_BARCODE_FOUND  (103);
@@ -355,6 +360,7 @@
 					) variable {return(0);}			// Return: ReturnValue
 			}//namspace BARCODE
 		}//namespace ANALYSE
+		
 		namespace DATABASE
 		{
 			function GetEasyCodeIIRack(
@@ -457,6 +463,7 @@
 					) variable {return(0);}			// Return: _NONE			= Position determined
 							//		_LIBRARY_ERROR = Position not determined
 			} //namespace LABWARE
+			
 			namespace MLSTAR
 			{
 				function GetNumberOfPipettingChannels(
@@ -475,6 +482,7 @@
 					variable iTotalNumberOfChannels	// Anzahl Kanaele total
 					) variable {return(0);}			// Return: Channel pattern
 			}//namespace MLSTAR
+			
 			namespace TRACE
 			{
 				function Trace2Text(
@@ -525,6 +533,7 @@
 					) variable {return(0);}	// Return: _NONE			= Output done
 					// _LIBRARY_ERROR = No output
 			}//namespace TRACE
+			
 			namespace SEQUENCE
 			{
 				function Init(
@@ -541,6 +550,7 @@
 					) variable {return(0);}
 			}// namespace SEQUENCE
 		}//namespace HELPER
+		
 		namespace MLSTAR
 		{
 			static function ExecFW_Cmd(
@@ -565,4 +575,3 @@
 	}// namespace EASYCODEII
 #endif
 #endif
-// $$author=Henrik$$valid=0$$time=2025-08-26 11:10$$checksum=8f62f785$$length=085$$
