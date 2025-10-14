@@ -5,8 +5,8 @@
 // Revisions:
 // ----------
 
-#ifndef __EASYCODEII_LIBRARY_hsl__
-#define __EASYCODEII_LIBRARY_hsl__ 1
+#ifndef __EASYCODEII_LIBRARYImpl_hsl__
+#define __EASYCODEII_LIBRARYImpl_hsl__ 1
 
 #pragma once
 #include "HSLUtils/HSLUtilLib.hsl"
