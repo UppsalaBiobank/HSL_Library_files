@@ -12,8 +12,6 @@
 #include "HSLExtensions/HSLStringTableLib.hsl"
 
 // Implementation of String library 
-#ifdef HSL_RUNTIME
-
 static variable strCmdPrompt("cmd.exe");
 
 namespace Str
@@ -599,5 +597,4 @@ namespace Str
       return(str);
    }
 }
-#endif
 #endif
