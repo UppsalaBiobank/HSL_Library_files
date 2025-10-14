@@ -9,7 +9,7 @@
 #define __HSLMlStarStepReturnLib_hsl__  1
 
 #ifdef HSL_RUNTIME
-#include "HSLMlStarStepReturnLibImpl.hs"
+#include "HSLMlStarStepReturnLibImpl.hs_"
 #endif
 
 #ifndef HSL_RUNTIME
