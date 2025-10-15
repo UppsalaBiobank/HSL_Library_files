@@ -8,8 +8,8 @@
 #ifndef __HSL_LiquidClassLibImpl_hs___
 #define __HSL_LiquidClassLibImpl_hs___ 1
 
+#ifdef HSL_RUNTIME
 #pragma once
-
 #include "HSLUtils/HslUtilLib.hsl"
 #include "HSLUtils/HSLUtilLib2.hsl"
 #include "HSLStrLib/HSLStrLib.hsl" 
@@ -853,4 +853,5 @@ function GetLiqClassChecksum(variable i_liquidClassName, variable o_int_checksum
  }
 }
 }
+#endif
 #endif
