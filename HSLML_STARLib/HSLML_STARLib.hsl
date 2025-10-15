@@ -10,10 +10,8 @@
 #define __HSLML_STARLib_hsl__	1
 
 #ifdef HSL_RUNTIME
-#pragma once
 #include "HSLML_STARLibImpl.hs_"
 #endif
-
 
 #ifndef HSL_RUNTIME
 namespace HSLML_STAR
@@ -98,6 +96,6 @@ namespace HSLML_STAR
 		variable& worklistFileName,
 		variable& liquidClass) variable { return(0); }
 }
-#endif
-#endif
 
+#endif
+#endif
