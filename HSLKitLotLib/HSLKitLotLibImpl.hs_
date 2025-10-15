@@ -5,6 +5,8 @@
 
 #ifndef __HSLKitLotLibImpl_hsl__
 #define __HSLKitLotLibImpl_hsl__	1
+
+#ifdef HSL_RUNTIME
 #pragma once
 #include "HSLSynLib/HSLSynLib.hsl"
 #include "HSLStrLib/HSLStrLib.hsl"
@@ -692,4 +694,5 @@ namespace HSLKitLot
 		SynLeaveCriticalSection(HSLKitLot_Sync);
 	}
 } // end of namespace HSLKitLot
+#endif
 #endif
