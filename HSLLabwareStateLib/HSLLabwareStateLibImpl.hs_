@@ -6,7 +6,10 @@
 //
 // ======================================================================
 
-// include guard
+#ifndef __HSLLabwareStateLibImpl_hs___
+#define __HSLLabwareStateLibImpl_hs___ 1
+
+#ifdef HSL_RUNTIME
 #pragma once
 #include "HSLStrLib/HSLStrLib.hsl"
 #include "HSLSynLib/HSLSynLib.hsl"
@@ -2167,3 +2170,5 @@ namespace HSLLabwState
 		}
 	}
 } // end of namespace HSLLabwState
+#endif
+#endif
