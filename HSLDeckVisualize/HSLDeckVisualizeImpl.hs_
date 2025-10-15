@@ -1,9 +1,11 @@
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Interface to library 
 //
+
 #ifndef __HSLDeckVisualizeImpl_hsl__
 #define __HSLDeckVisualizeImpl_hsl__ 1
 
+#ifdef HSL_RUNTIME
 #pragma once // use either pragma once or include guard not both
 #include "HSLUtils/HSLUtilLib.hsl"
 #include "HSLStrLib/HSLStrLib.hsl"
@@ -222,4 +224,5 @@ function UpdateLoadedLabware(device& dev, variable labware[], variable state[], 
 
 
 }	// namespace DeckVisualize
+#endif
 #endif
