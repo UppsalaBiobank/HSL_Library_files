@@ -8,6 +8,7 @@
 #define __HSLEXTENSION_SEQARRAY2D__ 1
 
 //============================== includes ==============================
+#ifdef HSL_RUNTIME
 #pragma once
 #include "HSLExtensions/HSLExtensionsFramework.hsl"
 #include "HSLStrLib/HSLStrLib.hsl"
@@ -680,5 +681,5 @@ namespace HSLExtensions
 
    } //end SeqArray2D
 } //end HSLExtensions
-
+#endif
 #endif //end __HSLEXTENSION_SEQARRAY2D__
