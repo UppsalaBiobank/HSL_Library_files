@@ -8,6 +8,7 @@
   #define __HSLLABWRACCESS__ 1
 
   //============================== includes ==============================
+#ifdef HSL_RUNTIME
 #pragma once //use either "#pragma once" or "include guard", not both
 #include "HSLSynLib/HSLSynLib.hsl"
 
@@ -2768,5 +2769,5 @@
       SynLeaveCriticalSection(HSLLabwareAccess_SH);
     }
   } //end HSLLabwareAccess
+#endif
 #endif //end __HSLLABWAREACCESS__
-// $$author=Henrik$$valid=0$$time=2025-09-18 13:07$$checksum=ea837173$$length=085$$
