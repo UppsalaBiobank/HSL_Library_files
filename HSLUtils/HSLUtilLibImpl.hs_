@@ -6,17 +6,16 @@
 //
 // ======================================================================
 
-#ifndef __HSLUtilLib_hsl__
-#define __HSLUtilLib_hsl__ 1
+#ifndef __HSLUtilLibImpl_hs___
+#define __HSLUtilLibImpl_hs___ 1
 
+#ifdef HSL_RUNTIME
 #pragma once
 #include "HSLExtensions/HSLStringTableLib.hsl"
 
 // --------------------------------------------------------------------------------------
 // Implementation of the Utility Library
 // --------------------------------------------------------------------------------------
-
-#ifdef HSL_RUNTIME
 namespace Util
 {
    // --------------------------------------------------------------------------------------
