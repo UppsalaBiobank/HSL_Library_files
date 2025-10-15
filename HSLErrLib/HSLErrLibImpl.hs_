@@ -3,9 +3,10 @@
 // Modification History
 //
 
-#ifndef __HSLErrLibImpl_hsl__
-#define __HSLErrLibImpl_hsl__	1
+#ifndef __HSLErrLibImpl_hs___
+#define __HSLErrLibImpl_hs___	1
 
+#ifdef HSL_RUNTIME
 #pragma once //use either pragma once or include guard, not both
 #include "HSLMthLib/HSLMthLib.hsl"
 #include "HSLStrLib/HSLStrLib.hsl"
@@ -106,5 +107,5 @@ function ErrDisplayError(variable& title) variable
 		return(MessageBox(message, title, style));
 	}
 }
-
+#endif
 #endif
