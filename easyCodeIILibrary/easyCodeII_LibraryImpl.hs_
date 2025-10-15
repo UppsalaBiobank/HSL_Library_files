@@ -5,9 +5,10 @@
 // Revisions:
 // ----------
 
-#ifndef __EASYCODEII_LIBRARYImpl_hsl__
-#define __EASYCODEII_LIBRARYImpl_hsl__ 1
+#ifndef __EASYCODEII_LIBRARYImpl_hs___
+#define __EASYCODEII_LIBRARYImpl_hs___ 1
 
+#ifdef HSL_RUNTIME
 #pragma once
 #include "HSLUtils/HSLUtilLib.hsl"
 #include "HSLMthLib/HSLMthLib.hsl"
@@ -70,7 +71,6 @@
         const variable _NO_READABLE_CHARACTERS       (107);
         const variable _NO_BARCODE_DEFINED           (140);
       } // namespace BARCODE
-
     } // namespace ERROR
 
     // Function Parameters Const
@@ -3107,5 +3107,5 @@
     } // end namespace MLSTAR
 
   } // namespace EASYCODEII
-
+#endif
 #endif
