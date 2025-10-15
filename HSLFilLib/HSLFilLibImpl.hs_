@@ -3,16 +3,14 @@
 // Modification History
 
 
-#ifndef __HSLFilLib_hsl__
-#define __HSLFilLib_hsl__	1
+#ifndef __HSLFilLibImpl_hs___
+#define __HSLFilLibImpl_hs___	1
 
+#ifdef HSL_RUNTIME
 #pragma once
 #include "HSLExtensions/HSLStringTableLib.hsl"
 
-
 // Implementation of File library 
-#ifdef HSL_RUNTIME
-
 // Data 
 static const variable filCmdPrompt("cmd.exe");
 
@@ -389,3 +387,4 @@ function FilFormatBarcodeFile(
 }
 #endif
 #endif
+// $$author=Henrik$$valid=0$$time=2025-09-30 11:23$$checksum=b2442226$$length=083$$
