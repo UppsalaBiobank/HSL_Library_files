@@ -10,6 +10,7 @@
 #define __HSLEXTENSIONS_FILE__ 1
 
 //============================== includes ==============================
+#ifdef HSL_RUNTIME
 #pragma once //use either "#pragma once" or "include guard", not both
 #include "HSLExtensions/HSLExtensionsFramework.hsl"
 #include "HSLExtensions/Enumerators.hsl"
@@ -827,4 +828,5 @@ namespace HSLExtensions
       }      
    } //end File
 } //end HSLExtensions
+#endif
 #endif //end __HSLEXTENSIONS_FILE__
