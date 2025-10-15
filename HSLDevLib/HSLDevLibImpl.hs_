@@ -4,9 +4,10 @@
 // Modification History:
 // ----------------------------------------------------------------------------------------------------
 
-#ifndef __HSLDevLibImpl_hsl__
-#define __HSLDevLibImpl_hsl__	1
+#ifndef __HSLDevLibImpl_hs___
+#define __HSLDevLibImpl_hs___	1
 
+#ifdef HSL_RUNTIME
 #pragma once //use either pragma once or include guard, not both
 #include "HSLUtils/HSLUtilLib2.hsl"
 #include "HSLUtils/HSLUtilLib2Def.hs_"
@@ -706,4 +707,5 @@ function DevSetUniqueBarcode3(device& deviceObj, sequence& sequenceObj, variable
 		err.Raise();
 	}
 }
+#endif
 #endif
