@@ -8,6 +8,7 @@
 #define __HSLEXTENSIONS_ARRAY2D__ 1
 
 //============================== includes ==============================
+#ifdef HSL_RUNTIME
 #pragma once //use either "#pragma once" or "include guard", not both
 #include "HSLExtensions/HSLExtensionsFramework.hsl"
 #include "HSLExtensions/Enumerators.hsl"
@@ -644,4 +645,5 @@ namespace HSLExtensions
       }
    } //end Array2D
 } //end HSLExtension
+#endif
 #endif //end __HSLEXTENSION_ARRAY2D__
