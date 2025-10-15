@@ -5,9 +5,10 @@
 // Modification History
 // ======================================================================
 
-#ifndef __HSLBarcodeReaderImpl_hsl__
-#define __HSLBarcodeReaderImpl_hsl__	1
+#ifndef __HSLBarcodeReaderImpl_hs___
+#define __HSLBarcodeReaderImpl_hs___	1
 
+#ifdef HSL_RUNTIME
 #pragma once
 #include "HSLStrLib/HSLStrLib.hsl"
 #include "HSLExtensions/HSLStringTableLib.hsl"
@@ -615,5 +616,5 @@ namespace HSLBarcodeReader
 	}
 
 } // end of name space HSLBarcodeReader
-
+#endif
 #endif  // end of '#ifndef __HSLBarcodeReaderImpl_hsl__'
