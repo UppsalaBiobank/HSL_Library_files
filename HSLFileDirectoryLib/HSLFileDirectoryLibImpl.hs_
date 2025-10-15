@@ -5,7 +5,7 @@
 
 #ifndef __HSLFileDirectoryLibImpl_hsl__
 #define __HSLFileDirectoryLibImpl_hsl__ 1
-
+#ifdef HSL_RUNTIME
 namespace FileDirectoryLib
 {
 	private object FileDirectory;
@@ -174,5 +174,5 @@ namespace FileDirectoryLib
    
 
 }
-
+#endif
 #endif
