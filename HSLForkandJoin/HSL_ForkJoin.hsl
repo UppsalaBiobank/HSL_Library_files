@@ -8,10 +8,23 @@
 //i_strThread:   (string) Reference to SMT
 //Return:  On successful execution returns handle for use in JoinThread
 //On Error: Returns (hslFalse) (0)  
+//
+//----------------------------------------------------------------------------------
+//
+//Rev hist.: HVestin - Added an interface to keep inline with function library structure. 
 
 #ifndef __HSLForkJoin_hsl__
-#define __HSLForkJoin__ 1
+#define __HSLForkJoin_hsl__ 1
 
+#ifndef HSL_RUNTIME
+namespace Fork_Join
+{
+   function ForkThread(variable i_strThread) variable {return(0);} 
+   function JoinThread(variable i_ThreadHandle) variable {return(0);}
+}
+#endif
+
+#ifdef HSL_RUNTIME
 namespace Fork_Join
 {
 	////////////////// FUNCTION FORK THREAD
@@ -62,4 +75,5 @@ namespace Fork_Join
 		}
 	}
 } // namespace Fork_Join
+#endif
 #endif
