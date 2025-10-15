@@ -8,6 +8,7 @@
 #ifndef __HSLStrLib_hsl__
 #define __HSLStrLib_hsl__  1
 
+#ifdef HSL_RUNTIME
 #pragma once 
 #include "HSLExtensions/HSLStringTableLib.hsl"
 
@@ -597,4 +598,5 @@ namespace Str
       return(str);
    }
 }
+#endif
 #endif
