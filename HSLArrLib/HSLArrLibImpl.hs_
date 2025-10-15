@@ -4,6 +4,8 @@
 
 #ifndef __HSLArrLibImpl_hs___
 #define __HSLArrLibImpl_hs___	1
+
+#ifdef HSL_RUNTIME
 #pragma once //use either "#pragma once" or "include guard", not both
 #include "HSLExtensions/HSLStringTableLib.hsl"
 
@@ -654,4 +656,5 @@ function SeqArrInsertElementAt(variable row, variable column, sequence& sequence
 		seqArr11.InsertElementAt(column, sequenceObj);
 	return;
 }
+#endif
 #endif
