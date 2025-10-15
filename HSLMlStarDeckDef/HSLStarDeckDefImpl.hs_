@@ -5,9 +5,10 @@
 //
 //---------------------------------------------------------------------------
 
-#ifndef __HSLMlStarDeckDef_hs___
-#define __HSLMlStarDeckDef_hs___	1
+#ifndef __HSLMlStarDeckDefImpl_hs___
+#define __HSLMlStarDeckDefImpl_hs___	1
 
+#ifdef HSL_RUNTIME
 #pragma once //use pragma once or include guards not both
 #include "HSLExtensions/HSLMlStarCfgKeys.hs_"
 #include "HSLUtils/HSLUtilLib2.hsl"
@@ -702,4 +703,5 @@ namespace MlStarDeckDef
 		return(position);
 	}
 }
+#endif
 #endif
