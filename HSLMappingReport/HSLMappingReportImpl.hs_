@@ -7,7 +7,10 @@
 //                           
 // ===========================================================================================
 
+#ifndef __HSLMappingReportImpl_hs___
+#define __HSLMappingReportImpl_hs___	1
 
+#ifdef HSL_RUNTIME
 #pragma once //use either "#pragma once" or "include guard", not both
 #include "HSLStrLib/HSLStrLib.hsl"
 #include "HSLSynLib/HSLSynLib.hsl"
@@ -2318,3 +2321,5 @@ namespace HSLMapReport
 		}
 	}
 } // end of namespace HSLMapReport
+#endif
+#endif
