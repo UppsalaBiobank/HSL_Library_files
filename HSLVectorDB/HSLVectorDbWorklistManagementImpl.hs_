@@ -9,6 +9,7 @@
 #ifndef __HSLVectorDbWorklistManagementImpl_hs___
 #define __HSLVectorDbWorklistManagementImpl_hs___  1
 
+#ifdef HSL_RUNTIME
 #pragma once
 #include "HSLUtils/HSLUtilLib2.hsl"
 #include "HSLUtils/HSLUtilLib2Def.hs_"
@@ -2704,4 +2705,5 @@ namespace VectorDb
       }
    } 
 }
+#endif
 #endif
