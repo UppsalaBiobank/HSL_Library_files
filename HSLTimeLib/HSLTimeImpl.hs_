@@ -10,6 +10,7 @@
 #ifndef __HSLTimeImpl_hs___
 #define __HSLTimeImpl_hs___  1
 
+#ifdef HSL_RUNTIME
 #pragma once
 #include "HSLMthLib/HSLMthLib.hsl"
 #include "HSLStrLib/HSLStrLib.hsl"
@@ -607,4 +608,5 @@ namespace HSLTime
 	   return(timerObj.WaitTimer(show));
    }
 }
+#endif
 #endif
