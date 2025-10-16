@@ -4,17 +4,16 @@
 // Modification History
 //---------------------------------------------------------------------------
 
-
 #ifndef __HSLMlStarStepReturnLibImpl_hsl__
 #define __HSLMlStarStepReturnLibImpl_hsl__	1
 
+#ifdef HSL_RUNTIME
 #pragma once //use either "#pragma once" or "include guard", not both
 #include "HSLStrLib/HSLStrLib.hsl"
 #include "HSLExtensions/HSLMlStarCfgKeys.hs_"
 #include "HSLExtensions/HSLStringTableLib.hsl"
 
 // Implementation of Microlab® STAR Step Return Library
-#ifdef HSL_RUNTIME
 namespace StepReturn
 {
 
@@ -102,8 +101,8 @@ namespace StepReturn
 				scriptControl.Language = "VBScript";
 
 				// Escape delimiter
-				StrReplace(str, "\"", "\"\"");
-				StrReplace(delimiter, "\"", "\"\"");
+				Str::StrReplace(str, "\"", "\"\"");
+				Str::StrReplace(delimiter, "\"", "\"\"");
 
 				// Split string
 				substrings = scriptControl.Eval("Split(\"" + str + "\", \"" + delimiter + "\")");
@@ -174,7 +173,7 @@ namespace StepReturn
 			if (position == ++pos)
 			{
 				str2 = str1;
-				StrReplace(str2, StringConstants::blockDelimiter, StringConstants::fieldDelimiter);
+				Str::StrReplace(str2, StringConstants::blockDelimiter, StringConstants::fieldDelimiter);
 				for (index2 = 1; index2 < field; index2++)
 				{
 					left = str2.Find(StringConstants::fieldDelimiter);
@@ -186,8 +185,8 @@ namespace StepReturn
 				right = left + str2.Find(StringConstants::fieldDelimiter);
 				if (left <= right)
 					str2 = str2.Mid(0, right - left);
-				StrTrimLeft(str2, "");
-				StrTrimRight(str2, "");
+				Str::StrTrimLeft(str2, "");
+				Str::StrTrimRight(str2, "");
 				break;
 			}
 			index1 = str1.Find(StringConstants::blockDelimiter);
@@ -219,7 +218,7 @@ namespace StepReturn
 			if (position == ++pos)
 			{
 				str2 = str1;
-				StrReplace(str2, StringConstants::blockDelimiter, StringConstants::fieldDelimiter);
+				Str::StrReplace(str2, StringConstants::blockDelimiter, StringConstants::fieldDelimiter);
 				for (index2 = 1; index2 < field; index2++)
 				{
 					left = str2.Find(StringConstants::fieldDelimiter);
