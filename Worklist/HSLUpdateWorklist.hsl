@@ -1,0 +1,22 @@
+// ======================================================================
+// This is a part of the Update Worklist Library.
+//
+// ======================================================================
+// Modification History
+//
+// ======================================================================
+
+#ifndef __HSLUpdateWorklist_hsl__
+#define __HSLUpdateWorklist_hsl___	1
+
+#ifdef HSL_RUNTIME
+#include "HSLUpdateWorklistImpl.hs_"
+#endif
+
+#ifndef HSL_RUNTIME
+namespace UpdateWorklist
+{
+	function UpdateJobStatus(variable& jobName, device& deviceObj, sequence& sequenceObj) variable {return(0);}
+}
+#endif
+#endif
