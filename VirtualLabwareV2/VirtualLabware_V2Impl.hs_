@@ -10,6 +10,7 @@
 #ifndef __HSLVirtualLabware_V2Impl_hsl__
 #define __HSLVirtualLabware_V2Impl_hsl__ 1
 
+#ifdef HSL_RUNTIME
 #pragma once
 #include "HSLUtils/HSLUtilLib.hsl"
 #include "HSLUtils/HSLUtilLib2.hsl" 
@@ -616,4 +617,5 @@ function GetContainerVolumeOfLabware (device d, variable labwareID, variable pos
       i_seq.SetCurrentPosition(oldPos);
    }*/
 }
+#endif
 #endif
