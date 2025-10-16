@@ -8,6 +8,8 @@
 
 #ifndef __HSLPTLLibImpl_hsl__
 #define __HSLPTLLibImpl_hsl__	1
+
+#ifdef HSL_RUNTIME
 #pragma once
 #include "HSLStrLib/HSLStrLib.hsl"
 #include "HSLMthLib/HSLMthLib.hsl"
@@ -21411,4 +21413,5 @@ namespace PTL
 					 moduleName + GetLanguage() + StringConstants::helpFileExt);
 	}
 }
+#endif
 #endif
