@@ -8,6 +8,8 @@
 #ifndef __HSLReportImpl_hsl__
 #define __HSLReportImpl_hsl__ 1
 
+#ifdef HSL_RUNTIME
+#pragma once
 #include "HSLStrLib/HSLStrLib.hsl"
 #include "HSLSynLib/HSLSynLib.hsl"
 #include "HSLUtils/HSLUtilLib.hsl"
