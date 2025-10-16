@@ -11,13 +11,13 @@
 
 #ifdef HSL_RUNTIME
 #pragma once
-#include "HSLUtilLib2.hsl"
-#include "HSLSynLib.hsl"
-#include "HSLStrLib.hsl"
-#include "HSLVectorDbWorklistManagement.hsl"
-#include "HSLVectorDbWorklistManagementDefs.hs_"
-#include "HSLVectorDbTrackingDefs.hs_"
-#include "HSLVectorDbTracking.hsl"
+#include "HSLUtils/HSLUtilLib2.hsl"
+#include "HSLSynLib/HSLSynLib.hsl"
+#include "HSLStrLib/HSLStrLib.hsl"
+#include "HSLVectorDb/HSLVectorDbWorklistManagement.hsl"
+#include "HSLVectorDb/HSLVectorDbWorklistManagementDefs.hs_"
+#include "HSLVectorDb/HSLVectorDbTrackingDefs.hs_"
+#include "HSLVectorDb/HSLVectorDbTracking.hsl"
 
 namespace UpdateWorklist
 {
@@ -193,15 +193,15 @@ namespace UpdateWorklist
 			vectorDbTrackingObject = GetVectorDbTrackerObject();
 			tableSchemaPars = vectorDbTrackingObject.GetTableSchema(vectorDbTrackingObject.HxVectorDbTable_Job);
 			columnSize = tableSchemaPars.Item2(vectorDbTrackingObject.HxVectorDbParsKey_Job_JobName, vectorDbTrackingObject.HxVectorDbParsKey_TableSchema_ColumnSize);
-			columnSize = columnSize - StrGetLength(Constants::defaultJobNamePrefix) - StrGetLength(Constants::defaultJobNamePostfix);
+			columnSize = columnSize - Str::StrGetLength(Constants::defaultJobNamePrefix) - Str::StrGetLength(Constants::defaultJobNamePostfix);
 
 			methodFileName = GetMethodFileName();
 			if ("" == methodFileName)
 			{
 				methodFileName = GetWorkflowFileName();
 			}
-			StrMakeLower(methodFileName);
-			methodFileName = StrRight(methodFileName, columnSize);
+			Str::StrMakeLower(methodFileName);
+			methodFileName = Str::StrRight(methodFileName, columnSize);
 			g_updateWorklist_DefaultJobName = Constants::defaultJobNamePrefix + methodFileName + Constants::defaultJobNamePostfix;
 			g_updateWorklist_Enabled = VectorDb_Misc::TrackingEnabled();
 		}
@@ -446,3 +446,4 @@ namespace UpdateWorklist
 }
 #endif
 #endif
+// $$author=Henrik$$valid=0$$time=2025-10-16 15:11$$checksum=cd09f06f$$length=083$$
