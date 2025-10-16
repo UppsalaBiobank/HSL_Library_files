@@ -12,6 +12,8 @@
 
 // Interface to Error library 
 #ifndef HSL_RUNTIME
+namespace Err
+{
 function ErrGetId() variable													{return(0);}
 function ErrSetId(variable number) void									{return;}
 function ErrGetDescription() variable										{return(0);}
@@ -25,6 +27,6 @@ function ErrMajor(variable hxr) variable									{return(0);}
 function ErrMinor(variable hxr) variable									{return(0);}
 function ErrCode(variable hxr) variable									{return(0);}
 function ErrDisplayError(variable& title) variable						{return(0);}
+}
 #endif
-
 #endif
