@@ -11,7 +11,7 @@
 #include "HSLMthLib/HSLMthLib.hsl"
 #include "HSLStrLib/HSLStrLib.hsl"
 
-namespace HSLErrLib
+namespace Err
 {
 function ErrGetId() variable
 	{
