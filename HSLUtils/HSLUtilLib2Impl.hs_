@@ -257,7 +257,7 @@ namespace Util2
          variable& functionName,
          variable& lineNumber) void
       {
-         if ( ErrMajor(err.GetId()) != MajorID )
+         if ( Err::ErrMajor(err.GetId()) != MajorID )
          {  
             // Error not generated from this file e.g. EOF-error,
             // generate error with ID from this module, include error text from previous error
