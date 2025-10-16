@@ -563,8 +563,8 @@ namespace MlStarSteps
    {
       string trace(Translate("SmartStepCustomErrorHandling - %s1 with step ID %s2"));
 
-      StrReplace(trace, "%s1", stepName);
-      StrReplace(trace, "%s2", IStr(customStepID));
+      Str::StrReplace(trace, "%s1", stepName);
+      Str::StrReplace(trace, "%s2", IStr(customStepID));
 
       FormatTrace("SYSTEM", trace, TraceStatus::progress);
    }
