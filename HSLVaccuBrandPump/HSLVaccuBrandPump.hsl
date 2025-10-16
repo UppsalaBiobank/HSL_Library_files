@@ -12,7 +12,7 @@
 #define __HSLVacuuBrandPumpLib_hsl__	1
 
 #ifdef HSL_RUNTIME
-#include "HSLVacuuBrandPump.hs_"
+#include "HSLVacuuBrandPumpImpl.hs_"
 #endif
 
 #ifndef HSL_RUNTIME
