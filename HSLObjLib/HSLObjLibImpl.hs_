@@ -7,6 +7,7 @@
 #ifndef __HSLObjLibImpl_hs___
 #define __HSLObjLibImpl_hs___	1
 
+#ifdef HSL_RUNTIME
 #pragma once
 #include "HSLSynLib/HSLSynLib.hsl"
 
@@ -886,5 +887,6 @@ namespace Object
 	}
 
 }
+#endif
 #endif
 // $$author=Henrik$$valid=0$$time=2025-09-19 12:17$$checksum=3dd4c50a$$length=083$$
