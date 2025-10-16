@@ -9,6 +9,7 @@
 #ifndef __HSLMatchWorklistImpl_hs___
 #define __HSLMatchWorklistImpl_hs___	1
 
+#ifdef HSL_RUNTIME
 #pragma once
 #include "HSLUtils/HSLUtilLib2.hsl"
 #include "HSLUtils/HSLUtilLib2Def.hs_"
@@ -906,6 +907,6 @@ namespace MatchWorklist
 		}
 	} 
 }
-
+#endif
 #endif
 // $$author=wbarmettler$$valid=1$$time=2017-03-14 13:14$$checksum=650878af$$length=090$$
