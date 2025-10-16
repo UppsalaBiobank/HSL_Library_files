@@ -7,6 +7,7 @@
 #ifndef __HSLSeqLibImpl_hs___
 #define __HSLSeqLibImpl_hs___  1
 
+#ifdef HSL_RUNTIME
 #pragma once
 #include "HSLExtensions/HSLStringTableLib.hsl"
 #include "HSLStrLib/HSLStrLib.hsl"
@@ -756,4 +757,5 @@ namespace Seq
 	   sequenceObj.RemoveAllSequenceProperties(position);
 	}
 }
+#endif
 #endif
