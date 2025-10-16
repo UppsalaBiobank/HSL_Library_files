@@ -9,6 +9,7 @@
 #ifndef __TraceLevelImpl_hs___
 #define __TraceLevelImpl_hs___ 1
 
+#ifdef HSL_RUNTIME
   namespace TRACELEVEL
   {
     // --------------------------------------------------------------------------------------
@@ -1052,5 +1053,6 @@
       _TraceSequence("Release_TraceSequence", i_seqToTrace);
     } // Release_TraceSequence
 } // namespace
+#endif
 #endif
 // $$author=Henrik$$valid=0$$time=2025-09-25 08:28$$checksum=c51eb291$$length=083$$
