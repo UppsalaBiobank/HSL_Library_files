@@ -2,12 +2,13 @@
 //
 // Modification History
 
-
 #ifndef __HSLXLLib_hsl__
 #define __HSLXLLib_hsl__	1
 
+#ifdef HSL_RUNTIME
 #pragma once //use either "#pragma once" or "include guard", not both
 #include "HSLSynLib/HSLSynLib.hsl"
+#endif
 
 // Interface to the Excel Library
 #ifndef HSL_RUNTIME
