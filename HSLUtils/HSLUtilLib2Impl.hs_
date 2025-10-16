@@ -9,6 +9,7 @@
 #ifndef __HSLUtilLib2Impl_hs___
 #define __HSLUtilLib2Impl_hs___ 1
 
+#ifdef HSL_RUNTIME
 #pragma once
    #include "HSLStrLib/HSLStrLib.hsl"
    #include "HSLMthLib/HSLMthLib.hsl"
@@ -1305,4 +1306,5 @@ namespace Util2
       }
    }
 }
+#endif
 #endif
