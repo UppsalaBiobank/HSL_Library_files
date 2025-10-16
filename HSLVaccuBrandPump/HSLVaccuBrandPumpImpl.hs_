@@ -11,6 +11,7 @@
 #ifndef __HSLVacuuBrandPumpImpl_hsl__
 #define __HSLVacuuBrandPumpImpl_hsl__  1
 
+#ifdef HSL_RUNTIME
 #pragma once
 #include "HSLStrLib/HSLStrLib.hsl"
 #include "HSLSynLib/HSLSynLib.hsl"
@@ -3803,3 +3804,4 @@ namespace HSLStarBVSLib
    }
 } // end of namespace HSLStarBVSLib
 #endif  
+#endif
