@@ -12,6 +12,7 @@
 #ifndef __HSLStatusWindowImpl_hs___
 #define __HSLStatusWindowImpl_hs___ 1
 
+#ifdef HSL_RUNTIME
 namespace HSLStatusWindow
 {
 
@@ -125,4 +126,5 @@ namespace HSLStatusWindow
       statusForm = io_WndHandle;
    }
 }
+#endif
 #endif //__HSLStatusWindow_hsl__
