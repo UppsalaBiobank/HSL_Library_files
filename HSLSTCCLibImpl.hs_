@@ -6,9 +6,10 @@
 //  --------------------
 //
 //  ------------------------------------------------------------------------------------
-#ifndef __HSLSTCCLibImpl_hsl__
-#define __HSLSTCCLibImpl_hsl__  1
+#ifndef __HSLSTCCLibImpl_hs___
+#define __HSLSTCCLibImpl_hs___  1
 
+#ifdef HSL_RUNTIME
 #pragma once
 #include "HSLUtils/HSLUtilLib2.hsl"
 #include "HSLUtils/HSLUtilLib2Def.hs_"
@@ -1352,4 +1353,5 @@ namespace STCC
 		return( location );
 	}
 }	// namespace STCC
+#endif
 #endif
