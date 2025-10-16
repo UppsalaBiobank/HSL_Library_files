@@ -9,6 +9,7 @@
 #ifndef __HSLSynLibImpl_hs___
 #define __HSLSynLibImpl_hs___	1
 
+#ifdef HSL_RUNTIME
 #pragma once
 #include "HSLExtensions/HSLStringTableLib.hsl"
 
@@ -964,4 +965,5 @@ namespace SyncLib
 				SynLeaveCriticalSection(SyncLibCs);	//leave critical section
 		}
 	}
+#endif
 #endif
