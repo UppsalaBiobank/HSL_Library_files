@@ -7,10 +7,10 @@
 //
 //  ------------------------------------------------------------------------------------
 
-
 #ifndef __HSLMECCLibImpl_hsl__
 #define __HSLMECCLibImpl_hsl__  1
 
+#ifdef HSL_RUNTIME
 #pragma once
 #include "HSLStrLib/HSLStrLib.hsl"
 #include "HSLExtensions/HSLStringTableLib.hsl"
@@ -516,4 +516,5 @@ namespace MECC
 		err.Raise(errorId, err.GetDescription()/*, StringTable::Load(IDS::helpFileName)*/);
 	}
 }
+#endif
 #endif
