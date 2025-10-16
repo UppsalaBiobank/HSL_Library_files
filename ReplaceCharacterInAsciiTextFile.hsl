@@ -2,6 +2,7 @@
 #ifndef __ReplaceCharacterInAsciiTextFile_hsl__
 #define __ReplaceCharacterInAsciiTextFile_hsl__ 1
 
+#ifdef HSL_RUNTIME
 #pragma once
 #include "HSLStrLib/HSLStrLib.hsl"
 
@@ -46,4 +47,5 @@ function ReplaceCharacterInAsciiTextFile(
       return(hslFalse);
    }
 }
+#endif
 #endif
