@@ -9,6 +9,7 @@
 #ifndef __HSLImportWorklistImpl_hs___
 #define __HSLImportWorklistImpl_hs___	1
 
+#ifdef HSL_RUNTIME
 #pragma once
 #include "HSLUtils/HSLUtilLib2.hsl"
 #include "HSLUtils/HSLUtilLib2Def.hs_"
@@ -2139,4 +2140,5 @@ namespace ImportWorklist
 		}
 	}
 }
+#endif
 #endif
