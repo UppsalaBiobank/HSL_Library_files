@@ -12,6 +12,7 @@
 // ----------------------------------------------------------------------------------------------------
 // Includes
 // ----------------------------------------------------------------------------------------------------
+#ifdef HSL_RUNTIME
 #pragma once
 #include "HSLStrLib/HSLStrLib.hsl"
 #include "HSLUtils/HSLUtilLib.hsl"
@@ -5505,4 +5506,5 @@ namespace VectorDb_LabwareType
 		}
 	}
 }
+#endif
 #endif
