@@ -6,8 +6,8 @@
 //                              
 //---------------------------------------------------------------------------------------
 
-#ifndef __HSLPTLLibImpl_hsl__
-#define __HSLPTLLibImpl_hsl__	1
+#ifndef __HSLPTLLibImpl_hs___
+#define __HSLPTLLibImpl_hs___	1
 
 #ifdef HSL_RUNTIME
 #pragma once
