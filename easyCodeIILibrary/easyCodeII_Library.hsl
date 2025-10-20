@@ -9,7 +9,7 @@
 #define   __easyCODEII_Libary_hsl__ 1
 
 //Implementation of easyCodeII library
-#ifdef HSL_RUNETIME
+#ifdef HSL_RUNTIME
 #pragma once
 #include "easyCodeII_LibraryImpl.hs_"
 #endif
