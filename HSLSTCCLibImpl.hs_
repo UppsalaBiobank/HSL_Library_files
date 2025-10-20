@@ -17,7 +17,7 @@
 #include "HSLExtensions/HSLStringTableLib.hsl"
 #include "Worklist/HSLImportWorklistImpl.hs_"
 #include "Worklist/HSLImportWorklistDefs.hs_"
-#include "Worklist/HSLUpdateWorklist.hs_"
+#include "Worklist/HSLUpdateWorklist.hsl"
 namespace STCC
 {
 	// Library provides implementation of the step
