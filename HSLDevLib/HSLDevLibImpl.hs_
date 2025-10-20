@@ -27,13 +27,13 @@ namespace DevConstants
 
 
 	// Wrapper function  
-	function DevGetSequence(device& deviceObj, variable& sequenceName, sequence& 	sequenceCopy) void
+	function DevGetSequence(device& deviceObj, variable& sequenceName, sequence& sequenceCopy) void
 	{
 		sequenceCopy = deviceObj.GetSequence(sequenceName);
 	}
 	
 	// Wrapper function  
-	function DevGetSequenceRef(device& deviceObj, variable& sequenceName, sequence& 	sequenceRef) variable
+	function DevGetSequenceRef(device& deviceObj, variable& sequenceName, sequence& sequenceRef) variable
 	{
 		return(deviceObj.GetSequenceRef(sequenceName, sequenceRef));
 	}
@@ -45,7 +45,7 @@ namespace DevConstants
 	}
 	
 	// Wrapper function  
-	function DevCopyResetSequence(device& deviceObj, variable& sequenceName, sequence& 	sequenceObj) variable
+	function DevCopyResetSequence(device& deviceObj, variable& sequenceName, sequence& sequenceObj) variable
 	{
 		return(deviceObj.CopyResetSequence(sequenceName, sequenceObj));
 	}
@@ -69,7 +69,7 @@ namespace DevConstants
 	}
 	
 	// Wrapper function  
-	function DevAddPreloadedLabware(device& deviceObj, variable& labwareId, variable& 	configFile, variable xCoord, variable yCoord, variable zCoord, variable angle, 	variable& preloadedLabIdBase) variable
+	function DevAddPreloadedLabware(device& deviceObj, variable& labwareId, variable& configFile, variable xCoord, variable yCoord, variable zCoord, variable angle, variable& preloadedLabIdBase) variable
 	{
 		variable position[](4);
 		position[0] = xCoord;
@@ -105,13 +105,13 @@ namespace DevConstants
 	}
 	
 	// Wrapper function  
-	function DevAddLabwareToTemplate(device& deviceObj, variable& labwareId, variable& 	configFile, variable& templateId, variable& siteId) variable
+	function DevAddLabwareToTemplate(device& deviceObj, variable& labwareId, variable& configFile, variable& templateId, variable& siteId) variable
 	{
 		return (deviceObj.AddLabwareToTemplate(labwareId, configFile, templateId, siteId));
 	}
 	
 	// Wrapper function  
-	function DevRemoveLabwareFromTemplate(device& deviceObj, variable& labwareId, variable& 	templateId) variable
+	function DevRemoveLabwareFromTemplate(device& deviceObj, variable& labwareId, variable& templateId) variable
 	{
 		return (deviceObj.RemoveLabwareFromTemplate(labwareId, templateId));
 	}
@@ -207,20 +207,20 @@ namespace DevConstants
 		count = 0;
 		TemplateLabwareNames::templateNames.SetSize(0);
 		TemplateLabwareNames::labwareNames.SetSize(0);
-		ret = deviceObj.GetTemplateLabwareNames(TemplateLabwareNames::templateNames, 	TemplateLabwareNames::labwareNames);
+		ret = deviceObj.GetTemplateLabwareNames(TemplateLabwareNames::templateNames, TemplateLabwareNames::labwareNames);
 		count = TemplateLabwareNames::templateNames.GetSize();
 		return(ret);
 	}
 	
 	// Wrapper function  
-	function DevGetTemplateLabwareNameAt(variable index, variable& templateName, variable& 	labwareName) void
+	function DevGetTemplateLabwareNameAt(variable index, variable& templateName, variable& labwareName) void
 	{
 		templateName = TemplateLabwareNames::templateNames.GetAt(index);
 		labwareName = TemplateLabwareNames::labwareNames.GetAt(index);
 	}
 	
 	// Wrapper function  
-	function DevGetLabwareData(device& deviceObj, variable& labwareId, variable& 	propertyKey) variable
+	function DevGetLabwareData(device& deviceObj, variable& labwareId, variable& propertyKey) variable
 	{
 		variable keys[];
 		variable values[];
@@ -233,15 +233,15 @@ namespace DevConstants
 	}
 	
 	// Wrapper function  
-	function DevComputeContainerVolume(device& deviceObj, variable& labwareId, variable& 	positionId, variable height, variable deckCoordinates) variable
+	function DevComputeContainerVolume(device& deviceObj, variable& labwareId, variable& positionId, variable height, variable deckCoordinates) variable
 	{
-		return (deviceObj.ComputeContainerVolume(labwareId, positionId, height, 	deckCoordinates));
+		return (deviceObj.ComputeContainerVolume(labwareId, positionId, height, deckCoordinates));
 	}
 	
 	// Wrapper function  
-	function DevComputeContainerVolume2(device& deviceObj, variable& labwareId, variable& 	positionId, variable height, variable deckCoordinates, variable connectedContainers) 	variable
+	function DevComputeContainerVolume2(device& deviceObj, variable& labwareId, variable& positionId, variable height, variable deckCoordinates, variable connectedContainers) variable
 	{
-		return (deviceObj.ComputeContainerVolume(labwareId, positionId, height, 	deckCoordinates, connectedContainers));
+		return (deviceObj.ComputeContainerVolume(labwareId, positionId, height, deckCoordinates, connectedContainers));
 	}
 	
 	// Wrapper function  
@@ -332,7 +332,7 @@ namespace DevConstants
 	}
 	
 	// Wrapper function  
-	function DevGetPositionsLabwareNames(device& deviceObj, sequence& sequenceObj, 	variable& labwareName, variable& count) variable
+	function DevGetPositionsLabwareNames(device& deviceObj, sequence& sequenceObj, variable& labwareName, variable& count) variable
 	{
 		variable ret(0);
 		count = 0;
@@ -340,15 +340,15 @@ namespace DevConstants
 		PositionsLabwareNames::labwareNames.SetSize(0);
 		PositionsLabwareNames::positionNames.SetSize(0);
 		ret = deviceObj.GetPositionsLabwareNames(	sequenceObj, labwareName, 
-																PositionsLabwareNames::templ	ateSites, 
-																PositionsLabwareNames::labwa	reNames,
-																PositionsLabwareNames::posit	ionNames);
+																PositionsLabwareNames::templateSites, 
+																PositionsLabwareNames::labwareNames,
+																PositionsLabwareNames::positionNames);
 		count = PositionsLabwareNames::templateSites.GetSize();
 		return(ret);
 	}
 	
 	// Wrapper function  
-	function DevGetPositionLabwareNameAt(variable index, variable& templateSite, variable& 	labwareName, variable& positionName) void
+	function DevGetPositionLabwareNameAt(variable index, variable& templateSite, variable& labwareName, variable& positionName) void
 	{
 		variable maxIndex(0);
 		variable size1(0);
@@ -386,8 +386,8 @@ namespace DevConstants
 		return(deviceObj.GetDeckLayoutFileName());
 	}
 	
-	// Get barcode data for the instance of labware at (optional) position. If no data has 	been set, the empty string is returned.
-	function DevGetBarcodeData(device& deviceObj, variable& labwareName, variable& 	positionName, variable& barcodeData) variable
+	// Get barcode data for the instance of labware at (optional) position. If no data has been set, the empty string is returned.
+	function DevGetBarcodeData(device& deviceObj, variable& labwareName, variable& positionName, variable& barcodeData) variable
 	{
 		variable errorDesc("");
 	
@@ -396,7 +396,7 @@ namespace DevConstants
 	
 		// Check params to be valid.
 		errorDesc = DevConstants::traceActionGetBarcodeData + DevConstants::crlf;
-		Util2::CheckValueTypeAndRange(labwareName, hslString, 	Util2::ValueCheck::RangeStringNotEmpty, errorDesc + "'labwareName'");
+		Util2::CheckValueTypeAndRange(labwareName, hslString, Util2::ValueCheck::RangeStringNotEmpty, errorDesc + "'labwareName'");
 		Util2::CheckValueType(positionName, hslString, errorDesc + "'positionName'");
 	
 		// Get barcode data.
@@ -405,12 +405,12 @@ namespace DevConstants
 	}
 	
 	// Set barcode data for the instance of labware at (optional) position.
-	function DevSetBarcodeData(device& deviceObj, variable& labwareName, variable& 	positionName, variable& barcodeData) variable
+	function DevSetBarcodeData(device& deviceObj, variable& labwareName, variable& positionName, variable& barcodeData) variable
 	{
 		// Check params to be valid.
 		variable errorDesc("");
 		errorDesc = DevConstants::traceActionSetBarcodeData + DevConstants::crlf;
-		Util2::CheckValueTypeAndRange(labwareName, hslString, 	Util2::ValueCheck::RangeStringNotEmpty, errorDesc + "'labwareName'");
+		Util2::CheckValueTypeAndRange(labwareName, hslString, Util2::ValueCheck::RangeStringNotEmpty, errorDesc + "'labwareName'");
 		Util2::CheckValueType(positionName, hslString, errorDesc + "'positionName'");
 		Util2::CheckValueType(barcodeData, hslString, errorDesc + "'barcodeData'");
 	
@@ -419,8 +419,8 @@ namespace DevConstants
 		return(hslTrue);
 	}
 	
-	// Get barcode data for the instance of labware at (optional) position. If no data has 	been set, the empty string is returned.
-	function DevGetBarcodeData2(device& deviceObj, variable& labwareName[], variable& 	positionName[], variable& barcodeData[]) variable
+	// Get barcode data for the instance of labware at (optional) position. If no data has been set, the empty string is returned.
+	function DevGetBarcodeData2(device& deviceObj, variable& labwareName[], variable& positionName[], variable& barcodeData[]) variable
 	{
 		variable i(0);
 		variable s1(labwareName.GetSize());
@@ -446,7 +446,7 @@ namespace DevConstants
 	}
 	
 	// Set barcode data for the instance of labware at (optional) position.
-	function DevSetBarcodeData2(device& deviceObj, variable& labwareName[], variable& 	positionName[], variable& barcodeData[]) variable
+	function DevSetBarcodeData2(device& deviceObj, variable& labwareName[], variable& positionName[], variable& barcodeData[]) variable
 	{
 		variable i(0);
 		variable s1(labwareName.GetSize());
@@ -471,8 +471,8 @@ namespace DevConstants
 		return(hslTrue);
 	}
 	
-	// Get barcode data for the instance of labware at (optional) position. If no data has 	been set, the empty string is returned.
-	function DevGetBarcodeData3(device& deviceObj, sequence& sequenceObj, variable& 	barcodeData[]) variable
+	// Get barcode data for the instance of labware at (optional) position. If no data has been set, the empty string is returned.
+	function DevGetBarcodeData3(device& deviceObj, sequence& sequenceObj, variable& barcodeData[]) variable
 	{
 		variable currentPosBak(-1);
 		variable currentPos(0);
@@ -509,7 +509,7 @@ namespace DevConstants
 	}
 	
 	// Set barcode data for the instance of labware at (optional) position.
-	function DevSetBarcodeData3(device& deviceObj, sequence& sequenceObj, variable& 	barcodeData[]) variable
+	function DevSetBarcodeData3(device& deviceObj, sequence& sequenceObj, variable& barcodeData[]) variable
 	{
 		variable currentPosBak(-1);
 		variable currentPos(0);
@@ -544,13 +544,13 @@ namespace DevConstants
 	}
 	
 	// Wrapper function  
-	function DevIsValidLabwareForCurrentDeckLayout(device& deviceObj, variable& labwareId) 	variable
+	function DevIsValidLabwareForCurrentDeckLayout(device& deviceObj, variable& labwareId) variable
 	{
 		return(deviceObj.IsValidLabwareForCurrentDeckLayout(labwareId));
 	}
 	
-	// Get unique barcode flag for the instance of labware at (optional) position. If no 	data has been set, 0 is returned.
-	function DevGetUniqueBarcode(device& deviceObj, variable& labwareName, variable& 	positionName, variable& uniqueBarcode) variable
+	// Get unique barcode flag for the instance of labware at (optional) position. If no data has been set, 0 is returned.
+	function DevGetUniqueBarcode(device& deviceObj, variable& labwareName, variable& positionName, variable& uniqueBarcode) variable
 	{
 		variable errorDesc("");
 	
@@ -559,7 +559,7 @@ namespace DevConstants
 	
 		// Check params to be valid.
 		errorDesc = DevConstants::traceActionGetUniqueBarcode + DevConstants::crlf;
-		Util2::CheckValueTypeAndRange(labwareName, hslString, 	Util2::ValueCheck::RangeStringNotEmpty, errorDesc + "'labwareName'");
+		Util2::CheckValueTypeAndRange(labwareName, hslString, Util2::ValueCheck::RangeStringNotEmpty, errorDesc + "'labwareName'");
 		Util2::CheckValueType(positionName, hslString, errorDesc + "'positionName'");
 	
 		// Get unique barcode flag.
@@ -568,12 +568,12 @@ namespace DevConstants
 	}
 	
 	// Set unique barcode flag for the instance of labware at (optional) position.
-	function DevSetUniqueBarcode(device& deviceObj, variable& labwareName, variable& 	positionName, variable uniqueBarcode) variable
+	function DevSetUniqueBarcode(device& deviceObj, variable& labwareName, variable& positionName, variable uniqueBarcode) variable
 	{
 		// Check params to be valid.
 		variable errorDesc("");
 		errorDesc = DevConstants::traceActionSetUniqueBarcode + DevConstants::crlf;
-		Util2::CheckValueTypeAndRange(labwareName, hslString, 	Util2::ValueCheck::RangeStringNotEmpty, errorDesc + "'labwareName'");
+		Util2::CheckValueTypeAndRange(labwareName, hslString, Util2::ValueCheck::RangeStringNotEmpty, errorDesc + "'labwareName'");
 		Util2::CheckValueType(positionName, hslString, errorDesc + "'positionName'");
 		Util2::CheckValueType(uniqueBarcode, hslInteger, errorDesc + "'uniqueBarcode'");
 		Util2::CheckValueRangeMinMax(uniqueBarcode, 0, 1, errorDesc + "'uniqueBarcode'");
@@ -583,8 +583,8 @@ namespace DevConstants
 		return(hslTrue);
 	}
 	
-	// Get unique barcode flag for the instance of labware at (optional) position. If no 	data has been set, 0 is returned.
-	function DevGetUniqueBarcode2(device& deviceObj, variable& labwareName[], variable& 	positionName[], variable& uniqueBarcode[]) variable
+	// Get unique barcode flag for the instance of labware at (optional) position. If no data has been set, 0 is returned.
+	function DevGetUniqueBarcode2(device& deviceObj, variable& labwareName[], variable& positionName[], variable& uniqueBarcode[]) variable
 	{
 		variable i(0);
 		variable s1(labwareName.GetSize());
@@ -610,7 +610,7 @@ namespace DevConstants
 	}
 	
 	// Set unique barcode flag for the instance of labware at (optional) position.
-	function DevSetUniqueBarcode2(device& deviceObj, variable& labwareName[], variable& 	positionName[], variable& uniqueBarcode[]) variable
+	function DevSetUniqueBarcode2(device& deviceObj, variable& labwareName[], variable& positionName[], variable& uniqueBarcode[]) variable
 	{
 		variable i(0);
 		variable s1(labwareName.GetSize());
@@ -635,8 +635,8 @@ namespace DevConstants
 		return(hslTrue);
 	}
 	
-	// Get unique barcode flag for the instance of labware at (optional) position. If no 	data has been set, 0 is returned.
-	function DevGetUniqueBarcode3(device& deviceObj, sequence& sequenceObj, variable& 	uniqueBarcode[]) variable
+	// Get unique barcode flag for the instance of labware at (optional) position. If no data has been set, 0 is returned.
+	function DevGetUniqueBarcode3(device& deviceObj, sequence& sequenceObj, variable& uniqueBarcode[]) variable
 	{
 		variable currentPosBak(-1);
 		variable currentPos(0);
@@ -673,7 +673,7 @@ namespace DevConstants
 	}
 	
 	// Set unique barcode flag for the instance of labware at (optional) position.
-	function DevSetUniqueBarcode3(device& deviceObj, sequence& sequenceObj, variable& 	uniqueBarcode[]) variable
+	function DevSetUniqueBarcode3(device& deviceObj, sequence& sequenceObj, variable& uniqueBarcode[]) variable
 	{
 		variable currentPosBak(-1);
 		variable currentPos(0);
