@@ -7,12 +7,12 @@
 #ifndef __HSLEXTENSIONS_DIRECTORY__
 #define __HSLEXTENSIONS_DIRECTORY__ 1
 
-#ifdef HSL_RUMTIME
+#ifdef HSL_RUNTIME
 #pragma once //use either "#pragma once" or "include guard", not both
 #include "HSLExtensions/Directory.hs_"
 #endif
 
-#ifndef HSL_RUMTIME
+#ifndef HSL_RUNTIME
 namespace HSLExtensions
 {
    //============================== Directory ==============================
