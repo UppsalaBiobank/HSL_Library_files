@@ -10,7 +10,7 @@
 #include "HSLFilLibImpl.hs_"
 #endif
 
-#ifndef HSL_RUMTIME
+#ifndef HSL_RUNTIME
 namespace Fil
 {
 function FilReadString(file& fileObj) variable													{return(0);}
