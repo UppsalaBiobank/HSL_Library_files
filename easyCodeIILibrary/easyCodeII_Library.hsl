@@ -14,7 +14,7 @@
 #include "easyCodeII_LibraryImpl.hs_"
 #endif
 
-#ifndef HSL_RUNETIME
+#ifndef HSL_RUNTIME
 	namespace EASYCODEII
 	{
       const variable _TRACE_LEVEL_NONE(0);
