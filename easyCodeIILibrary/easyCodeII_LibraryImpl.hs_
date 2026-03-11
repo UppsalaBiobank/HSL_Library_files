@@ -1,29 +1,30 @@
-// : easyCodeII
-// ===================
+// ======================================================================
+// This is a part of the easyCodeII library.
+// ======================================================================
 //
-//
-// Revisions:
-// ----------
-
+// Modification History
+// HV:   Some functions and constants went missing during refactoring.
+//       Everything should hopefully be included now.  20260309
+// ======================================================================
 #ifndef __EASYCODEII_LIBRARYImpl_hs___
 #define __EASYCODEII_LIBRARYImpl_hs___ 1
 
 #ifdef HSL_RUNTIME
 #pragma once
-#include "HSLUtils/HSLUtilLib.hsl"
-#include "HSLMthLib/HSLMthLib.hsl"
-#include "HSLStrLib/HSLStrLib.hsl"
-#include "HSLDevLib/HSLDevLib.hsl"
-#include "HSLSeqLib/HSLSeqLib.hsl"
+#include "HSLUtils\\HSLUtilLib.hsl"
+#include "HSLMthLib\\HSLMthLib.hsl"
+#include "HSLStrLib\\HSLStrLib.hsl"
+#include "HSLDevLib\\HSLDevLib.hsl"
+#include "HSLSeqLib\\HSLSeqLib.hsl"
+#include "HSLExtensions\\HSLStringTableLib.hsl"
 
-// Implementation ---------------------------------------------------------------------------------
-
+// Implementation
   namespace EASYCODEII
   {
     // Library Version
     static const variable _EASYCODEII_Library_Version("3.0.0");
 
-    // Different Tracelevels
+    // different Tracelevels
     const variable _TRACE_LEVEL_NONE(0);
     const variable _TRACE_LEVEL_NORMAL(1);
     const variable _TRACE_LEVEL_FULL(2);
@@ -31,22 +32,21 @@
 
     static const variable _APPLICATION_COM_CLASS_NAME("EASYCODEII.COM_Class"); // COM-Classname
 
-    static global object   _EASYCODEII_COM_Application_Connection;                             // COM-Connection to the application
-    static global variable _EASYCODEII_COM_Application_Connection_UsedFlag(hslFalse);          // COM-Connection to the application Flag
+    static global object   _EASYCODEII_COM_Application_Connection;                             // COM-connection to Application
+    static global variable _EASYCODEII_COM_Application_Connection_UsedFlag(hslFalse);          // COM-connection Application Flag
+    
+    const variable _DATABASE_RETURN_VALUE_NO_ID_FOUND(-1);                   // General return value if entry
+                                                                             // not found.
+    const variable _HSLTRUE(hslTrue);
+    const variable _HSLFALSE(hslFalse);
 
-    const variable _DATABASE_RETURN_VALUE_NO_ID_FOUND(-1);                   // Allgemeiner Rueckgabewert, wenn Eintrag nicht
-                                                                             // gefunden wurde.
+    const variable _SIMULATION_MODE_OFF(hslFalse);
+    const variable _SIMULATION_MODE_ON(hslTrue);
+    global variable _EASYCODEII_SimulationMode;                              // Variable for Simulation mode
 
-    const variable _HSLTRUE(hslTrue);                                        // hslTrue verwenden im Methodeneditor
-    const variable _HSLFALSE(hslFalse);                                      // hslFalse verwenden im Methodeneditor
+    static const variable _COM_INITIALISATION_DELAY(2);                      // Waiting time for initializing the easyPick COM interface
 
-    const variable _SIMULATION_MODE_OFF(hslFalse);                           // Methode laeuft normal
-    const variable _SIMULATION_MODE_ON(hslTrue);                             // Methode laeuft im Simulationsmodus
-    global variable _EASYCODEII_SimulationMode;                              // Variable fuer den Simulationsmodus
-
-    static const variable _COM_INITIALISATION_DELAY(2);                      // Wartezeit der Initialisierung des easyPick COM-Interface
-
-    // Errors (Return values of all functions)
+    // Errors (Return values for all funktions)
     namespace ERROR
     {
       const variable _NONE                           (0);   // No error
@@ -56,7 +56,7 @@
         const variable _MLSTAR                       (2);   // MLStar-Library error
         const variable _APPLICATION                  (3);   // Application error
       } // namespace GENERAL
-      namespace DATABASE
+            namespace DATABASE
       {
         const variable _READ                         (87);  // Database read error
         const variable _WRITE                        (88);  // Database write error
@@ -71,6 +71,7 @@
         const variable _NO_READABLE_CHARACTERS       (107);
         const variable _NO_BARCODE_DEFINED           (140);
       } // namespace BARCODE
+
     } // namespace ERROR
 
     // Function Parameters Const
@@ -155,7 +156,7 @@
       {
         const variable _ASCENDING                    (0);   // Ascending
         const variable _COLUMN_BY_COLUMN             (1);   // Column by column
-      } // namespace SORTORDER
+      } // namespace SORTORof
       namespace GROUPNAME
       {
         const variable _RACK                         ("Side");      // 1D Rack side code
@@ -169,12 +170,13 @@
     {
 
       // Init() -----------------------------------------------------------------------------------
+      // Initialize connection to application
       function Init(
                      device   & ML_STAR,                  // Device
                      variable iTraceLevel,                // Desired Tracelevel
                      variable iApplicationInit           // Should the application also be initialized
-                   ) variable                             // Return: _NONE          = Init successfully carried out
-                                                          //         _LIBRARY_ERROR = Init could not be carried out
+                   ) variable                             // Return: _NONE          = Init Successfully carried out
+                                                          //         _LIBRARY_ERROR = Init failed
       {
 
         // Set Tracelevels
@@ -185,10 +187,10 @@
                                                                                   ",iApplicationInit=",iApplicationInit,
                                                                                ")");
 
-        // Show library version
+        // Show Library Version
         if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_NORMAL) Trace(GetFunctionName()," easyCodeIILibrary Version=\"V",_EASYCODEII_Library_Version,"\"");
 
-        // Set simulation mode
+        // Set Simulation Mode
         _EASYCODEII_SimulationMode = _SIMULATION_MODE_OFF;
         if (ML_STAR.IsNullDevice()==hslFalse)
         {
@@ -200,7 +202,7 @@
 
         if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName()," _SimulationMode=",_EASYCODEII_SimulationMode);
 
-        // Should the application also be initialized
+        // Should application be initialized
         if (iApplicationInit==hslTrue)
         {
           timer timerApplicationStart;
@@ -208,14 +210,14 @@
           // create connection object
           onerror goto com_load_error;
           _EASYCODEII_COM_Application_Connection.CreateObject(_APPLICATION_COM_CLASS_NAME);
-           // Wait short while
+           // Wait short time
           timerApplicationStart.SetTimer(_COM_INITIALISATION_DELAY);
           timerApplicationStart.WaitTimer(hslFalse, hslFalse);
           _EASYCODEII_COM_Application_Connection_UsedFlag = hslTrue;
           if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName()," Initialisation ok");
         }
 
-        // Show program version
+        // Show Program version
         if (_EASYCODEII_COM_Application_Connection_UsedFlag==hslTrue)
         {
          variable ReturnValue;
@@ -229,7 +231,7 @@
 
         return(ERROR::_NONE);
 
-        // COM-Object cannot be instantiated
+        // COM-Object kann nicht instansiert werden
         com_load_error:
         {
           if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_NORMAL) Trace(GetFunctionName()," Initialisation failed!");
@@ -239,9 +241,10 @@
       // ------------------------------------------------------------------------------------------
 
       // DeInit() ---------------------------------------------------------------------------------
+      // DeInitialize
       function DeInit(
-                     ) variable                   // Return: _NONE          = DeInit successfully carried out
-                                                  //         _LIBRARY_ERROR = DeInit could not be carried out
+                     ) variable                   // Return: _NONE          = DeInit Successful 
+                                                  //         _LIBRARY_ERROR = DeInit unsuccessful
       {
 
         if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(),"()");
@@ -257,8 +260,9 @@
       // ------------------------------------------------------------------------------------------
 
       // SetSimulationMode() ----------------------------------------------------------------------
+      // Set Simulation mode
       function SetSimulationMode(
-                                  variable iSimulationMode             // Desired SimulationMode
+                                  variable iSimulationMode             // Desired Simulation Mode
                                 ) variable                             // Return: ReturnValue
       {
 
@@ -275,8 +279,9 @@
       // ------------------------------------------------------------------------------------------
 
       // GetSimulationMode() ----------------------------------------------------------------------
+      // Read simulation mode
       function GetSimulationMode(
-                                  variable & oSimulationMode           // Simulation-Mode
+                                  variable & oSimulationMode           // Simulation mode
                                 ) variable                             // Return: ReturnValue
       {
 
@@ -298,6 +303,7 @@
     {
 
       // IsRunning() ------------------------------------------------------------------------------
+      // Display application window
       function IsRunning(
                           variable & oApplicationRunningFlag    // Application RunningFlag
                         ) variable                              // Return: ReturnValue
@@ -327,6 +333,7 @@
       // ------------------------------------------------------------------------------------------
 
       // GetStartError() --------------------------------------------------------------------------
+      // Detect if errors occurred during starting  Application
       function GetApplicationStartError(
                                          variable & oApplicationStartError     // Application Start Error
                                        ) variable                              // Return: ReturnValue
@@ -354,10 +361,11 @@
       // ------------------------------------------------------------------------------------------
 
       // Application_GetApplicationErrorText() ----------------------------------------------------
+      // Get error msg based on error code
       function GetErrorText(
-                             variable iErrorNr,            // Application Fehler-Nummer
-                             variable & oErrorText         // Application Fehler-Text
-                           ) variable                      // Return: Fehlertext
+                             variable iErrorNr,            // Application error code
+                             variable & oErrorText         // Application error text
+                           ) variable                      // Return: Error text
       {
        variable ReturnValue;
 
@@ -384,16 +392,17 @@
       }
       // ------------------------------------------------------------------------------------------
 
-      // Get_ProgrammPath() ----------------------------------------------------------------
-      function Get_ProgrammPath(
-                                 variable & oProgrammPath    // Programm - Path
+      // Get_ProgramPath() ----------------------------------------------------------------
+      // Read Program Path
+      function Get_ProgramPath(
+                                 variable & oProgramPath    // Program - Path
                                ) variable                    // Return: ReturnValue
       {
        variable ReturnValue;
 
         if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), "(...)");
 
-        oProgrammPath = "";
+        oProgramPath = "";
 
         if (_EASYCODEII_COM_Application_Connection_UsedFlag==hslFalse)
         {
@@ -401,10 +410,10 @@
           return(ERROR::GENERAL::_APPLICATION);
         }
 
-        ReturnValue = _EASYCODEII_COM_Application_Connection.Application_Get_ProgrammPath(oProgrammPath);
+        ReturnValue = _EASYCODEII_COM_Application_Connection.Application_Get_ProgramPath(oProgramPath);
 
         if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(), " ReturnValue=",ReturnValue,
-                                                                                ",oProgrammPath=\"",oProgrammPath,"\"");
+                                                                                ",oProgramPath=\"",oProgramPath,"\"");
 
         return(ReturnValue);
       }
@@ -416,6 +425,7 @@
     {
 
       // Get_DatabasePicturePath() ----------------------------------------------------------------
+      // Read Database Picture Path
       function Get_DatabasePicturePath(
                                         variable & oDatabasePicturePath    // Database Picture Path
                                       ) variable                           // Return: ReturnValue
@@ -447,6 +457,7 @@
     {
 
       // Show() -----------------------------------------------------------------------------------
+      // Show Application window
       function Show(
                      variable iMode
                    ) variable      // Return: ReturnValue
@@ -472,6 +483,7 @@
       // ------------------------------------------------------------------------------------------
 
       // Hide() -----------------------------------------------------------------------------------
+      // Hide Application window
       function Hide(
                    ) variable      // Return: ReturnValue
       {
@@ -494,7 +506,7 @@
       // ------------------------------------------------------------------------------------------
 
       // IsVisible() ------------------------------------------------------------------------------
-      // Ist die Applikation noch sichtbar
+      // Is application visible
       function IsVisible(
                           variable & oIsVisible
                         ) variable      // Return: ReturnValue
@@ -527,6 +539,7 @@
       {
 
         // Show() ---------------------------------------------------------------------------------
+        // Show LiveView
         function Show(
                        variable iMode
                      ) variable      // Return: ReturnValue
@@ -552,6 +565,7 @@
         // ----------------------------------------------------------------------------------------
 
         // Hide() ---------------------------------------------------------------------------------
+        // Hide LiveView
         function Hide(
                      ) variable      // Return: ReturnValue
         {
@@ -574,6 +588,7 @@
         // ----------------------------------------------------------------------------------------
 
         // IsVisible() ----------------------------------------------------------------------------
+        // Is liveview visible
         function IsVisible(
                             variable & oIsVisible
                           ) variable      // Return: ReturnValue
@@ -603,9 +618,9 @@
         // ----------------------------------------------------------------------------------------
 
         // SavePicture() --------------------------------------------------------------------------
-        // Aktuelles Live-Bild speichern (inkl. Draw-Funktionen)
+        // Save current liveview including Draw functions
         function SavePicture(
-                              variable iPictureFilename,     // Name des Bildes
+                              variable iPictureFilename,     // Picture file name
                               variable iPictureFormat,       // Picture Format
                               variable iPictureSizePercent
                             ) variable                      // Return: ReturnValue
@@ -1246,9 +1261,9 @@
     {
 
       // Open() -----------------------------------------------------------------------------------
-      // Oeffnen der Camera
+      // Open Camera
       function Open(
-                     variable iSettingNameCamera      // Name der Settings
+                     variable iSettingNameCamera      // Settings
                    ) variable                         // Return: ReturnValue
       {
        variable ReturnValue;
@@ -1272,7 +1287,7 @@
       // ------------------------------------------------------------------------------------------
 
       // Close() ----------------------------------------------------------------------------------
-      // Schliessen der Camera
+      // Close Camera
       function Close(
                     ) variable                         // Return: ReturnValue
       {
@@ -1325,7 +1340,7 @@
       // ------------------------------------------------------------------------------------------
 
       // TakePicture() ----------------------------------------------------------------------------
-      // Erstellen eines Bildes
+      // Take picture
       function TakePicture(
                           ) variable                       // Return: ReturnValue
       {
@@ -1348,7 +1363,7 @@
       // ------------------------------------------------------------------------------------------
 
       // SavePicture() ----------------------------------------------------------------------------
-      // Erstelltes Bildes speichern
+      // Save picture
       function SavePicture(
                             variable iPictureFilename,     // Name des Bildes
                             variable iPictureFormat,       // Picture Format
@@ -1380,7 +1395,7 @@
       // ------------------------------------------------------------------------------------------
 
       // LoadPicture() ----------------------------------------------------------------------------
-      // Erstelltes Bildes speichern
+      // Load picture
       function LoadPicture(
                             variable iPictureFilename     // Name des Bildes
                           ) variable                      // Return: ReturnValue
@@ -1437,10 +1452,10 @@
     {
 
       // SelectCameraSettings() -------------------------------------------------------------------
-      // Aussuchen der Camera Settings
+      // Choose Camera Settings
       function SelectCameraSettings(
-                                      variable iDefaultSettingNameCamera, // Name der Vorgabe-Settings
-                                      variable & oSettingNameCamera       // Name der Settings
+                                      variable iDefaultSettingNameCamera, // Name of Default-Settings
+                                      variable & oSettingNameCamera       // Name of Settings
                                     ) variable                            // Return: ReturnValue
       {
        variable ReturnValue;
@@ -1468,10 +1483,10 @@
       // ------------------------------------------------------------------------------------------
 
       // SelectBarcodeSettings() ------------------------------------------------------------------
-      // Aussuchen der Barcode Settings
+      // Choose Barcode Settings
       function SelectBarcodeSettings(
-                                      variable iDefaultSettingNameBarcode,  // Name der Vorgabe-Settings
-                                      variable & oSettingNameBarcode        // Name der Settings
+                                      variable iDefaultSettingNameBarcode,  // Name of Default-Settings
+                                      variable & oSettingNameBarcode        // Name of Settings
                                     ) variable                              // Return: ReturnValue
       {
        variable ReturnValue;
@@ -1507,9 +1522,9 @@
       {
 
         // Start() ----------------------------------------------------------------------------------
-        // Startet die Analyse des Barocdes
+        // Start analysing barcode
         function Start(
-                        variable iSettingNameBarcode     // Name der Settings
+                        variable iSettingNameBarcode     // Name of Settings
                       ) variable                         // Return: ReturnValue
         {
          variable ReturnValue;
@@ -1533,9 +1548,9 @@
         // ------------------------------------------------------------------------------------------
 
         // Start_ParameterList() ----------------------------------------------------------------
-        // Startet die Analyse des Barcode mit speziellen Parametern
+        // Start analysing Barcode with parameters
         function Start_ParameterList(
-                                      variable iSettingNameBarcode,    // Name der Settings
+                                      variable iSettingNameBarcode,    // Name of Settings
                                       variable iArrayParameterList[]   // 
                                     ) variable                         // Return: ReturnValue
         {
@@ -1562,7 +1577,7 @@
         // ------------------------------------------------------------------------------------------
 
         // Stop() -----------------------------------------------------------------------------------
-        // Stoppt die Analyse des Barocdes
+        // Stop analysing barcodes
         function Stop(
                      ) variable                         // Return: ReturnValue
         {
@@ -1585,7 +1600,7 @@
         // ------------------------------------------------------------------------------------------
 
         // Reset() ----------------------------------------------------------------------------------
-        // Resettet die Analyse des Barocdes
+        // Reset barcode analysis
         function Reset(
                       ) variable                         // Return: ReturnValue
         {
@@ -1608,7 +1623,7 @@
         // ------------------------------------------------------------------------------------------
 
         // CheckRunning() ---------------------------------------------------------------------------
-        // Check Finish Analyse des Barcodes
+        // Check if barcode analysis is finished
         function CheckRunning(
                                variable & oRunning              // Running-Flag
                              ) variable                         // Return: ReturnValue
@@ -1638,7 +1653,7 @@
         // ------------------------------------------------------------------------------------------
 
         // SaveResult() -----------------------------------------------------------------------------
-        // Save Result of analysed bar code
+        // Save Result of analysed barcode
         function SaveResult(
                              variable iAsynchronPictureSave,
                              variable iDescription,
@@ -1785,7 +1800,7 @@
     {
 
       // GetEasyCodeIIRack() ----------------------------------------------------------------------
-      // Ermitteln der Rack Informationen
+      // Determine Rack Information
       function GetEasyCodeIIRack(
                                   variable iEasyCodeIIRackID,             // easyCodeIIRackID
                                   variable & oPictureFilename,
@@ -1824,7 +1839,7 @@
       // ------------------------------------------------------------------------------------------
 
       // SetEasyCodeIIRack_Field_Description() ----------------------------------------------------
-      // Setzen der Rack Description
+      // Set Rack Description
       function SetEasyCodeIIRack_Field_Description(
                                                     variable iEasyCodeIIRackID,             // easyCodeIIRackID
                                                     variable iDescription
@@ -1853,7 +1868,7 @@
       // ------------------------------------------------------------------------------------------
 
       // GetEasyCodeIIGroup() ---------------------------------------------------------------------
-      // Ermitteln der Group Informationen
+      // Determine Group Information
       function GetEasyCodeIIGroup(
                                    variable iEasyCodeIIGroupID,             // easyCodeIIGroupID
                                    variable & oNumber,
@@ -1896,7 +1911,7 @@
       // ------------------------------------------------------------------------------------------
 
       // SetEasyCodeIIGroup_Field_Description() ---------------------------------------------------
-      // Setzen der Group Description
+      // Set Group Description
       function SetEasyCodeIIGroup_Field_Description(
                                                      variable iEasyCodeIIGroupID,             // easyCodeIIGroupID
                                                      variable iDescription
@@ -1925,7 +1940,7 @@
       // ------------------------------------------------------------------------------------------
 
       // GetEasyCodeIIGroupID_By_EasyCodeIIRackID() -----------------------------------------------
-      // Ermitteln der GroupIDs anhand der RackID
+      // Determine GroupIDs based on RackID
       function GetEasyCodeIIGroupID_By_EasyCodeIIRackID(
                                                          variable iEasyCodeIIRackID,            // easyCodeIIRackID
                                                          variable & oArrayEasyCodeIIGroupID[]   // Array of easyCodeIIGroupID
@@ -1967,7 +1982,7 @@
       // ------------------------------------------------------------------------------------------
 
       // GetEasyCodeIIGroupID_By_Name() -----------------------------------------------------------
-      // Lesen der GroupID anhand des Gruppen-Namen
+      // Reading GroupID based on Group-name
       function GetEasyCodeIIGroupID_By_Name(
                                              variable iEasyCodeIIRackID,              // easyCodeIIRackID
                                              variable iName,
@@ -2001,7 +2016,7 @@
       // ------------------------------------------------------------------------------------------
 
       // GetEasyCodeIIGroup_LabwareInformation() --------------------------------------------------
-      // Lesen der Gruppen-Labware-Informationen
+      // Reading Labware Group Information
       function GetEasyCodeIIGroup_LabwareInformation(
                                                       variable iEasyCodeIIGroupID,  // easyCodeIIGroupID
                                                       variable & oSectionsX,
@@ -2036,7 +2051,7 @@
       // ------------------------------------------------------------------------------------------
 
       // GetEasyCodeIIContainer() -----------------------------------------------------------------
-      // Ermitteln der Container Informationen
+      // Determine Container Information
       function GetEasyCodeIIContainer(
                                        variable iEasyCodeIIContainerID,             // easyCodeIIContainerID
                                        variable & oBarcode,
@@ -2095,7 +2110,7 @@
       // ------------------------------------------------------------------------------------------
 
       // SetEasyCodeIIContainer_Field_Description() -----------------------------------------------
-      // Setzten der Cotainer Description
+      // Set Container Description
       function SetEasyCodeIIContainer_Field_Description(
                                                          variable iEasyCodeIIContainerID,        // easyCodeIIContainerID
                                                          variable iDescription
@@ -2124,7 +2139,7 @@
       // ------------------------------------------------------------------------------------------
 
       // GetEasyCodeIIContainerID_By_EasyCodeIIGroupID() -----------------------------------------------
-      // Ermitteln der ContainerIDs anhand der GroupID
+      // Determine ContainerIDs based on GroupID
       function GetEasyCodeIIContainerID_By_EasyCodeIIGroupID(
                                                               variable iEasyCodeIIGroupID,              // easyCodeIIGroupID
                                                               variable & oArrayEasyCodeIIContainerID[]  // Array of easyCodeIIContainerID
@@ -2166,7 +2181,7 @@
       // ------------------------------------------------------------------------------------------
 
       // GetEasyCodeIIContainerID_By_PositionNumber() ---------------------------------------------
-      // Ermitteln der ContainerID anhand der PositionNumber
+      // Determine ContainerID based on PositionNumber
       function GetEasyCodeIIContainerID_By_PositionNumber(
                                                            variable iEasyCodeIIGroupID,                 // easyCodeIIGroupID
                                                            variable iPositionNumber,
@@ -2211,7 +2226,7 @@
       // ------------------------------------------------------------------------------------------
 
       // GetEasyCodeIIContainerID_By_PositionText() -----------------------------------------------
-      // Ermitteln der ContainerID anhand der PositionText
+      // Determine ContainerID based on PositionText
       function GetEasyCodeIIContainerID_By_PositionText(
                                                          variable iEasyCodeIIGroupID,                 // easyCodeIIGroupID
                                                          variable iPositionText,
@@ -2260,18 +2275,18 @@
     namespace HELPER
     {
 
-      // StrIStrMitNullen() -----------------------------------------------------------------------
-      static function StrIStrMitNullen(
-                                        variable Zahl,           // Zahl die gewandelt werden soll
-                                        variable TotalLaenge     // Wie lange soll der String total sein
-                                      ) variable                 // Return: Gewandelter String mit vorhergehenden Nullen
+      // StrIStrWithZeros() -----------------------------------------------------------------------
+      static function StrIStrWithZeros(
+                                        variable Number,         // Number to convert
+                                        variable TotalLength     // How long should the string total be
+                                      ) variable                 // Return: converted string with leading zeros
       {
-        variable strNullen;
+        variable strZeros; 
 
-         strNullen = "000000000000000000" + Str::StrIStr(Zahl);
-         strNullen= Str::StrRight(strNullen,TotalLaenge);
+         strZeros = "000000000000000000" + Str::StrIStr(Number);
+         strZeros= Str::StrRight(strZeros,TotalLength);
 
-         return(strNullen);
+         return(strZeros);
       }
       // ------------------------------------------------------------------------------------------
 
@@ -2279,15 +2294,15 @@
       {
 
         // GetPositionCoordinates_Center_by_Labware() -----------------------------------------------
-        // Ermittelt die Koordinaten (Zentrum) anhand der Labware
+        // Determine coordinates (center) based on Labware
         function GetPositionCoordinates_Center_by_Labware(
                                                            device   & ML_STAR,       // Device
                                                            variable iLabware,        // Labware
-                                                           variable & oCoordinateX,  // Ausgabe Coordinate-X
-                                                           variable & oCoordinateY,  // Ausgabe Coordinate-Y
+                                                           variable & oCoordinateX,  // Output Coordinate-X
+                                                           variable & oCoordinateY,  // Output Coordinate-Y
                                                            variable & oCoordinateZ   // Coordinate-Z
-                                                         ) variable                  // Return: _NONE          = Position ermittelt
-                                                                                     //         _LIBRARY_ERROR = Position konnte nicht ermittelt werden
+                                                         ) variable                  // Return: _NONE          = Position determined
+                                                                                     //         _LIBRARY_ERROR = Position not determined
         {
          variable labwareCoords[];
          variable xCoords1;
@@ -2339,7 +2354,7 @@
         // ------------------------------------------------------------------------------------------
 
         // GetPositionCoordinates_by_Labware() ------------------------------------------------------
-        // Ermittelt die Koordinaten anhand der Labware
+        // Determine coordinates based on Labware
         function GetPositionCoordinates_by_Labware(
                                                     device   & ML_STAR,       // Device
                                                     variable iLabware,        // Labware
@@ -2385,8 +2400,8 @@
         }
         // ------------------------------------------------------------------------------------------
 
-              // GetPositionCoordinates_by_LabwarePosition() ----------------------------------------
-        // Ermittelt die Koordinaten anhand der Labware
+        // GetPositionCoordinates_by_LabwarePosition() ----------------------------------------
+        // Determine coordinates based on LabwarePosition
         function GetPositionCoordinates_by_LabwarePosition(
                                                             device   & ML_STAR,       // Device
                                                             variable iLabware,        // Labware
@@ -2457,14 +2472,14 @@
         // ------------------------------------------------------------------------------------------
 
         // ChannelPattern_LeftAdjust() --------------------------------------------------------------
-        // Linksbuendiges Channelpattern
+        // Left aligned Channelpattern
         function ChannelPattern_LeftAdjust(
-                                            variable iNumberOfChannels,      // Anzahl Kanaele
-                                            variable iTotalNumberOfChannels  // Anzahl Kanaele total
+                                            variable iNumberOfChannels,      // Number of channels
+                                            variable iTotalNumberOfChannels  // Number of channels total
                                           ) variable                         // Return: Channel pattern
         {
           variable strEinzen;
-          variable strNullen;
+          variable strZeros;
           variable ChannelPattern;
 
            if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(),"(",
@@ -2473,8 +2488,8 @@
                                                                                   ")");
 
            strEinzen = "11111111111111111111111111111111";
-           strNullen = "00000000000000000000000000000000";
-           ChannelPattern= Str::StrLeft( Str::StrLeft(strEinzen,iNumberOfChannels) + strNullen ,iTotalNumberOfChannels);
+           strZeros = "00000000000000000000000000000000";
+           ChannelPattern= Str::StrLeft( Str::StrLeft(strEinzen,iNumberOfChannels) + strZeros ,iTotalNumberOfChannels);
 
            if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName()," ChannelPattern=\"",ChannelPattern,"\"");
 
@@ -2483,14 +2498,14 @@
         // ------------------------------------------------------------------------------------------
 
         // ChannelPattern_RightAdjust() -------------------------------------------------------------
-        // Rechtsbuendiges Channelpattern
+        // Right aligned Channelpattern
         function ChannelPattern_RightAdjust(
-                                             variable iNumberOfChannels,      // Anzahl Kanaele
-                                             variable iTotalNumberOfChannels  // Anzahl Kanaele total
+                                             variable iNumberOfChannels,      // Number of channels
+                                             variable iTotalNumberOfChannels  // Number of channels total
                                            ) variable                         // Return: Channel pattern
         {
           variable strEinzen;
-          variable strNullen;
+          variable strZeros;
           variable ChannelPattern;
 
            if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(),"(",
@@ -2499,8 +2514,8 @@
                                                                                   ")");
 
            strEinzen = "11111111111111111111111111111111";
-           strNullen = "00000000000000000000000000000000";
-           ChannelPattern= Str::StrRight( strNullen + Str::StrLeft(strEinzen,iNumberOfChannels) ,iTotalNumberOfChannels);
+           strZeros = "00000000000000000000000000000000";
+           ChannelPattern= Str::StrRight( strZeros + Str::StrLeft(strEinzen,iNumberOfChannels) ,iTotalNumberOfChannels);
 
            if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName()," ChannelPattern=\"",ChannelPattern,"\"");
 
@@ -2509,14 +2524,14 @@
         // ------------------------------------------------------------------------------------------
 
         // ChannelPattern_SingleAdjust() ------------------------------------------------------------
-        // Channelpattern eines einzigen Kanals
+        // Channelpattern single channel
         function ChannelPattern_SingleAdjust(
-                                              variable iSingleChannel,         // Kanal
-                                              variable iTotalNumberOfChannels  // Anzahl Kanaele total
+                                              variable iSingleChannel,         // Channel
+                                              variable iTotalNumberOfChannels  // Number of channels total
                                             ) variable                         // Return: Channel pattern
         {
           variable strEinzen;
-          variable strNullen;
+          variable strZeros;
           variable ChannelPattern;
 
            if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName(),"(",
@@ -2524,8 +2539,8 @@
                                                                                   ",iTotalNumberOfChannels=",iTotalNumberOfChannels,
                                                                                   ")");
 
-           strNullen = "00000000000000000000000000000000";
-           ChannelPattern= Str::StrLeft( Str::StrLeft(strNullen,iSingleChannel-1) + "1" + strNullen ,iTotalNumberOfChannels);
+           strZeros = "00000000000000000000000000000000";
+           ChannelPattern= Str::StrLeft( Str::StrLeft(strZeros,iSingleChannel-1) + "1" + strZeros ,iTotalNumberOfChannels);
 
            if (_EASYCODEII_TraceLevel>=_TRACE_LEVEL_FULL) Trace(GetFunctionName()," ChannelPattern=\"",ChannelPattern,"\"");
 
@@ -2539,13 +2554,13 @@
       {
 
         // Trace2Text() -----------------------------------------------------------------------------
-        // Gibt einen Text je nach Tracelevel aus
+        // Text output depending on tracelevel
         function Trace2Text(
                              variable iTraceLevel,        // Tracelevel
-                             variable iText1,             // Tracetext 1
-                             variable iText2              // Tracetext 2
-                           ) variable                     // Return: _NONE          = Ausgabe wurde gemacht
-                                                          //         _LIBRARY_ERROR = keine Ausgabe wurde gemacht
+                             variable iText1,             // Traceext 1
+                             variable iText2              // Traceext 2
+                           ) variable                     // Return: _NONE          = Output was made
+                                                          //         _LIBRARY_ERROR = no Output was made
         {
           if (_EASYCODEII_TraceLevel<iTraceLevel) return(ERROR::_NONE);
 
@@ -2556,15 +2571,15 @@
         // ------------------------------------------------------------------------------------------
 
         // Trace4Text() -----------------------------------------------------------------------------
-        // Gibt einen Text je nach Tracelevel aus
+        // Text output depending on tracelevel
         function Trace4Text(
                              variable iTraceLevel,        // Tracelevel
-                             variable iText1,             // Tracetext 1
-                             variable iText2,             // Tracetext 2
-                             variable iText3,             // Tracetext 3
-                             variable iText4              // Tracetext 4
-                           ) variable                     // Return: _NONE          = Ausgabe wurde gemacht
-                                                          //         _LIBRARY_ERROR = keine Ausgabe wurde gemacht
+                             variable iText1,             // Traceext 1
+                             variable iText2,             // Traceext 2
+                             variable iText3,             // Traceext 3
+                             variable iText4              // Traceext 4
+                           ) variable                     // Return: _NONE          = Output was made
+                                                          //         _LIBRARY_ERROR = no Output was made
         {
           if (_EASYCODEII_TraceLevel<iTraceLevel) return(ERROR::_NONE);
 
@@ -2575,17 +2590,17 @@
         // ------------------------------------------------------------------------------------------
 
         // Trace6Text() -----------------------------------------------------------------------------
-        // Gibt einen Text je nach Tracelevel aus
+        // Text output depending on tracelevel
         function Trace6Text(
                              variable iTraceLevel,        // Tracelevel
-                             variable iText1,             // Tracetext 1
-                             variable iText2,             // Tracetext 2
-                             variable iText3,             // Tracetext 3
-                             variable iText4,             // Tracetext 4
-                             variable iText5,             // Tracetext 5
-                             variable iText6              // Tracetext 6
-                           ) variable                     // Return: _NONE          = Ausgabe wurde gemacht
-                                                          //         _LIBRARY_ERROR = keine Ausgabe wurde gemacht
+                             variable iText1,             // Traceext 1
+                             variable iText2,             // Traceext 2
+                             variable iText3,             // Traceext 3
+                             variable iText4,             // Traceext 4
+                             variable iText5,             // Traceext 5
+                             variable iText6              // Traceext 6
+                           ) variable                     // Return: _NONE          = Output was made
+                                                          //         _LIBRARY_ERROR = no Output was made
         {
           if (_EASYCODEII_TraceLevel<iTraceLevel) return(ERROR::_NONE);
 
@@ -2596,13 +2611,13 @@
         // ------------------------------------------------------------------------------------------
 
         // TraceArrayStr() -----------------------------------------------------------------------------
-        // Tracet einen Array Type String
+        // Trace an Array Type String
         function TraceArrayStr(
                                 variable iTraceLevel,  // Tracelevel
                                 variable iArrayName,
                                 variable iArray[]      // Array Variable
-                              ) variable               // Return: _NONE          = Ausgabe wurde gemacht
-                                                       //         _LIBRARY_ERROR = keine Ausgabe wurde gemacht
+                              ) variable               // Return: _NONE          = Output was made
+                                                       //         _LIBRARY_ERROR = no Output was made
         {
           variable index;
           variable arrayString("");
@@ -2622,13 +2637,13 @@
         // ------------------------------------------------------------------------------------------
 
         // TraceArrayInt() -----------------------------------------------------------------------------
-        // Tracet einen Array Type Intger
+        // Trace an Array Type Intger
         function TraceArrayInt(
                                 variable iTraceLevel,  // Tracelevel
                                 variable iArrayName,
                                 variable iArray []     // Array Variable
-                              ) variable               // Return: _NONE          = Ausgabe wurde gemacht
-                                                       //         _LIBRARY_ERROR = keine Ausgabe wurde gemacht
+                              ) variable               // Return: _NONE          = Output was made
+                                                       //         _LIBRARY_ERROR = no Output was made
         {
           variable index;
           variable arrayString("");
@@ -2648,13 +2663,13 @@
         // ------------------------------------------------------------------------------------------
 
         // TraceArrayFloat() -----------------------------------------------------------------------------
-        // Tracet einen Array Type Float
+        // Trace an Array Type Float
         function TraceArrayFloat(
                                   variable iTraceLevel,  // Tracelevel
                                   variable iArrayName,
                                   variable iArray[]      // Array Variable
-                                ) variable               // Return: _NONE          = Ausgabe wurde gemacht
-                                                         //         _LIBRARY_ERROR = keine Ausgabe wurde gemacht
+                                ) variable               // Return: _NONE          = Output was made
+                                                         //         _LIBRARY_ERROR = no Output was made
         {
           variable index;
           variable arrayString("");
@@ -2674,11 +2689,12 @@
         // ------------------------------------------------------------------------------------------
 
         // TraceSequence() --------------------------------------------------------------------------
+        // Outputs a sequence depending on the trace level.
         function TraceSequence(
                                 variable iTraceLevel,        // Tracelevel
                                 sequence iSequence           // Sequence
-                              ) variable                     // Return: _NONE          = Ausgabe wurde gemacht
-                                                             //         _LIBRARY_ERROR = keine Ausgabe wurde gemacht
+                              ) variable                     // Return: _NONE          = Output was made
+                                                             //         _LIBRARY_ERROR = no Output was made
         {
         variable index;
 
@@ -2700,6 +2716,7 @@
       {
 
         // Init() --------------------------------------------------------------------------
+        // Initialize Sequence
         function Init(
                        sequence & oSequence  // Sequence
                      ) variable
@@ -2716,10 +2733,11 @@
         // ------------------------------------------------------------------------------------------
 
         // Add() ---------------------------------------------------------------------------
+        // Add Sequence 
         function Add(
                       sequence iSourceSequence1,      // Source Sequence
                       sequence iSourceSequence2,      // Source Sequence
-                      sequence & oDestinationSequence // Out Sequence
+                      sequence & oDestinationSequence // Ziehl Sequence
                     ) variable
         {
           variable index; // loop index
@@ -2731,7 +2749,7 @@
                                                                                  ",iSourceSequence2=\"",iSourceSequence2.GetName(),"\"",
                                                                                  ",oDestinationSequence=\"",oDestinationSequence.GetName(),"\"");
 
-          // Delete sequence first
+          // Sequence zuerst loeschen
           Seq::SeqRemoveAll(oDestinationSequence);
 
           // set count to total
@@ -2746,7 +2764,7 @@
             tmp_DestinationSequence.Add(iSourceSequence2.GetLabwareId(),iSourceSequence2.GetPositionId());
           }
 
-          // Set sequence pointer to beginning
+          // Sequence-Zeiger an Anfang setzen
           Seq::SeqSetMax(tmp_DestinationSequence,Seq::SeqGetTotal(tmp_DestinationSequence));
           tmp_DestinationSequence.SetCurrentPosition(1);
 
@@ -2757,9 +2775,10 @@
         // --------------------------------------------------------------------------------------------
 
         // Copy() ---------------------------------------------------------------------------
+        // Copy Sequence
         function Copy(
                        sequence iSourceSequence,       // Source Sequence
-                       sequence & oDestinationSequence // Out Sequence
+                       sequence & oDestinationSequence // Ziehl Sequence
                      ) variable
         {
           variable index; // loop index
@@ -2783,7 +2802,7 @@
             tmp_DestinationSequence.Add(iSourceSequence.GetLabwareId(),iSourceSequence.GetPositionId());
           }
 
-          // Set sequence pointer to beginning
+          // Sequence-Zeiger an Anfang setzen
           Seq::SeqSetMax(tmp_DestinationSequence,Seq::SeqGetTotal(tmp_DestinationSequence));
           tmp_DestinationSequence.SetCurrentPosition(tmp_CurrentPosititionSourceSequence);
 
@@ -2802,21 +2821,21 @@
     {
       static       variable _light_CAMERA_FLASH_OUTPUTPORT_IsOn (hslFalse);
 
-      // By what factor is the PWM signal reduced so that only a maximum of 24V is on the output
+      // By what factor is the PWM signal reduced so that the output voltage is a maximum of 24V
       static const variable _light_CAMERA_CHANNEL_PWM_Factor    (0.58);
       static       variable _light_CAMERA_CHANNEL_PWM_IsOn      (hslFalse);
 
-      // By what factor is the PWM signal reduced so that only a maximum of 24V is on the output
+      // By what factor is the PWM signal reduced so that the output voltage is a maximum of 24V
       static const variable _light_DIV2_PWM_Factor              (0.58);
-      // DIV2 PWM-Nummer
+      // DIV2 PWM-value
       static const variable _light_DIV2_PWM1_Number             ("on1");
       static       variable _light_DIV2_PWM1_IsOn               (hslFalse);
       static const variable _light_DIV2_PWM2_Number             ("on2");
       static       variable _light_DIV2_PWM2_IsOn               (hslFalse);
 
-      // By what factor is the PWM signal reduced so that only a maximum of 24V is on the output
+      // By what factor is the PWM signal reduced so that the output voltage is a maximum of 24V
       static const variable _light_DIV3_PWM_Factor             (0.58);
-      // DIV3 PWM-Nummer
+      // DIV3 PWM-value
       static const variable _light_DIV3_PWM3_Number             ("on3");
       static       variable _light_DIV3_PWM3_IsOn               (hslFalse);
       static const variable _light_DIV3_PWM4_Number             ("on4");
@@ -2843,12 +2862,12 @@
       } // end of ExecFW_Cmd()
 
       // ---------------------------------------------------------------
-      // Turn on light
+      // Turn on lights
       // ---------------------------------------------------------------
       function Light_On(
                          device & ML_STAR,       // Device
                          variable iLightSource,  // PWM number and DIV2 or DIV3 connector
-                         variable iPercent       // Lightintensity
+                         variable iPercent       // Light intensity
                        ) variable
       {
        variable rc[];
@@ -2865,7 +2884,7 @@
 
         if (iLightSource == EASYCODEII_HELPER::LIGHTSOURCE::_MLSTAR_DIV2_PWM1)
         {
-          percentStr = HELPER::StrIStrMitNullen(IVal(FStr(iPercent*_light_DIV2_PWM_Factor)),3);
+          percentStr = HELPER::StrIStrWithZeros(IVal(FStr(iPercent*_light_DIV2_PWM_Factor)),3);
           if (_EASYCODEII_SimulationMode == _SIMULATION_MODE_OFF)
           {
             rc = ExecFW_Cmd(ML_STAR,"X0OS",_light_DIV2_PWM1_Number+"od01"+"os"+percentStr+"oe"+percentStr);
@@ -2880,7 +2899,7 @@
         }
         else if (iLightSource == EASYCODEII_HELPER::LIGHTSOURCE::_MLSTAR_DIV2_PWM2)
         {
-          percentStr = HELPER::StrIStrMitNullen(IVal(FStr(iPercent*_light_DIV2_PWM_Factor)),3);
+          percentStr = HELPER::StrIStrWithZeros(IVal(FStr(iPercent*_light_DIV2_PWM_Factor)),3);
           if (_EASYCODEII_SimulationMode == _SIMULATION_MODE_OFF)
           {
             rc = ExecFW_Cmd(ML_STAR,"X0OS",_light_DIV2_PWM2_Number+"od01"+"os"+percentStr+"oe"+percentStr);
@@ -2895,7 +2914,7 @@
         }
         else if (iLightSource == EASYCODEII_HELPER::LIGHTSOURCE::_MLSTAR_DIV3_PWM3)
         {
-          percentStr = HELPER::StrIStrMitNullen(IVal(FStr(iPercent*_light_DIV3_PWM_Factor)),3);
+          percentStr = HELPER::StrIStrWithZeros(IVal(FStr(iPercent*_light_DIV3_PWM_Factor)),3);
           if (_EASYCODEII_SimulationMode == _SIMULATION_MODE_OFF)
           {
             rc = ExecFW_Cmd(ML_STAR,"X0OS",_light_DIV3_PWM3_Number+"od01"+"os"+percentStr+"oe"+percentStr);
@@ -2910,7 +2929,7 @@
         }
         else if (iLightSource == EASYCODEII_HELPER::LIGHTSOURCE::_MLSTAR_DIV3_PWM4)
         {
-          percentStr = HELPER::StrIStrMitNullen(IVal(FStr(iPercent*_light_DIV3_PWM_Factor)),3);
+          percentStr = HELPER::StrIStrWithZeros(IVal(FStr(iPercent*_light_DIV3_PWM_Factor)),3);
           if (_EASYCODEII_SimulationMode == _SIMULATION_MODE_OFF)
           {
             rc = ExecFW_Cmd(ML_STAR,"X0OS",_light_DIV3_PWM4_Number+"od01"+"os"+percentStr+"oe"+percentStr);
@@ -2925,7 +2944,7 @@
         }
         else if (iLightSource == EASYCODEII_HELPER::LIGHTSOURCE::_CAMERA_CHANNEL)
         {
-          percentStr = HELPER::StrIStrMitNullen(IVal(FStr(iPercent*_light_CAMERA_CHANNEL_PWM_Factor)),3);
+          percentStr = HELPER::StrIStrWithZeros(IVal(FStr(iPercent*_light_CAMERA_CHANNEL_PWM_Factor)),3);
           if (_EASYCODEII_SimulationMode == _SIMULATION_MODE_OFF)
           {
             rc = ExecFW_Cmd(ML_STAR,"ICCA","ca"+percentStr);
@@ -3066,7 +3085,7 @@
       // ---------------------------------------------------------------
 
       // ---------------------------------------------------------------
-      // Turn off all light sources
+      // Turn off lights
       // ---------------------------------------------------------------
       function Light_Off_All(
                               device & ML_STAR       // Device
