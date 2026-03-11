@@ -3,575 +3,978 @@
 // ======================================================================
 //
 // Modification History
-//
+// HV:   Some functions and constants went missing during refactoring.
+//       Everything should hopefully be included now.  20260309
 // ======================================================================
-#ifndef   __easyCODEII_Libary_hsl__
-#define   __easyCODEII_Libary_hsl__ 1
+#ifndef __EASYCODEII_LIBRARY_hsl__
+#define __EASYCODEII_LIBRARY_hsl__ 1
 
-//Implementation of easyCodeII library
 #ifdef HSL_RUNTIME
 #pragma once
-#include "easyCodeII_LibraryImpl.hs_"
+#include "easyCodeIILibrary\\easyCodeII_LibraryImpl.hs_"
 #endif
 
+// Interface
 #ifndef HSL_RUNTIME
-	namespace EASYCODEII
-	{
-      const variable _TRACE_LEVEL_NONE(0);
-      const variable _TRACE_LEVEL_NORMAL(1);
-      const variable _TRACE_LEVEL_FULL(2);
-      
-      const variable _DATABASE_RETURN_VALUE_NO_ID_FOUND(-1);
-      const variable _HSLTRUE(hslTrue);
-      const variable _HSLFALSE(hslFalse);
-      const variable _SIMULATION_MODE_OFF(hslFalse);                           
-      const variable _SIMULATION_MODE_ON(hslTrue);                             
-      global variable _EASYCODEII_SimulationMode;
-      
-      namespace EASYCODEII_HELPER
-      {
-         namespace LIGHTSOURCE
-         {
-            const variable _NO_LIGHT                     (0);   // None
-            const variable _MLSTAR_DIV2_PWM1             (1);   // DIV2
-            const variable _MLSTAR_DIV2_PWM2             (2);   // DIV2
-            const variable _MLSTAR_DIV3_PWM3             (3);   // DIV3
-            const variable _MLSTAR_DIV3_PWM4             (4);   // DIV3
-            const variable _CAMERA_CHANNEL               (5);   // Camera Channel
-            const variable _CAMERA_FLASH_OUTPUTPORT      (6);   // Camera Flash Output Port
-         } // namespace LIGHTSOURCE
-         
-         namespace SORTORDER
-         {
-            const variable _ASCENDING                    (0);   // Ascending
-            const variable _COLUMN_BY_COLUMN             (1);   // Column by column
-         } // namespace SORTORDER
-        	
-        	namespace GROUPNAME
-        	{
-        		const variable _RACK                         ("Side");      // 1D Rack side code
-        		const variable _TUBES                        ("Tubes");     // Tubes
-        		const variable _BOTTOM_TL                    ("Bottom_TL"); // 2D Rack bottom code top left
-        		const variable _BOTTOM_BR                    ("Bottom_BR"); // 2D Rack bottom code bottom right
-      	} // namespace GROUPNAME
-    	} // namespace EASYCODEII_HELPER
-      
+  namespace EASYCODEII
+  {
+    // Library Version
+
+    // Different Tracelevels
+    const variable _TRACE_LEVEL_NONE(0);
+    const variable _TRACE_LEVEL_NORMAL(1);
+    const variable _TRACE_LEVEL_FULL(2);
+
+    const variable _DATABASE_RETURN_VALUE_NO_ID_FOUND(-1);                   // General return value if entry
+                                                                             // not found.
+
+    const variable _HSLTRUE(hslTrue);                                        // Use hslTrue in method editor
+    const variable _HSLFALSE(hslFalse);                                      // Use hslFalse in method editor
+
+    const variable _SIMULATION_MODE_OFF(hslFalse);                           // Method runs normal
+    const variable _SIMULATION_MODE_ON(hslTrue);                             // Method runs in simulation mode
+    global variable _EASYCODEII_SimulationMode;                              // Variable for simulation mode
+
     // Errors (Return values of all functions)
-    	namespace ERROR
-    	{
-      	const variable _NONE                           (0);   // No error
-      	
-      	namespace GENERAL
-      	{
-      		const variable _LIBRARY                      (1);   // HSL-Library error
-      		const variable _MLSTAR                       (2);   // MLStar-Library error
-      		const variable _APPLICATION                  (3);   // Application error
-      	} // namespace GENERAL
-      	
-      	namespace DATABASE
-      	{
-      		const variable _READ                         (87);  // Database read error
-      		const variable _WRITE                        (88);  // Database write error
-      		const variable _UPDATE                       (89);  // Database update error
-      	} // namespace DATABASE
-      	
-      	namespace BARCODE
-      	{
-      		const variable _MORE_THAN_ONE_BARCODE_FOUND  (103);
-      	  	const variable _NO_BARCODE_DECOED            (104);
-      	  	const variable _WRONG_BARCODE_MASK           (105);
-      	  	const variable _NO_BARCODE_DETECTED          (106);
-      	 	const variable _NO_READABLE_CHARACTERS       (107);
-      	  	const variable _NO_BARCODE_DEFINED           (140);
-      	} // namespace BARCODE
-    	} // namespace ERROR
+    namespace ERROR
+    {
+      const variable _NONE                           (0);   // No error
+      namespace GENERAL
+      {
+        const variable _LIBRARY                      (1);   // HSL-Library error
+        const variable _MLSTAR                       (2);   // MLStar-Library error
+        const variable _APPLICATION                  (3);   // Application error
+      } // namespace GENERAL
+      namespace DATABASE
+      {
+        const variable _READ                         (87);  // Database read error
+        const variable _WRITE                        (88);  // Database write error
+        const variable _UPDATE                       (89);  // Database update error
+      } // namespace DATABASE
+      namespace BARCODE
+      {
+        const variable _MORE_THAN_ONE_BARCODE_FOUND  (103);
+        const variable _NO_BARCODE_DECOED            (104);
+        const variable _WRONG_BARCODE_MASK           (105);
+        const variable _NO_BARCODE_DETECTED          (106);
+        const variable _NO_READABLE_CHARACTERS       (107);
+        const variable _NO_BARCODE_DEFINED           (140);
+      } // namespace BARCODE
 
-      namespace INIT
-		{
-			function Init(
-				device	& ML_STAR,					// Device
-				variable iTraceLevel,				// Desired Tracelevel
-				variable iApplicationInit			// Should the application also be initialized
-				) variable {return(0);}				// Return: _NONE			= Init successfully carried out
-													//		_LIBRARY_ERROR = Init could not be carried out
-	
-			function DeInit(
-				) variable {return(0);}							// Return: _NONE			= DeInit successfully carried out
-													//		_LIBRARY_ERROR = DeInit could not be carried out
-			function SetSimulationMode(
-				variable iSimulationMode			// Desired SimulationMode
-				) variable {return(0);}				// Return: ReturnValue
-			function GetSimulationMode(
-				variable & oSimulationMode			// Simulation-Mode
-				) variable {return(0);}			// Return: ReturnValue
-			} //namespace INIT
-		
-		namespace APPLICATION
-		{
-			function IsRunning(
-				variable & oApplicationRunningFlag		// Application RunningFlag
-				) variable {return(0);}				// Return: ReturnValue
-			function GetApplicationStartError(
-				variable & oApplicationStartError		// Application Start Error
-				) variable {return(0);}				// Return: ReturnValue
-			function GetErrorText(
-				variable iErrorNr,		// Application Fehler-Nummer
-				variable & oErrorText		// Application Fehler-Text
-				) variable {return(0);}		// Return: Fehlertext
-			function Get_ProgrammPath(
-				variable & oProgrammPath		// Programm - Path
-				) variable {return(0);}	// Return: ReturnValue
-			} //namespace APPLICATION
-	
-		namespace APPLICATIONSETTINGS
-		{
-			function Get_DatabasePicturePath(
-				variable & oDatabasePicturePath		// Database Picture Path
-				) variable {return(0);}		// Return: ReturnValue
-		} //namespace APPLICATIONSETTINGS
-	
-		namespace GUI
-		{
-			function Show(
-				variable iMode
-				) variable {return(0);}	// Return: ReturnValue
-			function Hide(
-				) variable {return(0);}	// Return: ReturnValue
-			function IsVisible(
-				variable & oIsVisible
-				) variable {return(0);}	// Return: ReturnValue
-	
-			namespace LIVEVIEW
-			{
-				function Show(
-					variable iMode
-					) variable {return(0);}	// Return: ReturnValue
-				function Hide(
-					) variable {return(0);}	// Return: ReturnValue			
-				function IsVisible(
-					variable & oIsVisible
-					) variable {return(0);}	// Return: ReturnValue
-				function SavePicture(
-					variable iPictureFilename,		// Name des Bildes
-					variable iPictureFormat,	// Picture Format
-					variable iPictureSizePercent
-					) variable {return(0);}		// Return: ReturnValue
-			
-			namespace FOCUS
-			{
-				function Show(
-					variable iPositionX,			// Position X
-					variable iPositionY,			// Position Y
-					variable iSizeX,			// Size X
-					variable iSizeY,			// Size Y
-					variable iAngle,			// Angle
-					variable iGradientValueThreshold,	// Gradient value threshold
-					variable iGradientValueSensibility // Gradient value sensibility
-					) variable {return(0);}		// Return: ReturnValue
-				function GetCurrentValue(
-					variable & oCurrentGradientValueThreshold,
-					variable & oMaximumGradientValueThreshold,
-					variable & oLowerLimitGradientValueThreshold,
-					variable & oValueInTollerance
-					) variable {return(0);}		// Return: ReturnValue
-			}//namespace FOCUS
-			
-			namespace APERTURE
-			{
-				function Show(
-					variable iPositionX,			// Position X
-					variable iPositionY,			// Position Y
-					variable iSizeX,			// Size X
-					variable iSizeY,			// Size Y
-					variable iAngle,			// Angle
-					variable iGrayValueCenter,		// Gray value center
-					variable iGrayValueSensibility // Gray value sensibility
-					) variable {return(0);}		// Return: ReturnValue
-				function GetCurrentValue(
-					variable & oCurrentGrayValueCenter,
-					variable & oLowerLimitGrayValueCenter,
-					variable & oUpperLimitGrayValueCenter,
-					variable & oValueInTollerance
-					) variable {return(0);}		// Return: ReturnValue
-			}//namespace APERTURE
-			
-			namespace HOMOGENEOUS
-			{
-				function Show(
-					variable iPositionX,			// Position X
-					variable iPositionY,			// Position Y
-					variable iSizeX,		// Size X
-					variable iSizeY,		// Size Y
-					variable iAngle,		// Angle
-					variable iFilterMode,			// Filter mode
-					variable iHomogeneousValueThreshold,	// Value threshold
-					variable iHomogeneousValueSensibility	// Value sensibility
-					) variable {return(0);}				// Return: ReturnValue
-				function GetCurrentValue(
-					variable & oCurrentHomogeneousValue,
-					variable & oMaximumHomogeneousValue,
-					variable & oLowerLimitHomogeneousValue,
-					variable & oValueInTollerance
-					) variable {return(0);}		// Return: ReturnValue
-			}//namespace HOMOGENEOUS
-			
-			namespace DRAW
-			{
-				function ClearAll(
-					) variable {return(0);}	// Return: ReturnValue
-				function Clear(
-					variable iObjectName	// Name des Objects
-					) variable {return(0);}			// Return: ReturnValue
-				function Picture(
-					variable iObjectName,		// Name des Objects
-					variable iPictureFileName,
-					variable iPositionX,	// PositionX [Prozent]
-					variable iPositionY,	// PositionY [Prozent]
-					variable iScale,			// Scale
-					variable iAngle			// Angle
-					) variable {return(0);}			// Return: ReturnValue
-				function Cross(
-					variable iObjectName,		// Name des Objects
-					variable iPositionX,	// PositionX [Prozent]
-					variable iPositionY,	// PositionY [Prozent]
-					variable iSize,			// Size [Prozent]
-					variable iAngle,			// Angle
-					variable iColor,			// Color
-					variable iLineSize		// LineSize
-					) variable {return(0);}			// Return: ReturnValue
-				function Ellipse(
-					variable iObjectName,		// Name des Objects
-					variable iPositionX,	// PositionX [Prozent]
-					variable iPositionY,	// PositionY [Prozent]
-					variable iSizeX,			// SizeX [Prozent]
-					variable iSizeY,			// SizeY [Prozent]
-					variable iAngle,			// Angle
-					variable iColor,			// Color
-					variable iLineSize,	// LineSize
-					variable iDrawMode		// DrawMode
-					) variable {return(0);}			// Return: ReturnValue
-				function Rectangle(
-					variable iObjectName,		// Name des Objects
-					variable iPositionX,	// PositionX [Prozent]
-					variable iPositionY,	// PositionY [Prozent]
-					variable iSizeX,			// SizeX [Prozent]
-					variable iSizeY,			// SizeY [Prozent]
-					variable iAngle,			// Angle
-					variable iColor,			// Color
-					variable iLineSize,	// LineSize
-					variable iDrawMode		// DrawMode
-					) variable {return(0);}			// Return: ReturnValue
-				function Line(
-					variable iObjectName,		// Name des Objects
-					variable iPosition1X,		// Position 1 X [Prozent]
-					variable iPosition1Y,		// Position 1 Y [Prozent]
-					variable iPosition2X,		// Position 2 X [Prozent]
-					variable iPosition2Y,		// Position 2 Y [Prozent]
-					variable iColor,			// Color
-					variable iLineSize		// LineSize
-					) variable {return(0);}			// Return: ReturnValue
-				function Text(
-					variable iObjectName,		// Name des Objects
-					variable iPositionX,	// PositionX [Prozent]
-					variable iPositionY,	// PositionY [Prozent]
-					variable iText,			// Text
-					variable iColor,			// Color
-					variable iFontName,	// FontName
-					variable iTextSize		// TextSize
-					) variable {return(0);}			// Return: ReturnValue
-			} //namespace DRAW
-		} //namespace LIVEVIEW
-	} //namespace GUI
-	
-		namespace CAMERA
-		{
-			function Open(
-				variable iSettingNameCamera	// Name der Settings
-				) variable {return(0);}			// Return: ReturnValue
-			function Close(
-				) variable {return(0);}			// Return: ReturnValue
-			function IsOpen(
-				variable & oCameraIsOpen		// Camera open flag
-				) variable {return(0);}			// Return: ReturnValue
-			function TakePicture(
-				) variable {return(0);}		// Return: ReturnValue
-			function SavePicture(
-				variable iPictureFilename,		// Name des Bildes
-				variable iPictureFormat,	// Picture Format
-				variable iPictureSizePercent
-				) variable {return(0);}		// Return: ReturnValue
-			function LoadPicture(
-				variable iPictureFilename		// Name des Bildes
-				) variable {return(0);}		// Return: ReturnValue
-			function SetOutputPortFlash(
-				variable iOn		// 
-				) variable {return(0);}		// Return: ReturnValue
-		}
-		namespace SETTINGS
-		{		
-			function SelectCameraSettings(
-					variable iDefaultSettingNameCamera, // Name der Vorgabe-Settings
-					variable & oSettingNameCamera	// Name der Settings
-					) variable {return(0);}			// Return: ReturnValue
-			function SelectBarcodeSettings(
-					variable iDefaultSettingNameBarcode,	// Name der Vorgabe-Settings
-					variable & oSettingNameBarcode		// Name der Settings
-					) variable {return(0);}				// Return: ReturnValue
-		}
-		namespace ANALYSE
-		{
-			namespace BARCODE
-			{
-				function Start(
-					variable iSettingNameBarcode		// Name der Settings
-					) variable {return(0);}			// Return: ReturnValue
-				function Start_ParameterList(
-					variable iSettingNameBarcode,		// Name der Settings
-					variable iArrayParameterList[]	// 
-					) variable {return(0);}			// Return: ReturnValue
-				function Stop(
-					) variable {return(0);}			// Return: ReturnValue
-				function Reset(
-					) variable {return(0);}			// Return: ReturnValue
-				function CheckRunning(
-					variable & oRunning			// Running-Flag
-					) variable {return(0);}			// Return: ReturnValue
-				function SaveResult(
-					variable iAsynchronPictureSave,
-					variable iDescription,
-					variable & oEasyCodeIIRackID		// easyCodeIIRackID
-					) variable {return(0);}			// Return: ReturnValue
-				function SaveResult_CheckAsynchronSaveFinish(
-					variable & oFinish			// Finish-Flag
-					) variable {return(0);}			// Return: ReturnValue
-				function ExportRackPicture(
-					variable iEasyCodeIIRackID,	// easyCodeIIRackID
-					variable iAsynchronPictureSave,
-					variable iPictureFilenamePath,
-					variable iPictureFormat,
-					variable iDrawAnalysedInformation,
-					variable iPictureCropped,
-					variable iPictureSizePercent
-					) variable {return(0);}			// Return: ReturnValue
-				function ExportToZipArchive(
-					variable iArrayEasyCodeIIRackID[],	// easyCodeIIRackID
-					variable iArchiveFilenamePath,
-					variable iArchiveAppendMode
-					) variable {return(0);}			// Return: ReturnValue
-			}//namspace BARCODE
-		}//namespace ANALYSE
-		
-		namespace DATABASE
-		{
-			function GetEasyCodeIIRack(
-				variable iEasyCodeIIRackID,		// easyCodeIIRackID
-				variable & oPictureFilename,
-				variable & oErrorCode,
-				variable & oDescription
-				) variable {return(0);}					// Return: ReturnValue
-			function SetEasyCodeIIRack_Field_Description(
-				variable iEasyCodeIIRackID,		// easyCodeIIRackID
-				variable iDescription
-				) variable {return(0);}			// Return: ReturnValue
-			function GetEasyCodeIIGroup(
-				variable iEasyCodeIIGroupID,		// easyCodeIIGroupID
-				variable & oNumber,
-				variable & oName,
-				variable & oErrorCode,
-				variable & oDescription
-				) variable {return(0);}					// Return: ReturnValue
-			function SetEasyCodeIIGroup_Field_Description(
-				variable iEasyCodeIIGroupID,		// easyCodeIIGroupID
-				variable iDescription
-				) variable {return(0);}			// Return: ReturnValue
-			function GetEasyCodeIIGroupID_By_EasyCodeIIRackID(
-				variable iEasyCodeIIRackID,		// easyCodeIIRackID
-				variable & oArrayEasyCodeIIGroupID[]	// Array of easyCodeIIGroupID
-				) variable {return(0);}				// Return: ReturnValue
-			function GetEasyCodeIIGroupID_By_Name(
-				variable iEasyCodeIIRackID,			// easyCodeIIRackID
-				variable iName,
-				variable & oEasyCodeIIGroupID
-				) variable {return(0);}			// Return: ReturnValue
-			function GetEasyCodeIIGroup_LabwareInformation(
-				variable iEasyCodeIIGroupID,	// easyCodeIIGroupID
-				variable & oSectionsX,
-				variable & oSectionsY
-				) variable {return(0);}		// Return: ReturnValue
-			function GetEasyCodeIIContainer(
-				variable iEasyCodeIIContainerID,		// easyCodeIIContainerID
-				variable & oBarcode,
-				variable & oBarcodeType,
-				variable & oPositionNumber,
-				variable & oPositionText,
-				variable & oQuality,
-				variable & oQualityDetails,
-				variable & oErrorCode,
-				variable & oDescription
-				) variable {return(0);}					// Return: ReturnValue
-			function SetEasyCodeIIContainer_Field_Description(
-				variable iEasyCodeIIContainerID,		// easyCodeIIContainerID
-				variable iDescription
-				) variable {return(0);}			// Return: ReturnValue
-			function GetEasyCodeIIContainerID_By_EasyCodeIIGroupID(
-				variable iEasyCodeIIGroupID,			// easyCodeIIGroupID
-				variable & oArrayEasyCodeIIContainerID[]	// Array of easyCodeIIContainerID
-				) variable {return(0);}				// Return: ReturnValue
-			function GetEasyCodeIIContainerID_By_PositionNumber(
-				variable iEasyCodeIIGroupID,				// easyCodeIIGroupID
-				variable iPositionNumber,
-				variable & oArrayEasyCodeIIContainerID[]		// Array of easyCodeIIContainerID
-				) variable {return(0);}					// Return: ReturnValue
-			function GetEasyCodeIIContainerID_By_PositionText(
-				variable iEasyCodeIIGroupID,				// easyCodeIIGroupID
-				variable iPositionText,
-				variable & oArrayEasyCodeIIContainerID[]		// Array of easyCodeIIContainerID
-				) variable {return(0);}					// Return: ReturnValue
-		} //namspace DATABASE
+    } // namespace ERROR
 
-		namespace HELPER
-		{
-			static function StrIStrMitNullen(
-				variable Zahl,			// Number to be converted
-				variable TotalLaenge		// String total length
-				) variable {return(0);}				// Return: Converted string with leading zeros
-			namespace LABWARE
-			{
-				function GetPositionCoordinates_Center_by_Labware(
-					device	& ML_STAR,	// Device
-					variable iLabware,		// Labware
-					variable & oCoordinateX,	// Output Coordinate-X
-					variable & oCoordinateY,	// Ausgabe Coordinate-Y
-					variable & oCoordinateZ	// Coordinate-Z
-					) variable {return(0);}			// Return: _NONE			= Position determined
-					//		_LIBRARY_ERROR = Position not determined 
-				function GetPositionCoordinates_by_Labware(
-					device   & ML_STAR,       // Device
-					variable iLabware,        // Labware
-					variable & oCoordinateX,  // Coordinate-X
-					variable & oCoordinateY,  // Coordinate-Y
-					variable & oCoordinateZ   // Coordinate-Z
-					) variable {return(0);}                  // Return: _NONE          = Position determined
-					//         _LIBRARY_ERROR = Position not determined
-				function GetPositionCoordinates_by_LabwarePosition(
-					device	& ML_STAR,	// Device
-					variable iLabware,		// Labware
-					variable iPosition,	// Position
-					variable & oCoordinateX,	// Coordinate-X
-					variable & oCoordinateY,	// Coordinate-Y
-					variable & oCoordinateZ	// Coordinate-Z
-					) variable {return(0);}			// Return: _NONE			= Position determined
-							//		_LIBRARY_ERROR = Position not determined
-			} //namespace LABWARE
-			
-			namespace MLSTAR
-			{
-				function GetNumberOfPipettingChannels(
-					device	& ML_STAR	// Device
-					) variable {return(0);}				// Return: Number of channels
-				function ChannelPattern_LeftAdjust(
-					variable iNumberOfChannels,	// Anzahl Kanaele
-					variable iTotalNumberOfChannels	// Anzahl Kanaele total
-					) variable {return(0);}			// Return: Channel pattern
-				function ChannelPattern_RightAdjust(
-					variable iNumberOfChannels,	// Anzahl Kanaele
-					variable iTotalNumberOfChannels	// Anzahl Kanaele total
-					) variable {return(0);}			// Return: Channel pattern
-				function ChannelPattern_SingleAdjust(
-					variable iSingleChannel,		// Kanal
-					variable iTotalNumberOfChannels	// Anzahl Kanaele total
-					) variable {return(0);}			// Return: Channel pattern
-			}//namespace MLSTAR
-			
-			namespace TRACE
-			{
-				function Trace2Text(
-					variable iTraceLevel,		// Tracelevel
-					variable iText1,		// Tracetext 1
-					variable iText2			// Tracetext 2
-					) variable {return(0);}	// Return: _NONE			= Output done
-					//		_LIBRARY_ERROR = No output
-				function Trace4Text(
-					variable iTraceLevel,		// Tracelevel
-					variable iText1,		// Tracetext 1
-					variable iText2,		// Tracetext 2
-					variable iText3,		// Tracetext 3
-					variable iText4			// Tracetext 4
-					) variable {return(0);}	// Return: _NONE			= Output done
-					//		_LIBRARY_ERROR = No output
-				function Trace6Text(
-					variable iTraceLevel,		// Tracelevel
-					variable iText1,		// Tracetext 1
-					variable iText2,		// Tracetext 2
-					variable iText3,		// Tracetext 3
-					variable iText4,		// Tracetext 4
-					variable iText5,		// Tracetext 5
-					variable iText6			// Tracetext 6
-					) variable {return(0);}	// Return: _NONE			= Output done
-					//		_LIBRARY_ERROR = No output
-				function TraceArrayStr(
-					variable iTraceLevel,	// Tracelevel
-					variable iArrayName,
-					variable iArray[]	// Array Variable
-					) variable {return(0);}			// Return: _NONE			= Output done
-							//		_LIBRARY_ERROR = No output
-				function TraceArrayInt(
-					variable iTraceLevel,	// Tracelevel
-					variable iArrayName,
-					variable iArray []		// Array Variable
-					) variable {return(0);}			// Return: _NONE			= Output done
-							//		_LIBRARY_ERROR = No output
-				function TraceArrayFloat(
-					variable iTraceLevel,	// Tracelevel
-					variable iArrayName,
-					variable iArray[]	// Array Variable
-					) variable {return(0);}			// Return: _NONE			= Output done
-							//		_LIBRARY_ERROR = No output
-				function TraceSequence(
-					variable iTraceLevel,		// Tracelevel
-					sequence iSequence			// Sequence
-					) variable {return(0);}	// Return: _NONE			= Output done
-					// _LIBRARY_ERROR = No output
-			}//namespace TRACE
-			
-			namespace SEQUENCE
-			{
-				function Init(
-					sequence & oSequence	// Sequence
-					) variable {return(0);}
-				function Add(
-					sequence iSourceSequence1,	// Source Sequence
-					sequence iSourceSequence2,	// Source Sequence
-					sequence & oDestinationSequence // Out Sequence
-					) variable {return(0);}
-				function Copy(
-					sequence iSourceSequence,	// Source Sequence
-					sequence & oDestinationSequence // Out Sequence
-					) variable {return(0);}
-			}// namespace SEQUENCE
-		}//namespace HELPER
-		
-		namespace MLSTAR
-		{
-			static function ExecFW_Cmd(
-				device & ML_STAR,
-				variable cmd,
-				variable prm
-				) variable {return(0);}
+    // Function Parameters Const
+    namespace GUI
+    {
+      namespace SHOW
+      {
+        namespace MODE
+        {
+          const variable _NORMAL                     (1);   // Show Normal
+          const variable _MAXIMIZED                  (2);   // Show Maximized
+        } // namespace MODE
+      } // namespace SHOW
+      namespace LIVEVIEW
+      {
+        namespace MODE
+        {
+          const variable _NORMAL                     (1);   // Show Normal
+        } // namespace MODE
+        namespace DRAW
+        {
+          namespace COLOR
+          {
+            const variable _RED                     ("red");
+            const variable _GREEN                   ("green");
+            const variable _BLUE                    ("blue");
+            const variable _ORANGE                  ("orange");
+            const variable _CYAN                    ("cyan");
+            const variable _MANGENTA                ("mangenta");
+            const variable _YELLOW                  ("yellow");
+            const variable _GRAY                    ("gray");
+            const variable _BLACK                   ("black");
+            const variable _WHITE                   ("white");
+          } // namespace COLOR
+          namespace DRAWMODE
+          {
+            const variable _FILL                    ("fill");
+            const variable _MARGIN                  ("margin");
+          } // namespace DRAWMODE
+          namespace FONT
+          {
+            const variable _ARIAL                   ("Arial");
+          } // namespace FONT
+        } // namespace DRAW
+      } // namespace LIVEVIEW
+    } // namespace GUI
 
-			function Light_On(
-				device & ML_STAR,	// Device
-				variable iLightSource,	// PWM number and DIV2 or DIV3 connector
-				variable iPercent	// Lightintensity
-				) variable {return(0);}
-			function Light_Off(
-				device & ML_STAR,	// Device
-				variable iLightSource	// PWM number and DIV2 or DIV3 connector
-				) variable {return(0);}
-			function Light_Off_All(
-				device & ML_STAR	// Device
-				) variable {return(0);}
-		}// end namespace MLSTAR
-	}// namespace EASYCODEII
+    namespace CAMERA
+    {
+      namespace SAVEPICTURE
+      {
+        namespace PICTUREFORMAT
+        {
+          const variable _TIFF                       ("tiff");
+          const variable _BMP                        ("bmp");
+          const variable _JPEG_UNCOPRESSED           ("jpeg");
+          const variable _JPEG_80_PERCENT            ("jpeg 80");
+          const variable _JPEG_60_PERCENT            ("jpeg 60");
+          const variable _JPEG_40_PERCENT            ("jpeg 40");
+          const variable _JPEG_20_PERCENT            ("jpeg 20");
+          const variable _PNG                        ("png");
+          const variable _PNG_COMPRESSED_BEST        ("png best");
+          const variable _PNG_COMPRESSED_FASTEST     ("png fastest");
+          const variable _PNG_NONE                   ("png none");
+        } // namespace PICTUREFORMAT
+      } // namespace SAVEPICTURE
+    } // namespace CAMERA
+
+    namespace EASYCODEII_HELPER
+    {
+      namespace LIGHTSOURCE
+      {
+        const variable _NO_LIGHT                     (0);   // None
+        const variable _MLSTAR_DIV2_PWM1             (1);   // DIV2
+        const variable _MLSTAR_DIV2_PWM2             (2);   // DIV2
+        const variable _MLSTAR_DIV3_PWM3             (3);   // DIV3
+        const variable _MLSTAR_DIV3_PWM4             (4);   // DIV3
+        const variable _CAMERA_CHANNEL               (5);   // Camera Channel
+        const variable _CAMERA_FLASH_OUTPUTPORT      (6);   // Camera Flash Output Port
+      } // namespace LIGHTSOURCE
+      namespace SORTORDER
+      {
+        const variable _ASCENDING                    (0);   // Ascending
+        const variable _COLUMN_BY_COLUMN             (1);   // Column by column
+      } // namespace SORTORDER
+      namespace GROUPNAME
+      {
+        const variable _RACK                         ("Side");      // 1D Rack side code
+        const variable _TUBES                        ("Tubes");     // Tubes
+        const variable _BOTTOM_TL                    ("Bottom_TL"); // 2D Rack bottom code top left
+        const variable _BOTTOM_BR                    ("Bottom_BR"); // 2D Rack bottom code bottom right
+      } // namespace GROUPNAME
+    } // namespace EASYCODEII_HELPER
+
+    namespace INIT
+    {
+
+      // Init() -----------------------------------------------------------------------------------
+      // Initializes the connection to the application
+      function Init(
+                     device   & ML_STAR,                  // Device
+                     variable iTraceLevel,                // Sent Tracelevel
+                     variable iApplicationInit           // Should the application be initialized
+                   ) variable {return(0);}              // Return: _NONE          = Init successfully completed
+														// Return: _LIBRARY_ERROR = Init failed
+      // ------------------------------------------------------------------------------------------
+
+      // DeInit() ---------------------------------------------------------------------------------
+      // Deinitialize
+      function DeInit(
+                     ) variable {return(0);}                   		// Return: _NONE          = DeInit successfully completed
+														// Return: _LIBRARY_ERROR = DeInit failed
+      // ------------------------------------------------------------------------------------------
+
+      // SetSimulationMode() ----------------------------------------------------------------------
+      // Set simulation mode
+      function SetSimulationMode(
+                                  variable iSimulationMode             // Desired Simulation Mode
+                                ) variable {return(0);}                             // Return: ReturnValue
+      // ------------------------------------------------------------------------------------------
+
+      // GetSimulationMode() ----------------------------------------------------------------------
+      // Read simulation mode
+      function GetSimulationMode(
+                                  variable & oSimulationMode           // Simulation Mode
+                                ) variable {return(0);}                             // Return: ReturnValue
+      // ------------------------------------------------------------------------------------------
+
+    } // namespace INIT
+
+    namespace APPLICATION
+    {
+
+      // IsRunning() ------------------------------------------------------------------------------
+      // Displays the application window
+      function IsRunning(
+                          variable & oApplicationRunningFlag    // Application RunningFlag
+                        ) variable {return(0);}                             // Return: ReturnValue
+      // ------------------------------------------------------------------------------------------
+
+      // GetStartError() --------------------------------------------------------------------------
+      // Determine if any error occured during start of application
+      function GetApplicationStartError(
+                                         variable & oApplicationStartError     // Application Start Error
+                                       ) variable {return(0);}                             // Return: ReturnValue
+      // ------------------------------------------------------------------------------------------
+
+      // Application_GetApplicationErrorText() ----------------------------------------------------
+      // Determine what type of error based on error value
+      function GetErrorText(
+                             variable iErrorNr,            // Application error value
+                             variable & oErrorText         // Application error text
+                           ) variable {return(0);}                     // Return: Error text
+      // ------------------------------------------------------------------------------------------
+
+      // Get_ProgrammPath() ----------------------------------------------------------------
+      // Read program path
+      function Get_ProgramPath(
+                                 variable & oProgramPath    // Program Path
+                               ) variable {return(0);}                   // Return: ReturnValue
+      // ------------------------------------------------------------------------------------------
+
+    } // namespace APPLICATION
+
+    namespace APPLICATIONSETTINGS
+    {
+
+      // Get_DatabasePicturePath() ----------------------------------------------------------------
+      // Read database picture path
+      function Get_DatabasePicturePath(
+                                        variable & oDatabasePicturePath    // Database Picture Path
+                                      ) variable {return(0);}                          // Return: ReturnValue
+      // ------------------------------------------------------------------------------------------
+
+    } // namespace APPLICATIONSETTINGS
+
+    namespace GUI
+    {
+
+      // Show() -----------------------------------------------------------------------------------
+      // Show application window
+      function Show(
+                     variable iMode
+                   ) variable {return(0);}     // Return: ReturnValue
+      // ------------------------------------------------------------------------------------------
+
+      // Hide() -----------------------------------------------------------------------------------
+      // Hide application window
+      function Hide(
+                   ) variable {return(0);}     // Return: ReturnValue
+      // ------------------------------------------------------------------------------------------
+
+      // IsVisible() ------------------------------------------------------------------------------
+      // Is the application window still visible
+      function IsVisible(
+                          variable & oIsVisible
+                        ) variable {return(0);}     // Return: ReturnValue
+      // ------------------------------------------------------------------------------------------
+
+      namespace LIVEVIEW
+      {
+
+        // Show() ---------------------------------------------------------------------------------
+        // Show liveview
+        function Show(
+                       variable iMode
+                     ) variable {return(0);}     // Return: ReturnValue
+        // ----------------------------------------------------------------------------------------
+
+        // Hide() ---------------------------------------------------------------------------------
+        // Hide LiveView
+        function Hide(
+                     ) variable {return(0);}     // Return: ReturnValue
+        // ----------------------------------------------------------------------------------------
+
+        // IsVisible() ----------------------------------------------------------------------------
+        // Is LiveView still visible
+        function IsVisible(
+                            variable & oIsVisible
+                          ) variable {return(0);}     // Return: ReturnValue
+        // ----------------------------------------------------------------------------------------
+
+        // SavePicture() --------------------------------------------------------------------------
+        // Save current live image (including draw functions)
+        function SavePicture(
+                              variable iPictureFilename,     // Name des Bildes
+                              variable iPictureFormat,       // Picture Format
+                              variable iPictureSizePercent
+                            ) variable {return(0);}                     // Return: ReturnValue
+        // ----------------------------------------------------------------------------------------
+
+        namespace FOCUS
+        {
+
+          // Show() -------------------------------------------------------------------------------
+          // Camera Focus Show
+          function Show(
+                         variable iPositionX,               // Position X
+                         variable iPositionY,               // Position Y
+                         variable iSizeX,                   // Size X
+                         variable iSizeY,                   // Size Y
+                         variable iAngle,                   // Angle
+                         variable iGradientValueThreshold,  // Gradient value threshold
+                         variable iGradientValueSensibility // Gradient value sensibility
+                       ) variable {return(0);}                          // Return: ReturnValue
+          // --------------------------------------------------------------------------------------
+
+          // GetCurrentValue() --------------------------------------------------------------------
+          // Camera Focus GetCurrentValue
+          function GetCurrentValue(
+                                    variable & oCurrentGradientValueThreshold,
+                                    variable & oMaximumGradientValueThreshold,
+                                    variable & oLowerLimitGradientValueThreshold,
+                                    variable & oValueInTollerance
+                                  ) variable {return(0);}                          // Return: ReturnValue
+          // --------------------------------------------------------------------------------------
+
+        } // namespace FOCUS
+
+        namespace APERTURE
+        {
+
+          // Show() -------------------------------------------------------------------------------
+          // Camera Aperture Show
+          function Show(
+                         variable iPositionX,           // Position X
+                         variable iPositionY,           // Position Y
+                         variable iSizeX,               // Size X
+                         variable iSizeY,               // Size Y
+                         variable iAngle,               // Angle
+                         variable iGrayValueCenter,     // Gray value center
+                         variable iGrayValueSensibility // Gray value sensibility
+                       ) variable {return(0);}                      // Return: ReturnValue
+          // --------------------------------------------------------------------------------------
+
+          // GetCurrentValue() --------------------------------------------------------------------
+          // Camera Aperture GetCurrentValue
+          function GetCurrentValue(
+                                    variable & oCurrentGrayValueCenter,
+                                    variable & oLowerLimitGrayValueCenter,
+                                    variable & oUpperLimitGrayValueCenter,
+                                    variable & oValueInTollerance
+                                  ) variable {return(0);}                          // Return: ReturnValue
+          // --------------------------------------------------------------------------------------
+
+        } // namespace APERTURE
+
+        namespace HOMOGENEOUS
+        {
+
+          // Show() -------------------------------------------------------------------------------
+          // Camera Homogeneous Show
+          function Show(
+                         variable iPositionX,                   // Position X
+                         variable iPositionY,                   // Position Y
+                         variable iSizeX,                       // Size X
+                         variable iSizeY,                       // Size Y
+                         variable iAngle,                       // Angle
+                         variable iFilterMode,                  // Filter mode
+                         variable iHomogeneousValueThreshold,   // Value threshold
+                         variable iHomogeneousValueSensibility  // Value sensibility
+                       ) variable {return(0);}                              // Return: ReturnValue
+          // --------------------------------------------------------------------------------------
+
+          // GetCurrentValue() --------------------------------------------------------------------
+          // Camera Homogeneous GetCurrentValue
+          function GetCurrentValue(
+                                    variable & oCurrentHomogeneousValue,
+                                    variable & oMaximumHomogeneousValue,
+                                    variable & oLowerLimitHomogeneousValue,
+                                    variable & oValueInTollerance
+                                  ) variable {return(0);}                          // Return: ReturnValue
+          // --------------------------------------------------------------------------------------
+
+        } // namespace HOMOGENEOUS
+
+        namespace DRAW
+        {
+
+          // ClearAll() ---------------------------------------------------------------------------
+          // LiveView Draw Function: ClearAll
+          function ClearAll(
+                           ) variable {return(0);}     // Return: ReturnValue
+          // --------------------------------------------------------------------------------------
+
+          // Clear() ------------------------------------------------------------------------------
+          // LiveView Draw Function: Clear
+          function Clear(
+                          variable iObjectName      // Name of Object
+                        ) variable {return(0);}                 // Return: ReturnValue
+          // --------------------------------------------------------------------------------------
+
+          // Picture() ------------------------------------------------------------------------------
+          // LiveView Draw Function: Picture
+          function Picture(
+                            variable iObjectName,     // Name of Object
+                            variable iPictureFileName,
+                            variable iPositionX,      // PositionX [Percent]
+                            variable iPositionY,      // PositionY [Percent]
+                            variable iScale,          // Scale
+                            variable iAngle           // Angle
+                          ) variable {return(0);}                 // Return: ReturnValue
+          // --------------------------------------------------------------------------------------
+
+          // Cross() ------------------------------------------------------------------------------
+          // LiveView Draw Function: Cross
+          function Cross(
+                          variable iObjectName,     // Name of object
+                          variable iPositionX,      // PositionX [Percent]
+                          variable iPositionY,      // PositionY [Percent]
+                          variable iSize,           // Size [Percent]
+                          variable iAngle,          // Angle
+                          variable iColor,          // Color
+                          variable iLineSize        // LineSize
+                        ) variable {return(0);}                 // Return: ReturnValue
+          // --------------------------------------------------------------------------------------
+
+          // Ellipse() ----------------------------------------------------------------------------
+          // LiveView Draw Function: Ellipse
+          function Ellipse(
+                            variable iObjectName,     // Name of object
+                            variable iPositionX,      // PositionX [Percent]
+                            variable iPositionY,      // PositionY [Percent]
+                            variable iSizeX,          // SizeX [Percent]
+                            variable iSizeY,          // SizeY [Percent]
+                            variable iAngle,          // Angle
+                            variable iColor,          // Color
+                            variable iLineSize,       // LineSize
+                            variable iDrawMode        // DrawMode
+                          ) variable {return(0);}                 // Return: ReturnValue
+          // --------------------------------------------------------------------------------------
+
+          // Rectangle() --------------------------------------------------------------------------
+          // LiveView Draw Function: Rectangle
+          function Rectangle(
+                              variable iObjectName,     // Name of object
+                              variable iPositionX,      // PositionX [Percent]
+                              variable iPositionY,      // PositionY [Percent]
+                              variable iSizeX,          // SizeX [Percent]
+                              variable iSizeY,          // SizeY [Percent]
+                              variable iAngle,          // Angle
+                              variable iColor,          // Color
+                              variable iLineSize,       // LineSize
+                              variable iDrawMode        // DrawMode
+                            ) variable {return(0);}                 // Return: ReturnValue
+          // --------------------------------------------------------------------------------------
+
+          // Line() -------------------------------------------------------------------------------
+          // LiveView Draw Function: Line
+          function Line(
+                         variable iObjectName,     // Name of object
+                         variable iPosition1X,     // Position 1 X [Percent]
+                         variable iPosition1Y,     // Position 1 Y [Percent]
+                         variable iPosition2X,     // Position 2 X [Percent]
+                         variable iPosition2Y,     // Position 2 Y [Percent]
+                         variable iColor,          // Color
+                         variable iLineSize        // LineSize
+                       ) variable {return(0);}                 // Return: ReturnValue
+          // --------------------------------------------------------------------------------------
+
+          // Text() -------------------------------------------------------------------------------
+          // LiveView Draw Function: Text
+          function Text(
+                         variable iObjectName,     // Name of object
+                         variable iPositionX,      // PositionX [Percent]
+                         variable iPositionY,      // PositionY [Percent]
+                         variable iText,           // Text
+                         variable iColor,          // Color
+                         variable iFontName,       // FontName
+                         variable iTextSize        // TextSize
+                       ) variable {return(0);}                 // Return: ReturnValue
+          // ----------------------------------------------------------------------------------------
+
+        } // namespace DRAW
+
+      } // namespace LIVEVIEW
+
+    } // namespace GUI
+
+    namespace CAMERA
+    {
+
+      // Open() -----------------------------------------------------------------------------------
+      // Open Camera
+      function Open(
+                     variable iSettingNameCamera      // Name of Settings
+                   ) variable {return(0);}                        // Return: ReturnValue
+      // ------------------------------------------------------------------------------------------
+
+      // Close() ----------------------------------------------------------------------------------
+      // Close Camera
+      function Close(
+                    ) variable {return(0);}                        // Return: ReturnValue
+      // ------------------------------------------------------------------------------------------
+
+      // IsOpen() ---------------------------------------------------------------------------------
+      // Camera Open Check
+      function IsOpen(
+                       variable & oCameraIsOpen         // Camera open flag
+                     ) variable {return(0);}                        // Return: ReturnValue
+      // ------------------------------------------------------------------------------------------
+
+      // TakePicture() ----------------------------------------------------------------------------
+      // Make image
+      function TakePicture(
+                          ) variable {return(0);}                      // Return: ReturnValue
+      // ------------------------------------------------------------------------------------------
+
+      // SavePicture() ----------------------------------------------------------------------------
+      // Save iamge
+      function SavePicture(
+                            variable iPictureFilename,     // Image name
+                            variable iPictureFormat,       // Picture Format
+                            variable iPictureSizePercent
+                          ) variable {return(0);}                     // Return: ReturnValue
+      // ------------------------------------------------------------------------------------------
+
+      // LoadPicture() ----------------------------------------------------------------------------
+      // Load image
+      function LoadPicture(
+                            variable iPictureFilename     // Image name
+                          ) variable {return(0);}                     // Return: ReturnValue
+      // ------------------------------------------------------------------------------------------
+
+      // SetOutputFlash() ----------------------------------------------------------------------------
+      // Camera Output Flash On/Off
+      function SetOutputPortFlash(
+                                   variable iOn     // 
+                                 ) variable {return(0);}        // Return: ReturnValue
+      // ------------------------------------------------------------------------------------------
+
+    } // namespace CAMERA
+
+    namespace SETTINGS
+    {
+
+      // SelectCameraSettings() -------------------------------------------------------------------
+      // Select Camera Settings
+      function SelectCameraSettings(
+                                      variable iDefaultSettingNameCamera, // Name of default settings
+                                      variable & oSettingNameCamera       // Name of settings
+                                    ) variable {return(0);}                           // Return: ReturnValue
+      // ------------------------------------------------------------------------------------------
+
+      // SelectBarcodeSettings() ------------------------------------------------------------------
+      // Select Barcode Settings
+      function SelectBarcodeSettings(
+                                      variable iDefaultSettingNameBarcode,  // Name of default settings
+                                      variable & oSettingNameBarcode        // Name of settings
+                                    ) variable {return(0);}                             // Return: ReturnValue
+      // ------------------------------------------------------------------------------------------
+
+    } // namespace SETTINGS
+
+    namespace ANALYSE
+    {
+
+      namespace BARCODE
+      {
+
+        // Start() ----------------------------------------------------------------------------------
+        // Start analysing Barocdes
+        function Start(
+                        variable iSettingNameBarcode     // Name of settings
+                      ) variable {return(0);}                        // Return: ReturnValue
+        // ------------------------------------------------------------------------------------------
+
+        // Start_ParameterList() ----------------------------------------------------------------
+        // Start analysing Barcode with parameters
+        function Start_ParameterList(
+                                      variable iSettingNameBarcode,    // Name of settings
+                                      variable iArrayParameterList[]   // 
+                                    ) variable {return(0);}                        // Return: ReturnValue
+        // ------------------------------------------------------------------------------------------
+
+        // Stop() -----------------------------------------------------------------------------------
+        // Stop analysing Barocdes
+        function Stop(
+                     ) variable {return(0);}                        // Return: ReturnValue
+        // ------------------------------------------------------------------------------------------
+
+        // Reset() ----------------------------------------------------------------------------------
+        // Reset Barocdes analysis
+        function Reset(
+                      ) variable {return(0);}                        // Return: ReturnValue
+        // ------------------------------------------------------------------------------------------
+
+        // CheckRunning() ---------------------------------------------------------------------------
+        // Check if barcode analysis is finished
+        function CheckRunning(
+                               variable & oRunning              // Running-Flag
+                             ) variable {return(0);}                        // Return: ReturnValue
+        // ------------------------------------------------------------------------------------------
+
+        // SaveResult() -----------------------------------------------------------------------------
+        // Save Result of analysed barcode
+        function SaveResult(
+                             variable iAsynchronPictureSave,
+                             variable iDescription,
+                             variable & oEasyCodeIIRackID     // easyCodeIIRackID
+                           ) variable {return(0);}                        // Return: ReturnValue
+        // ------------------------------------------------------------------------------------------
+
+        // SaveResult_CheckAsynchronSaving() --------------------------------------------------------
+        // Check Finish Saving Results by Asynchron mode
+        function SaveResult_CheckAsynchronSaveFinish(
+                                                      variable & oFinish               // Finish-Flag
+                                                    ) variable {return(0);}                        // Return: ReturnValue
+        // ------------------------------------------------------------------------------------------
+
+        // ExportRackPicture() ----------------------------------------------------------------------
+        // Export rack picture
+        function ExportRackPicture(
+                                    variable iEasyCodeIIRackID,      // easyCodeIIRackID
+                                    variable iAsynchronPictureSave,
+                                    variable iPictureFilenamePath,
+                                    variable iPictureFormat,
+                                    variable iDrawAnalysedInformation,
+                                    variable iPictureCropped,
+                                    variable iPictureSizePercent
+                                  ) variable {return(0);}                        // Return: ReturnValue
+        // ------------------------------------------------------------------------------------------
+
+        // ExportToZipArchive() ---------------------------------------------------------------------
+        // Export to a ZIP archive
+        function ExportToZipArchive(
+                                    variable iArrayEasyCodeIIRackID[],      // easyCodeIIRackID
+                                    variable iArchiveFilenamePath,
+                                    variable iArchiveAppendMode
+                                  ) variable {return(0);}                               // Return: ReturnValue
+        // ------------------------------------------------------------------------------------------
+
+      } // namespace BARCODE
+
+    } // namespace ANALYSE
+
+    namespace DATABASE
+    {
+
+      // GetEasyCodeIIRack() ----------------------------------------------------------------------
+      // Determine Rack Information
+      function GetEasyCodeIIRack(
+                                  variable iEasyCodeIIRackID,             // easyCodeIIRackID
+                                  variable & oPictureFilename,
+                                  variable & oErrorCode,
+                                  variable & oDescription
+                                ) variable {return(0);}                                    // Return: ReturnValue
+      // ------------------------------------------------------------------------------------------
+
+      // SetEasyCodeIIRack_Field_Description() ----------------------------------------------------
+      // Set Rack Description
+      function SetEasyCodeIIRack_Field_Description(
+                                                    variable iEasyCodeIIRackID,             // easyCodeIIRackID
+                                                    variable iDescription
+                                                  ) variable {return(0);}                               // Return: ReturnValue
+      // ------------------------------------------------------------------------------------------
+
+      // GetEasyCodeIIGroup() ---------------------------------------------------------------------
+      // Determine Group Information
+      function GetEasyCodeIIGroup(
+                                   variable iEasyCodeIIGroupID,             // easyCodeIIGroupID
+                                   variable & oNumber,
+                                   variable & oName,
+                                   variable & oErrorCode,
+                                   variable & oDescription
+                                 ) variable {return(0);}                                    // Return: ReturnValue
+      // ------------------------------------------------------------------------------------------
+
+      // SetEasyCodeIIGroup_Field_Description() ---------------------------------------------------
+      // Set Group Description
+      function SetEasyCodeIIGroup_Field_Description(
+                                                     variable iEasyCodeIIGroupID,             // easyCodeIIGroupID
+                                                     variable iDescription
+                                                   ) variable {return(0);}                                // Return: ReturnValue
+      // ------------------------------------------------------------------------------------------
+
+      // GetEasyCodeIIGroupID_By_EasyCodeIIRackID() -----------------------------------------------
+      // Determine GroupIDs based on RackID
+      function GetEasyCodeIIGroupID_By_EasyCodeIIRackID(
+                                                         variable iEasyCodeIIRackID,            // easyCodeIIRackID
+                                                         variable & oArrayEasyCodeIIGroupID[]   // Array of easyCodeIIGroupID
+                                                       ) variable {return(0);}                              // Return: ReturnValue
+      // ------------------------------------------------------------------------------------------
+
+      // GetEasyCodeIIGroupID_By_Name() -----------------------------------------------------------
+      // Reading GroupID based on Group-name
+      function GetEasyCodeIIGroupID_By_Name(
+                                             variable iEasyCodeIIRackID,              // easyCodeIIRackID
+                                             variable iName,
+                                             variable & oEasyCodeIIGroupID
+                                           ) variable {return(0);}                                // Return: ReturnValue
+      // ------------------------------------------------------------------------------------------
+
+      // GetEasyCodeIIGroup_LabwareInformation() --------------------------------------------------
+      // Reading Labware Group Information
+      function GetEasyCodeIIGroup_LabwareInformation(
+                                                      variable iEasyCodeIIGroupID,  // easyCodeIIGroupID
+                                                      variable & oSectionsX,
+                                                      variable & oSectionsY
+                                                    ) variable {return(0);}                     // Return: ReturnValue
+      // ------------------------------------------------------------------------------------------
+
+      // GetEasyCodeIIContainer() -----------------------------------------------------------------
+      // Determine Container Information
+      function GetEasyCodeIIContainer(
+                                       variable iEasyCodeIIContainerID,             // easyCodeIIContainerID
+                                       variable & oBarcode,
+                                       variable & oBarcodeType,
+                                       variable & oPositionNumber,
+                                       variable & oPositionText,
+                                       variable & oQuality,
+                                       variable & oQualityDetails,
+                                       variable & oErrorCode,
+                                       variable & oDescription
+                                     ) variable {return(0);}                                    // Return: ReturnValue
+      // ------------------------------------------------------------------------------------------
+
+      // SetEasyCodeIIContainer_Field_Description() -----------------------------------------------
+      // Set Container Description
+      function SetEasyCodeIIContainer_Field_Description(
+                                                         variable iEasyCodeIIContainerID,        // easyCodeIIContainerID
+                                                         variable iDescription
+                                                       ) variable {return(0);}                               // Return: ReturnValue
+      // ------------------------------------------------------------------------------------------
+
+      // GetEasyCodeIIContainerID_By_EasyCodeIIGroupID() -----------------------------------------------
+      // Determine ContainerIDs based on GroupID
+      function GetEasyCodeIIContainerID_By_EasyCodeIIGroupID(
+                                                              variable iEasyCodeIIGroupID,              // easyCodeIIGroupID
+                                                              variable & oArrayEasyCodeIIContainerID[]  // Array of easyCodeIIContainerID
+                                                            ) variable {return(0);}                                 // Return: ReturnValue
+      // ------------------------------------------------------------------------------------------
+
+      // GetEasyCodeIIContainerID_By_PositionNumber() ---------------------------------------------
+      // Determine ContainerID based on PositionNumber
+      function GetEasyCodeIIContainerID_By_PositionNumber(
+                                                           variable iEasyCodeIIGroupID,                 // easyCodeIIGroupID
+                                                           variable iPositionNumber,
+                                                           variable & oArrayEasyCodeIIContainerID[]     // Array of easyCodeIIContainerID
+                                                         ) variable {return(0);}                                    // Return: ReturnValue
+      // ------------------------------------------------------------------------------------------
+
+      // GetEasyCodeIIContainerID_By_PositionText() -----------------------------------------------
+      // Determine ContainerID based on PositionText
+      function GetEasyCodeIIContainerID_By_PositionText(
+                                                         variable iEasyCodeIIGroupID,                 // easyCodeIIGroupID
+                                                         variable iPositionText,
+                                                         variable & oArrayEasyCodeIIContainerID[]     // Array of easyCodeIIContainerID
+                                                       ) variable {return(0);}                                    // Return: ReturnValue
+      // ------------------------------------------------------------------------------------------
+
+    } // namespace DATABASE
+
+    namespace HELPER
+    {
+      namespace LABWARE
+      {
+
+        // GetPositionCoordinates_Center_by_Labware() -----------------------------------------------
+        // Determine coordinates (center) based on Labware
+        function GetPositionCoordinates_Center_by_Labware(
+                                                           device   & ML_STAR,       // Device
+                                                           variable iLabware,        // Labware
+                                                           variable & oCoordinateX,  // Output Coordinate-X
+                                                           variable & oCoordinateY,  // Output Coordinate-Y
+                                                           variable & oCoordinateZ   // Coordinate-Z
+                                                         ) variable {return(0);}                 // Return: _NONE          = Determined position
+        // ------------------------------------------------------------------------------------------
+
+        // GetPositionCoordinates_by_Labware() ------------------------------------------------------
+        // Determine coordinates based on Labware
+        function GetPositionCoordinates_by_Labware(
+                                                    device   & ML_STAR,       // Device
+                                                    variable iLabware,        // Labware
+                                                    variable & oCoordinateX,  // Coordinate-X
+                                                    variable & oCoordinateY,  // Coordinate-Y
+                                                    variable & oCoordinateZ   // Coordinate-Z
+                                                  ) variable {return(0);}                 // Return: _NONE          = Determined position
+        // ------------------------------------------------------------------------------------------
+
+        // GetPositionCoordinates_by_LabwarePosition() ----------------------------------------
+        // Determine coordinates based on Labware
+        function GetPositionCoordinates_by_LabwarePosition(
+                                                            device   & ML_STAR,       // Device
+                                                            variable iLabware,        // Labware
+                                                            variable iPosition,       // Position
+                                                            variable & oCoordinateX,  // Coordinate-X
+                                                            variable & oCoordinateY,  // Coordinate-Y
+                                                            variable & oCoordinateZ   // Coordinate-Z
+                                                          ) variable {return(0);}                 // Return: _NONE          = Determined position
+        // ------------------------------------------------------------------------------------------
+
+      } // namespace LABWARE
+
+      namespace MLSTAR
+      {
+
+        // GetNumberOfPipettingChannels() -----------------------------------------------------------
+        function GetNumberOfPipettingChannels(
+                                               device   & ML_STAR      // Device
+                                             ) variable {return(0);}               // Return: Number of channels
+        // ------------------------------------------------------------------------------------------
+
+        // ChannelPattern_LeftAdjust() --------------------------------------------------------------
+        // Left aligned Channelpattern
+        function ChannelPattern_LeftAdjust(
+                                            variable iNumberOfChannels,      // Number of channels
+                                            variable iTotalNumberOfChannels  // Number of channels total
+                                          ) variable {return(0);}                        // Return: Channel pattern
+        // ------------------------------------------------------------------------------------------
+
+        // ChannelPattern_RightAdjust() -------------------------------------------------------------
+        // Right aligned Channelpattern
+        function ChannelPattern_RightAdjust(
+                                             variable iNumberOfChannels,      // Number of channels
+                                             variable iTotalNumberOfChannels  // Number of channels total
+                                           ) variable {return(0);}                        // Return: Channel pattern
+        // ------------------------------------------------------------------------------------------
+
+        // ChannelPattern_SingleAdjust() ------------------------------------------------------------
+        // Channelpattern eines einzigen Kanals
+        function ChannelPattern_SingleAdjust(
+                                              variable iSingleChannel,         // Channel
+                                              variable iTotalNumberOfChannels  // Number of channels total
+                                            ) variable {return(0);}                        // Return: Channel pattern
+        // ------------------------------------------------------------------------------------------
+
+      } // namespace MLSTAR
+
+      namespace TRACE
+      {
+
+        // Trace2Text() -----------------------------------------------------------------------------
+        // Text output depending on tracelevel
+        function Trace2Text(
+                             variable iTraceLevel,        // Tracelevel
+                             variable iText1,             // Tracetext 1
+                             variable iText2              // Tracetext 2
+                           ) variable {return(0);}                    // Return: _NONE          = Output was made
+        // ------------------------------------------------------------------------------------------
+
+        // Trace4Text() -----------------------------------------------------------------------------
+        // Text output depending on tracelevel
+        function Trace4Text(
+                             variable iTraceLevel,        // Tracelevel
+                             variable iText1,             // Tracetext 1
+                             variable iText2,             // Tracetext 2
+                             variable iText3,             // Tracetext 3
+                             variable iText4              // Tracetext 4
+                           ) variable {return(0);}                    // Return: _NONE          = Output was made
+        // ------------------------------------------------------------------------------------------
+
+        // Trace6Text() -----------------------------------------------------------------------------
+        // Text output depending on tracelevel
+        function Trace6Text(
+                             variable iTraceLevel,        // Tracelevel
+                             variable iText1,             // Tracetext 1
+                             variable iText2,             // Tracetext 2
+                             variable iText3,             // Tracetext 3
+                             variable iText4,             // Tracetext 4
+                             variable iText5,             // Tracetext 5
+                             variable iText6              // Tracetext 6
+                           ) variable {return(0);}                    // Return: _NONE          = Output was made
+        // ------------------------------------------------------------------------------------------
+
+        // TraceArrayStr() -----------------------------------------------------------------------------
+        // Trace an Array Type String
+        function TraceArrayStr(
+                                variable iTraceLevel,  // Tracelevel
+                                variable iArrayName,
+                                variable iArray[]      // Array Variable
+                              ) variable {return(0);}              // Return: _NONE          = Output was made
+        // ------------------------------------------------------------------------------------------
+
+        // TraceArrayInt() -----------------------------------------------------------------------------
+        // Trace an Array Type Intger
+        function TraceArrayInt(
+                                variable iTraceLevel,  // Tracelevel
+                                variable iArrayName,
+                                variable iArray []     // Array Variable
+                              ) variable {return(0);}              // Return: _NONE          = Output was made
+        // ------------------------------------------------------------------------------------------
+
+        // TraceArrayFloat() -----------------------------------------------------------------------------
+        // Trace an Array Type Float
+        function TraceArrayFloat(
+                                  variable iTraceLevel,  // Tracelevel
+                                  variable iArrayName,
+                                  variable iArray[]      // Array Variable
+                                ) variable {return(0);}              // Return: _NONE          = Output was made
+        // ------------------------------------------------------------------------------------------
+
+        // TraceSequence() --------------------------------------------------------------------------
+        // Outputs a sequence depending on the trace level.
+        function TraceSequence(
+                                variable iTraceLevel,        // Tracelevel
+                                sequence iSequence           // Sequence
+                              ) variable {return(0);}                    // Return: _NONE          = Output was made
+        // ------------------------------------------------------------------------------------------
+
+      } // namespace TRACE
+
+      namespace SEQUENCE
+      {
+
+        // Init() --------------------------------------------------------------------------
+        // Sequence initialized
+        function Init(
+                       sequence & oSequence  // Sequence
+                     ) variable {return(0);}
+        // ------------------------------------------------------------------------------------------
+
+        // Add() ---------------------------------------------------------------------------
+        // Add Sequence
+        function Add(
+                      sequence iSourceSequence1,      // Source Sequence
+                      sequence iSourceSequence2,      // Source Sequence
+                      sequence & oDestinationSequence // Target Sequence
+                    ) variable {return(0);}
+        // --------------------------------------------------------------------------------------------
+
+        // Copy() ---------------------------------------------------------------------------
+        // Sequence kopieren
+        function Copy(
+                       sequence iSourceSequence,       // Source Sequence
+                       sequence & oDestinationSequence // Target Sequence
+                     ) variable {return(0);}
+        // --------------------------------------------------------------------------------------------
+
+      } // namespace SEQUENCE
+
+    } // namespace HELPER
+
+    // ------------------------------------------------------------------------------------------
+    namespace MLSTAR
+    {
+
+      // By what factor is the PWM signal reduced so that the output voltage is a maximum of 24V?
+
+      // By what factor is the PWM signal reduced so that the output voltage is a maximum of 24V?
+      // DIV2 PWM number
+
+      // By what factor is the PWM signal reduced so that the output voltage is a maximum of 24V?
+      // DIV3 PWM number
+
+
+      // ---------------------------------------------------------------
+      // Turning on Lights 
+      // ---------------------------------------------------------------
+      function Light_On(
+                         device & ML_STAR,       // Device
+                         variable iLightSource,  // PWM number and DIV2 or DIV3 connector
+                         variable iPercent       // Light intensity
+                       ) variable {return(0);}
+
+      // ---------------------------------------------------------------
+      // Turning off Lights
+      // ---------------------------------------------------------------
+      function Light_Off(
+                          device & ML_STAR,       // Device
+                          variable iLightSource   // PWM number and DIV2 or DIV3 connector
+                        ) variable {return(0);}
+      // ---------------------------------------------------------------
+
+      // ---------------------------------------------------------------
+      // Turn of all lights
+      // ---------------------------------------------------------------
+      function Light_Off_All(
+                              device & ML_STAR       // Device
+                            ) variable {return(0);}
+      // ---------------------------------------------------------------
+
+    } // end namespace MLSTAR
+
+  } // namespace EASYCODEII
 #endif
 #endif
